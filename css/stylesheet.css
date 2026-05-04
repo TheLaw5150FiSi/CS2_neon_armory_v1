@@ -1,0 +1,121 @@
+:root {
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #0f0f1a;
+  --neon-purple: #b04fff;
+  --neon-pink: #ff2d9b;
+  --pink-light: #ff6ec7;
+  --text-primary: #e8e8f0;
+  --text-muted: #a0a0c0;
+  --border: rgba(176, 79, 255, 0.2);
+  --glow-purple: 0 0 20px rgba(176, 79, 255, 0.4);
+  --glow-pink: 0 0 20px rgba(255, 45, 155, 0.4);
+  --font-mono: "Courier New", Courier, monospace;
+  --font-size-base: 16px;
+  --transition: all 0.3s ease;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-base);
+  line-height: 1.6;
+}
+
+ul {
+  list-style: none;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: rgba(10, 10, 15, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  z-index: 1000;
+}
+
+.nav-logo {
+  font-size: 1.4rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: var(--text-primary);
+}
+
+.bracket {
+  color: var(--neon-purple);
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+.nav.links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.nav-links a:hover {
+  color: var(--neon-pink);
+  text-shadow: var(--glow-pink);
+}
+
+#hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 80px;
+  background: radial-gradient(
+    circle at 30% 50%,
+    rgba(176,79,255,0.08) 0%,
+    transparent 60%
+  );
+}
+
+#hero h1 {
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  line-height: 1.1;
+  margin: 0.5rem;
+}
+
+.highlight {
+  color: var(--neon-purple);
+  text-shadow: var(--glow-purple);
+}
+
+.btn-primary {
+  background: var(--neon-purple);
+  color: #000;
+  padding: 0.8rem 2rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: var(--transition);
+}
+
+.btn-primary:hover {
+  box-shadow: var(--glow-purple);
+  transform: translateY(-2px);
+}
