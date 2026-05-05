@@ -71,9 +71,7 @@
       <!-- SKILLS SECTION -->
       <section id="skills">
         <h2 class="section-title">_ skillset</h2>
-        <!-- Skills Grid - angepasst an deinen Wissensstand als Azubi -->
         <div class="skills-grid">
-          <!-- 1. Netzwerkgrundlagen -->
           <div class="skill-card">
             <div class="skill-icon">🌐</div>
             <h3>Netzwerktechnik</h3>
@@ -83,7 +81,6 @@
             </div>
           </div>
 
-          <!-- 2. Betriebssysteme -->
           <div class="skill-card">
             <div class="skill-icon">🐧</div>
             <h3>Linux & Windows</h3>
@@ -93,7 +90,6 @@
             </div>
           </div>
 
-          <!-- 3. Systemintegration -->
           <div class="skill-card">
             <div class="skill-icon">⚙️</div>
             <h3>Systemadministration</h3>
@@ -106,7 +102,6 @@
             </div>
           </div>
 
-          <!-- 4. Security Basics -->
           <div class="skill-card">
             <div class="skill-icon">🔒</div>
             <h3>Cybersecurity Grundlagen</h3>
@@ -119,7 +114,6 @@
             </div>
           </div>
 
-          <!-- 5. Pentesting-Tools -->
           <div class="skill-card">
             <div class="skill-icon">🛠️</div>
             <h3>Pentesting Tools</h3>
@@ -129,7 +123,6 @@
             </div>
           </div>
 
-          <!-- 6. CTF & TryHackMe -->
           <div class="skill-card">
             <div class="skill-icon">🏆</div>
             <h3>CTF & Labs</h3>
@@ -150,42 +143,53 @@
               <span class="project-status">in progress</span>
             </div>
             <h3>🏠 Homelab - Pentesting Lab</h3>
-    <p>Eigenes virtuelles Netzwerk aufgebaut mit Kali Linux, Windows AD, und verwundbaren VMs (Metasploitable, DVWA) zum sicheren Üben von Angriffstechniken.</p>
-    <div class="tags">
-      <span class="tag">VirtualBox</span>
-      <span class="tag">Kali Linux</span>
-      <span class="tag">Active Directory</span>
-      <span class="tag">Metasploitable</span>
-    </div>
-    <!--<a href="#" class="project-link">➜ mehr zum Lab</a>-->
-  </div>
+            <p>
+              Eigenes virtuelles Netzwerk aufgebaut mit Kali Linux, Windows AD,
+              und verwundbaren VMs (Metasploitable, DVWA) zum sicheren Üben von
+              Angriffstechniken.
+            </p>
+            <div class="tags">
+              <span class="tag">VirtualBox</span>
+              <span class="tag">Kali Linux</span>
+              <span class="tag">Active Directory</span>
+              <span class="tag">Metasploitable</span>
+            </div>
+            <!--<a href="#" class="project-link">➜ mehr zum Lab</a>-->
+          </div>
           <div class="project-card">
             <div class="project-header">
-               <span class="project-status">learning</span>
-    </div>
-    <h3>🎯 TryHackMe - Learning Path</h3>
-    <p>Aktive Bearbeitung des "Pre Security" und "Junior Penetration Tester" Pfades. Dokumentierte Lösungen und eigene Notes auf GitHub.</p>
-    <div class="tags">
-      <span class="tag">TryHackMe</span>
-      <span class="tag">Nmap</span>
-      <span class="tag">Burp Suite</span>
-      <span class="tag">PrivEsc</span>
-    </div>
-    <!--<a href="#" class="project-link">➜ CTF Notes</a>-->
-  </div>
+              <span class="project-status">learning</span>
+            </div>
+            <h3>🎯 TryHackMe - Learning Path</h3>
+            <p>
+              Aktive Bearbeitung des "Pre Security" und "Junior Penetration
+              Tester" Pfades. Dokumentierte Lösungen und eigene Notes auf
+              GitHub.
+            </p>
+            <div class="tags">
+              <span class="tag">TryHackMe</span>
+              <span class="tag">Nmap</span>
+              <span class="tag">Burp Suite</span>
+              <span class="tag">PrivEsc</span>
+            </div>
+            <!--<a href="#" class="project-link">➜ CTF Notes</a>-->
+          </div>
           <div class="project-card">
             <div class="project-header">
-             <span class="project-status">Beta</span>
-    </div>
-    <h3>🔍 Netzwerk-Scanner (Bash)</h3>
-    <p>Eigenes Bash-Script für schnelle Netzwerkscans mit Nmap, automatischer Auswertung und Markdown-Report-Generierung.</p>
-    <div class="tags">
-      <span class="tag">Bash</span>
-      <span class="tag">Nmap</span>
-      <span class="tag">Automation</span>
-    </div>
-    <!--<a href="#" class="project-link">➜ GitHub Repo</a>-->
-  </div>
+              <span class="project-status">Beta</span>
+            </div>
+            <h3>🔍 Netzwerk-Scanner (Bash)</h3>
+            <p>
+              Eigenes Bash-Script für schnelle Netzwerkscans mit Nmap,
+              automatischer Auswertung und Markdown-Report-Generierung.
+            </p>
+            <div class="tags">
+              <span class="tag">Bash</span>
+              <span class="tag">Nmap</span>
+              <span class="tag">Automation</span>
+            </div>
+            <!--<a href="#" class="project-link">➜ GitHub Repo</a>-->
+          </div>
         </div>
       </section>
 
@@ -239,5 +243,60 @@
       </div>
       <p style="margin-top: 10px"></p>
     </footer>
+
+    <!-- Kleines JavaScript nur für die aktive Nav-Hervorhebung beim Scrollen/Klick - kein anderes JS! 
+         Gemäß Aufgabenstellung ist nur HTML/CSS Pflicht, aber für die dynamische active-Klasse 
+         ist minimales JS nötig. Falls du reines CSS bevorzugst: Die active Klasse wird manuell gesetzt.
+         Hier kommt eine einfache, nicht-invasive Lösung, die nur die Navigation aktualisiert. -->
+    <script>
+      (function () {
+        // Aktiven Link basierend auf sichtbarem Bereich beim Scrollen setzen
+        const sections = document.querySelectorAll("section");
+        const navLinks = document.querySelectorAll(".nav-links a");
+
+        function setActiveLink() {
+          let currentSection = "";
+          const scrollPos = window.scrollY + 150; // offset für navbar
+
+          sections.forEach((section) => {
+            const sectionTop = section.offsetTop;
+            const sectionBottom = sectionTop + section.offsetHeight;
+            if (scrollPos >= sectionTop && scrollPos < sectionBottom) {
+              currentSection = section.getAttribute("id");
+            }
+          });
+
+          navLinks.forEach((link) => {
+            link.classList.remove("active");
+            const href = link.getAttribute("href").substring(1); // #about -> about
+            if (href === currentSection) {
+              link.classList.add("active");
+            }
+          });
+
+          // falls keiner getroffen (zB hero Bereich) markiere about
+          if (!currentSection && window.scrollY < 100) {
+            // am Anfang der Seite: about aktivieren
+            navLinks.forEach((link) => {
+              link.classList.remove("active");
+              if (link.getAttribute("href") === "#about") {
+                link.classList.add("active");
+              }
+            });
+          }
+        }
+
+        window.addEventListener("scroll", setActiveLink);
+        window.addEventListener("load", setActiveLink);
+
+        // optional: klick handler verhindert standardmäßiges verhalten nicht, aber nach klick active setzen
+        navLinks.forEach((link) => {
+          link.addEventListener("click", function (e) {
+            navLinks.forEach((l) => l.classList.remove("active"));
+            this.classList.add("active");
+          });
+        });
+      })();
+    </script>
   </body>
 </html>
