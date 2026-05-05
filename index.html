@@ -10,56 +10,241 @@
     <header>
       <nav class="navbar">
         <div class="nav-logo">
-          <span class="bracket">[</span>
-          TheLaw
-          <span class="bracket">]</span>
+          <span class="bracket">[</span> TheLaw <span class="bracket">]</span>
         </div>
         <ul class="nav-links">
-          <li><a href="#about">. /about</a></li>
-          <li><a href="#skills">. /skills</li>
-          <li><a href="#projects">. /projects</li>
-          <li><a href="#contact">. /contact</li>
+          <li><a href="#whoami" class="active">. /whoami</a></li>
+          <li><a href="#skills">. /skills</a></li>
+          <li><a href="#projects">. /projects</a></li>
+          <li><a href="#contact">. /contact</a></li>
         </ul>
       </nav>
     </header>
+
     <main>
+      <!-- HERO SECTION -->
       <section id="hero">
-        <div class="hero-content"></div>      
-        <p class="hero-tag">// Willkommen in meiner Welt</p>
-        <h1>
-          Ich bin <span class="highlight">TheLaw</span>
-        </h1>
-        <p class="hero-role">
-        >_ Pentester & Cyber Security Specialist
-        </p>
-        <div class="hero-buttons">
-          <a href="#projects" class="btn btn-primary">
-            Meine Projekte
-          </a>
-          <a href="#contact" class="btn btn-outline">
-            Kontakt
-          </a>
+        <div class="hero-content">
+          <p class="hero-tag">&lt;/// Willkommen in meiner Welt &gt;</p>
+          <h1>Ich bin <span class="highlight">TheLaw</span></h1>
+          <p class="hero-role cursor-blink">
+            > Pentester & Cyber Security Specialist
+          </p>
+          <div class="hero-buttons">
+            <a href="#projects" class="btn btn-primary">Meine Projekte</a>
+            <a href="#contact" class="btn btn-outline">Kontakt</a>
           </div>
         </div>
-        </section>
-
-      <section id="about">
-        <h2>_about</h2>
-        </section>
-
-      <section id="skills">
-        <h2>_skillset</h2>
-        </section>
-
-      <section id="projects">
-        <h2>_projects</h2>
-        </section>
-
-      <section id="contact">
-        <h2>_contact</h2>
       </section>
 
+      <!-- whoami SECTION -->
+      <section id="whoami">
+        <h2 class="section-title">_ whoami</h2>
+        <p style="max-width: 800px; color: var(--text-muted)">
+          Ich bin <strong>TheLaw</strong> | angehender Fachinformatiker
+          (SysAdmin) | Pentester in training
+        </p>
+        <br />
+        <p style="max-width: 800px; color: var(--text-muted)">
+          $> cat passion.txt
+        </p>
+        <p style="max-width: 800px; color: var(--text-muted)">
+          Seit Kindheitstagen: Computer, Hacking, Security – PCs sind mein
+          Leben.
+        </p>
+        <br />
+        <p style="max-width: 800px; color: var(--text-muted)">
+          $> echo $mission
+        </p>
+        <p style="max-width: 800px; color: var(--text-muted)">
+          Systeme verstehen, Schwachstellen finden, Sicherheit verbessern.
+        </p>
+        <br />
+        <p style="max-width: 800px; color: var(--text-muted)">
+          $> skills --current
+        </p>
+        <p style="max-width: 800px; color: var(--text-muted)">
+          Netzwerke | Linux | Windows | Bash | Python | TryHackMe | HTB
+        </p>
+      </section>
+
+      <!-- SKILLS SECTION -->
+      <section id="skills">
+        <h2 class="section-title">_ skillset</h2>
+        <!-- Skills Grid - angepasst an deinen Wissensstand als Azubi -->
+        <div class="skills-grid">
+          <!-- 1. Netzwerkgrundlagen -->
+          <div class="skill-card">
+            <div class="skill-icon">🌐</div>
+            <h3>Netzwerktechnik</h3>
+            <p>TCP/IP, Subnetting, Routing, Switching, VLANs, DHCP, DNS</p>
+            <div class="skill-progress">
+              <div class="progress-fill" style="width: 75%"></div>
+            </div>
+          </div>
+
+          <!-- 2. Betriebssysteme -->
+          <div class="skill-card">
+            <div class="skill-icon">🐧</div>
+            <h3>Linux & Windows</h3>
+            <p>Kali Linux, Ubuntu, Windows Server, AD, PowerShell, Bash</p>
+            <div class="skill-progress">
+              <div class="progress-fill" style="width: 70%"></div>
+            </div>
+          </div>
+
+          <!-- 3. Systemintegration -->
+          <div class="skill-card">
+            <div class="skill-icon">⚙️</div>
+            <h3>Systemadministration</h3>
+            <p>
+              Active Directory, Virtualisierung (VMware/VirtualBox), Backups,
+              Monitoring
+            </p>
+            <div class="skill-progress">
+              <div class="progress-fill" style="width: 65%"></div>
+            </div>
+          </div>
+
+          <!-- 4. Security Basics -->
+          <div class="skill-card">
+            <div class="skill-icon">🔒</div>
+            <h3>Cybersecurity Grundlagen</h3>
+            <p>
+              Firewalls, Sicherheitsrichtlinien, Authentifizierung,
+              Verschlüsselung
+            </p>
+            <div class="skill-progress">
+              <div class="progress-fill" style="width: 40%"></div>
+            </div>
+          </div>
+
+          <!-- 5. Pentesting-Tools -->
+          <div class="skill-card">
+            <div class="skill-icon">🛠️</div>
+            <h3>Pentesting Tools</h3>
+            <p>Nmap, Wireshark, Metasploit, Burp Suite, Hydra, John</p>
+            <div class="skill-progress">
+              <div class="progress-fill" style="width: 20%"></div>
+            </div>
+          </div>
+
+          <!-- 6. CTF & TryHackMe -->
+          <div class="skill-card">
+            <div class="skill-icon">🏆</div>
+            <h3>CTF & Labs</h3>
+            <p>TryHackMe (in progress), HackTheBox, VulnHub, PicoCTF</p>
+            <div class="skill-progress">
+              <div class="progress-fill" style="width: 15%"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROJEKTE SECTION -->
+      <section id="projects">
+        <h2 class="section-title">_ projects</h2>
+        <div class="projects-grid">
+          <div class="project-card">
+            <div class="project-header">
+              <span class="project-status">Live</span>
+            </div>
+            <h3>CTF Writeup - HackTheBox</h3>
+            <p>
+              Detaillierte Lösung einer HTB-Maschine inkl. Privilege Escalation
+              und Root-Exploit.
+            </p>
+            <div class="tags">
+              <span class="tag">Linux</span>
+              <span class="tag">Metasploit</span>
+              <span class="tag">SQLi</span>
+            </div>
+            <a href="#" class="project-link">➜ read writeup</a>
+          </div>
+          <div class="project-card">
+            <div class="project-header">
+              <span class="project-status">Case Study</span>
+            </div>
+            <h3>Red Teaming Simulation</h3>
+            <p>
+              Internes Netzwerk-Pentesting mit C2-Frameworks, Adversary
+              Emulation und Berichterstattung.
+            </p>
+            <div class="tags">
+              <span class="tag">CobaltStrike</span>
+              <span class="tag">ActiveDirectory</span>
+              <span class="tag">BloodHound</span>
+            </div>
+            <a href="#" class="project-link">➜ details</a>
+          </div>
+          <div class="project-card">
+            <div class="project-header">
+              <span class="project-status">Tool</span>
+            </div>
+            <h3>AutoRecon - Portscanner</h3>
+            <p>
+              Automatisierter Enumeration-Script-Ansatz mit Nmap, APIs und
+              Bericht-Generator.
+            </p>
+            <div class="tags">
+              <span class="tag">Python</span>
+              <span class="tag">Bash</span>
+              <span class="tag">Nmap</span>
+            </div>
+            <a href="#" class="project-link">➜ GitHub Repo</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- KONTAKT FORMULAR-->
+      <section id="contact">
+        <h2 class="section-title">_ contact</h2>
+        <form class="contact-form" action="#" method="post">
+          <div class="form-group">
+            <label for="name">// Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="dein_name"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="email">// E-Mail</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="mail@domain.de"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="msg">// Nachricht</label>
+            <textarea
+              id="msg"
+              name="msg"
+              rows="5"
+              placeholder="Deine Anfrage ..."
+            ></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary submit-btn">
+            _ Senden
+          </button>
+        </form>
+      </section>
     </main>
-    <footer>...</footer>
+
+    <footer>
+      <p>© 2025 TheLaw – Pentesting & Cyber Security Portfolio</p>
+      <div class="footer-links">
+        <a href="https://github.com/TheLaw5150FiSi">[GitHub]</a>
+        <a href="#">[X]</a>
+        <a href="#">[LinkedIn]</a>
+        <a href="#">[CTFtime]</a>
+      </div>
+      <p style="margin-top: 10px"></p>
+    </footer>
   </body>
 </html>
