@@ -490,7 +490,6 @@
             }
         }
 
-        /* prefers-reduced-motion: Respektiere Nutzerpräferenz (Bonus) */
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
                 animation-duration: 0.01ms !important;
@@ -500,7 +499,6 @@
             }
         }
 
-        /* Glassmorphismus- Akzent für Karten (Bonus) */
         .skill-card, .project-card, .contact-form {
             backdrop-filter: blur(2px);
         }
