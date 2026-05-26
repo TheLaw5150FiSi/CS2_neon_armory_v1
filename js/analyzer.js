@@ -1,38 +1,319 @@
 // ======================== SYSTEM ANALYZER ========================
 function populateCpuSelect() {
   const select = document.getElementById("analyzerCpuSelect");
-  if (!select) return;
-  const sortedCpus = Object.keys(analyzerCpuData).sort((a, b) => analyzerCpuData[b] - analyzerCpuData[a]);
-  const groups = { "AMD Ryzen 9": [], "AMD Ryzen 7": [], "AMD Ryzen 5": [], "AMD Ryzen 3": [], "AMD Threadripper": [], "Intel Core Ultra": [], "Intel Core i9": [], "Intel Core i7": [], "Intel Core i5": [], "Intel Core i3": [], "Intel Pentium/Celeron": [] };
-  
-  for (const cpu of sortedCpus) {
-    if (cpu.startsWith("Ryzen 9")) groups["AMD Ryzen 9"].push(cpu);
-    else if (cpu.startsWith("Ryzen 7")) groups["AMD Ryzen 7"].push(cpu);
-    else if (cpu.startsWith("Ryzen 5")) groups["AMD Ryzen 5"].push(cpu);
-    else if (cpu.startsWith("Ryzen 3")) groups["AMD Ryzen 3"].push(cpu);
-    else if (cpu.startsWith("TR")) groups["AMD Threadripper"].push(cpu);
-    else if (cpu.startsWith("Ultra")) groups["Intel Core Ultra"].push(cpu);
-    else if (cpu.startsWith("i9")) groups["Intel Core i9"].push(cpu);
-    else if (cpu.startsWith("i7")) groups["Intel Core i7"].push(cpu);
-    else if (cpu.startsWith("i5")) groups["Intel Core i5"].push(cpu);
-    else if (cpu.startsWith("i3")) groups["Intel Core i3"].push(cpu);
-    else groups["Intel Pentium/Celeron"].push(cpu);
+  if (!select) {
+    console.error("select Element nicht gefunden!");
+    return;
   }
-  
-  select.innerHTML = '<option value="" disabled selected>-- CPU auswählen --</option>';
-  for (const [groupName, cpus] of Object.entries(groups)) {
-    if (cpus.length === 0) continue;
-    const optgroup = document.createElement("optgroup");
-    optgroup.label = groupName;
-    cpus.sort((a, b) => analyzerCpuData[b] - analyzerCpuData[a]);
-    for (const cpu of cpus) {
-      const option = document.createElement("option");
-      option.value = cpu;
-      option.textContent = cpu;
-      optgroup.appendChild(option);
+
+  console.log("CPU Liste wird geladen...");
+  console.log("Anzahl CPUs:", Object.keys(analyzerCpuData).length);
+
+  // ======================== INTEL GENERATIONEN ========================
+  const intelGenerations = {
+    "Intel Core Ultra (2024-2025)": [],
+    "Intel 14. Gen (Raptor Lake Refresh)": [],
+    "Intel 13. Gen (Raptor Lake)": [],
+    "Intel 12. Gen (Alder Lake)": [],
+    "Intel 11. Gen (Rocket Lake)": [],
+    "Intel 10. Gen (Comet Lake)": [],
+    "Intel 9. Gen (Coffee Lake Refresh)": [],
+    "Intel 8. Gen (Coffee Lake)": [],
+    "Intel 7. Gen (Kaby Lake)": [],
+    "Intel 6. Gen (Skylake)": [],
+    "Intel 5. Gen (Broadwell)": [],
+    "Intel 4. Gen (Haswell)": [],
+    "Intel 3. Gen (Ivy Bridge)": [],
+    "Intel 2. Gen (Sandy Bridge)": [],
+    "Intel 1. Gen (Nehalem/Westmere)": [],
+    "Intel Pentium / Celeron": []
+  };
+
+  // ======================== AMD GENERATIONEN ========================
+  const amdGenerations = {
+    "AMD Ryzen 9000 Series (Zen 5)": [],
+    "AMD Ryzen 8000 Series (Zen 4 APU)": [],
+    "AMD Ryzen 7000 Series (Zen 4)": [],
+    "AMD Ryzen 5000 Series (Zen 3)": [],
+    "AMD Ryzen 4000 Series (Zen 2 APU)": [],
+    "AMD Ryzen 3000 Series (Zen 2)": [],
+    "AMD Ryzen 2000 Series (Zen+)": [],
+    "AMD Ryzen 1000 Series (Zen)": [],
+    "AMD Threadripper": [],
+    "AMD FX Series": [],
+    "AMD A-Series APU": [],
+    "AMD Phenom Series": [],
+    "AMD Athlon Series": [],
+    "AMD Sempron Series": []
+  };
+
+  // ======================== CPU ZUORDNUNG ========================
+  for (const [cpuName, score] of Object.entries(analyzerCpuData)) {
+    let zugeordnet = false;
+
+    // ===== INTEL ERKENNUNG =====
+    // Intel hat typischerweise i3, i5, i7, i9, Pentium, Celeron, Ultra
+    if (cpuName.includes("i3-") || cpuName.includes("i5-") || cpuName.includes("i7-") || 
+        cpuName.includes("i9-") || cpuName.includes("Pentium") || cpuName.includes("Celeron") ||
+        cpuName.includes("Ultra") || cpuName.startsWith("Intel")) {
+      
+      // Core Ultra
+      if (cpuName.includes("Ultra")) {
+        intelGenerations["Intel Core Ultra (2024-2025)"].push({ name: cpuName, score: score });
+        zugeordnet = true;
+      }
+      // 14. Gen
+      else if (cpuName.includes("14900") || cpuName.includes("14700") || cpuName.includes("14600") || 
+               cpuName.includes("14500") || cpuName.includes("14400") || cpuName.includes("14100")) {
+        intelGenerations["Intel 14. Gen (Raptor Lake Refresh)"].push({ name: cpuName, score: score });
+        zugeordnet = true;
+      }
+      // 13. Gen
+      else if (cpuName.includes("13900") || cpuName.includes("13700") || cpuName.includes("13600") || 
+               cpuName.includes("13500") || cpuName.includes("13400") || cpuName.includes("13100")) {
+        intelGenerations["Intel 13. Gen (Raptor Lake)"].push({ name: cpuName, score: score });
+        zugeordnet = true;
+      }
+      // 12. Gen
+      else if (cpuName.includes("12900") || cpuName.includes("12700") || cpuName.includes("12600") || 
+               cpuName.includes("12500") || cpuName.includes("12400") || cpuName.includes("12490") ||
+               cpuName.includes("12100")) {
+        intelGenerations["Intel 12. Gen (Alder Lake)"].push({ name: cpuName, score: score });
+        zugeordnet = true;
+      }
+      // 11. Gen
+      else if (cpuName.includes("11900") || cpuName.includes("11700") || cpuName.includes("11600") || 
+               cpuName.includes("11500") || cpuName.includes("11400")) {
+        intelGenerations["Intel 11. Gen (Rocket Lake)"].push({ name: cpuName, score: score });
+        zugeordnet = true;
+      }
+      // 10. Gen
+      else if (cpuName.includes("10900") || cpuName.includes("10700") || cpuName.includes("10600") || 
+               cpuName.includes("10500") || cpuName.includes("10400") || cpuName.includes("10300") ||
+               cpuName.includes("10325") || cpuName.includes("10100") || cpuName.includes("10105")) {
+        intelGenerations["Intel 10. Gen (Comet Lake)"].push({ name: cpuName, score: score });
+        zugeordnet = true;
+      }
+      // 9. Gen
+      else if (cpuName.includes("9900") || cpuName.includes("9700") || cpuName.includes("9600") || 
+               cpuName.includes("9500") || cpuName.includes("9400") || cpuName.includes("9300") ||
+               cpuName.includes("9350") || cpuName.includes("9100")) {
+        intelGenerations["Intel 9. Gen (Coffee Lake Refresh)"].push({ name: cpuName, score: score });
+        zugeordnet = true;
+      }
+      // 8. Gen
+      else if (cpuName.includes("8700") || cpuName.includes("8600") || cpuName.includes("8500") || 
+               cpuName.includes("8400") || cpuName.includes("8300") || cpuName.includes("8350") ||
+               cpuName.includes("8100") || cpuName.includes("8086")) {
+        intelGenerations["Intel 8. Gen (Coffee Lake)"].push({ name: cpuName, score: score });
+        zugeordnet = true;
+      }
+      // 7. Gen
+      else if (cpuName.includes("7700") || cpuName.includes("7600") || cpuName.includes("7500") || 
+               cpuName.includes("7400") || cpuName.includes("7350") || cpuName.includes("7320") ||
+               cpuName.includes("7300") || cpuName.includes("7100")) {
+        intelGenerations["Intel 7. Gen (Kaby Lake)"].push({ name: cpuName, score: score });
+        zugeordnet = true;
+      }
+      // 6. Gen
+      else if (cpuName.includes("6700") || cpuName.includes("6600") || cpuName.includes("6500") || 
+               cpuName.includes("6400") || cpuName.includes("6402") || cpuName.includes("6320") ||
+               cpuName.includes("6300") || cpuName.includes("6100")) {
+        intelGenerations["Intel 6. Gen (Skylake)"].push({ name: cpuName, score: score });
+        zugeordnet = true;
+      }
+      // 5. Gen
+      else if (cpuName.includes("5775") || cpuName.includes("5675")) {
+        intelGenerations["Intel 5. Gen (Broadwell)"].push({ name: cpuName, score: score });
+        zugeordnet = true;
+      }
+      // 4. Gen
+      else if (cpuName.includes("4790") || cpuName.includes("4770") || cpuName.includes("4771") ||
+               cpuName.includes("4690") || cpuName.includes("4670") || cpuName.includes("4590") ||
+               cpuName.includes("4460") || cpuName.includes("4440") || cpuName.includes("4430") ||
+               cpuName.includes("4370") || cpuName.includes("4360") || cpuName.includes("4350") ||
+               cpuName.includes("4340") || cpuName.includes("4330") || cpuName.includes("4170") ||
+               cpuName.includes("4160") || cpuName.includes("4150") || cpuName.includes("4130")) {
+        intelGenerations["Intel 4. Gen (Haswell)"].push({ name: cpuName, score: score });
+        zugeordnet = true;
+      }
+      // 3. Gen
+      else if (cpuName.includes("3770") || cpuName.includes("3570") || cpuName.includes("3550") ||
+               cpuName.includes("3470") || cpuName.includes("3450") || cpuName.includes("3350") ||
+               cpuName.includes("3330") || cpuName.includes("3240") || cpuName.includes("3225") ||
+               cpuName.includes("3220")) {
+        intelGenerations["Intel 3. Gen (Ivy Bridge)"].push({ name: cpuName, score: score });
+        zugeordnet = true;
+      }
+      // 2. Gen
+      else if (cpuName.includes("2700") || cpuName.includes("2600") || cpuName.includes("2550") ||
+               cpuName.includes("2500") || cpuName.includes("2400") || cpuName.includes("2390") ||
+               cpuName.includes("2320") || cpuName.includes("2300") || cpuName.includes("2130") ||
+               cpuName.includes("2125") || cpuName.includes("2120") || cpuName.includes("2105") ||
+               cpuName.includes("2100")) {
+        intelGenerations["Intel 2. Gen (Sandy Bridge)"].push({ name: cpuName, score: score });
+        zugeordnet = true;
+      }
+      // 1. Gen
+      else if (cpuName.includes("990X") || cpuName.includes("980X") || cpuName.includes("975") ||
+               cpuName.includes("970") || cpuName.includes("965") || cpuName.includes("960") ||
+               cpuName.includes("950") || cpuName.includes("940") || cpuName.includes("930") ||
+               cpuName.includes("920") || cpuName.includes("880") || cpuName.includes("870") ||
+               cpuName.includes("860") || cpuName.includes("760") || cpuName.includes("750") ||
+               cpuName.includes("680") || cpuName.includes("670") || cpuName.includes("661") ||
+               cpuName.includes("660") || cpuName.includes("655") || cpuName.includes("650") ||
+               cpuName.includes("560") || cpuName.includes("550") || cpuName.includes("540") ||
+               cpuName.includes("530")) {
+        intelGenerations["Intel 1. Gen (Nehalem/Westmere)"].push({ name: cpuName, score: score });
+        zugeordnet = true;
+      }
+      // Pentium / Celeron
+      else if (cpuName.includes("Pentium") || cpuName.includes("Celeron")) {
+        intelGenerations["Intel Pentium / Celeron"].push({ name: cpuName, score: score });
+        zugeordnet = true;
+      }
     }
-    select.appendChild(optgroup);
+
+    // ===== AMD ERKENNUNG =====
+    // AMD hat typischerweise Ryzen, TR, FX, A, Athlon, Phenom, Sempron
+    if (!zugeordnet && (cpuName.includes("Ryzen") || cpuName.includes("TR ") || 
+        cpuName.includes("FX-") || cpuName.includes("A10-") || cpuName.includes("A8-") ||
+        cpuName.includes("A6-") || cpuName.includes("A4-") || cpuName.includes("Athlon") ||
+        cpuName.includes("Phenom") || cpuName.includes("Sempron") || cpuName.startsWith("AMD"))) {
+      
+      // Threadripper
+      if (cpuName.includes("TR ") || cpuName.includes("Threadripper")) {
+        amdGenerations["AMD Threadripper"].push({ name: cpuName, score: score });
+        zugeordnet = true;
+      }
+      // Ryzen 9000
+      else if (cpuName.includes("9950") || cpuName.includes("9900") || cpuName.includes("9850") ||
+               cpuName.includes("9800") || cpuName.includes("9700") || cpuName.includes("9600")) {
+        amdGenerations["AMD Ryzen 9000 Series (Zen 5)"].push({ name: cpuName, score: score });
+        zugeordnet = true;
+      }
+      // Ryzen 8000 APU
+      else if (cpuName.includes("8700G") || cpuName.includes("8600G") || cpuName.includes("8500G") ||
+               cpuName.includes("8300G")) {
+        amdGenerations["AMD Ryzen 8000 Series (Zen 4 APU)"].push({ name: cpuName, score: score });
+        zugeordnet = true;
+      }
+      // Ryzen 7000
+      else if (cpuName.includes("7950") || cpuName.includes("7900") || cpuName.includes("7800") ||
+               cpuName.includes("7700") || cpuName.includes("7600") || cpuName.includes("7500F")) {
+        amdGenerations["AMD Ryzen 7000 Series (Zen 4)"].push({ name: cpuName, score: score });
+        zugeordnet = true;
+      }
+      // Ryzen 5000
+      else if (cpuName.includes("5950") || cpuName.includes("5900") || cpuName.includes("5800") ||
+               cpuName.includes("5700") || cpuName.includes("5600") || cpuName.includes("5500") ||
+               cpuName.includes("5300")) {
+        amdGenerations["AMD Ryzen 5000 Series (Zen 3)"].push({ name: cpuName, score: score });
+        zugeordnet = true;
+      }
+      // Ryzen 4000 APU
+      else if (cpuName.includes("4700G") || cpuName.includes("4600G") || cpuName.includes("4500") ||
+               cpuName.includes("4300G") || cpuName.includes("4100")) {
+        amdGenerations["AMD Ryzen 4000 Series (Zen 2 APU)"].push({ name: cpuName, score: score });
+        zugeordnet = true;
+      }
+      // Ryzen 3000
+      else if (cpuName.includes("3950") || cpuName.includes("3900") || cpuName.includes("3800") ||
+               cpuName.includes("3700") || cpuName.includes("3600") || cpuName.includes("3500") ||
+               cpuName.includes("3400") || cpuName.includes("3300") || cpuName.includes("3200") ||
+               cpuName.includes("3100")) {
+        amdGenerations["AMD Ryzen 3000 Series (Zen 2)"].push({ name: cpuName, score: score });
+        zugeordnet = true;
+      }
+      // Ryzen 2000
+      else if (cpuName.includes("2700") || cpuName.includes("2600") || cpuName.includes("2500") ||
+               cpuName.includes("2400") || cpuName.includes("2300") || cpuName.includes("2200")) {
+        amdGenerations["AMD Ryzen 2000 Series (Zen+)"].push({ name: cpuName, score: score });
+        zugeordnet = true;
+      }
+      // Ryzen 1000
+      else if (cpuName.includes("1800") || cpuName.includes("1700") || cpuName.includes("1600") ||
+               cpuName.includes("1500") || cpuName.includes("1400") || cpuName.includes("1300") ||
+               cpuName.includes("1200")) {
+        amdGenerations["AMD Ryzen 1000 Series (Zen)"].push({ name: cpuName, score: score });
+        zugeordnet = true;
+      }
+      // FX Series
+      else if (cpuName.includes("FX-")) {
+        amdGenerations["AMD FX Series"].push({ name: cpuName, score: score });
+        zugeordnet = true;
+      }
+      // A-Series
+      else if (cpuName.match(/A\d{1,2}-/)) {
+        amdGenerations["AMD A-Series APU"].push({ name: cpuName, score: score });
+        zugeordnet = true;
+      }
+      // Phenom
+      else if (cpuName.includes("Phenom")) {
+        amdGenerations["AMD Phenom Series"].push({ name: cpuName, score: score });
+        zugeordnet = true;
+      }
+      // Athlon
+      else if (cpuName.includes("Athlon")) {
+        amdGenerations["AMD Athlon Series"].push({ name: cpuName, score: score });
+        zugeordnet = true;
+      }
+      // Sempron
+      else if (cpuName.includes("Sempron")) {
+        amdGenerations["AMD Sempron Series"].push({ name: cpuName, score: score });
+        zugeordnet = true;
+      }
+    }
+
+    // Fallback für nicht zugeordnete CPUs
+    if (!zugeordnet) {
+      console.warn("Nicht zugeordnete CPU:", cpuName);
+    }
   }
+
+  // ======================== DROPDOWN BAUEN ========================
+  select.innerHTML = '<option value="" disabled selected>-- CPU auswählen --</option>';
+
+  // 1. ALLE INTEL GENERATIONEN (in der definierten Reihenfolge)
+  for (const [genName, cpus] of Object.entries(intelGenerations)) {
+    if (cpus.length > 0) {
+      // Nach Punktzahl sortieren (höchste zuerst)
+      cpus.sort((a, b) => b.score - a.score);
+      
+      const optgroup = document.createElement("optgroup");
+      optgroup.label = `${genName} (${cpus.length})`;
+      
+      for (const cpu of cpus) {
+        const option = document.createElement("option");
+        option.value = cpu.name;
+        option.textContent = cpu.name;
+        optgroup.appendChild(option);
+      }
+      select.appendChild(optgroup);
+    }
+  }
+
+  // 2. ALLE AMD GENERATIONEN (in der definierten Reihenfolge)
+  for (const [genName, cpus] of Object.entries(amdGenerations)) {
+    if (cpus.length > 0) {
+      // Nach Punktzahl sortieren (höchste zuerst)
+      cpus.sort((a, b) => b.score - a.score);
+      
+      const optgroup = document.createElement("optgroup");
+      optgroup.label = `${genName} (${cpus.length})`;
+      
+      for (const cpu of cpus) {
+        const option = document.createElement("option");
+        option.value = cpu.name;
+        option.textContent = cpu.name;
+        optgroup.appendChild(option);
+      }
+      select.appendChild(optgroup);
+    }
+  }
+
+  console.log("FERTIG! Intel Gruppen:", Object.values(intelGenerations).filter(g => g.length > 0).length);
+  console.log("FERTIG! AMD Gruppen:", Object.values(amdGenerations).filter(g => g.length > 0).length);
 }
 
 function calculateAnalyzerRamScore(ramGB) {
