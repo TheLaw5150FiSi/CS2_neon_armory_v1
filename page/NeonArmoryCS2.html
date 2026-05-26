@@ -1,0 +1,3210 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>CS2 Neon Studio · Komplette Configs + Taser</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --bg-gradient: radial-gradient(circle at 10% 20%, #0a0a0f, #010101);
+        --card-bg: rgba(8, 8, 16, 0.85);
+        --text-color: #f0e6ff;
+        --border-color: #ff44cc70;
+        --accent: #ff44cc;
+        --accent-glow: #ff44ff;
+        --accent-light: #ff88ff;
+        --accent-dark: #b200ff;
+        --input-bg: #010104dd;
+        --btn-bg: #1e1a2f;
+        --tab-bg: #11101c;
+      }
+
+      body.theme-pink {
+        --bg-gradient: radial-gradient(circle at 10% 20%, #0a0a0f, #010101);
+        --card-bg: rgba(8, 8, 16, 0.85);
+        --text-color: #f0e6ff;
+        --border-color: #ff44cc70;
+        --accent: #ff44cc;
+        --accent-glow: #ff44ff;
+        --accent-light: #ff88ff;
+        --accent-dark: #b200ff;
+        --input-bg: #010104dd;
+        --btn-bg: #1e1a2f;
+        --tab-bg: #11101c;
+      }
+      body.theme-red {
+        --bg-gradient: radial-gradient(circle at 10% 20%, #0a0a0a, #1a0000);
+        --card-bg: rgba(20, 5, 5, 0.85);
+        --text-color: #ffe0e0;
+        --border-color: #ff3333;
+        --accent: #ff2222;
+        --accent-glow: #ff0000;
+        --accent-light: #ff6666;
+        --accent-dark: #cc0000;
+        --input-bg: #2a0000dd;
+        --btn-bg: #3a1010;
+        --tab-bg: #1a0505;
+      }
+      body.theme-yellow {
+        --bg-gradient: radial-gradient(circle at 10% 20%, #1a1a00, #0a0a00);
+        --card-bg: rgba(30, 30, 5, 0.85);
+        --text-color: #ffffe0;
+        --border-color: #ffcc33;
+        --accent: #ffcc00;
+        --accent-glow: #ffdd44;
+        --accent-light: #ffdd77;
+        --accent-dark: #cc9900;
+        --input-bg: #2a2a00dd;
+        --btn-bg: #3a3a10;
+        --tab-bg: #1a1a05;
+      }
+      body.theme-green {
+        --bg-gradient: radial-gradient(circle at 10% 20%, #0a1a0a, #000a00);
+        --card-bg: rgba(5, 30, 5, 0.85);
+        --text-color: #e0ffe0;
+        --border-color: #33ff33;
+        --accent: #22cc22;
+        --accent-glow: #44ff44;
+        --accent-light: #66ff66;
+        --accent-dark: #009900;
+        --input-bg: #002a00dd;
+        --btn-bg: #103a10;
+        --tab-bg: #051a05;
+      }
+      body.theme-blue {
+        --bg-gradient: radial-gradient(circle at 10% 20%, #0a0a2a, #00001a);
+        --card-bg: rgba(5, 5, 40, 0.85);
+        --text-color: #e0e0ff;
+        --border-color: #3399ff;
+        --accent: #2288dd;
+        --accent-glow: #44aaff;
+        --accent-light: #77bbff;
+        --accent-dark: #0066cc;
+        --input-bg: #00002add;
+        --btn-bg: #101a3a;
+        --tab-bg: #05051a;
+      }
+
+      body {
+        background: var(--bg-gradient);
+        font-family: "Segoe UI", "Inter", "Fira Code", monospace;
+        color: var(--text-color);
+        padding: 1.5rem;
+        transition: all 0.3s ease;
+      }
+      .app-container {
+        max-width: 1600px;
+        margin: 0 auto;
+      }
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        background: var(--card-bg);
+        backdrop-filter: blur(12px);
+        border-radius: 2rem;
+        padding: 1rem 2rem;
+        border: 1px solid var(--border-color);
+      }
+      .logo-area {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .logo-area img {
+        height: 60px;
+        width: auto;
+        border-radius: 1rem;
+        filter: drop-shadow(0 0 6px var(--accent));
+      }
+      .title h1 {
+        font-size: 1.8rem;
+        background: linear-gradient(
+          135deg,
+          #ffffff,
+          var(--accent),
+          var(--accent-dark)
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .theme-selector {
+        display: flex;
+        gap: 0.3rem;
+        background: var(--btn-bg);
+        border-radius: 2rem;
+        padding: 0.3rem;
+        border: 1px solid var(--border-color);
+        flex-wrap: wrap;
+      }
+      .theme-btn {
+        background: transparent;
+        border: none;
+        border-radius: 1.5rem;
+        padding: 0.4rem 0.8rem;
+        font-size: 0.85rem;
+        font-weight: bold;
+        cursor: pointer;
+        color: var(--text-color);
+        transition: 0.2s;
+      }
+      .theme-btn.active {
+        background: var(--accent);
+        color: #0a0a0f;
+        box-shadow: 0 0 8px var(--accent-glow);
+      }
+      .theme-btn:hover {
+        background: var(--accent);
+        color: #0a0a0f;
+      }
+      .tabs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+        margin-bottom: 2rem;
+        border-bottom: 2px solid var(--border-color);
+        padding-bottom: 0.5rem;
+      }
+      .tab-btn {
+        background: var(--tab-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 2rem;
+        padding: 0.6rem 1.8rem;
+        font-weight: bold;
+        font-size: 1rem;
+        color: var(--text-color);
+        cursor: pointer;
+        transition: 0.2s;
+      }
+      .tab-btn.active {
+        background: var(--accent);
+        border-color: var(--accent-glow);
+        box-shadow: 0 0 10px var(--accent-glow);
+        color: #0a0a0f;
+      }
+      .tab-content {
+        display: none;
+        animation: fade 0.2s ease;
+      }
+      .tab-content.active {
+        display: block;
+      }
+      @keyframes fade {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      .card {
+        background: var(--card-bg);
+        backdrop-filter: blur(12px);
+        border-radius: 1.8rem;
+        border: 1px solid var(--border-color);
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      }
+      .card h2 {
+        border-left: 5px solid var(--accent);
+        padding-left: 1rem;
+        margin-bottom: 1rem;
+        font-size: 1.5rem;
+      }
+      .keyboard-main {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+      }
+      .keyboard-section {
+        background: #05040bc9;
+        border-radius: 1.5rem;
+        padding: 1rem;
+        border: 1px solid var(--border-color);
+      }
+      .key-row {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-bottom: 0.6rem;
+      }
+      .key {
+        background: #0e0c1c;
+        border: 1px solid #5a3a8a;
+        border-radius: 0.8rem;
+        padding: 0.7rem 0.5rem;
+        min-width: 55px;
+        text-align: center;
+        font-weight: bold;
+        font-family: monospace;
+        font-size: 0.85rem;
+        cursor: pointer;
+        transition: 0.05s linear;
+        color: var(--text-color);
+      }
+      body.theme-red .key {
+        background: #2a0a0a;
+        border-color: #aa3333;
+      }
+      body.theme-yellow .key {
+        background: #2a2a0a;
+        border-color: #aaaa33;
+      }
+      body.theme-green .key {
+        background: #0a2a0a;
+        border-color: #33aa33;
+      }
+      body.theme-blue .key {
+        background: #0a0a2a;
+        border-color: #3333aa;
+      }
+      .key:active {
+        transform: scale(0.96);
+        background: var(--accent);
+      }
+      .key.active-key {
+        background: var(--accent);
+        border-color: var(--accent-light);
+        box-shadow: 0 0 8px var(--accent);
+      }
+      .key.bound-buy {
+        background: #2a1a44;
+        border-color: var(--accent);
+        box-shadow: 0 0 4px var(--accent);
+      }
+      .key.bound-script {
+        background: #1a4444;
+        border-color: #44cccc;
+        box-shadow: 0 0 4px #44cccc;
+      }
+      .key.bound-both {
+        background: #442a44;
+        border-color: #ff44cc;
+        box-shadow: 0 0 6px #ff44cc;
+      }
+      .numpad-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.6rem;
+        margin-top: 0.5rem;
+      }
+      .numpad-key {
+        background: #0e0c1c;
+        border: 1px solid var(--border-color);
+        border-radius: 1rem;
+        padding: 0.6rem;
+        text-align: center;
+        font-weight: bold;
+        cursor: pointer;
+      }
+      .numpad-key.bound-buy {
+        background: #2a1a44;
+        border-color: var(--accent);
+      }
+      .numpad-key.bound-script {
+        background: #1a4444;
+        border-color: #44cccc;
+      }
+      .numpad-key.bound-both {
+        background: #442a44;
+        border-color: #ff44cc;
+      }
+      .category-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+        margin: 1rem 0;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 0.8rem;
+      }
+      .cat-pill {
+        background: var(--btn-bg);
+        border-radius: 2rem;
+        padding: 0.4rem 1.2rem;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 0.9rem;
+        transition: 0.1s;
+        border: 1px solid transparent;
+      }
+      .cat-pill.active-cat {
+        background: var(--accent);
+        color: #0a0a0f;
+        border-color: white;
+        box-shadow: 0 0 6px var(--accent);
+      }
+      .items-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 0.7rem;
+        max-height: 260px;
+        overflow-y: auto;
+        padding: 0.5rem;
+        background: #03010860;
+        border-radius: 1rem;
+      }
+      .weapon-item {
+        background: var(--btn-bg);
+        border-radius: 2rem;
+        padding: 0.5rem 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        border: 1px solid var(--border-color);
+      }
+      .weapon-item:hover {
+        background: var(--accent);
+      }
+      .add-icon {
+        color: var(--accent-light);
+        font-weight: bold;
+      }
+      .main-cat-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid var(--border-color);
+      }
+      .main-cat-btn {
+        background: linear-gradient(135deg, var(--btn-bg), #0e0c2a);
+        border: 1px solid var(--accent);
+        border-radius: 2.5rem;
+        padding: 0.7rem 1.8rem;
+        font-weight: bold;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        color: var(--text-color);
+      }
+      .main-cat-btn.active-main {
+        background: var(--accent);
+        color: #0a0a0f;
+        border-color: white;
+        box-shadow: 0 0 12px var(--accent);
+      }
+      .main-cat-btn:hover {
+        background: var(--accent);
+        transform: translateY(-2px);
+      }
+      .subcat-buttons {
+        display: none;
+        flex-wrap: wrap;
+        gap: 0.7rem;
+        margin: 0.8rem 0 1rem 0;
+        padding: 0.5rem 0;
+        border-bottom: 1px dashed var(--border-color);
+      }
+      .subcat-buttons.visible {
+        display: flex;
+      }
+      .subcat-btn {
+        background: var(--btn-bg);
+        border-radius: 2rem;
+        padding: 0.4rem 1.2rem;
+        font-weight: 600;
+        font-size: 0.8rem;
+        cursor: pointer;
+        border: 1px solid var(--border-color);
+        transition: 0.1s;
+      }
+      .subcat-btn.active-subcat {
+        background: var(--accent);
+        color: #0a0a0f;
+        border-color: white;
+        box-shadow: 0 0 8px var(--accent);
+      }
+      .config-grid {
+        display: none;
+        grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));
+        gap: 0.8rem;
+        margin-top: 1rem;
+        background: #05040aa0;
+        border-radius: 1.2rem;
+        padding: 0.6rem;
+        max-height: 500px;
+        overflow-y: auto;
+      }
+      .config-grid.visible {
+        display: grid;
+      }
+      .config-item {
+        background: var(--btn-bg);
+        border-radius: 1.2rem;
+        padding: 0.8rem;
+        border-left: 3px solid var(--accent);
+        transition: 0.1s;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        cursor: pointer;
+      }
+      .config-item:hover {
+        background: var(--accent);
+      }
+      .config-cmd {
+        font-family: monospace;
+        font-size: 0.8rem;
+        background: var(--input-bg);
+        padding: 0.2rem 0.5rem;
+        border-radius: 0.6rem;
+        display: inline-block;
+        margin: 0.2rem 0;
+        word-break: break-all;
+      }
+      .config-desc {
+        font-size: 0.7rem;
+        opacity: 0.8;
+        margin-top: 0.2rem;
+        line-height: 1.3;
+      }
+      .config-select {
+        background: var(--btn-bg);
+        border: 1px solid var(--accent);
+        border-radius: 0.6rem;
+        padding: 0.3rem;
+        color: var(--text-color);
+        font-family: monospace;
+        font-size: 0.75rem;
+        cursor: pointer;
+      }
+      .config-select:hover {
+        background: var(--accent);
+      }
+      .config-preview {
+        font-family: monospace;
+        font-size: 0.7rem;
+        background: var(--accent);
+        padding: 0.2rem 0.4rem;
+        border-radius: 0.4rem;
+        word-break: break-all;
+      }
+      .takeover-btn {
+        background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+        border: none;
+        border-radius: 1.5rem;
+        padding: 0.3rem 0.8rem;
+        font-size: 0.7rem;
+        font-weight: bold;
+        color: white;
+        cursor: pointer;
+        transition: 0.1s;
+        margin-top: 0.3rem;
+        align-self: flex-start;
+      }
+      .takeover-btn.success {
+        background: linear-gradient(135deg, #00c853, #009624);
+        box-shadow: 0 0 8px #00ff66;
+      }
+      .takeover-btn:hover {
+        transform: scale(1.02);
+        box-shadow: 0 0 8px var(--accent);
+      }
+      .config-item-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 0.5rem;
+      }
+      .config-info {
+        flex: 1;
+      }
+      textarea {
+        width: 100%;
+        background: var(--input-bg);
+        border: 1px solid var(--accent);
+        border-radius: 1rem;
+        padding: 0.8rem;
+        color: var(--text-color);
+        font-family: "Fira Code", monospace;
+        resize: vertical;
+      }
+      button.glow {
+        background: var(--btn-bg);
+        border: 1px solid var(--accent);
+        border-radius: 2rem;
+        padding: 0.6rem 1.4rem;
+        font-weight: bold;
+        margin: 0.4rem 0.4rem 0 0;
+        cursor: pointer;
+        color: var(--text-color);
+        transition: 0.2s;
+      }
+      button.glow:hover {
+        background: var(--accent);
+        box-shadow: 0 0 8px var(--accent);
+        color: #0a0a0f;
+      }
+      .saved-binds {
+        background: #00000070;
+        border-radius: 1rem;
+        padding: 0.8rem;
+        font-family: monospace;
+        font-size: 0.8rem;
+        max-height: 300px;
+        overflow-y: auto;
+      }
+      .bind-entry {
+        border-left: 3px solid var(--accent);
+        padding: 0.5rem 0.5rem;
+        margin: 0.4rem 0;
+        word-break: break-all;
+        cursor: pointer;
+        background: #0c0a18;
+        border-radius: 0.5rem;
+        transition: 0.1s;
+      }
+      .bind-entry:hover {
+        background: var(--accent);
+      }
+      .bind-key {
+        color: var(--accent-light);
+        font-weight: bold;
+        display: inline-block;
+        min-width: 60px;
+      }
+      .bind-command {
+        color: #aaffdd;
+      }
+      .empty-message {
+        color: var(--accent-light);
+        font-style: italic;
+        padding: 0.5rem;
+        text-align: center;
+      }
+      .start-opt-item {
+        background: var(--btn-bg);
+        border-radius: 1rem;
+        padding: 0.8rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        border: 1px solid var(--border-color);
+        min-width: 180px;
+      }
+      .start-opt-header {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+      }
+      .start-opt-header input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+        accent-color: var(--accent);
+      }
+      .start-opt-header label {
+        font-weight: bold;
+        cursor: pointer;
+        font-family: monospace;
+        font-size: 0.9rem;
+      }
+      .start-opt-desc {
+        font-size: 0.7rem;
+        opacity: 0.7;
+        margin-left: 1.8rem;
+      }
+      .start-opt-select {
+        background: var(--btn-bg);
+        border: 1px solid var(--accent);
+        border-radius: 0.6rem;
+        padding: 0.3rem;
+        color: var(--text-color);
+        font-family: monospace;
+        font-size: 0.75rem;
+        cursor: pointer;
+        margin-left: 1.8rem;
+      }
+      .start-opt-select:hover {
+        background: var(--accent);
+      }
+      .start-options-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+      .start-result {
+        background: var(--input-bg);
+        border-radius: 1rem;
+        padding: 1rem;
+        margin: 1rem 0;
+        font-family: "Fira Code", monospace;
+        word-break: break-all;
+      }
+      .info-box {
+        background: var(--accent);
+        border-left: 3px solid var(--accent-dark);
+        border-radius: 0.8rem;
+        padding: 0.8rem;
+        margin-bottom: 1rem;
+        font-size: 0.85rem;
+        color: #0a0a0f;
+      }
+      .info-box code {
+        background: #00000060;
+        padding: 0.2rem 0.4rem;
+        border-radius: 0.3rem;
+        color: white;
+      }
+      .info-hint {
+        background: var(--accent);
+        border-radius: 1rem;
+        padding: 0.5rem 1rem;
+        margin-bottom: 1rem;
+        font-size: 0.85rem;
+        color: #0a0a0f;
+      }
+      .layout-toggle-container {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 1rem;
+      }
+      .config-list-container {
+        margin-top: 1.5rem;
+        border-top: 1px solid var(--border-color);
+        padding-top: 1rem;
+      }
+      .config-list-title {
+        font-size: 1.1rem;
+        margin-bottom: 0.8rem;
+        color: var(--accent-light);
+      }
+
+      .presets-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+      .preset-card {
+        background: var(--btn-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 1.2rem;
+        padding: 1rem;
+        transition: 0.1s;
+        cursor: pointer;
+      }
+      .preset-card:hover {
+        background: var(--accent);
+        transform: translateY(-2px);
+      }
+      .preset-card.active-preset-card {
+        background: linear-gradient(135deg, #00c853, #009624);
+        border-color: #00ff66;
+        box-shadow: 0 0 12px #00ff66;
+        color: white;
+      }
+      .preset-card h3 {
+        font-size: 1.1rem;
+        margin-bottom: 0.3rem;
+      }
+      .preset-card p {
+        font-size: 0.7rem;
+        opacity: 0.8;
+      }
+      .preset-badge {
+        display: inline-block;
+        background: var(--accent);
+        color: #0a0a0f;
+        border-radius: 1rem;
+        padding: 0.2rem 0.6rem;
+        font-size: 0.65rem;
+        margin-top: 0.5rem;
+      }
+      .active-preset-card .preset-badge {
+        background: white;
+        color: #009624;
+      }
+
+      .config-subtabs {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 0.5rem;
+      }
+      .config-subtab {
+        background: var(--btn-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 2rem;
+        padding: 0.4rem 1.2rem;
+        font-size: 0.85rem;
+        cursor: pointer;
+        transition: 0.1s;
+      }
+      .config-subtab.active {
+        background: var(--accent);
+        color: #0a0a0f;
+        border-color: white;
+        box-shadow: 0 0 8px var(--accent);
+      }
+      .config-subtab:hover {
+        background: var(--accent);
+      }
+      .config-sub-content {
+        display: none;
+      }
+      .config-sub-content.active {
+        display: block;
+      }
+
+      .script-template-item {
+        background: var(--btn-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 2rem;
+        padding: 0.4rem 1rem;
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: 0.1s;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .script-template-item:hover {
+        background: var(--accent);
+        transform: scale(1.02);
+        color: #0a0a0f;
+      }
+      .script-desc {
+        font-size: 0.65rem;
+        opacity: 0.7;
+      }
+
+      .info-text {
+        font-size: 0.7rem;
+        margin-top: 0.5rem;
+        color: var(--accent-light);
+      }
+      .selected-key-info {
+        background: var(--accent);
+        color: #0a0a0f;
+        padding: 0.2rem 0.6rem;
+        border-radius: 1rem;
+        font-size: 0.7rem;
+        display: inline-block;
+        margin-left: 0.5rem;
+      }
+
+      .benchmark-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+      }
+      .benchmark-system {
+        flex: 1;
+        min-width: 250px;
+      }
+      .benchmark-test {
+        flex: 2;
+        min-width: 500px;
+      }
+      .benchmark-canvas {
+        background: #0a0a0f;
+        border-radius: 0.8rem;
+        width: 100%;
+        height: 400px;
+        margin-bottom: 0.8rem;
+        border: 1px solid var(--border-color);
+      }
+      .fps-counter {
+        font-family: monospace;
+        font-size: 1.5rem;
+        text-align: center;
+        padding: 0.6rem;
+        background: var(--input-bg);
+        border-radius: 1rem;
+        margin-bottom: 0.8rem;
+        border: 1px solid var(--accent);
+      }
+      .fps-value {
+        font-size: 2rem;
+        font-weight: bold;
+        color: var(--accent);
+      }
+      .progress-bar {
+        height: 4px;
+        background: var(--btn-bg);
+        border-radius: 4px;
+        margin: 0.8rem 0;
+        overflow: hidden;
+      }
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent), var(--accent-light));
+        width: 0%;
+        transition: width 0.1s linear;
+        border-radius: 4px;
+      }
+      .recommendation-item {
+        background: var(--btn-bg);
+        border-radius: 0.8rem;
+        padding: 0.6rem;
+        margin-bottom: 0.6rem;
+        border-left: 3px solid var(--accent);
+        font-size: 0.85rem;
+      }
+      .system-info {
+        line-height: 1.8;
+      }
+      .system-info div {
+        padding: 0.3rem 0;
+        border-bottom: 1px solid var(--border-color);
+      }
+      .score-value {
+        font-size: 2.5rem;
+        font-weight: bold;
+        background: linear-gradient(135deg, var(--accent), #a855f7);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .result-card {
+        background: var(--btn-bg);
+        border-radius: 1rem;
+        padding: 1rem;
+        margin-top: 1rem;
+        border: 1px solid var(--border-color);
+        text-align: center;
+      }
+      .rating-excellent {
+        color: #66ff66;
+      }
+      .rating-good {
+        color: #aaff66;
+      }
+      .rating-ok {
+        color: #ffaa66;
+      }
+      .rating-poor {
+        color: #ff8866;
+      }
+      .rating-bad {
+        color: #ff6666;
+      }
+    </style>
+  </head>
+  <body class="theme-pink">
+    <div class="app-container">
+      <div class="header">
+        <div class="logo-area">
+          <img
+            src="https://i.ibb.co/nhSP55c/Chat-GPT-Image-20-Apr-2026-15-10-55.png"
+            alt="CS2 Neon Logo"
+            onerror="this.src = 'https://via.placeholder.com/60x60?text=CS2'"
+          />
+          <div class="title">
+            <h1>NEON ARMORY CS2 · ULTIMATE EDITION</h1>
+            <p>
+              Taser · Komplette Configs · Hauptkategorie → Unterkategorie →
+              Befehle
+            </p>
+          </div>
+        </div>
+        <div class="theme-selector">
+          <button class="theme-btn active" data-theme="pink">💗 Pink</button>
+          <button class="theme-btn" data-theme="red">❤️ Rot</button>
+          <button class="theme-btn" data-theme="yellow">💛 Gelb</button>
+          <button class="theme-btn" data-theme="green">💚 Grün</button>
+          <button class="theme-btn" data-theme="blue">💙 Blau</button>
+        </div>
+      </div>
+
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="buyTab">💸 BUYSCRIPT</button>
+        <button class="tab-btn" data-tab="configTab">⚙️ CONFIGS</button>
+        <button class="tab-btn" data-tab="scriptsTab">🎮 SKRIPTE</button>
+        <button class="tab-btn" data-tab="benchmarkTab">⚡ BENCHMARK</button>
+        <button class="tab-btn" data-tab="startTab">🚀 START OPTIONEN</button>
+        <button class="tab-btn" data-tab="exportTab">📦 EXPORT</button>
+      </div>
+
+      <!-- BUYSCRIPT TAB -->
+      <div id="buyTab" class="tab-content active">
+        <div class="layout-toggle-container">
+          <button
+            id="toggleKeyboardLayout"
+            class="glow"
+            style="background: transparent"
+          >
+            ⌨️ DE Layout
+          </button>
+        </div>
+        <div class="card">
+          <h2>⌨️ TASTATUR + NUMPAD</h2>
+          <div class="info-text">
+            🎨 Farben: 🟣 Lila = BuyScript belegt | 🔵 Blau = Skript belegt |
+            🟣🔵 Beides belegt
+          </div>
+          <div class="keyboard-main">
+            <div class="keyboard-section" id="mainKeyboard"></div>
+            <div class="keyboard-section">
+              <div>🔢 NUMPAD</div>
+              <div class="numpad-grid" id="numpadContainer"></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <h2>🛒 KATEGORIEN (Taser in Rüstung, Flashbang 2x)</h2>
+          <div class="category-row" id="categoryList"></div>
+          <div class="items-grid" id="itemsGrid"></div>
+        </div>
+        <div class="card">
+          <h2>✏️ BUY-BEFEHL für ausgewählte Taste</h2>
+          <textarea
+            id="buyCommandInput"
+            rows="2"
+            placeholder="buy awp; buy vesthelm; ..."
+          ></textarea>
+          <button class="glow" id="saveBindingBtn">💾 Speichern</button>
+          <button class="glow" id="unbindCurrentBtn">
+            🔓 Bindung entfernen
+          </button>
+        </div>
+        <div class="card">
+          <h2>📦 GESPEICHERTE BINDS</h2>
+          <div class="saved-binds" id="savedBindsList"></div>
+          <button class="glow" id="resetBuyBtn">🔄 Alle löschen</button>
+        </div>
+      </div>
+
+      <!-- CONFIGS TAB -->
+      <div id="configTab" class="tab-content">
+        <div class="card">
+          <h2>⚙️ CONFIGURATION</h2>
+          <div class="config-subtabs">
+            <button class="config-subtab active" data-subtab="commands">
+              📋 Einzelbefehle
+            </button>
+            <button class="config-subtab" data-subtab="presets">
+              🎨 Grafik-Presets
+            </button>
+          </div>
+          <div id="config-commands" class="config-sub-content active">
+            <div class="info-hint">
+              📌 1. Hauptkategorie wählen → 2. Unterkategorie wählen → 3. Befehl
+              auswählen & Wert einstellen → 📋 Übernehmen
+            </div>
+            <div id="mainCategoriesContainer" class="main-cat-buttons"></div>
+            <div id="subcategoriesContainer"></div>
+            <div id="commandsContainer"></div>
+          </div>
+          <div id="config-presets" class="config-sub-content">
+            <div class="info-hint">
+              📌 Wähle ein Preset – nochmal klicken = entfernen!
+            </div>
+            <div class="presets-grid" id="presetsGrid"></div>
+          </div>
+          <div class="config-list-container">
+            <div class="config-list-title">
+              📋 Meine gespeicherten Config-Befehle:
+            </div>
+            <div id="savedConfigsList" class="saved-binds"></div>
+            <button class="glow" id="clearAllConfigsBtn">
+              🗑️ Alle Config-Befehle löschen
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SKRIPTE TAB -->
+      <div id="scriptsTab" class="tab-content">
+        <div class="layout-toggle-container">
+          <button
+            id="toggleKeyboardLayoutScript"
+            class="glow"
+            style="background: transparent"
+          >
+            ⌨️ DE Layout
+          </button>
+        </div>
+        <div class="card">
+          <h2>🎮 SKRIPT EDITOR</h2>
+          <div class="info-text">
+            🎨 Farben: 🟣 Lila = BuyScript belegt | 🔵 Blau = Skript belegt |
+            🟣🔵 Beides belegt
+          </div>
+          <div class="info-text">
+            📍 <strong>Ausgewählte Taste:</strong>
+            <span id="selectedScriptKeyDisplay" class="selected-key-info"
+              >Keine Taste ausgewählt</span
+            >
+            → Klicke auf eine Taste auf der Tastatur!
+          </div>
+          <div class="keyboard-main">
+            <div class="keyboard-section" id="scriptKeyboardMain"></div>
+            <div class="keyboard-section">
+              <div>🔢 NUMPAD</div>
+              <div class="numpad-grid" id="scriptNumpadContainer"></div>
+            </div>
+          </div>
+          <input
+            type="text"
+            id="scriptNameInput"
+            placeholder="Skriptname"
+            style="
+              background: var(--input-bg);
+              border: 1px solid var(--accent);
+              border-radius: 2rem;
+              padding: 0.5rem 1rem;
+              width: 100%;
+              margin-bottom: 10px;
+              color: var(--text-color);
+            "
+          />
+          <textarea
+            id="scriptCommandsArea"
+            rows="4"
+            placeholder='alias +jumpthrow "+jump"&#10;alias -jumpthrow "-jump; -attack"'
+          ></textarea>
+          <button class="glow" id="saveScriptWithKeyBtn">
+            💾 Speichern (mit ausgewählter Taste)
+          </button>
+          <button class="glow" id="unbindScriptKeyBtn">
+            🔓 Bindung entfernen
+          </button>
+        </div>
+        <div class="card">
+          <h2>📚 VORGEFERTIGTE SKRIPTE</h2>
+          <div
+            id="templateScripts"
+            style="display: flex; gap: 8px; flex-wrap: wrap"
+          ></div>
+          <div class="info-text" style="margin-top: 0.5rem">
+            💡 Klicke auf ein Skript → Taste auswählen → Speichern.
+          </div>
+        </div>
+        <div class="card">
+          <h2>💾 GESPEICHERTE SKRIPT-BINDS</h2>
+          <div class="saved-binds" id="savedScriptsList"></div>
+          <button class="glow" id="deleteSelectedScriptBtn">🗑️ Löschen</button>
+        </div>
+      </div>
+
+      <!-- BENCHMARK TAB -->
+      <div id="benchmarkTab" class="tab-content">
+        <div class="card">
+          <h2>⚡ PERFORMANCE BENCHMARK</h2>
+          <div class="info-hint">
+            🎮 GPU Shader Test · 4000 Iterationen pro Pixel · 20 Sekunden ·
+            UNLIMITED FPS
+          </div>
+          <div class="benchmark-container">
+            <div class="benchmark-system">
+              <h3>🖥️ Systeminformationen</h3>
+              <div id="systemInfo" class="system-info">
+                <div>
+                  💻 CPU: <span id="cpuInfo">Erkannt</span> (<span
+                    id="cpuCoreCount"
+                    >?</span
+                  >
+                  Kerne)
+                </div>
+                <div>🎮 GPU: <span id="gpuInfo">Wird geladen...</span></div>
+                <div>💾 RAM: <span id="ramInfo">Wird geladen...</span></div>
+                <div>
+                  🌐 Browser: <span id="browserInfo">Wird geladen...</span>
+                </div>
+              </div>
+              <h3 style="margin-top: 1.5rem">📊 BENCHMARK ERGEBNIS</h3>
+              <div class="result-card">
+                <div class="stat-label">CS2 PERFORMANCE INDEX</div>
+                <div class="score-value" id="scoreValue">---</div>
+              </div>
+              <div
+                id="resultDetail"
+                style="text-align: center; color: #9ca3af; margin-top: 0.5rem"
+              >
+                Noch kein Test
+              </div>
+              <div
+                id="scoreInfo"
+                style="
+                  text-align: center;
+                  color: #6b7280;
+                  font-size: 0.7rem;
+                  margin-top: 0.3rem;
+                "
+              ></div>
+            </div>
+            <div class="benchmark-test">
+              <h3>🎮 GPU Shader Test (Unlimited FPS)</h3>
+              <canvas
+                id="benchmarkCanvas"
+                class="benchmark-canvas"
+                width="800"
+                height="400"
+              ></canvas>
+              <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+              </div>
+              <div class="fps-counter" id="fpsCounter">
+                --- <span style="font-size: 1rem">FPS</span>
+              </div>
+              <button class="glow" id="startBenchmarkBtn" style="width: 100%">
+                ▶ BENCHMARK STARTEN (20 Sek.)
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <h2>💡 10 OPTIMIERUNGSTIPPS</h2>
+          <div id="recommendations">
+            <div class="recommendation-item">
+              🔍 Führe einen Benchmark durch.
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <h2>📖 PERFORMANCE INDEX</h2>
+          <div style="display: flex; flex-wrap: wrap; gap: 0.8rem">
+            <div>
+              <span class="rating-excellent">🏆 45.000+</span> Exzellent
+            </div>
+            <div><span class="rating-good">✅ 30.000+</span> Gut</div>
+            <div><span class="rating-ok">👍 18.000+</span> Akzeptabel</div>
+            <div><span class="rating-poor">⚠️ 8.000+</span> Befriedigend</div>
+            <div><span class="rating-bad">❌ Unter 8.000</span> Schwach</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- START OPTIONEN TAB -->
+      <div id="startTab" class="tab-content">
+        <div class="card">
+          <h2>🚀 START OPTIONEN FÜR CS2</h2>
+          <div class="info-box">
+            📖 Steam → Bibliothek → CS2 Rechtsklick → Eigenschaften →
+            Startoptionen
+          </div>
+          <div id="startOptionsContainer" class="start-options-grid"></div>
+          <div class="start-result">
+            <strong>📋 Generierte Startoptionen:</strong><br /><code
+              id="generatedStartOptions"
+            ></code>
+          </div>
+          <button class="glow" id="copyStartOptionsBtn">📋 Kopieren</button>
+          <button class="glow" id="resetStartOptionsBtn">♻️ Standard</button>
+        </div>
+      </div>
+
+      <!-- EXPORT TAB -->
+      <div id="exportTab" class="tab-content">
+        <div class="card">
+          <h2>📦 ALL-IN-ONE EXPORT</h2>
+          <textarea id="fullExportTextarea" rows="12" readonly></textarea>
+          <button class="glow" id="copyFullExportBtn">📋 Kopieren</button>
+          <button class="glow" id="downloadFullCfgBtn">
+            💾 Als autoexec.cfg
+          </button>
+          <button class="glow" id="refreshExportBtn">🔄 Aktualisieren</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // ======================== THEME ========================
+      function initTheme() {
+        const savedTheme = localStorage.getItem("cs2_neon_theme") || "pink";
+        document.body.classList.remove(
+          "theme-pink",
+          "theme-red",
+          "theme-yellow",
+          "theme-green",
+          "theme-blue",
+        );
+        document.body.classList.add(`theme-${savedTheme}`);
+        document.querySelectorAll(".theme-btn").forEach((btn) => {
+          btn.classList.remove("active");
+          if (btn.dataset.theme === savedTheme) btn.classList.add("active");
+        });
+      }
+      function setTheme(theme) {
+        document.body.classList.remove(
+          "theme-pink",
+          "theme-red",
+          "theme-yellow",
+          "theme-green",
+          "theme-blue",
+        );
+        document.body.classList.add(`theme-${theme}`);
+        localStorage.setItem("cs2_neon_theme", theme);
+        document.querySelectorAll(".theme-btn").forEach((btn) => {
+          btn.classList.remove("active");
+          if (btn.dataset.theme === theme) btn.classList.add("active");
+        });
+      }
+      document
+        .querySelectorAll(".theme-btn")
+        .forEach((btn) =>
+          btn.addEventListener("click", () => setTheme(btn.dataset.theme)),
+        );
+
+      // ======================== BENCHMARK (vereinfacht) ========================
+      function getSystemInfo() {
+        document.getElementById("cpuCoreCount").innerHTML =
+          navigator.hardwareConcurrency || "?";
+        document.getElementById("ramInfo").innerHTML = navigator.deviceMemory
+          ? navigator.deviceMemory + " GB"
+          : "Unbekannt";
+        let browser = "Unbekannt";
+        const ua = navigator.userAgent;
+        if (ua.indexOf("Edg") > -1) browser = "Edge";
+        else if (ua.indexOf("Chrome") > -1) browser = "Chrome";
+        else if (ua.indexOf("Firefox") > -1) browser = "Firefox";
+        document.getElementById("browserInfo").innerHTML = browser;
+        try {
+          const canvasGpu = document.createElement("canvas");
+          const gl = canvasGpu.getContext("webgl");
+          if (gl) {
+            const debugInfo = gl.getExtension("WEBGL_debug_renderer_info");
+            if (debugInfo) {
+              let gpu = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+              document.getElementById("gpuInfo").innerHTML = gpu.substring(
+                0,
+                45,
+              );
+            } else document.getElementById("gpuInfo").innerHTML = "WebGL aktiv";
+          }
+        } catch (e) {
+          document.getElementById("gpuInfo").innerHTML = "Nicht verfügbar";
+        }
+      }
+      getSystemInfo();
+
+      const canvas = document.getElementById("benchmarkCanvas");
+      canvas.width = 800;
+      canvas.height = 400;
+      let running = false,
+        timeoutId = null,
+        frames = 0,
+        startTime = 0,
+        fpsHistory = [];
+      const testDuration = 20;
+      function startBenchmark() {
+        if (running) return;
+        running = true;
+        frames = 0;
+        fpsHistory = [];
+        startTime = performance.now();
+        const btn = document.getElementById("startBenchmarkBtn");
+        btn.disabled = true;
+        btn.textContent = "⏳ LÄUFT... 20 Sek.";
+        document.getElementById("progressFill").style.width = "0%";
+        let lastFpsUpdate = startTime;
+        function frame() {
+          if (!running) return;
+          const now = performance.now();
+          const elapsed = (now - startTime) / 1000;
+          document.getElementById("progressFill").style.width =
+            Math.min(100, (elapsed / testDuration) * 100) + "%";
+          if (elapsed >= testDuration) {
+            const avgFps = Math.round(frames / elapsed);
+            const sorted = [...fpsHistory].sort((a, b) => a - b);
+            const low1 = sorted[Math.floor(sorted.length * 0.01)] || avgFps;
+            const score = Math.round(avgFps * avgFps * 0.15 + low1 * 60);
+            running = false;
+            btn.disabled = false;
+            btn.textContent = "▶ BENCHMARK STARTEN (20 Sek.)";
+            document.getElementById("fpsCounter").innerHTML =
+              `<span class="fps-value">${avgFps}</span> FPS (Ø)`;
+            document.getElementById("scoreValue").innerHTML =
+              score.toLocaleString();
+            document.getElementById("resultDetail").innerHTML =
+              `Ø ${avgFps} FPS | 1% Low: ${low1}`;
+            let tips = [];
+            if (score >= 45000)
+              tips = [
+                "🏆 Exzellent! Nutze Cinematic Preset",
+                "⚡ fps_max 0",
+                "🎬 MSAA 8x",
+                "🖥️ 240Hz+",
+                "🎮 Reflex + Boost",
+                "💾 cl_forcepreload 1",
+                "🌐 rate 1048576",
+                "🔊 snd_mixahead 0.02",
+                "📊 cl_showfps 1",
+                "✅ High-End Setup",
+              ];
+            else if (score >= 30000)
+              tips = [
+                "✅ Sehr gut! Balanced Preset",
+                "🎮 fps_max 400",
+                "🖥️ MSAA 4x",
+                "⚡ engine_low_latency_sleep 1",
+                "💾 mat_queue_mode 2",
+                "🎨 r_dynamic 0",
+                "🌐 cl_updaterate 128",
+                "🔊 voice_scale 0.5",
+                "📊 144Hz ideal",
+                "💡 Top Leistung",
+              ];
+            else if (score >= 18000)
+              tips = [
+                "👍 Solide! HIGH FPS Preset",
+                "🎮 fps_max 300",
+                "🎨 MSAA 2x",
+                "⚡ r_csm 0",
+                "💾 r_dynamic 0",
+                "📐 1280x960",
+                "🌐 rate 786432",
+                "🔧 mat_picmip 1",
+                "💡 Stabile 144 FPS möglich",
+                "📊 Vermeide V-Sync",
+              ];
+            else if (score >= 8000)
+              tips = [
+                "⚠️ Optimieren! LOW-END Preset",
+                "🎮 fps_max 144",
+                "🎨 mat_disable_bloom 1",
+                "⚡ r_rim_light 0",
+                "💾 mat_picmip 2",
+                "📐 1024x768",
+                "🌐 -high -nojoy",
+                "🔧 cl_ragdoll_physics_enable 0",
+                "💡 Schließe Browser",
+                "📊 Upgrade empfohlen",
+              ];
+            else
+              tips = [
+                "❌ Schwach! LOW-END Preset",
+                "🎮 fps_max 60",
+                "🎨 Alles aus",
+                "⚡ -threads 4",
+                "💾 800x600",
+                "📐 Energiesparplan",
+                "🌐 VPN aus",
+                "🔧 Treiber updaten",
+                "💡 Hardware Upgrade",
+                "📊 60Hz Ziel",
+              ];
+            document.getElementById("recommendations").innerHTML = tips
+              .map((t) => `<div class="recommendation-item">✨ ${t}</div>`)
+              .join("");
+            if (timeoutId) clearTimeout(timeoutId);
+            return;
+          }
+          frames++;
+          const liveFps = Math.round(frames / elapsed);
+          document.getElementById("fpsCounter").innerHTML =
+            `<span class="fps-value">${liveFps}</span> FPS (live)`;
+          if (now - lastFpsUpdate > 200) {
+            fpsHistory.push(liveFps);
+            lastFpsUpdate = now;
+          }
+          timeoutId = setTimeout(frame, 0);
+        }
+        frame();
+      }
+      document
+        .getElementById("startBenchmarkBtn")
+        .addEventListener("click", startBenchmark);
+      if (canvas.getContext("2d")) {
+        const ctx = canvas.getContext("2d");
+        ctx.fillStyle = "#0a0a1a";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "#ff88ff";
+        ctx.font = "16px monospace";
+        ctx.textAlign = "center";
+        ctx.fillText(
+          "🎮 GPU Shader Test – Benchmark starten",
+          canvas.width / 2,
+          canvas.height / 2,
+        );
+      }
+
+      // ======================== TASTATUR LAYOUT ========================
+      let currentLayout = "DE";
+      const deKeysRows = [
+        [
+          "ESC",
+          "F1",
+          "F2",
+          "F3",
+          "F4",
+          "F5",
+          "F6",
+          "F7",
+          "F8",
+          "F9",
+          "F10",
+          "F11",
+          "F12",
+        ],
+        [
+          "^",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "0",
+          "ß",
+          "´",
+          "BACKSPACE",
+        ],
+        [
+          "TAB",
+          "Q",
+          "W",
+          "E",
+          "R",
+          "T",
+          "Z",
+          "U",
+          "I",
+          "O",
+          "P",
+          "Ü",
+          "+",
+          "#",
+        ],
+        [
+          "CAPS",
+          "A",
+          "S",
+          "D",
+          "F",
+          "G",
+          "H",
+          "J",
+          "K",
+          "L",
+          "Ö",
+          "Ä",
+          "ENTER",
+        ],
+        [
+          "LSHIFT",
+          "<",
+          "Y",
+          "X",
+          "C",
+          "V",
+          "B",
+          "N",
+          "M",
+          ",",
+          ".",
+          "-",
+          "RSHIFT",
+        ],
+        [
+          "LCTRL",
+          "LALT",
+          "SPACE",
+          "RALT",
+          "RCTRL",
+          "LEFT",
+          "DOWN",
+          "UP",
+          "RIGHT",
+        ],
+      ];
+      const usKeysRows = [
+        [
+          "ESC",
+          "F1",
+          "F2",
+          "F3",
+          "F4",
+          "F5",
+          "F6",
+          "F7",
+          "F8",
+          "F9",
+          "F10",
+          "F11",
+          "F12",
+        ],
+        [
+          "~",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "0",
+          "-",
+          "=",
+          "BACKSPACE",
+        ],
+        [
+          "TAB",
+          "Q",
+          "W",
+          "E",
+          "R",
+          "T",
+          "Y",
+          "U",
+          "I",
+          "O",
+          "P",
+          "[",
+          "]",
+          "\\",
+        ],
+        [
+          "CAPS",
+          "A",
+          "S",
+          "D",
+          "F",
+          "G",
+          "H",
+          "J",
+          "K",
+          "L",
+          ";",
+          "'",
+          "ENTER",
+        ],
+        ["LSHIFT", "Z", "X", "C", "V", "B", "N", "M", ",", ".", "/", "RSHIFT"],
+        [
+          "LCTRL",
+          "LALT",
+          "SPACE",
+          "RALT",
+          "RCTRL",
+          "LEFT",
+          "DOWN",
+          "UP",
+          "RIGHT",
+        ],
+      ];
+      let mainKeysRows = [...deKeysRows];
+      const numpadKeys = [
+        "KP_7",
+        "KP_8",
+        "KP_9",
+        "KP_4",
+        "KP_5",
+        "KP_6",
+        "KP_1",
+        "KP_2",
+        "KP_3",
+        "KP_0",
+        "KP_DEL",
+        "KP_PLUS",
+      ];
+      function getAllKeys() {
+        return [...mainKeysRows.flat(), ...numpadKeys];
+      }
+      function getKeyClass(key, isBuy) {
+        const hasBuy = buyBindings && buyBindings[key];
+        const hasScript = scriptBindings && scriptBindings[key];
+        if (hasBuy && hasScript) return "bound-both";
+        if (hasBuy) return "bound-buy";
+        if (hasScript) return "bound-script";
+        return "";
+      }
+      function toggleKeyboardLayout() {
+        if (currentLayout === "DE") {
+          mainKeysRows = [...usKeysRows];
+          currentLayout = "US";
+          document.getElementById("toggleKeyboardLayout").innerHTML =
+            "🇺🇸 US Layout";
+          document.getElementById("toggleKeyboardLayoutScript").innerHTML =
+            "🇺🇸 US Layout";
+        } else {
+          mainKeysRows = [...deKeysRows];
+          currentLayout = "DE";
+          document.getElementById("toggleKeyboardLayout").innerHTML =
+            "⌨️ DE Layout";
+          document.getElementById("toggleKeyboardLayoutScript").innerHTML =
+            "⌨️ DE Layout";
+        }
+        renderBuyKeyboard();
+        renderScriptKeyboard();
+      }
+
+      // ======================== BUYSCRIPT ========================
+      let buyBindings = {};
+      let selectedBuyKey = null;
+      const categories = {
+        Pistole: [
+          "Glock-18",
+          "USP-S",
+          "P250",
+          "Five-SeveN",
+          "Tec-9",
+          "Desert Eagle",
+          "Dual Berettas",
+          "CZ75-Auto",
+        ].map((n) => ({
+          name: n,
+          cmd: `buy ${n.toLowerCase().replace(/ /g, "").replace(/-/g, "")}`,
+          maxCount: 1,
+        })),
+        "MP / SMG": [
+          "MP9",
+          "MAC-10",
+          "MP7",
+          "MP5-SD",
+          "UMP-45",
+          "P90",
+          "PP-Bizon",
+        ].map((n) => ({
+          name: n,
+          cmd: `buy ${n.toLowerCase().replace(/ /g, "").replace(/-/g, "")}`,
+          maxCount: 1,
+        })),
+        Rifle: [
+          "AK-47",
+          "M4A4",
+          "M4A1-S",
+          "FAMAS",
+          "Galil AR",
+          "SG 553",
+          "AUG",
+        ].map((n) => ({
+          name: n,
+          cmd: `buy ${n.toLowerCase().replace(/ /g, "").replace(/-/g, "")}`,
+          maxCount: 1,
+        })),
+        Sniper: ["AWP", "SSG 08", "SCAR-20", "G3SG1"].map((n) => ({
+          name: n,
+          cmd: `buy ${n.toLowerCase().replace(/ /g, "").replace("-", "")}`,
+          maxCount: 1,
+        })),
+        Pumpgun: ["Nova", "XM1014", "MAG-7", "Sawed-Off"].map((n) => ({
+          name: n,
+          cmd: `buy ${n.toLowerCase().replace(/ /g, "").replace(/-/g, "")}`,
+          maxCount: 1,
+        })),
+        "Schwere Waffen": ["M249", "Negev"].map((n) => ({
+          name: n,
+          cmd: `buy ${n.toLowerCase()}`,
+          maxCount: 1,
+        })),
+        Rüstung: [
+          { name: "Kevlar+Helm", cmd: "buy vesthelm", maxCount: 1 },
+          { name: "Kevlar", cmd: "buy vest", maxCount: 1 },
+          { name: "Defuser", cmd: "buy defuser", maxCount: 1 },
+          { name: "🔫 Taser", cmd: "buy taser", maxCount: 1 },
+        ],
+        Granaten: [
+          { name: "HE Grenade", cmd: "buy hegrenade", maxCount: 1 },
+          { name: "Flashbang", cmd: "buy flashbang", maxCount: 2 },
+          { name: "Smoke", cmd: "buy smokegrenade", maxCount: 1 },
+          { name: "Molotov", cmd: "buy molotov", maxCount: 1 },
+          { name: "Incendiary", cmd: "buy incgrenade", maxCount: 1 },
+          { name: "Decoy", cmd: "buy decoy", maxCount: 1 },
+        ],
+      };
+      let currentCategory = "Pistole";
+      function loadBuy() {
+        let s = localStorage.getItem("cs2_neon_buy_unique");
+        if (s) buyBindings = JSON.parse(s);
+        else buyBindings = {};
+        renderSavedBinds();
+        refreshFullExport();
+      }
+      function saveBuy() {
+        localStorage.setItem(
+          "cs2_neon_buy_unique",
+          JSON.stringify(buyBindings),
+        );
+        renderSavedBinds();
+        refreshFullExport();
+        renderBuyKeyboard();
+        renderScriptKeyboard();
+      }
+      function renderBuyKeyboard() {
+        const mainCont = document.getElementById("mainKeyboard");
+        if (!mainCont) return;
+        mainCont.innerHTML = "";
+        mainKeysRows.forEach((row) => {
+          let rd = document.createElement("div");
+          rd.className = "key-row";
+          row.forEach((k) => {
+            let d = document.createElement("div");
+            d.className = `key ${getKeyClass(k, true)}`;
+            if (selectedBuyKey === k) d.classList.add("active-key");
+            d.textContent = k;
+            d.onclick = () => {
+              selectedBuyKey = k;
+              renderBuyKeyboard();
+              document.getElementById("buyCommandInput").value =
+                buyBindings[k] || "";
+            };
+            rd.appendChild(d);
+          });
+          mainCont.appendChild(rd);
+        });
+        const numCont = document.getElementById("numpadContainer");
+        if (!numCont) return;
+        numCont.innerHTML = "";
+        numpadKeys.forEach((k) => {
+          let d = document.createElement("div");
+          d.className = `numpad-key ${getKeyClass(k, true)}`;
+          if (selectedBuyKey === k) d.style.background = "var(--accent)";
+          d.textContent = k.replace("KP_", "");
+          d.onclick = () => {
+            selectedBuyKey = k;
+            renderBuyKeyboard();
+            document.getElementById("buyCommandInput").value =
+              buyBindings[k] || "";
+          };
+          numCont.appendChild(d);
+        });
+      }
+      function renderBuyCategories() {
+        let catDiv = document.getElementById("categoryList");
+        if (!catDiv) return;
+        catDiv.innerHTML = "";
+        Object.keys(categories).forEach((c) => {
+          let p = document.createElement("div");
+          p.className = "cat-pill";
+          if (currentCategory === c) p.classList.add("active-cat");
+          p.textContent = c;
+          p.onclick = () => {
+            currentCategory = c;
+            renderBuyCategories();
+            renderBuyItems();
+          };
+          catDiv.appendChild(p);
+        });
+        renderBuyItems();
+      }
+      function renderBuyItems() {
+        let grid = document.getElementById("itemsGrid");
+        if (!grid) return;
+        grid.innerHTML = "";
+        categories[currentCategory].forEach((it) => {
+          let div = document.createElement("div");
+          div.className = "weapon-item";
+          div.innerHTML = `<span>${it.name}</span><span class="add-icon">+</span>`;
+          div.onclick = () => {
+            if (!selectedBuyKey) {
+              alert("Taste wählen!");
+              return;
+            }
+            let cur = document.getElementById("buyCommandInput").value;
+            let cnt = (
+              cur.match(
+                new RegExp(it.cmd.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi"),
+              ) || []
+            ).length;
+            if (cnt >= it.maxCount) {
+              alert(`Maximal ${it.maxCount} mal erlaubt`);
+              return;
+            }
+            let n = cur ? cur + "; " + it.cmd : it.cmd;
+            document.getElementById("buyCommandInput").value = n;
+          };
+          grid.appendChild(div);
+        });
+      }
+      function saveCurrentBinding() {
+        if (!selectedBuyKey) {
+          alert("Keine Taste");
+          return;
+        }
+        let val = document.getElementById("buyCommandInput").value.trim();
+        if (!val) return;
+        if (
+          buyBindings[selectedBuyKey] !== val &&
+          buyBindings[selectedBuyKey] &&
+          !confirm(`Taste "${selectedBuyKey}" bereits gebunden. Überschreiben?`)
+        )
+          return;
+        buyBindings[selectedBuyKey] = val;
+        saveBuy();
+        alert(`Bindung für ${selectedBuyKey} gespeichert`);
+      }
+      function unbindCurrentKey() {
+        if (selectedBuyKey && buyBindings[selectedBuyKey]) {
+          delete buyBindings[selectedBuyKey];
+          saveBuy();
+          document.getElementById("buyCommandInput").value = "";
+          alert(`Binding für ${selectedBuyKey} entfernt`);
+        } else alert("Keine Bindung");
+      }
+      function renderSavedBinds() {
+        let cont = document.getElementById("savedBindsList");
+        if (!cont) return;
+        cont.innerHTML = "";
+        if (Object.keys(buyBindings).length === 0) {
+          cont.innerHTML = '<div class="empty-message">✨ Keine Bindings</div>';
+          return;
+        }
+        for (let [k, cmd] of Object.entries(buyBindings)) {
+          let e = document.createElement("div");
+          e.className = "bind-entry";
+          e.innerHTML = `<span class="bind-key">bind "${k}"</span> → <span class="bind-command">"${cmd}"</span>`;
+          cont.appendChild(e);
+        }
+      }
+      function resetBuy() {
+        buyBindings = {};
+        saveBuy();
+        if (selectedBuyKey)
+          document.getElementById("buyCommandInput").value = "";
+        alert("Alle Buy-Bindings gelöscht.");
+      }
+
+      // ======================== START OPTIONEN (ohne fps_max) ========================
+      let startOptionsList = [
+        { cmd: "-console", desc: "Konsole", hasValue: false, selected: true },
+        {
+          cmd: "-high",
+          desc: "Hohe Priorität",
+          hasValue: false,
+          selected: false,
+        },
+        {
+          cmd: "-nojoy",
+          desc: "Joystick aus",
+          hasValue: false,
+          selected: false,
+        },
+        {
+          cmd: "-fullscreen",
+          desc: "Vollbild",
+          hasValue: false,
+          selected: false,
+        },
+        {
+          cmd: "-vulkan",
+          desc: "Vulkan API",
+          hasValue: false,
+          selected: false,
+        },
+        {
+          cmd: "-softparticlesdefaultoff",
+          desc: "Partikel aus",
+          hasValue: false,
+          selected: false,
+        },
+        {
+          cmd: "-refresh",
+          desc: "Hz",
+          hasValue: true,
+          value: "144",
+          selected: false,
+          values: ["60", "120", "144", "165", "240", "360"],
+        },
+        {
+          cmd: "-threads",
+          desc: "Threads",
+          hasValue: true,
+          value: "8",
+          selected: false,
+          values: ["4", "6", "8", "12", "16"],
+        },
+      ];
+      function loadStartOptions() {
+        let saved = localStorage.getItem("cs2_neon_startoptions");
+        if (saved) {
+          let data = JSON.parse(saved);
+          for (let i = 0; i < startOptionsList.length; i++) {
+            if (data[i]) {
+              startOptionsList[i].selected = data[i].selected;
+              if (startOptionsList[i].hasValue && data[i].value)
+                startOptionsList[i].value = data[i].value;
+            }
+          }
+        }
+        renderStartOptionsUI();
+      }
+      function saveStartOptions() {
+        localStorage.setItem(
+          "cs2_neon_startoptions",
+          JSON.stringify(
+            startOptionsList.map((opt) => ({
+              selected: opt.selected,
+              value: opt.value,
+            })),
+          ),
+        );
+      }
+      function renderStartOptionsUI() {
+        const container = document.getElementById("startOptionsContainer");
+        if (!container) return;
+        container.innerHTML = "";
+        startOptionsList.forEach((opt) => {
+          const itemDiv = document.createElement("div");
+          itemDiv.className = "start-opt-item";
+          const headerDiv = document.createElement("div");
+          headerDiv.className = "start-opt-header";
+          const checkbox = document.createElement("input");
+          checkbox.type = "checkbox";
+          checkbox.checked = opt.selected;
+          checkbox.onchange = () => {
+            opt.selected = checkbox.checked;
+            saveStartOptions();
+            updateStartOptionsPreview();
+          };
+          const label = document.createElement("label");
+          label.textContent = opt.cmd;
+          headerDiv.appendChild(checkbox);
+          headerDiv.appendChild(label);
+          itemDiv.appendChild(headerDiv);
+          const descSpan = document.createElement("div");
+          descSpan.className = "start-opt-desc";
+          descSpan.textContent = opt.desc;
+          itemDiv.appendChild(descSpan);
+          if (opt.hasValue) {
+            const select = document.createElement("select");
+            select.className = "start-opt-select";
+            opt.values.forEach((val) => {
+              const option = document.createElement("option");
+              option.value = val;
+              option.textContent = val;
+              if (opt.value === val) option.selected = true;
+              select.appendChild(option);
+            });
+            select.onchange = () => {
+              opt.value = select.value;
+              saveStartOptions();
+              updateStartOptionsPreview();
+            };
+            itemDiv.appendChild(select);
+          }
+          container.appendChild(itemDiv);
+        });
+        updateStartOptionsPreview();
+      }
+      function getSelectedStartOptionsString() {
+        const selected = [];
+        for (let opt of startOptionsList)
+          if (opt.selected)
+            selected.push(opt.hasValue ? `${opt.cmd} ${opt.value}` : opt.cmd);
+        return selected.join(" ");
+      }
+      function updateStartOptionsPreview() {
+        const previewElem = document.getElementById("generatedStartOptions");
+        if (previewElem)
+          previewElem.textContent =
+            getSelectedStartOptionsString() || "(Keine)";
+      }
+      function copyStartOptionsToClipboard() {
+        const text = getSelectedStartOptionsString();
+        if (text)
+          navigator.clipboard.writeText(text).then(() => alert("✅ Kopiert!"));
+        else alert("❌ Keine Optionen");
+      }
+      function resetStartOptionsToDefault() {
+        startOptionsList.forEach((opt) => {
+          if (opt.cmd === "-console") opt.selected = true;
+          else opt.selected = false;
+          if (opt.cmd === "-refresh") opt.value = "144";
+          if (opt.cmd === "-threads") opt.value = "8";
+        });
+        saveStartOptions();
+        renderStartOptionsUI();
+        alert("✅ Zurückgesetzt!");
+      }
+
+      // ======================== CONFIGS (angepasst: Audio Ducking entfernt, Maus & Steuerung komplett entfernt) ========================
+      let globalConfigCommands = [];
+      let configMetadata = [];
+      let currentPreset = null;
+
+      const configCategories = {
+        "🎯 Performance & FPS": {
+          subcats: [
+            "Performance Kern",
+            "Shader & Effekte",
+            "Speicher Optimierung",
+            "GPU & Rendering",
+            "CPU & Threading",
+          ],
+          commands: {},
+        },
+        "🔊 Audio & Voice": {
+          subcats: ["Lautstärke", "Mikrofon & Voice", "Sound Qualität"],
+          commands: {},
+        },
+        "🌐 Netzwerk & Multiplayer": {
+          subcats: [
+            "Interpolation",
+            "Bandbreite & Rate",
+            "Latency & Timeout",
+            "Connection Optimierung",
+          ],
+          commands: {},
+        },
+        "🎨 Video & Grafik": {
+          subcats: [
+            "Auflösung & Display",
+            "Texturen & Details",
+            "Beleuchtung & Schatten",
+            "Anti-Aliasing",
+            "Post-Processing",
+          ],
+          commands: {},
+        },
+      };
+
+      const allCommandsLibrary = {
+        "Performance Kern": [
+          {
+            cmd: "fps_max",
+            values: [
+              "0",
+              "60",
+              "120",
+              "144",
+              "240",
+              "300",
+              "400",
+              "500",
+              "1000",
+            ],
+            desc: "Maximale Bildrate (0=unlimitiert)",
+          },
+          {
+            cmd: "fps_max_menu",
+            values: ["30", "60", "120", "144"],
+            desc: "Menü-Bildrate",
+          },
+          {
+            cmd: "engine_low_latency_sleep",
+            values: ["0", "1"],
+            desc: "Reduziert Input-Latenz",
+          },
+          {
+            cmd: "r_queued_ropes",
+            values: ["0", "1"],
+            desc: "ROP-Pufferung für Seile",
+          },
+          {
+            cmd: "cl_forcepreload",
+            values: ["0", "1"],
+            desc: "Ressourcen vorladen",
+          },
+        ],
+        "Shader & Effekte": [
+          {
+            cmd: "r_csm",
+            values: ["0", "1", "2"],
+            desc: "Kaskadierte Schattenkarten",
+          },
+          {
+            cmd: "r_csm_cascade_res",
+            values: ["256", "512", "1024", "2048"],
+            desc: "Schatten-Auflösung",
+          },
+          { cmd: "r_dynamic", values: ["0", "1"], desc: "Dynamische Schatten" },
+          { cmd: "r_rim_light", values: ["0", "1"], desc: "Randlichter" },
+          {
+            cmd: "mat_disable_bloom",
+            values: ["0", "1"],
+            desc: "Bloom deaktivieren",
+          },
+          { cmd: "r_3dsky", values: ["0", "1"], desc: "3D-Skybox" },
+          {
+            cmd: "cl_detaildist",
+            values: ["400", "800", "1200", "2000"],
+            desc: "Detail-Reichweite",
+          },
+        ],
+        "Speicher Optimierung": [
+          {
+            cmd: "cl_forcepreload",
+            values: ["0", "1"],
+            desc: "Erzwingt Preloading",
+          },
+          {
+            cmd: "cl_physics_impact_enable",
+            values: ["0", "1"],
+            desc: "Physik-Effekte",
+          },
+          {
+            cmd: "cl_ragdoll_physics_enable",
+            values: ["0", "1"],
+            desc: "Ragdoll-Physik",
+          },
+          {
+            cmd: "r_waterforceexpensive",
+            values: ["0", "1"],
+            desc: "Wassereffekte",
+          },
+        ],
+        "GPU & Rendering": [
+          {
+            cmd: "mat_queue_mode",
+            values: ["-1", "0", "1", "2"],
+            desc: "Threading-Modus",
+          },
+          { cmd: "mat_vsync", values: ["0", "1"], desc: "V-Sync" },
+          {
+            cmd: "gpu_level",
+            values: ["0", "1", "2", "3"],
+            desc: "GPU-Render-Level",
+          },
+          {
+            cmd: "mat_picmip",
+            values: ["0", "1", "2"],
+            desc: "Texturqualität",
+          },
+          {
+            cmd: "r_lod",
+            values: ["-1", "0", "1", "2"],
+            desc: "Modell-Detailstufe",
+          },
+          {
+            cmd: "mat_aaquality",
+            values: ["0", "1", "2"],
+            desc: "AA-Qualität",
+          },
+        ],
+        "CPU & Threading": [
+          {
+            cmd: "host_thread_mode",
+            values: ["0", "1", "2"],
+            desc: "Multi-Core-Rendering",
+          },
+          {
+            cmd: "threadpool_worker_count",
+            values: ["2", "4", "6", "8", "12", "16"],
+            desc: "Worker-Threads",
+          },
+          {
+            cmd: "sv_parallel_packentities",
+            values: ["0", "1"],
+            desc: "Parallele Entities",
+          },
+        ],
+        Lautstärke: [
+          {
+            cmd: "volume",
+            values: [
+              "0",
+              "0.1",
+              "0.2",
+              "0.3",
+              "0.4",
+              "0.5",
+              "0.6",
+              "0.7",
+              "0.8",
+              "0.9",
+              "1.0",
+            ],
+            desc: "Master-Lautstärke",
+          },
+          {
+            cmd: "voice_scale",
+            values: ["0", "0.2", "0.4", "0.6", "0.8", "1.0"],
+            desc: "Voice-Chat Lautstärke",
+          },
+          {
+            cmd: "snd_mixahead",
+            values: ["0.02", "0.05", "0.1", "0.2"],
+            desc: "Audio-Puffer",
+          },
+          {
+            cmd: "snd_headphone_pan_exponent",
+            values: ["1", "1.5", "2"],
+            desc: "Kopfhörer Panorama",
+          },
+        ],
+        "Mikrofon & Voice": [
+          {
+            cmd: "voice_enable",
+            values: ["0", "1"],
+            desc: "Voice-Chat aktivieren",
+          },
+          {
+            cmd: "voice_threshold",
+            values: ["0", "0.1", "0.2", "0.5", "1.0"],
+            desc: "Mikrofon-Empfindlichkeit",
+          },
+          {
+            cmd: "voice_loopback",
+            values: ["0", "1"],
+            desc: "Eigene Stimme hören",
+          },
+          {
+            cmd: "voice_mixer_volume",
+            values: ["0", "0.25", "0.5", "0.75", "1.0"],
+            desc: "Mikrofon-Lautstärke",
+          },
+        ],
+        "Sound Qualität": [
+          {
+            cmd: "snd_musicvolume",
+            values: ["0", "0.2", "0.4", "0.6", "0.8", "1.0"],
+            desc: "Musik-Lautstärke",
+          },
+          {
+            cmd: "snd_menumusic_volume",
+            values: ["0", "0.2", "0.5", "1.0"],
+            desc: "Menü-Musik",
+          },
+          {
+            cmd: "snd_roundend_volume",
+            values: ["0", "0.2", "0.5", "1.0"],
+            desc: "Rundenende Sound",
+          },
+        ],
+        Interpolation: [
+          {
+            cmd: "cl_interp_ratio",
+            values: ["1", "2"],
+            desc: "Interpolationsverhältnis",
+          },
+          {
+            cmd: "cl_interp",
+            values: ["0", "0.015625", "0.03125"],
+            desc: "Interpolationszeit",
+          },
+        ],
+        "Bandbreite & Rate": [
+          {
+            cmd: "rate",
+            values: ["196608", "393216", "524288", "786432", "1048576"],
+            desc: "Bandbreite",
+          },
+          {
+            cmd: "cl_updaterate",
+            values: ["64", "128"],
+            desc: "Updates pro Sekunde",
+          },
+          {
+            cmd: "cl_cmdrate",
+            values: ["64", "128"],
+            desc: "Befehle pro Sekunde",
+          },
+        ],
+        "Latency & Timeout": [
+          {
+            cmd: "cl_timeout",
+            values: ["30", "60", "120", "300"],
+            desc: "Timeout Sekunden",
+          },
+          {
+            cmd: "net_maxcleartime",
+            values: ["0", "1", "2"],
+            desc: "Netzwerk-Clear Time",
+          },
+        ],
+        "Connection Optimierung": [
+          { cmd: "cl_predict", values: ["0", "1"], desc: "Client-Vorhersage" },
+          {
+            cmd: "cl_predictweapons",
+            values: ["0", "1"],
+            desc: "Waffen-Vorhersage",
+          },
+        ],
+        "Auflösung & Display": [
+          {
+            cmd: "mat_setvideomode",
+            values: [
+              "1280 720 1",
+              "1366 768 1",
+              "1600 900 1",
+              "1920 1080 1",
+              "2560 1440 1",
+            ],
+            desc: "16:9 Auflösungen",
+          },
+          {
+            cmd: "mat_setvideomode_ex",
+            values: ["1280 1024 1", "1024 768 1", "800 600 1"],
+            desc: "4:3 Auflösungen",
+          },
+          {
+            cmd: "mat_monitorgamma",
+            values: ["1.6", "1.8", "2.0", "2.2", "2.4"],
+            desc: "Gamma",
+          },
+        ],
+        "Texturen & Details": [
+          {
+            cmd: "mat_picmip",
+            values: ["0", "1", "2"],
+            desc: "Texturqualität",
+          },
+          {
+            cmd: "r_lod",
+            values: ["-1", "0", "1", "2"],
+            desc: "Modell-Detail",
+          },
+          {
+            cmd: "cl_detaildist",
+            values: ["400", "800", "1200", "2000"],
+            desc: "Detail-Reichweite",
+          },
+        ],
+        "Beleuchtung & Schatten": [
+          { cmd: "r_csm", values: ["0", "1", "2"], desc: "Schattenqualität" },
+          {
+            cmd: "r_shadow_quality",
+            values: ["0", "1", "2"],
+            desc: "Schatten extra",
+          },
+          {
+            cmd: "mat_ambient_light_r",
+            values: ["0.1", "0.2", "0.3", "0.4"],
+            desc: "Ambient Rot",
+          },
+          {
+            cmd: "mat_ambient_light_g",
+            values: ["0.1", "0.2", "0.3", "0.4"],
+            desc: "Ambient Grün",
+          },
+          {
+            cmd: "mat_ambient_light_b",
+            values: ["0.1", "0.2", "0.3", "0.4"],
+            desc: "Ambient Blau",
+          },
+        ],
+        "Anti-Aliasing": [
+          {
+            cmd: "mat_msaa",
+            values: ["0", "2", "4", "8"],
+            desc: "Multisample AA",
+          },
+          {
+            cmd: "mat_aaquality",
+            values: ["0", "1", "2"],
+            desc: "AA-Qualität",
+          },
+          {
+            cmd: "mat_software_aa_strength",
+            values: ["0", "0.5", "1.0"],
+            desc: "Post-AA Stärke",
+          },
+        ],
+        "Post-Processing": [
+          {
+            cmd: "mat_disable_fancy_blending",
+            values: ["0", "1"],
+            desc: "Effekte deaktivieren",
+          },
+          { cmd: "r_ambientboost", values: ["0", "1"], desc: "Ambient Boost" },
+          {
+            cmd: "mat_disable_bloom",
+            values: ["0", "1"],
+            desc: "Bloom deaktivieren",
+          },
+        ],
+      };
+
+      function fillCategories() {
+        for (let mainCat in configCategories) {
+          for (let subCat of configCategories[mainCat].subcats) {
+            configCategories[mainCat].commands[subCat] =
+              allCommandsLibrary[subCat] || [];
+          }
+        }
+      }
+
+      const presetsList = [
+        {
+          key: "cinematic",
+          name: "🎬 Cinematic Ultra",
+          desc: "Maximale visuelle Qualität",
+          badge: "RTX 4080+",
+          commands: [
+            "mat_setvideomode 2560 1440 1",
+            "mat_vsync 1",
+            "r_dynamic 1",
+            "r_csm 2",
+            "mat_msaa 8",
+            "mat_picmip 0",
+            "r_lod -1",
+            "cl_detaildist 2000",
+            "mat_aaquality 2",
+            "r_shadow_quality 2",
+            "r_3dsky 1",
+            "r_rim_light 1",
+            "mat_disable_fancy_blending 0",
+          ],
+        },
+        {
+          key: "highfps",
+          name: "⚡ HIGH FPS",
+          desc: "Competitive Performance",
+          badge: "240Hz+",
+          commands: [
+            "mat_setvideomode 1280 960 1",
+            "mat_vsync 0",
+            "r_dynamic 0",
+            "r_csm 0",
+            "mat_msaa 2",
+            "mat_picmip 2",
+            "r_lod 2",
+            "cl_detaildist 400",
+            "mat_aaquality 0",
+            "r_shadow_quality 0",
+            "r_3dsky 0",
+            "r_rim_light 0",
+            "mat_disable_fancy_blending 1",
+            "cl_forcepreload 1",
+          ],
+        },
+        {
+          key: "lowend",
+          name: "🔧 LOW-END",
+          desc: "Maximale FPS",
+          badge: "Toaster",
+          commands: [
+            "mat_setvideomode 1024 768 1",
+            "mat_vsync 0",
+            "r_dynamic 0",
+            "r_csm 0",
+            "mat_msaa 0",
+            "mat_picmip 2",
+            "r_lod 2",
+            "cl_detaildist 400",
+            "mat_aaquality 0",
+            "r_shadow_quality 0",
+            "r_3dsky 0",
+            "r_rim_light 0",
+            "mat_disable_fancy_blending 1",
+            "cl_forcepreload 1",
+            "mat_disable_bloom 1",
+            "cl_physics_impact_enable 0",
+            "cl_ragdoll_physics_enable 0",
+          ],
+        },
+        {
+          key: "balanced",
+          name: "⚖️ Balanced",
+          desc: "Gute Grafik & FPS",
+          badge: "Allrounder",
+          commands: [
+            "mat_setvideomode 1920 1080 1",
+            "mat_vsync 0",
+            "r_dynamic 1",
+            "r_csm 1",
+            "mat_msaa 4",
+            "mat_picmip 1",
+            "r_lod 0",
+            "cl_detaildist 1200",
+            "mat_aaquality 1",
+            "r_shadow_quality 1",
+            "r_3dsky 1",
+            "r_rim_light 0",
+            "mat_disable_fancy_blending 0",
+          ],
+        },
+      ];
+
+      function loadGlobalConfigs() {
+        let stored = localStorage.getItem("cs2_neon_global_configs");
+        if (stored) {
+          let data = JSON.parse(stored);
+          globalConfigCommands = data.commands || [];
+          configMetadata = data.metadata || [];
+          currentPreset = data.currentPreset || null;
+        }
+        renderSavedConfigsList();
+        refreshFullExport();
+        renderPresetsTab();
+      }
+      function saveGlobalConfigs() {
+        localStorage.setItem(
+          "cs2_neon_global_configs",
+          JSON.stringify({
+            commands: globalConfigCommands,
+            metadata: configMetadata,
+            currentPreset: currentPreset,
+          }),
+        );
+        renderSavedConfigsList();
+        refreshFullExport();
+        renderPresetsTab();
+      }
+      function renderPresetsTab() {
+        const container = document.getElementById("presetsGrid");
+        if (!container) return;
+        container.innerHTML = "";
+        presetsList.forEach((preset) => {
+          const card = document.createElement("div");
+          card.className = "preset-card";
+          if (currentPreset === preset.key)
+            card.classList.add("active-preset-card");
+          card.innerHTML = `<h3>${preset.name}</h3><p>${preset.desc}</p><span class="preset-badge">${preset.badge}</span>`;
+          card.onclick = () => togglePreset(preset.key);
+          container.appendChild(card);
+        });
+      }
+      function togglePreset(presetKey) {
+        const preset = presetsList.find((p) => p.key === presetKey);
+        if (!preset) return;
+        if (currentPreset === presetKey) {
+          if (confirm(`Preset "${preset.name}" entfernen?`)) {
+            globalConfigCommands = [];
+            configMetadata = [];
+            currentPreset = null;
+            saveGlobalConfigs();
+            alert(`✅ Preset entfernt!`);
+            if (currentMainCat && currentSubCat)
+              renderCommands(currentMainCat, currentSubCat);
+            renderPresetsTab();
+          }
+        } else {
+          if (confirm(`Preset "${preset.name}" laden?`)) {
+            globalConfigCommands = [...preset.commands];
+            configMetadata = [];
+            for (let cmd of preset.commands) {
+              let cmdName = cmd.split(" ")[0];
+              let foundCat = "🎨 Video & Grafik",
+                foundSub = "Auflösung & Display";
+              for (let mc in configCategories) {
+                for (let sc of configCategories[mc].subcats) {
+                  let cmdList = allCommandsLibrary[sc] || [];
+                  if (cmdList.some((c) => c.cmd === cmdName)) {
+                    foundCat = mc;
+                    foundSub = sc;
+                    break;
+                  }
+                }
+              }
+              configMetadata.push({
+                command: cmd,
+                mainCat: foundCat,
+                subCat: foundSub,
+              });
+            }
+            currentPreset = presetKey;
+            saveGlobalConfigs();
+            alert(`✅ Preset geladen!`);
+            if (currentMainCat && currentSubCat)
+              renderCommands(currentMainCat, currentSubCat);
+            renderPresetsTab();
+          }
+        }
+      }
+      function addConfigDirectly(cmdString, mainCat, subCat) {
+        if (cmdString && !globalConfigCommands.includes(cmdString)) {
+          globalConfigCommands.push(cmdString);
+          configMetadata.push({
+            command: cmdString,
+            mainCat: mainCat,
+            subCat: subCat,
+          });
+          if (currentPreset) {
+            currentPreset = null;
+            saveGlobalConfigs();
+            renderPresetsTab();
+          } else saveGlobalConfigs();
+          return true;
+        }
+        return false;
+      }
+      function removeConfigByCommand(cmdString) {
+        const index = globalConfigCommands.indexOf(cmdString);
+        if (index !== -1) {
+          globalConfigCommands.splice(index, 1);
+          configMetadata.splice(index, 1);
+          if (currentPreset) {
+            currentPreset = null;
+            saveGlobalConfigs();
+            renderPresetsTab();
+          } else saveGlobalConfigs();
+          return true;
+        }
+        return false;
+      }
+      function clearAllConfigs() {
+        if (confirm("Alle Config-Befehle löschen?")) {
+          globalConfigCommands = [];
+          configMetadata = [];
+          currentPreset = null;
+          saveGlobalConfigs();
+          renderPresetsTab();
+          if (currentMainCat && currentSubCat)
+            renderCommands(currentMainCat, currentSubCat);
+        }
+      }
+      function renderSavedConfigsList() {
+        let container = document.getElementById("savedConfigsList");
+        if (!container) return;
+        container.innerHTML = "";
+        if (globalConfigCommands.length === 0) {
+          container.innerHTML =
+            '<div class="empty-message">📭 Keine Config-Befehle gespeichert</div>';
+          return;
+        }
+        globalConfigCommands.forEach((cmd, idx) => {
+          let entry = document.createElement("div");
+          entry.className = "bind-entry";
+          entry.innerHTML = `<span class="bind-command">${cmd}</span> <span style="color:var(--accent-light); float:right; cursor:pointer;" onclick="removeConfigCommand(${idx})">[x]</span>`;
+          container.appendChild(entry);
+        });
+      }
+      window.removeConfigCommand = (idx) => {
+        globalConfigCommands.splice(idx, 1);
+        configMetadata.splice(idx, 1);
+        if (currentPreset) {
+          currentPreset = null;
+          saveGlobalConfigs();
+          renderPresetsTab();
+        } else saveGlobalConfigs();
+        refreshFullExport();
+        if (currentMainCat && currentSubCat)
+          renderCommands(currentMainCat, currentSubCat);
+      };
+      let currentMainCat = null,
+        currentSubCat = null;
+      function renderMainCategories() {
+        const container = document.getElementById("mainCategoriesContainer");
+        if (!container) return;
+        container.innerHTML = "";
+        for (let mainCatName of Object.keys(configCategories)) {
+          let btn = document.createElement("div");
+          btn.className = "main-cat-btn";
+          btn.textContent = mainCatName;
+          btn.onclick = () => {
+            document
+              .querySelectorAll(".main-cat-btn")
+              .forEach((b) => b.classList.remove("active-main"));
+            btn.classList.add("active-main");
+            currentMainCat = mainCatName;
+            currentSubCat = null;
+            renderSubcategories(mainCatName);
+          };
+          container.appendChild(btn);
+        }
+      }
+      function renderSubcategories(mainCatName) {
+        const subContainer = document.getElementById("subcategoriesContainer");
+        const commandsContainer = document.getElementById("commandsContainer");
+        if (!subContainer || !commandsContainer) return;
+        const catData = configCategories[mainCatName];
+        if (!catData) return;
+        subContainer.innerHTML = "";
+        let subButtonsDiv = document.createElement("div");
+        subButtonsDiv.className = "subcat-buttons visible";
+        catData.subcats.forEach((sub) => {
+          let btn = document.createElement("div");
+          btn.className = "subcat-btn";
+          btn.textContent = sub;
+          btn.onclick = () => {
+            document
+              .querySelectorAll(".subcat-btn")
+              .forEach((b) => b.classList.remove("active-subcat"));
+            btn.classList.add("active-subcat");
+            currentSubCat = sub;
+            renderCommands(mainCatName, sub);
+          };
+          subButtonsDiv.appendChild(btn);
+        });
+        subContainer.appendChild(subButtonsDiv);
+        commandsContainer.innerHTML = "";
+      }
+      function isCommandInConfig(cmdString) {
+        return globalConfigCommands.includes(cmdString);
+      }
+      function renderCommands(mainCatName, subCatName) {
+        const commandsContainer = document.getElementById("commandsContainer");
+        if (!commandsContainer) return;
+        const catData = configCategories[mainCatName];
+        if (!catData || !catData.commands[subCatName]) return;
+        let commandsList = catData.commands[subCatName];
+        let gridDiv = document.createElement("div");
+        gridDiv.className = "config-grid visible";
+        commandsList.forEach((cf) => {
+          let item = document.createElement("div");
+          item.className = "config-item";
+          let selectHtml = "";
+          let defaultVal = cf.values[0];
+          if (cf.values && cf.values.length > 0) {
+            selectHtml = `<select class="config-select" data-cmd="${cf.cmd}">`;
+            cf.values.forEach((val) => {
+              selectHtml += `<option value="${val}">${val}</option>`;
+            });
+            selectHtml += `</select>`;
+          }
+          item.innerHTML = `<div class="config-item-header"><div class="config-info"><div class="config-cmd">${cf.cmd}</div><div class="config-desc">${cf.desc}</div></div><button class="takeover-btn">📋 Übernehmen</button></div>${selectHtml}<div class="config-preview">${cf.cmd} ${defaultVal}</div>`;
+          const select = item.querySelector(".config-select");
+          const preview = item.querySelector(".config-preview");
+          const takeoverBtn = item.querySelector(".takeover-btn");
+          function updateButtonState() {
+            let finalCmd = cf.cmd;
+            let selectedVal = defaultVal;
+            if (select) {
+              selectedVal = select.value;
+              finalCmd = `${cf.cmd} ${selectedVal}`;
+            }
+            if (isCommandInConfig(finalCmd)) {
+              takeoverBtn.classList.add("success");
+              takeoverBtn.innerHTML = "✓ Abgeschlossen";
+            } else {
+              takeoverBtn.classList.remove("success");
+              takeoverBtn.innerHTML = "📋 Übernehmen";
+            }
+          }
+          if (select) {
+            select.addEventListener("change", (e) => {
+              const selectedValue = e.target.value;
+              preview.textContent = `${cf.cmd} ${selectedValue}`;
+              updateButtonState();
+            });
+          }
+          takeoverBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            let finalCmd = cf.cmd;
+            let selectedVal = defaultVal;
+            if (select) {
+              selectedVal = select.value;
+              finalCmd = `${cf.cmd} ${selectedVal}`;
+            }
+            if (isCommandInConfig(finalCmd)) {
+              if (confirm(`"${finalCmd}" entfernen?`)) {
+                removeConfigByCommand(finalCmd);
+                updateButtonState();
+                takeoverBtn.innerHTML = "🗑 Gelöscht!";
+                setTimeout(() => {
+                  updateButtonState();
+                }, 800);
+              }
+            } else {
+              addConfigDirectly(finalCmd, mainCatName, subCatName);
+              updateButtonState();
+              takeoverBtn.innerHTML = "✓ Gespeichert!";
+              setTimeout(() => {
+                updateButtonState();
+              }, 800);
+            }
+          });
+          item.addEventListener("click", (e) => {
+            if (e.target !== takeoverBtn && e.target.tagName !== "SELECT") {
+              let finalCmd = cf.cmd;
+              let selectedVal = defaultVal;
+              if (select) {
+                selectedVal = select.value;
+                finalCmd = `${cf.cmd} ${selectedVal}`;
+              }
+              if (isCommandInConfig(finalCmd)) {
+                if (confirm(`"${finalCmd}" entfernen?`)) {
+                  removeConfigByCommand(finalCmd);
+                  updateButtonState();
+                }
+              } else {
+                addConfigDirectly(finalCmd, mainCatName, subCatName);
+                updateButtonState();
+                takeoverBtn.innerHTML = "✓ Gespeichert!";
+                setTimeout(() => {
+                  updateButtonState();
+                }, 800);
+              }
+            }
+          });
+          updateButtonState();
+          gridDiv.appendChild(item);
+        });
+        commandsContainer.innerHTML = "";
+        commandsContainer.appendChild(gridDiv);
+      }
+
+      // ======================== SKRIPTE (mit drei neuen Skripten: Rainbow-HUD, Quick Bomb Drop, Rainbow Crosshair) ========================
+      let scriptBindings = {};
+      let selectedScriptKey = null;
+      function updateSelectedKeyDisplay() {
+        const display = document.getElementById("selectedScriptKeyDisplay");
+        if (display) {
+          if (selectedScriptKey) {
+            display.textContent = selectedScriptKey;
+            display.style.background = "var(--accent)";
+          } else {
+            display.textContent = "Keine Taste ausgewählt";
+            display.style.background = "#ff4444";
+          }
+        }
+      }
+
+      // AKTUALISIERTE SKRIPT-TEMPLATES: Jumpthrow, NetGraph, Quick Nade, Rainbow-HUD, Quick Bomb Drop, Rainbow Crosshair
+      const scriptTemplatesList = [
+        {
+          name: "🦘 Jumpthrow",
+          key: "jumpthrow",
+          desc: "Springen + Werfen",
+          content:
+            'alias +jumpthrow "+jump"\nalias -jumpthrow "-jump; -attack"\nbind "KEY" "+jumpthrow"',
+        },
+        {
+          name: "📊 NetGraph Toggle",
+          key: "netgraph",
+          desc: "FPS/Ping anzeigen",
+          content:
+            'alias +netg "cl_showfps 2;+showscores"\nalias -netg "cl_showfps 0;-showscores"\nbind "KEY" "+netg"',
+        },
+        {
+          name: "💣 Quick Nade",
+          key: "quicknade",
+          desc: "Schnell Granaten",
+          content:
+            'alias nextnade "use weapon_hegrenade; use weapon_flashbang; use weapon_smokegrenade; use weapon_molotov"\nbind "KEY" "nextnade"',
+        },
+        {
+          name: "🌈 Rainbow-HUD",
+          key: "rainbowhud",
+          desc: "HUD-Farben bei Bewegung",
+          content:
+            'alias hudToggle "hud_on"\nalias "hud_off" "\n    bind w +forward;\n    bind s +back;\n    bind a +left;\n    bind d +right;\n    bind space +jump;\n    bind ctrl +duck;\n    bind shift +speed;\n    cl_hud_color 0;\n    echo \"🌈 HUD-Farben AUS\";\n    alias hudToggle hud_on\n"\nalias "hud_on" "\n    bind w +_forward;\n    bind s +_back;\n    bind a +_left;\n    bind d +_right;\n    bind space +_jump;\n    bind ctrl +_duck;\n    bind shift +_walk;\n    echo \"🌈 HUD-Farben AN - Drücke WASD, Springen, Ducken, Schleichen!\";\n    alias hudToggle hud_off\n"\nalias "+_forward" "+forward; cl_hud_color 7"\nalias "-_forward" "-forward; cl_hud_color 0"\nalias "+_back" "+back; cl_hud_color 3"\nalias "-_back" "-back; cl_hud_color 0"\nalias "+_left" "+left; cl_hud_color 8"\nalias "-_left" "-left; cl_hud_color 0"\nalias "+_right" "+right; cl_hud_color 10"\nalias "-_right" "-right; cl_hud_color 0"\nalias "+_jump" "+jump; cl_hud_color 6"\nalias "-_jump" "-jump; cl_hud_color 0"\nalias "+_duck" "+duck; cl_hud_color 5"\nalias "-_duck" "-duck; cl_hud_color 0"\nalias "+_walk" "+speed; cl_hud_color 9"\nalias "-_walk" "-speed; cl_hud_color 0"\nbind "KEY" "hudToggle"\nhud_on',
+        },
+        {
+          name: "💣 Quick Bomb Drop",
+          key: "bombdrop",
+          desc: "Bombe schnell fallen lassen",
+          content:
+            'alias "+bombdrop" "use weapon_c4; drop"\nalias "-bombdrop" "slot10"\nbind "KEY" "+bombdrop"',
+        },
+        {
+          name: "🌈 Rainbow Crosshair",
+          key: "rainbowcrosshair",
+          desc: "Fadenkreuz-Regenbogen bei jedem Schuss",
+          content:
+            'alias rainbow_crosshair "rainbow_step0"\nalias "rainbow_step0" "cl_crosshaircolor_r 255; cl_crosshaircolor_g 0; cl_crosshaircolor_b 0; alias rainbow_crosshair rainbow_step1"\nalias "rainbow_step1" "cl_crosshaircolor_r 255; cl_crosshaircolor_g 85; cl_crosshaircolor_b 0; alias rainbow_crosshair rainbow_step2"\nalias "rainbow_step2" "cl_crosshaircolor_r 255; cl_crosshaircolor_g 255; cl_crosshaircolor_b 0; alias rainbow_crosshair rainbow_step3"\nalias "rainbow_step3" "cl_crosshaircolor_r 170; cl_crosshaircolor_g 255; cl_crosshaircolor_b 0; alias rainbow_crosshair rainbow_step4"\nalias "rainbow_step4" "cl_crosshaircolor_r 0; cl_crosshaircolor_g 255; cl_crosshaircolor_b 0; alias rainbow_crosshair rainbow_step5"\nalias "rainbow_step5" "cl_crosshaircolor_r 0; cl_crosshaircolor_g 255; cl_crosshaircolor_b 170; alias rainbow_crosshair rainbow_step6"\nalias "rainbow_step6" "cl_crosshaircolor_r 0; cl_crosshaircolor_g 255; cl_crosshaircolor_b 255; alias rainbow_crosshair rainbow_step7"\nalias "rainbow_step7" "cl_crosshaircolor_r 0; cl_crosshaircolor_g 85; cl_crosshaircolor_b 255; alias rainbow_crosshair rainbow_step8"\nalias "rainbow_step8" "cl_crosshaircolor_r 0; cl_crosshaircolor_g 0; cl_crosshaircolor_b 255; alias rainbow_crosshair rainbow_step9"\nalias "rainbow_step9" "cl_crosshaircolor_r 85; cl_crosshaircolor_g 0; cl_crosshaircolor_b 255; alias rainbow_crosshair rainbow_step10"\nalias "rainbow_step10" "cl_crosshaircolor_r 170; cl_crosshaircolor_g 0; cl_crosshaircolor_b 255; alias rainbow_crosshair rainbow_step11"\nalias "rainbow_step11" "cl_crosshaircolor_r 255; cl_crosshaircolor_g 0; cl_crosshaircolor_b 170; alias rainbow_crosshair rainbow_step0"\nalias "+rainbow_attack" "+attack; rainbow_crosshair"\nalias "-rainbow_attack" "-attack"\nalias "reset_crosshair" "\n    cl_crosshaircolor_r 0;\n    cl_crosshaircolor_g 255;\n    cl_crosshaircolor_b 255;\n    echo \"🌈 Fadenkreuz zurückgesetzt auf CYAN\";\n    alias rainbow_crosshair rainbow_step0\n"\nalias "crosshair_rainbow_on" "\n    bind MOUSE1 +rainbow_attack;\n    cl_crosshaircolor 5;\n    echo \"🌈 RAINBOW-MODUS AN - Jeder Schuss ändert die Farbe!\";\n    alias crosshair_toggle crosshair_rainbow_off\n"\nalias "crosshair_rainbow_off" "\n    bind MOUSE1 +attack;\n    echo \"🌈 RAINBOW-MODUS AUS - Normales Fadenkreuz\";\n    alias crosshair_toggle crosshair_rainbow_on\n"\nalias crosshair_toggle crosshair_rainbow_on\nbind "KEY" "crosshair_toggle"\ncl_crosshaircolor 5',
+        },
+      ];
+
+      function loadScriptBindings() {
+        let s = localStorage.getItem("cs2_neon_script_unique");
+        if (s) scriptBindings = JSON.parse(s);
+        else scriptBindings = {};
+        renderScriptsList();
+        refreshFullExport();
+        updateSelectedKeyDisplay();
+      }
+      function saveScriptBindings() {
+        localStorage.setItem(
+          "cs2_neon_script_unique",
+          JSON.stringify(scriptBindings),
+        );
+        renderScriptsList();
+        refreshFullExport();
+        renderScriptKeyboard();
+        renderBuyKeyboard();
+      }
+      function renderScriptKeyboard() {
+        let mainCont = document.getElementById("scriptKeyboardMain");
+        if (!mainCont) return;
+        mainCont.innerHTML = "";
+        mainKeysRows.forEach((row) => {
+          let rd = document.createElement("div");
+          rd.className = "key-row";
+          row.forEach((k) => {
+            let d = document.createElement("div");
+            d.className = `key ${getKeyClass(k, false)}`;
+            if (selectedScriptKey === k) d.classList.add("active-key");
+            d.textContent = k;
+            d.onclick = () => {
+              selectedScriptKey = k;
+              renderScriptKeyboard();
+              updateSelectedKeyDisplay();
+              let val = scriptBindings[k] || "";
+              document.getElementById("scriptCommandsArea").value = val.replace(
+                /^bind ".*"\n/,
+                "",
+              );
+              let nameMatch = val.match(/\/\/ (.*?)\n/);
+              if (nameMatch)
+                document.getElementById("scriptNameInput").value = nameMatch[1];
+            };
+            rd.appendChild(d);
+          });
+          mainCont.appendChild(rd);
+        });
+        let numCont = document.getElementById("scriptNumpadContainer");
+        if (!numCont) return;
+        numCont.innerHTML = "";
+        numpadKeys.forEach((k) => {
+          let d = document.createElement("div");
+          d.className = `numpad-key ${getKeyClass(k, false)}`;
+          if (selectedScriptKey === k) d.style.background = "var(--accent)";
+          d.textContent = k.replace("KP_", "");
+          d.onclick = () => {
+            selectedScriptKey = k;
+            renderScriptKeyboard();
+            updateSelectedKeyDisplay();
+            let val = scriptBindings[k] || "";
+            document.getElementById("scriptCommandsArea").value = val.replace(
+              /^bind ".*"\n/,
+              "",
+            );
+            let nameMatch = val.match(/\/\/ (.*?)\n/);
+            if (nameMatch)
+              document.getElementById("scriptNameInput").value = nameMatch[1];
+          };
+          numCont.appendChild(d);
+        });
+      }
+      function saveScriptForCurrentKey() {
+        if (!selectedScriptKey) {
+          alert("❌ Keine Taste ausgewählt!");
+          return;
+        }
+        let userAliases = document
+          .getElementById("scriptCommandsArea")
+          .value.trim();
+        if (!userAliases) {
+          alert("❌ Skript-Inhalt leer!");
+          return;
+        }
+        let scriptName =
+          document.getElementById("scriptNameInput").value.trim() || "Skript";
+        let finalContent = `// ${scriptName}\n${userAliases
+          .replace(/bind "KEY"/g, `bind "${selectedScriptKey}"`)
+          .replace(/bind "F12"/g, `bind "${selectedScriptKey}"`)
+          .replace(/bind "TAB"/g, `bind "${selectedScriptKey}"`)}`;
+        if (
+          scriptBindings[selectedScriptKey] &&
+          !confirm(
+            `Taste ${selectedScriptKey} bereits gebunden. Überschreiben?`,
+          )
+        )
+          return;
+        scriptBindings[selectedScriptKey] = finalContent;
+        saveScriptBindings();
+        alert(`✅ Skript für Taste "${selectedScriptKey}" gespeichert!`);
+        renderScriptKeyboard();
+        renderBuyKeyboard();
+      }
+      function unbindScriptKey() {
+        if (selectedScriptKey && scriptBindings[selectedScriptKey]) {
+          delete scriptBindings[selectedScriptKey];
+          saveScriptBindings();
+          document.getElementById("scriptCommandsArea").value = "";
+          document.getElementById("scriptNameInput").value = "";
+          alert(`Binding für ${selectedScriptKey} entfernt`);
+          renderScriptKeyboard();
+          renderBuyKeyboard();
+        } else if (!selectedScriptKey) alert("❌ Keine Taste ausgewählt!");
+        else alert("Keine Bindung für diese Taste");
+      }
+      function renderScriptsList() {
+        let cont = document.getElementById("savedScriptsList");
+        if (!cont) return;
+        cont.innerHTML = "";
+        if (Object.keys(scriptBindings).length === 0) {
+          cont.innerHTML = '<div class="empty-message">📭 Keine Skripte</div>';
+          return;
+        }
+        for (let [key, val] of Object.entries(scriptBindings)) {
+          let d = document.createElement("div");
+          d.className = "bind-entry";
+          let firstLine = val.split("\n")[0].replace("//", "");
+          d.innerHTML = `<span class="bind-key">bind "${key}"</span> → <span class="bind-command">"${firstLine.substring(0, 60)}"</span>`;
+          d.onclick = () => {
+            selectedScriptKey = key;
+            renderScriptKeyboard();
+            updateSelectedKeyDisplay();
+            let cleanVal = scriptBindings[key].replace(/^\/\/.*\n/, "");
+            document.getElementById("scriptCommandsArea").value = cleanVal;
+            document.getElementById("scriptNameInput").value = firstLine.trim();
+          };
+          cont.appendChild(d);
+        }
+      }
+      function deleteSelectedScript() {
+        if (selectedScriptKey && scriptBindings[selectedScriptKey]) {
+          delete scriptBindings[selectedScriptKey];
+          saveScriptBindings();
+          document.getElementById("scriptCommandsArea").value = "";
+          document.getElementById("scriptNameInput").value = "";
+          alert(`Skript auf Taste ${selectedScriptKey} gelöscht`);
+          renderScriptKeyboard();
+          renderBuyKeyboard();
+        } else if (!selectedScriptKey) alert("❌ Keine Taste ausgewählt!");
+        else alert("Kein Skript auf dieser Taste");
+      }
+      function renderTemplates() {
+        let cont = document.getElementById("templateScripts");
+        if (!cont) return;
+        cont.innerHTML = "";
+        scriptTemplatesList.forEach((t) => {
+          let btn = document.createElement("div");
+          btn.className = "script-template-item";
+          btn.innerHTML = `<span>${t.name}</span><span class="script-desc">📝 ${t.desc}</span>`;
+          btn.onclick = () => {
+            if (!selectedScriptKey)
+              alert("⚠️ Bitte zuerst eine Taste auswählen!");
+            else toggleScriptTemplate(t.key, t.content, t.name);
+          };
+          cont.appendChild(btn);
+        });
+      }
+      function toggleScriptTemplate(scriptKey, scriptContent, scriptName) {
+        let finalContent = `// ${scriptName}\n${scriptContent
+          .replace(/bind "KEY"/g, `bind "${selectedScriptKey}"`)
+          .replace(/bind "F12"/g, `bind "${selectedScriptKey}"`)
+          .replace(/bind "TAB"/g, `bind "${selectedScriptKey}"`)}`;
+        if (
+          scriptBindings[selectedScriptKey] &&
+          !confirm(`Taste ${selectedScriptKey} bereits belegt. Überschreiben?`)
+        )
+          return;
+        scriptBindings[selectedScriptKey] = finalContent;
+        saveScriptBindings();
+        alert(
+          `✅ Skript "${scriptName}" wurde auf Taste "${selectedScriptKey}" gespeichert!`,
+        );
+        renderScriptKeyboard();
+        renderBuyKeyboard();
+        document.getElementById("scriptCommandsArea").value =
+          finalContent.replace(/^\/\/.*\n/, "");
+        document.getElementById("scriptNameInput").value = scriptName;
+      }
+
+      // ======================== EXPORT ========================
+      function generateFullExport() {
+        let out = "// CS2 NEON CONFIG\n\n";
+        for (let [k, cmd] of Object.entries(buyBindings))
+          out += `bind "${k}" "${cmd}"\n`;
+        out += "\n";
+        for (let cmd of globalConfigCommands) out += `${cmd}\n`;
+        out += "\n";
+        for (let [key, val] of Object.entries(scriptBindings))
+          out += `${val}\n\n`;
+        return out;
+      }
+      function refreshFullExport() {
+        let ta = document.getElementById("fullExportTextarea");
+        if (ta) ta.value = generateFullExport();
+      }
+      function copyFullExport() {
+        navigator.clipboard.writeText(generateFullExport());
+        alert("Export kopiert!");
+      }
+      function downloadFullCfg() {
+        let blob = new Blob([generateFullExport()], { type: "text/plain" });
+        let a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "cs2_neon_autoexec.cfg";
+        a.click();
+        URL.revokeObjectURL(a.href);
+        alert("Download: cs2_neon_autoexec.cfg");
+      }
+
+      function initTabs() {
+        document.querySelectorAll(".tab-btn").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            document
+              .querySelectorAll(".tab-btn")
+              .forEach((b) => b.classList.remove("active"));
+            btn.classList.add("active");
+            document
+              .querySelectorAll(".tab-content")
+              .forEach((tc) => tc.classList.remove("active"));
+            document
+              .getElementById(btn.getAttribute("data-tab"))
+              .classList.add("active");
+            refreshFullExport();
+          });
+        });
+      }
+      function initConfigSubTabs() {
+        document.querySelectorAll(".config-subtab").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const subtab = btn.dataset.subtab;
+            document
+              .querySelectorAll(".config-subtab")
+              .forEach((b) => b.classList.remove("active"));
+            btn.classList.add("active");
+            document
+              .querySelectorAll(".config-sub-content")
+              .forEach((c) => c.classList.remove("active"));
+            document.getElementById(`config-${subtab}`).classList.add("active");
+          });
+        });
+      }
+
+      function init() {
+        fillCategories();
+        initTheme();
+        loadBuy();
+        renderBuyKeyboard();
+        renderBuyCategories();
+        document
+          .getElementById("saveBindingBtn")
+          ?.addEventListener("click", saveCurrentBinding);
+        document
+          .getElementById("unbindCurrentBtn")
+          ?.addEventListener("click", unbindCurrentKey);
+        document
+          .getElementById("resetBuyBtn")
+          ?.addEventListener("click", resetBuy);
+        renderMainCategories();
+        document
+          .getElementById("clearAllConfigsBtn")
+          ?.addEventListener("click", clearAllConfigs);
+        loadGlobalConfigs();
+        loadScriptBindings();
+        renderScriptKeyboard();
+        renderTemplates();
+        document
+          .getElementById("saveScriptWithKeyBtn")
+          ?.addEventListener("click", saveScriptForCurrentKey);
+        document
+          .getElementById("unbindScriptKeyBtn")
+          ?.addEventListener("click", unbindScriptKey);
+        document
+          .getElementById("deleteSelectedScriptBtn")
+          ?.addEventListener("click", deleteSelectedScript);
+        loadStartOptions();
+        document
+          .getElementById("copyStartOptionsBtn")
+          ?.addEventListener("click", copyStartOptionsToClipboard);
+        document
+          .getElementById("resetStartOptionsBtn")
+          ?.addEventListener("click", resetStartOptionsToDefault);
+        document
+          .getElementById("copyFullExportBtn")
+          ?.addEventListener("click", copyFullExport);
+        document
+          .getElementById("downloadFullCfgBtn")
+          ?.addEventListener("click", downloadFullCfg);
+        document
+          .getElementById("refreshExportBtn")
+          ?.addEventListener("click", refreshFullExport);
+        document
+          .getElementById("toggleKeyboardLayout")
+          ?.addEventListener("click", toggleKeyboardLayout);
+        document
+          .getElementById("toggleKeyboardLayoutScript")
+          ?.addEventListener("click", toggleKeyboardLayout);
+        initConfigSubTabs();
+        initTabs();
+        const allKeysList = getAllKeys();
+        if (allKeysList.length) {
+          if (!selectedBuyKey || !allKeysList.includes(selectedBuyKey))
+            selectedBuyKey = allKeysList[0];
+          renderBuyKeyboard();
+        }
+        if (!selectedScriptKey || !allKeysList.includes(selectedScriptKey))
+          selectedScriptKey = allKeysList[0];
+        renderScriptKeyboard();
+        updateSelectedKeyDisplay();
+        refreshFullExport();
+      }
+      init();
+    </script>
+  </body>
+</html>
