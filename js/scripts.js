@@ -49,7 +49,9 @@ function renderScriptKeyboard() {
         renderScriptKeyboard();
         updateSelectedKeyDisplay();
         let val = scriptBindings[k] || "";
-        document.getElementById("scriptCommandsArea").value = val.replace(/^bind ".*"\n/, "");
+        // Entferne die bind-Zeile und den Kommentar für die Anzeige
+        let cleanVal = val.replace(/^\/\/ .*\n/, "").replace(/bind ".*"\n?/g, "");
+        document.getElementById("scriptCommandsArea").value = cleanVal.trim();
         let nameMatch = val.match(/\/\/ (.*?)\n/);
         if (nameMatch) document.getElementById("scriptNameInput").value = nameMatch[1];
       };
@@ -70,7 +72,8 @@ function renderScriptKeyboard() {
       renderScriptKeyboard();
       updateSelectedKeyDisplay();
       let val = scriptBindings[k] || "";
-      document.getElementById("scriptCommandsArea").value = val.replace(/^bind ".*"\n/, "");
+      let cleanVal = val.replace(/^\/\/ .*\n/, "").replace(/bind ".*"\n?/g, "");
+      document.getElementById("scriptCommandsArea").value = cleanVal.trim();
       let nameMatch = val.match(/\/\/ (.*?)\n/);
       if (nameMatch) document.getElementById("scriptNameInput").value = nameMatch[1];
     };
@@ -89,11 +92,37 @@ function saveScriptForCurrentKey() {
     return;
   }
   let scriptName = document.getElementById("scriptNameInput").value.trim() || "Skript";
-  let finalContent = `// ${scriptName}\n${userAliases
-    .replace(/bind "KEY"/g, `bind "${selectedScriptKey}"`)
-    .replace(/bind "F12"/g, `bind "${selectedScriptKey}"`)
-    .replace(/bind "TAB"/g, `bind "${selectedScriptKey}"`)}`;
+  
+  // Entferne alle existierenden bind-Zeilen aus dem userAliases
+  let cleanAliases = userAliases.replace(/bind\s+"[^"]*"\s+[^\n]*\n?/g, "");
+  cleanAliases = cleanAliases.trim();
+  
+  // Extrahiere den alias-Namen für den bind-Befehl
+  let aliasName = "";
+  const aliasMatch = cleanAliases.match(/alias\s+(\+\w+|\w+)/);
+  if (aliasMatch) {
+    aliasName = aliasMatch[1];
+  }
+  
+  // Baue das finale Skript OHNE doppelte bind-Zeile
+  let finalContent = `// ${scriptName}\n${cleanAliases}`;
+  
+  // Füge die bind-Zeile NUR am Ende hinzu (einmal)
+  if (aliasName) {
+    finalContent += `\nbind "${selectedScriptKey}" "${aliasName}"`;
+  } else {
+    // Fallback: Wenn kein Alias gefunden wurde, versuche den ersten Befehl zu nehmen
+    const firstLine = cleanAliases.split("\n")[0];
+    if (firstLine && firstLine.includes("alias")) {
+      const fallbackMatch = firstLine.match(/alias\s+(\+\w+|\w+)/);
+      if (fallbackMatch) {
+        finalContent += `\nbind "${selectedScriptKey}" "${fallbackMatch[1]}"`;
+      }
+    }
+  }
+  
   if (scriptBindings[selectedScriptKey] && !confirm(`Taste ${selectedScriptKey} bereits gebunden. Überschreiben?`)) return;
+  
   scriptBindings[selectedScriptKey] = finalContent;
   saveScriptBindings();
   alert(`✅ Skript für Taste "${selectedScriptKey}" gespeichert!`);
@@ -133,8 +162,8 @@ function renderScriptsList() {
       selectedScriptKey = key;
       renderScriptKeyboard();
       updateSelectedKeyDisplay();
-      let cleanVal = scriptBindings[key].replace(/^\/\/.*\n/, "");
-      document.getElementById("scriptCommandsArea").value = cleanVal;
+      let cleanVal = val.replace(/^\/\/.*\n/, "").replace(/bind ".*"\n?/g, "");
+      document.getElementById("scriptCommandsArea").value = cleanVal.trim();
       document.getElementById("scriptNameInput").value = firstLine.trim();
     };
     cont.appendChild(d);
@@ -172,20 +201,74 @@ function renderTemplates() {
 }
 
 function toggleScriptTemplate(scriptKey, scriptContent, scriptName) {
-  let finalContent = `// ${scriptName}\n${scriptContent
-    .replace(/bind "KEY"/g, `bind "${selectedScriptKey}"`)
-    .replace(/bind "F12"/g, `bind "${selectedScriptKey}"`)
-    .replace(/bind "TAB"/g, `bind "${selectedScriptKey}"`)}`;
+  if (!selectedScriptKey) {
+    alert("⚠️ Bitte zuerst eine Taste auswählen!");
+    return;
+  }
+  
+  // Entferne ALLE bind-Zeilen aus dem Template (auch die mit "KEY")
+  let cleanContent = scriptContent.replace(/bind\s+"[^"]*"\s+[^\n]*\n?/g, "");
+  cleanContent = cleanContent.trim();
+  
+  // Entferne auch die letzte Zeile wenn sie "hud_on" oder ähnliches ist (falls vorhanden)
+  const lines = cleanContent.split('\n');
+  const filteredLines = lines.filter(line => {
+    // Behalte nur alias-Zeilen und verzweigte Befehle
+    return line.trim().startsWith('alias') || 
+           line.trim().startsWith('+') || 
+           line.trim().startsWith('-') ||
+           line.trim().startsWith('hudToggle') ||
+           (line.trim().length > 0 && !line.trim().startsWith('bind'));
+  });
+  cleanContent = filteredLines.join('\n');
+  
+  // Finde den Alias-Namen für den bind-Befehl
+  let aliasName = "";
+  // Suche nach "hudToggle" als alias
+  const hudMatch = cleanContent.match(/alias\s+(hudToggle)\s/);
+  if (hudMatch) {
+    aliasName = hudMatch[1];
+  } else {
+    // Oder nach einem anderen Alias
+    const aliasMatch = cleanContent.match(/alias\s+(\+\w+|\w+)/);
+    if (aliasMatch) {
+      aliasName = aliasMatch[1];
+    }
+  }
+  
+  // Baue das finale Skript
+  let finalContent = `// ${scriptName}\n${cleanContent}`;
+  
+  // Füge die bind-Zeile NUR EINMAL hinzu
+  if (aliasName) {
+    finalContent += `\nbind "${selectedScriptKey}" "${aliasName}"`;
+  } else {
+    // Fallback: Suche nach einem Befehl in der ersten Zeile
+    const firstLine = cleanContent.split('\n')[0];
+    if (firstLine && firstLine.includes('alias')) {
+      const cmdMatch = firstLine.match(/alias\s+(\+\w+|\w+)/);
+      if (cmdMatch) {
+        finalContent += `\nbind "${selectedScriptKey}" "${cmdMatch[1]}"`;
+      }
+    }
+  }
+  
   if (scriptBindings[selectedScriptKey] && !confirm(`Taste ${selectedScriptKey} bereits belegt. Überschreiben?`)) return;
+  
   scriptBindings[selectedScriptKey] = finalContent;
   saveScriptBindings();
   alert(`✅ Skript "${scriptName}" wurde auf Taste "${selectedScriptKey}" gespeichert!`);
   renderScriptKeyboard();
   if (window.renderBuyKeyboard) window.renderBuyKeyboard();
   if (window.renderSayKeyboard) window.renderSayKeyboard();
-  document.getElementById("scriptCommandsArea").value = finalContent.replace(/^\/\/.*\n/, "");
+  
+  // Zeige das gespeicherte Skript im Editor an
+  document.getElementById("scriptCommandsArea").value = cleanContent;
   document.getElementById("scriptNameInput").value = scriptName;
 }
 
+// Globale Exporte
 window.scriptBindings = scriptBindings;
 window.renderScriptKeyboard = renderScriptKeyboard;
+window.saveScriptBindings = saveScriptBindings;
+window.loadScriptBindings = loadScriptBindings;

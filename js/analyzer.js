@@ -1,3 +1,4 @@
+// ======================== CPU DROPDOWN GENERIEREN ========================
 // ======================== SYSTEM ANALYZER ========================
 function populateCpuSelect() {
   const select = document.getElementById("analyzerCpuSelect");
@@ -316,6 +317,156 @@ function populateCpuSelect() {
   console.log("FERTIG! AMD Gruppen:", Object.values(amdGenerations).filter(g => g.length > 0).length);
 }
 
+// ======================== GPU DROPDOWN GENERIEREN ========================
+function populateGpuSelect() {
+  const select = document.getElementById("analyzerGpuSelect");
+  if (!select) {
+    console.error("GPU select Element nicht gefunden!");
+    return;
+  }
+
+  console.log("GPU Liste wird geladen...");
+  console.log("Anzahl GPUs:", Object.keys(analyzerGpuData).length);
+
+  // GPU-Gruppen definieren (wie bei CPU)
+  const gpuGroups = {
+    "NVIDIA RTX 50 Series (2025)": [],
+    "NVIDIA RTX 40 Series (2022-2024)": [],
+    "NVIDIA RTX 30 Series (2020-2022)": [],
+    "NVIDIA RTX 20 Series (2018-2020)": [],
+    "NVIDIA GTX 16 Series (2019)": [],
+    "NVIDIA GTX 10 Series (2016-2018)": [],
+    "NVIDIA GTX 9 Series (2014-2016)": [],
+    "AMD Radeon RX 9000 Series (2025)": [],
+    "AMD Radeon RX 7000 Series (2022-2024)": [],
+    "AMD Radeon RX 6000 Series (2020-2022)": [],
+    "AMD Radeon RX 5000 Series (2019)": [],
+    "AMD Radeon Vega / RX 500 Series (2016-2018)": [],
+    "Intel Arc Series (2022-2025)": [],
+    "Intel Integrated Graphics": []
+  };
+
+  // GPU-Daten in Gruppen sortieren
+  for (const [gpuName, score] of Object.entries(analyzerGpuData)) {
+    let zugeordnet = false;
+    
+    // NVIDIA RTX 50 SERIES
+    if (gpuName.includes("RTX 5090") || gpuName.includes("RTX 5080") || 
+        gpuName.includes("RTX 5070") || gpuName.includes("RTX 5060")) {
+      gpuGroups["NVIDIA RTX 50 Series (2025)"].push({ name: gpuName, score: score });
+      zugeordnet = true;
+    }
+    // NVIDIA RTX 40 SERIES
+    else if (gpuName.includes("RTX 4090") || gpuName.includes("RTX 4080") || 
+             gpuName.includes("RTX 4070") || gpuName.includes("RTX 4060")) {
+      gpuGroups["NVIDIA RTX 40 Series (2022-2024)"].push({ name: gpuName, score: score });
+      zugeordnet = true;
+    }
+    // NVIDIA RTX 30 SERIES
+    else if (gpuName.includes("RTX 3090") || gpuName.includes("RTX 3080") || 
+             gpuName.includes("RTX 3070") || gpuName.includes("RTX 3060") || 
+             gpuName.includes("RTX 3050")) {
+      gpuGroups["NVIDIA RTX 30 Series (2020-2022)"].push({ name: gpuName, score: score });
+      zugeordnet = true;
+    }
+    // NVIDIA RTX 20 SERIES
+    else if (gpuName.includes("RTX 2080") || gpuName.includes("RTX 2070") || 
+             gpuName.includes("RTX 2060")) {
+      gpuGroups["NVIDIA RTX 20 Series (2018-2020)"].push({ name: gpuName, score: score });
+      zugeordnet = true;
+    }
+    // NVIDIA GTX 16 SERIES
+    else if (gpuName.includes("GTX 1660") || gpuName.includes("GTX 1650")) {
+      gpuGroups["NVIDIA GTX 16 Series (2019)"].push({ name: gpuName, score: score });
+      zugeordnet = true;
+    }
+    // NVIDIA GTX 10 SERIES
+    else if (gpuName.includes("GTX 1080") || gpuName.includes("GTX 1070") || 
+             gpuName.includes("GTX 1060") || gpuName.includes("GTX 1050")) {
+      gpuGroups["NVIDIA GTX 10 Series (2016-2018)"].push({ name: gpuName, score: score });
+      zugeordnet = true;
+    }
+    // NVIDIA GTX 9 SERIES
+    else if (gpuName.includes("GTX 980") || gpuName.includes("GTX 970") || 
+             gpuName.includes("GTX 960") || gpuName.includes("GTX 950")) {
+      gpuGroups["NVIDIA GTX 9 Series (2014-2016)"].push({ name: gpuName, score: score });
+      zugeordnet = true;
+    }
+    // AMD RX 9000 SERIES
+    else if (gpuName.includes("RX 9090") || gpuName.includes("RX 9080") || 
+             gpuName.includes("RX 9070") || gpuName.includes("RX 9060")) {
+      gpuGroups["AMD Radeon RX 9000 Series (2025)"].push({ name: gpuName, score: score });
+      zugeordnet = true;
+    }
+    // AMD RX 7000 SERIES
+    else if (gpuName.includes("RX 7900") || gpuName.includes("RX 7800") || 
+             gpuName.includes("RX 7700") || gpuName.includes("RX 7600")) {
+      gpuGroups["AMD Radeon RX 7000 Series (2022-2024)"].push({ name: gpuName, score: score });
+      zugeordnet = true;
+    }
+    // AMD RX 6000 SERIES
+    else if (gpuName.includes("RX 6950") || gpuName.includes("RX 6900") || 
+             gpuName.includes("RX 6800") || gpuName.includes("RX 6750") ||
+             gpuName.includes("RX 6700") || gpuName.includes("RX 6650") ||
+             gpuName.includes("RX 6600") || gpuName.includes("RX 6500") ||
+             gpuName.includes("RX 6400")) {
+      gpuGroups["AMD Radeon RX 6000 Series (2020-2022)"].push({ name: gpuName, score: score });
+      zugeordnet = true;
+    }
+    // AMD RX 5000 SERIES
+    else if (gpuName.includes("RX 5700") || gpuName.includes("RX 5600") || 
+             gpuName.includes("RX 5500")) {
+      gpuGroups["AMD Radeon RX 5000 Series (2019)"].push({ name: gpuName, score: score });
+      zugeordnet = true;
+    }
+    // AMD VEGA / RX 500
+    else if (gpuName.includes("Vega") || gpuName.includes("RX 590") || 
+             gpuName.includes("RX 580") || gpuName.includes("RX 570") ||
+             gpuName.includes("RX 480")) {
+      gpuGroups["AMD Radeon Vega / RX 500 Series (2016-2018)"].push({ name: gpuName, score: score });
+      zugeordnet = true;
+    }
+    // INTEL ARC
+    else if (gpuName.includes("Arc")) {
+      gpuGroups["Intel Arc Series (2022-2025)"].push({ name: gpuName, score: score });
+      zugeordnet = true;
+    }
+    // INTEL INTEGRATED
+    else if (gpuName.includes("UHD") || gpuName.includes("Iris") || gpuName.includes("HD Graphics")) {
+      gpuGroups["Intel Integrated Graphics"].push({ name: gpuName, score: score });
+      zugeordnet = true;
+    }
+    
+    if (!zugeordnet) {
+      console.warn("Nicht zugeordnete GPU:", gpuName);
+    }
+  }
+
+  // ======================== DROPDOWN BAUEN ========================
+  select.innerHTML = '<option value="" disabled selected>-- GPU auswählen --</option>';
+
+  // Alle GPU-Gruppen in der definierten Reihenfolge
+  for (const [groupName, gpus] of Object.entries(gpuGroups)) {
+    if (gpus.length > 0) {
+      // Nach Punktzahl sortieren (höchste zuerst)
+      gpus.sort((a, b) => b.score - a.score);
+      
+      const optgroup = document.createElement("optgroup");
+      optgroup.label = `${groupName} (${gpus.length})`;
+      
+      for (const gpu of gpus) {
+        const option = document.createElement("option");
+        option.value = gpu.name;
+        option.textContent = gpu.name;
+        optgroup.appendChild(option);
+      }
+      select.appendChild(optgroup);
+    }
+  }
+
+  console.log("FERTIG! GPU Gruppen:", Object.values(gpuGroups).filter(g => g.length > 0).length);
+}
+
 function calculateAnalyzerRamScore(ramGB) {
   if (ramGB >= 128) return 2200;
   if (ramGB >= 64) return 1900;
@@ -392,9 +543,9 @@ function updateAnalyzerEvaluation() {
   totalScore = totalScore * calculateRamTypeMultiplier(ramType);
   totalScore = totalScore * calculateMonitorMalus(monitors);
   if (isStreaming) totalScore = totalScore * 0.92;
-  totalScore = Math.floor(Math.min(50000, Math.max(0, totalScore)));
+  totalScore = Math.floor(Math.min(70000, Math.max(0, totalScore)));
   
-  document.getElementById("analyzerMeterFill").style.width = (totalScore / 50000) * 100 + "%";
+  document.getElementById("analyzerMeterFill").style.width = (totalScore / 70000) * 100 + "%";
   document.getElementById("analyzerScoreValue").innerHTML = totalScore.toLocaleString();
   
   const category = getAnalyzerPerformanceCategory(totalScore);
@@ -412,7 +563,8 @@ function updateAnalyzerEvaluation() {
 // Analyzer Event-Listener initialisieren
 function initAnalyzer() {
   populateCpuSelect();
-  document.getElementById("analyzerCpuSelect")?.addEventListener("change", updateAnalyzerEvaluation);
+  populateGpuSelect();
+    document.getElementById("analyzerCpuSelect")?.addEventListener("change", updateAnalyzerEvaluation);
   document.getElementById("analyzerGpuSelect")?.addEventListener("change", updateAnalyzerEvaluation);
   document.getElementById("analyzerRamSelect")?.addEventListener("change", updateAnalyzerEvaluation);
   document.getElementById("analyzerRamTypeSelect")?.addEventListener("change", updateAnalyzerEvaluation);

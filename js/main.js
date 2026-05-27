@@ -66,6 +66,7 @@ function init() {
   initConfigSubTabs();
   initTabs();
   initAnalyzer();
+  initPingTest();
   
   const allKeysList = getAllKeys();
   if (allKeysList.length) {

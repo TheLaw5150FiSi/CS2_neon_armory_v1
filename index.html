@@ -43,6 +43,7 @@
         <button class="tab-btn" data-tab="analyzerTab">
           📊 SYSTEM ANALYZER
         </button>
+        <button class="tab-btn" data-tab="pingTab">📡 PING RADAR</button>
         <button class="tab-btn" data-tab="startTab">🚀 START OPTIONEN</button>
         <button class="tab-btn" data-tab="exportTab">📦 EXPORT</button>
       </div>
@@ -269,411 +270,195 @@
       </div>
 
       <!-- SYSTEM ANALYZER TAB -->
-      <div id="analyzerTab" class="tab-content">
-        <div class="card">
-          <h2>📊 SYSTEM ANALYZER · CS2 PERFORMANCE INDEX</h2>
-          <div class="info-hint">
-            📊 Wähle CPU, GPU, RAM und weitere Faktoren – der Performance-Score
-            (0-50.000) wird live berechnet
-          </div>
+<!-- SYSTEM ANALYZER TAB -->
+<div id="analyzerTab" class="tab-content">
+  <div class="card">
+    <h2>📊 SYSTEM ANALYZER · CS2 PERFORMANCE INDEX</h2>
+    <div class="info-hint">
+      📊 Wähle CPU, GPU und RAM – der Performance-Score wird live berechnet
+    </div>
 
-          <div class="analyzer-config-grid">
-            <!-- CPU -->
-            <div class="analyzer-card">
-              <h3><i class="fas fa-microchip"></i> Select CPU</h3>
-              <div class="analyzer-select-group">
-                <label>Prozessor</label>
-                <select id="analyzerCpuSelect">
-                  <option value="" disabled selected>
-                    -- CPU auswählen --
-                  </option>
-                </select>
-              </div>
-            </div>
+    <!-- ZEILE 1: CPU + GPU + RAM nebeneinander -->
+    <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
+      <!-- CPU -->
+      <div style="flex: 1; min-width: 200px; background: var(--btn-bg); border-radius: 1rem; padding: 0.8rem; border: 1px solid var(--border-color);">
+        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+          <i class="fas fa-microchip"></i>
+          <strong>CPU</strong>
+        </div>
+        <select id="analyzerCpuSelect" style="width: 100%; padding: 0.5rem; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 0.6rem; color: var(--text-color);">
+          <option value="" disabled selected>-- CPU auswählen --</option>
+        </select>
+      </div>
 
-            <!-- GPU -->
-            <div class="analyzer-card">
-              <h3><i class="fas fa-gamepad"></i> Select GPU</h3>
-              <div class="analyzer-select-group">
-                <label>Grafikkarte</label>
-                <select id="analyzerGpuSelect">
-                  <option value="" disabled selected>
-                    -- GPU auswählen --
-                  </option>
-                  <optgroup label="NVIDIA RTX 50 Series">
-                    <option value="RTX 5090">NVIDIA RTX 5090 (32GB)</option>
-                    <option value="RTX 5080">NVIDIA RTX 5080 (16GB)</option>
-                    <option value="RTX 5070 Ti">
-                      NVIDIA RTX 5070 Ti (16GB)
-                    </option>
-                    <option value="RTX 5070">NVIDIA RTX 5070 (12GB)</option>
-                    <option value="RTX 5060 Ti">
-                      NVIDIA RTX 5060 Ti (16GB/8GB)
-                    </option>
-                    <option value="RTX 5060">NVIDIA RTX 5060 (8GB)</option>
-                  </optgroup>
-                  <optgroup label="NVIDIA RTX 40 Series">
-                    <option value="RTX 4090">NVIDIA RTX 4090 (24GB)</option>
-                    <option value="RTX 4080 SUPER">
-                      NVIDIA RTX 4080 SUPER (16GB)
-                    </option>
-                    <option value="RTX 4080">NVIDIA RTX 4080 (16GB)</option>
-                    <option value="RTX 4070 Ti SUPER">
-                      NVIDIA RTX 4070 Ti SUPER (16GB)
-                    </option>
-                    <option value="RTX 4070 Ti">
-                      NVIDIA RTX 4070 Ti (12GB)
-                    </option>
-                    <option value="RTX 4070 SUPER">
-                      NVIDIA RTX 4070 SUPER (12GB)
-                    </option>
-                    <option value="RTX 4070">NVIDIA RTX 4070 (12GB)</option>
-                    <option value="RTX 4060 Ti">
-                      NVIDIA RTX 4060 Ti (8GB/16GB)
-                    </option>
-                    <option value="RTX 4060">NVIDIA RTX 4060 (8GB)</option>
-                  </optgroup>
-                  <optgroup label="NVIDIA RTX 30 Series">
-                    <option value="RTX 3090 Ti">
-                      NVIDIA RTX 3090 Ti (24GB)
-                    </option>
-                    <option value="RTX 3090">NVIDIA RTX 3090 (24GB)</option>
-                    <option value="RTX 3080 Ti">
-                      NVIDIA RTX 3080 Ti (12GB)
-                    </option>
-                    <option value="RTX 3080 12GB">
-                      NVIDIA RTX 3080 (12GB)
-                    </option>
-                    <option value="RTX 3080">NVIDIA RTX 3080 (10GB)</option>
-                    <option value="RTX 3070 Ti">
-                      NVIDIA RTX 3070 Ti (8GB)
-                    </option>
-                    <option value="RTX 3070">NVIDIA RTX 3070 (8GB)</option>
-                    <option value="RTX 3060 Ti">
-                      NVIDIA RTX 3060 Ti (8GB)
-                    </option>
-                    <option value="RTX 3060 12GB">
-                      NVIDIA RTX 3060 (12GB)
-                    </option>
-                    <option value="RTX 3060 8GB">NVIDIA RTX 3060 (8GB)</option>
-                    <option value="RTX 3050">NVIDIA RTX 3050 (8GB)</option>
-                  </optgroup>
-                  <optgroup label="NVIDIA RTX 20 Series">
-                    <option value="RTX 2080 Ti">
-                      NVIDIA RTX 2080 Ti (11GB)
-                    </option>
-                    <option value="RTX 2080 SUPER">
-                      NVIDIA RTX 2080 SUPER (8GB)
-                    </option>
-                    <option value="RTX 2080">NVIDIA RTX 2080 (8GB)</option>
-                    <option value="RTX 2070 SUPER">
-                      NVIDIA RTX 2070 SUPER (8GB)
-                    </option>
-                    <option value="RTX 2070">NVIDIA RTX 2070 (8GB)</option>
-                    <option value="RTX 2060 SUPER">
-                      NVIDIA RTX 2060 SUPER (8GB)
-                    </option>
-                    <option value="RTX 2060">NVIDIA RTX 2060 (6GB)</option>
-                  </optgroup>
-                  <optgroup label="NVIDIA GTX 16/10/9 Series">
-                    <option value="GTX 1660 SUPER">
-                      NVIDIA GTX 1660 SUPER (6GB)
-                    </option>
-                    <option value="GTX 1660 Ti">
-                      NVIDIA GTX 1660 Ti (6GB)
-                    </option>
-                    <option value="GTX 1660">NVIDIA GTX 1660 (6GB)</option>
-                    <option value="GTX 1650 SUPER">
-                      NVIDIA GTX 1650 SUPER (4GB)
-                    </option>
-                    <option value="GTX 1650">NVIDIA GTX 1650 (4GB)</option>
-                    <option value="GTX 1080 Ti">
-                      NVIDIA GTX 1080 Ti (11GB)
-                    </option>
-                    <option value="GTX 1080">NVIDIA GTX 1080 (8GB)</option>
-                    <option value="GTX 1070 Ti">
-                      NVIDIA GTX 1070 Ti (8GB)
-                    </option>
-                    <option value="GTX 1070">NVIDIA GTX 1070 (8GB)</option>
-                    <option value="GTX 1060 6GB">NVIDIA GTX 1060 (6GB)</option>
-                    <option value="GTX 1050 Ti">
-                      NVIDIA GTX 1050 Ti (4GB)
-                    </option>
-                    <option value="GTX 1050">NVIDIA GTX 1050 (2GB/3GB)</option>
-                    <option value="GTX 980 Ti">NVIDIA GTX 980 Ti (6GB)</option>
-                    <option value="GTX 980">NVIDIA GTX 980 (4GB)</option>
-                    <option value="GTX 970">NVIDIA GTX 970 (4GB)</option>
-                    <option value="GTX 960">NVIDIA GTX 960 (4GB/2GB)</option>
-                    <option value="GTX 950">NVIDIA GTX 950 (2GB)</option>
-                  </optgroup>
-                  <optgroup label="AMD Radeon RX 9000 Series">
-                    <option value="RX 9090 XT">AMD RX 9090 XT (32GB)</option>
-                    <option value="RX 9080 XT">AMD RX 9080 XT (24GB)</option>
-                    <option value="RX 9070 XT">AMD RX 9070 XT (16GB)</option>
-                    <option value="RX 9070">AMD RX 9070 (16GB)</option>
-                    <option value="RX 9060 XT">
-                      AMD RX 9060 XT (16GB/8GB)
-                    </option>
-                  </optgroup>
-                  <optgroup label="AMD Radeon RX 7000 Series">
-                    <option value="RX 7900 XTX">AMD RX 7900 XTX (24GB)</option>
-                    <option value="RX 7900 XT">AMD RX 7900 XT (20GB)</option>
-                    <option value="RX 7900 GRE">AMD RX 7900 GRE (16GB)</option>
-                    <option value="RX 7800 XT">AMD RX 7800 XT (16GB)</option>
-                    <option value="RX 7700 XT">AMD RX 7700 XT (12GB)</option>
-                    <option value="RX 7600 XT">AMD RX 7600 XT (16GB)</option>
-                    <option value="RX 7600">AMD RX 7600 (8GB)</option>
-                  </optgroup>
-                  <optgroup label="AMD Radeon RX 6000 Series">
-                    <option value="RX 6950 XT">AMD RX 6950 XT (16GB)</option>
-                    <option value="RX 6900 XT">AMD RX 6900 XT (16GB)</option>
-                    <option value="RX 6800 XT">AMD RX 6800 XT (16GB)</option>
-                    <option value="RX 6800">AMD RX 6800 (16GB)</option>
-                    <option value="RX 6750 XT">AMD RX 6750 XT (12GB)</option>
-                    <option value="RX 6700 XT">AMD RX 6700 XT (12GB)</option>
-                    <option value="RX 6700">AMD RX 6700 (10GB)</option>
-                    <option value="RX 6650 XT">AMD RX 6650 XT (8GB)</option>
-                    <option value="RX 6600 XT">AMD RX 6600 XT (8GB)</option>
-                    <option value="RX 6600">AMD RX 6600 (8GB)</option>
-                    <option value="RX 6500 XT">AMD RX 6500 XT (4GB)</option>
-                    <option value="RX 6400">AMD RX 6400 (4GB)</option>
-                  </optgroup>
-                  <optgroup label="AMD Radeon RX 5000 Series">
-                    <option value="RX 5700 XT">AMD RX 5700 XT (8GB)</option>
-                    <option value="RX 5700">AMD RX 5700 (8GB)</option>
-                    <option value="RX 5600 XT">AMD RX 5600 XT (6GB)</option>
-                    <option value="RX 5500 XT">AMD RX 5500 XT (8GB/4GB)</option>
-                  </optgroup>
-                  <optgroup label="AMD Radeon Vega / RX 500">
-                    <option value="RX Vega 64">
-                      AMD RX Vega 64 (8GB HBM2)
-                    </option>
-                    <option value="RX Vega 56">
-                      AMD RX Vega 56 (8GB HBM2)
-                    </option>
-                    <option value="RX 590">AMD RX 590 (8GB)</option>
-                    <option value="RX 580">AMD RX 580 (8GB)</option>
-                    <option value="RX 570">AMD RX 570 (8GB)</option>
-                    <option value="RX 480">AMD RX 480 (8GB)</option>
-                  </optgroup>
-                  <optgroup label="Intel Arc & Integrated GPUs">
-                    <option value="Intel Arc B580">
-                      Intel Arc B580 (12GB)
-                    </option>
-                    <option value="Intel Arc B570">
-                      Intel Arc B570 (10GB)
-                    </option>
-                    <option value="Intel Arc A770">
-                      Intel Arc A770 (16GB)
-                    </option>
-                    <option value="Intel Arc A750">Intel Arc A750 (8GB)</option>
-                    <option value="Intel Arc A580">Intel Arc A580 (8GB)</option>
-                    <option value="Intel Arc A380">Intel Arc A380 (6GB)</option>
-                    <option value="Intel Arc A310">Intel Arc A310 (4GB)</option>
-                    <option value="Intel UHD Graphics 770">
-                      Intel UHD Graphics 770
-                    </option>
-                    <option value="Intel UHD Graphics 750">
-                      Intel UHD Graphics 750
-                    </option>
-                    <option value="Intel UHD Graphics 730">
-                      Intel UHD Graphics 730
-                    </option>
-                    <option value="Intel UHD Graphics 630">
-                      Intel UHD Graphics 630
-                    </option>
-                    <option value="Intel Iris Xe Graphics">
-                      Intel Iris Xe Graphics
-                    </option>
-                    <option value="Intel HD Graphics 630">
-                      Intel HD Graphics 630
-                    </option>
-                    <option value="Intel HD Graphics 530">
-                      Intel HD Graphics 530
-                    </option>
-                  </optgroup>
-                </select>
-              </div>
-            </div>
+      <!-- GPU -->
+      <div style="flex: 1; min-width: 200px; background: var(--btn-bg); border-radius: 1rem; padding: 0.8rem; border: 1px solid var(--border-color);">
+        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+          <i class="fas fa-gamepad"></i>
+          <strong>GPU</strong>
+        </div>
+        <select id="analyzerGpuSelect" style="width: 100%; padding: 0.5rem; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 0.6rem; color: var(--text-color);">
+          <option value="" disabled selected>-- GPU auswählen --</option>
+        </select>
+      </div>
 
-            <!-- RAM (Größe + Typ gemeinsam) -->
-            <div class="analyzer-card">
-              <h3><i class="fas fa-memory"></i> Select RAM</h3>
-              <div class="analyzer-select-group">
-                <label>Arbeitsspeicher (GB)</label>
-                <select id="analyzerRamSelect">
-                  <option value="" disabled selected>
-                    -- RAM auswählen --
-                  </option>
-                  <option value="4">4 GB</option>
-                  <option value="8">8 GB</option>
-                  <option value="16">16 GB</option>
-                  <option value="32">32 GB</option>
-                  <option value="64">64 GB</option>
-                  <option value="128">128 GB</option>
-                </select>
-              </div>
-              <div class="analyzer-select-group">
-                <label>RAM-Typ</label>
-                <select id="analyzerRamTypeSelect">
-                  <option value="DDR5">DDR5 (neuester Standard)</option>
-                  <option value="DDR4">DDR4</option>
-                  <option value="DDR3">DDR3 (veraltet)</option>
-                </select>
-              </div>
-            </div>
-
-            <!-- Anzahl Monitore (eigener Kasten) -->
-            <div class="analyzer-card">
-              <h3><i class="fas fa-desktop"></i> Monitor Setup</h3>
-              <div class="analyzer-select-group">
-                <label>Anzahl Monitore</label>
-                <select id="analyzerMonitorsSelect">
-                  <option value="1">1 Monitor</option>
-                  <option value="2">2 Monitore</option>
-                  <option value="3">3 Monitore</option>
-                  <option value="4">4+ Monitore</option>
-                </select>
-              </div>
-              <div class="info-text" style="margin-top: 0.5rem">
-                💡 Mehrere Monitore reduzieren die Gaming-Performance (ca. -2%
-                pro zusätzlichem Monitor)
-              </div>
-            </div>
-
-            <!-- Streaming Checkbox (eigener Kasten) -->
-            <div class="analyzer-card">
-              <h3><i class="fas fa-broadcast-tower"></i> Streaming</h3>
-              <div class="analyzer-checkbox-group">
-                <label>
-                  <input type="checkbox" id="analyzerStreamingCheckbox" /> 🎥
-                  Streamst du während des Spielens?
-                </label>
-              </div>
-              <div class="info-text" style="margin-top: 0.5rem">
-                💡 Streaming belastet CPU/GPU und reduziert die Performance um
-                ca. 8%
-              </div>
-            </div>
-          </div>
-
-          <div class="analyzer-score-section" id="analyzerResultArea">
-            <div id="analyzerEmptyState" class="analyzer-empty-state">
-              <i class="fas fa-desktop"></i>
-              <p>
-                Wähle oben CPU, GPU, RAM und weitere Faktoren aus<br />Der
-                Performance-Score wird automatisch berechnet
-              </p>
-            </div>
-            <div id="analyzerScoreContent" style="display: none">
-              <div class="analyzer-score-panel">
-                <div>
-                  <div class="analyzer-score-number" id="analyzerScoreValue">
-                    0
-                  </div>
-                  <div class="analyzer-score-label">
-                    <i class="fas fa-star"></i> PERFORMANCE SCORE (0-50.000)
-                    <i class="fas fa-star"></i>
-                  </div>
-                  <div class="analyzer-meter-bar">
-                    <div
-                      class="analyzer-meter-fill"
-                      id="analyzerMeterFill"
-                      style="width: 0%"
-                    ></div>
-                  </div>
-                </div>
-                <div class="analyzer-score-tips" id="analyzerTipsContainer">
-                  <h4>
-                    <i class="fas fa-gamepad"></i> CS2 / Gaming Empfehlungen
-                  </h4>
-                  <ul
-                    class="analyzer-settings-list"
-                    id="analyzerSettingsList"
-                  ></ul>
-                </div>
-              </div>
-              <div
-                id="analyzerDetailedAdvice"
-                style="
-                  margin-top: 0.8rem;
-                  font-size: 0.75rem;
-                  color: var(--accent-light);
-                  border-top: 1px solid var(--border-color);
-                  padding-top: 0.8rem;
-                "
-              >
-                <span id="analyzerHardwareSummary"></span>
-              </div>
-              <div
-                class="analyzer-optimization-list"
-                id="analyzerOptimizationList"
-              >
-                <h5><i class="fas fa-wrench"></i> Optimierungsvorschläge</h5>
-                <div
-                  class="analyzer-optimization-items"
-                  id="analyzerOptimizationItems"
-                ></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="analyzer-legend">
-            <div class="analyzer-legend-item">
-              <div
-                class="analyzer-legend-color"
-                style="background: linear-gradient(135deg, #ffd700, #a855f7)"
-              ></div>
-              <span><strong>45.000+</strong> Exzellent ✅</span>
-            </div>
-            <div class="analyzer-legend-item">
-              <div
-                class="analyzer-legend-color"
-                style="background: linear-gradient(135deg, #3b82f6, #10b981)"
-              ></div>
-              <span><strong>30.000+</strong> Gut ✅</span>
-            </div>
-            <div class="analyzer-legend-item">
-              <div
-                class="analyzer-legend-color"
-                style="background: linear-gradient(135deg, #f59e0b, #fbbf24)"
-              ></div>
-              <span><strong>18.000+</strong> Akzeptabel ⚠️</span>
-            </div>
-            <div class="analyzer-legend-item">
-              <div
-                class="analyzer-legend-color"
-                style="background: linear-gradient(135deg, #ef4444, #f87171)"
-              ></div>
-              <span><strong>8.000+</strong> Befriedigend ❌</span>
-            </div>
-            <div class="analyzer-legend-item">
-              <div
-                class="analyzer-legend-color"
-                style="background: #6b7280"
-              ></div>
-              <span><strong>Unter 8.000</strong> Schwach ❌</span>
-            </div>
-          </div>
-
-          <div class="analyzer-disclaimer">
-            <i class="fas fa-info-circle"></i> <strong>Hinweis:</strong> Der
-            hier berechnete Performance-Score ist ein
-            <strong>theoretischer Richtwert</strong> basierend auf CPU-, GPU-
-            und RAM-Daten. Die tatsächliche Leistung in Counter-Strike 2 kann je
-            nach Treiberversion, Kühlung, Hintergrundprozessen und anderen
-            Systemkomponenten abweichen. Dieser Analyzer dient nur als grobe
-            Orientierungshilfe.
-          </div>
-          <div class="info-text" style="margin-top: 0.5rem">
-            <i class="fas fa-chart-line"></i>
-            <strong>Scoring-Methodik:</strong> Maximal 50.000 Punkte.
-            Top-Konfiguration (RTX 5090 + Ryzen 9 9950X3D + 128GB DDR5 RAM)
-            erreicht ca. 49.500 Punkte. Abzüge für: mehrere Monitore (-2% pro
-            Monitor), Streaming (-8%), DDR4 (-5%), DDR3 (-12%).
-          </div>
+      <!-- RAM -->
+      <div style="flex: 1; min-width: 200px; background: var(--btn-bg); border-radius: 1rem; padding: 0.8rem; border: 1px solid var(--border-color);">
+        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+          <i class="fas fa-memory"></i>
+          <strong>RAM</strong>
+        </div>
+        <div style="display: flex; gap: 0.5rem;">
+          <select id="analyzerRamSelect" style="flex: 1; padding: 0.5rem; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 0.6rem; color: var(--text-color);">
+            <option value="" disabled selected>GB</option>
+            <option value="4">4 GB</option>
+            <option value="8">8 GB</option>
+            <option value="16">16 GB</option>
+            <option value="32">32 GB</option>
+            <option value="64">64 GB</option>
+            <option value="128">128 GB</option>
+          </select>
+          <select id="analyzerRamTypeSelect" style="flex: 1; padding: 0.5rem; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 0.6rem; color: var(--text-color);">
+            <option value="DDR5">DDR5</option>
+            <option value="DDR4">DDR4</option>
+            <option value="DDR3">DDR3</option>
+          </select>
         </div>
       </div>
+    </div>
+
+    <!-- ZEILE 2: Monitore + Streaming nebeneinander -->
+    <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
+      <!-- Monitore -->
+      <div style="flex: 1; min-width: 200px; background: var(--btn-bg); border-radius: 1rem; padding: 0.8rem; border: 1px solid var(--border-color);">
+        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+          <i class="fas fa-desktop"></i>
+          <strong>Monitore</strong>
+        </div>
+        <select id="analyzerMonitorsSelect" style="width: 100%; padding: 0.5rem; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 0.6rem; color: var(--text-color);">
+          <option value="1">1 Monitor</option>
+          <option value="2">2 Monitore</option>
+          <option value="3">3 Monitore</option>
+          <option value="4">4+ Monitore</option>
+        </select>
+        <div class="info-text" style="margin-top: 0.3rem; font-size: 0.65rem;">
+          💡 -2% pro Monitor
+        </div>
+      </div>
+
+      <!-- Streaming -->
+      <div style="flex: 1; min-width: 200px; background: var(--btn-bg); border-radius: 1rem; padding: 0.8rem; border: 1px solid var(--border-color);">
+        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+          <i class="fas fa-broadcast-tower"></i>
+          <strong>Streaming</strong>
+        </div>
+        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+          <input type="checkbox" id="analyzerStreamingCheckbox" style="accent-color: var(--accent);">
+          <span>🎥 Aktives Streaming</span>
+        </label>
+        <div class="info-text" style="margin-top: 0.3rem; font-size: 0.65rem;">
+          💡 -8% Performance
+        </div>
+      </div>
+    </div>
+
+    <!-- ERGEBNISBEREICH -->
+    <div class="analyzer-score-section" id="analyzerResultArea">
+      <div id="analyzerEmptyState" class="analyzer-empty-state">
+        <i class="fas fa-desktop"></i>
+        <p>Wähle CPU, GPU und RAM aus<br>Der Score wird automatisch berechnet</p>
+      </div>
+      <div id="analyzerScoreContent" style="display: none">
+        <!-- Score und Kurzinfo -->
+        <div style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; margin-bottom: 1rem;">
+          <div style="text-align: center; min-width: 150px;">
+            <div class="analyzer-score-number" id="analyzerScoreValue" style="font-size: 2.2rem;">0</div>
+            <div class="analyzer-score-label" style="font-size: 0.7rem;">PERFORMANCE SCORE</div>
+            <div class="analyzer-meter-bar" style="width: 150px; margin: 0.3rem auto;">
+              <div class="analyzer-meter-fill" id="analyzerMeterFill" style="width: 0%"></div>
+            </div>
+          </div>
+          
+          <div style="flex: 1; background: rgba(0,0,0,0.2); border-radius: 0.8rem; padding: 0.6rem 1rem;">
+            <div id="analyzerSettingsList" style="font-size: 0.8rem;"></div>
+          </div>
+          
+          <div style="font-size: 0.75rem; color: var(--accent-light); background: rgba(0,0,0,0.15); padding: 0.4rem 0.8rem; border-radius: 0.6rem;" id="analyzerHardwareSummary"></div>
+        </div>
+        
+        <!-- OPTIMIERUNGSVORSCHLÄGE (immer sichtbar, größer) -->
+        <div style="margin-top: 1rem; padding-top: 0.8rem; border-top: 1px solid var(--border-color);">
+          <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.8rem;">
+            <i class="fas fa-wrench" style="color: var(--accent-light);"></i>
+            <strong style="font-size: 0.9rem;">🔧 Optimierungsvorschläge für dein System</strong>
+          </div>
+          <div id="analyzerOptimizationItems" style="display: flex; flex-direction: column; gap: 0.5rem;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Kleine Legende -->
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.8rem; margin-top: 1rem; padding-top: 0.8rem; border-top: 1px solid var(--border-color); font-size: 0.7rem;">
+      <span><span style="background: linear-gradient(135deg,#ffd700,#a855f7); padding: 0.15rem 0.4rem; border-radius: 0.3rem;">45k+</span> Exzellent</span>
+      <span><span style="background: linear-gradient(135deg,#3b82f6,#10b981); padding: 0.15rem 0.4rem; border-radius: 0.3rem;">30k+</span> Gut</span>
+      <span><span style="background: linear-gradient(135deg,#f59e0b,#fbbf24); padding: 0.15rem 0.4rem; border-radius: 0.3rem;">18k+</span> Akzeptabel</span>
+      <span><span style="background: linear-gradient(135deg,#ef4444,#f87171); padding: 0.15rem 0.4rem; border-radius: 0.3rem;">8k+</span> Befriedigend</span>
+      <span><span style="background: #6b7280; padding: 0.15rem 0.4rem; border-radius: 0.3rem;">-8k</span> Schwach</span>
+    </div>
+
+    <div class="analyzer-disclaimer" style="margin-top: 0.8rem; font-size: 0.65rem; padding: 0.5rem 0.8rem;">
+      <i class="fas fa-info-circle"></i> Theoretischer Richtwert basierend auf CPU, GPU und RAM. Tatsächliche Leistung kann abweichen.
+    </div>
+  </div>
+</div>
+<!-- PING RADAR TAB -->
+<div id="pingTab" class="tab-content">
+  <div class="card">
+    <h2>📡 PING RADAR – CS2 Server Latenz Test</h2>
+    <div class="info-hint">
+      🌍 Teste deine Verbindung zu allen wichtigen CS2-Server-Regionen.
+      Finde die beste Region für dein nächstes Match!
+    </div>
+    
+    <div style="margin-bottom: 1.5rem;">
+      <button class="glow" id="startPingTestBtn" style="width: auto; background: var(--accent);">
+        🚀 Test starten (alle Regionen)
+      </button>
+      <button class="glow" id="stopPingTestBtn" style="width: auto;">
+        ⏹️ Stoppen
+      </button>
+    </div>
+    
+    <!-- Fortschrittsbalken -->
+    <div class="progress-bar" id="pingProgressBar">
+      <div class="progress-fill" id="pingProgressFill" style="width: 0%;"></div>
+    </div>
+    
+    <!-- Ergebnisse -->
+    <div id="pingResultsContainer" style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1rem;">
+      <div class="empty-message">👉 Klicke auf "Test starten"</div>
+    </div>
+    
+    <!-- Beste Region Empfehlung -->
+    <div id="pingBestRegion" style="margin-top: 1.5rem; padding: 1rem; background: var(--accent); border-radius: 1rem; color: #0a0a0f; display: none;">
+      <strong>🏆 BESTE REGION FÜR DICH:</strong> <span id="bestRegionName"></span> 
+      (<span id="bestRegionPing"></span>ms) – <span id="bestRegionRec"></span>
+    </div>
+    
+    <!-- Letzte Messungen -->
+    <div style="margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem;">
+      <details>
+        <summary style="cursor: pointer; color: var(--accent-light);">📊 Letzte 5 Messungen (Verlauf)</summary>
+        <div id="pingHistory" style="margin-top: 0.5rem; font-size: 0.7rem; font-family: monospace;"></div>
+      </details>
+    </div>
+    
+    <div class="analyzer-disclaimer" style="margin-top: 0.8rem;">
+      <i class="fas fa-info-circle"></i> Die Messungen sind browserbasiert und approximativ. 
+      Tatsächliche CS2-Ingame-Pings können leicht abweichen (meist 5-15ms höher).
+    </div>
+  </div>
+</div>
 
       <!-- START OPTIONEN TAB -->
       <div id="startTab" class="tab-content">
@@ -710,6 +495,7 @@
     <script src="js/data.js"></script>
   <script src="js/theme.js"></script>
   <script src="js/analyzer.js"></script>
+  <script src="js/pingtest.js"></script>
   <script src="js/keyboard.js"></script>
   <script src="js/buyscript.js"></script>
   <script src="js/saybinds.js"></script>
