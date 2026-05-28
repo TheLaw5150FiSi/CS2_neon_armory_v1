@@ -97,7 +97,6 @@ const analyzerCpuData = {
   "Intel Core i5-11400": 12800,
   "Intel Core i5-11400F": 12500,
   "Intel Core i3-10325": 9500,
-  "Intel Core i3-10320": 9300,
   "Intel Core i3-10300": 9100,
 
   // ======================== 10. GENERATION (Comet Lake) ========================
@@ -142,7 +141,6 @@ const analyzerCpuData = {
   "Intel Core i5-9400F": 9600,
   "Intel Core i5-9400T": 8500,
   "Intel Core i3-9350K": 8500,
-  "Intel Core i3-9320": 8300,
   "Intel Core i3-9300": 8200,
   "Intel Core i3-9100": 8000,
   "Intel Core i3-9100F": 7800,
@@ -299,7 +297,6 @@ const analyzerCpuData = {
 
   // ======================== AMD RYZEN 8000 SERIES (2024 / Zen 4 mit iGPU) ========================
   "AMD Ryzen 7 8700G": 19500,
-  "AMD Ryzen 7 8700F": 19200,
   "AMD Ryzen 5 8600G": 18200,
   "AMD Ryzen 5 8500G": 17200,
   "AMD Ryzen 3 8300G": 12000,
@@ -1097,37 +1094,6 @@ const categories = {
     { name: "Decoy", cmd: "buy decoy", maxCount: 1 },
   ],
 };
-
-// ======================== START OPTIONEN ========================
-let startOptionsList = [
-  { cmd: "-console", desc: "Konsole", hasValue: false, selected: true },
-  { cmd: "-high", desc: "Hohe Priorität", hasValue: false, selected: false },
-  { cmd: "-nojoy", desc: "Joystick aus", hasValue: false, selected: false },
-  { cmd: "-fullscreen", desc: "Vollbild", hasValue: false, selected: false },
-  { cmd: "-vulkan", desc: "Vulkan API", hasValue: false, selected: false },
-  {
-    cmd: "-softparticlesdefaultoff",
-    desc: "Partikel aus",
-    hasValue: false,
-    selected: false,
-  },
-  {
-    cmd: "-refresh",
-    desc: "Hz",
-    hasValue: true,
-    value: "144",
-    selected: false,
-    values: ["60", "120", "144", "165", "240", "360"],
-  },
-  {
-    cmd: "-threads",
-    desc: "Threads",
-    hasValue: true,
-    value: "8",
-    selected: false,
-    values: ["4", "6", "8", "12", "16"],
-  },
-];
 
 // ======================== TASTATUR LAYOUT ========================
 const deKeysRows = [
