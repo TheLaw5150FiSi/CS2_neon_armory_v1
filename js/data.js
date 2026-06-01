@@ -572,328 +572,235 @@ const gpuGroups = {
 
 // ======================== CONFIG COMMANDS ========================
 const allCommandsLibrary = {
-  "Performance Kern": [
+  // ========== PERFORMANCE & FPS ==========
+  "FPS & Performance": [
     {
       cmd: "fps_max",
-      values: ["0", "60", "120", "144", "240", "300", "400", "500", "1000"],
-      desc: "Begrenzt die maximale Bildrate.",
+      values: ["0", "60", "120", "144", "165", "240", "300", "360", "400", "500", "1000"],
+      desc: "Maximale Bildrate. 0 = unlimitiert (niedrigste Latenz)."
     },
     {
-      cmd: "fps_max_menu",
-      values: ["30", "60", "120", "144"],
-      desc: "Begrenzt die Bildrate im Menü.",
+      cmd: "cl_showfps",
+      values: ["0", "1", "2", "3"],
+      desc: "FPS-Anzeige: 0=Aus, 1=Text, 2=Graph, 3=Details."
     },
     {
-      cmd: "engine_low_latency_sleep",
+      cmd: "engine_low_latency_sleep_after_client_tick",
       values: ["0", "1"],
-      desc: "Reduziert die Input-Latenz.",
+      desc: "Reduziert Input-Latenz. 1 = aktiviert (empfohlen)."
     },
     {
-      cmd: "r_queued_ropes",
+      cmd: "r_drawtracers_firstperson",
       values: ["0", "1"],
-      desc: "Optimiert die Darstellung von Seilen.",
+      desc: "Eigene Schuss-Tracer. 0 = aus (mehr FPS)."
     },
     {
-      cmd: "cl_forcepreload",
+      cmd: "cl_disable_ragdolls",
       values: ["0", "1"],
-      desc: "Lädt alle Ressourcen vor.",
+      desc: "Deaktiviert Leichen-Physik. 1 = aus (mehr FPS)."
     },
-  ],
-  "Shader & Effekte": [
-    {
-      cmd: "r_csm",
-      values: ["0", "1", "2"],
-      desc: "Kaskadierte Schattenkarten.",
-    },
-    {
-      cmd: "r_csm_cascade_res",
-      values: ["256", "512", "1024", "2048"],
-      desc: "Auflösung der Schattenkarten.",
-    },
-    { cmd: "r_dynamic", values: ["0", "1"], desc: "Dynamische Schatten." },
-    {
-      cmd: "r_rim_light",
-      values: ["0", "1"],
-      desc: "Randlichter an Modellen.",
-    },
-    {
-      cmd: "mat_disable_bloom",
-      values: ["0", "1"],
-      desc: "Bloom-Effekt deaktivieren.",
-    },
-    { cmd: "r_3dsky", values: ["0", "1"], desc: "3D-Himmel auf Maps." },
-    {
-      cmd: "cl_detaildist",
-      values: ["400", "800", "1200", "2000"],
-      desc: "Reichweite für Detail-Texturen.",
-    },
-  ],
-  "Speicher Optimierung": [
-    {
-      cmd: "cl_forcepreload",
-      values: ["0", "1"],
-      desc: "Ressourcen vorladen.",
-    },
-    {
-      cmd: "cl_physics_impact_enable",
-      values: ["0", "1"],
-      desc: "Physik-Effekte.",
-    },
-    {
-      cmd: "cl_ragdoll_physics_enable",
-      values: ["0", "1"],
-      desc: "Leichen-Physik.",
-    },
-    {
-      cmd: "r_waterforceexpensive",
-      values: ["0", "1"],
-      desc: "Wassereffekte.",
-    },
-  ],
-  "GPU & Rendering": [
     {
       cmd: "mat_queue_mode",
       values: ["-1", "0", "1", "2"],
-      desc: "Multithreading für Rendering.",
-    },
+      desc: "Multi-Core-Rendering: -1=Auto, 2=Multikern (empfohlen)."
+    }
+  ],
+
+  // ========== VIDEO & GRAFIK ==========
+  "Video & Grafik": [
     {
-      cmd: "mat_vsync",
+      cmd: "video_fullscreen",
       values: ["0", "1"],
-      desc: "Vertikale Synchronisation.",
+      desc: "0 = Fenstermodus, 1 = Vollbild."
     },
     {
-      cmd: "gpu_level",
-      values: ["0", "1", "2", "3"],
-      desc: "GPU-Render-Qualität.",
-    },
-    { cmd: "mat_picmip", values: ["0", "1", "2"], desc: "Texturqualität." },
-    {
-      cmd: "r_lod",
-      values: ["-1", "0", "1", "2"],
-      desc: "Modell-Detailstufe.",
-    },
-    {
-      cmd: "mat_aaquality",
-      values: ["0", "1", "2"],
-      desc: "Anti-Aliasing-Qualität.",
-    },
-  ],
-  "CPU & Threading": [
-    {
-      cmd: "host_thread_mode",
-      values: ["0", "1", "2"],
-      desc: "Multi-Core-Rendering.",
-    },
-    {
-      cmd: "threadpool_worker_count",
-      values: ["2", "4", "6", "8", "12", "16"],
-      desc: "Anzahl der CPU-Threads.",
-    },
-    {
-      cmd: "sv_parallel_packentities",
+      cmd: "video_vsync",
       values: ["0", "1"],
-      desc: "Parallele Entity-Verarbeitung.",
+      desc: "Vertikale Synchronisation. 0 = aus (niedrigere Latenz)."
     },
+    {
+      cmd: "video_msaa",
+      values: ["0", "2", "4", "8"],
+      desc: "Kantenglättung. 0 = aus (max FPS), 8 = beste Qualität."
+    },
+    {
+      cmd: "video_texture_detail",
+      values: ["0", "1", "2"],
+      desc: "Texturqualität: 0 = Niedrig (max FPS), 2 = Hoch."
+    },
+    {
+      cmd: "shadow_quality",
+      values: ["0", "1", "2"],
+      desc: "Schattenqualität: 0 = Aus (max FPS), 2 = Hoch."
+    },
+    {
+      cmd: "shadow_dynamic",
+      values: ["0", "1"],
+      desc: "Dynamische Schatten. 0 = aus (mehr FPS)."
+    },
+    {
+      cmd: "bloom_scale",
+      values: ["0", "0.25", "0.5", "0.75", "1"],
+      desc: "Bloom-Effekt Stärke. 0 = aus."
+    },
+    {
+      cmd: "render_quality",
+      values: ["0", "1", "2"],
+      desc: "Render-Auflösung: 0 = Niedrig, 2 = Hoch."
+    },
+    {
+      cmd: "ambient_occlusion",
+      values: ["0", "1"],
+      desc: "Ambient Occlusion. 0 = aus (mehr FPS)."
+    },
+    {
+      cmd: "model_quality",
+      values: ["0", "1", "2"],
+      desc: "Modell-Detailstufe: 0 = Niedrig, 2 = Hoch."
+    },
+    {
+      cmd: "effect_quality",
+      values: ["0", "1", "2"],
+      desc: "Effektqualität. 0 = Niedrig (mehr FPS)."
+    },
+    {
+      cmd: "particle_quality",
+      values: ["0", "1", "2"],
+      desc: "Partikelqualität. 0 = Niedrig (mehr FPS)."
+    },
+    {
+      cmd: "r_fullscreen_gamma",
+      values: ["1.6", "1.8", "2.0", "2.2", "2.4", "2.6"],
+      desc: "Helligkeitseinstellung. Empfohlen: 2.2."
+    }
   ],
-  Lautstärke: [
-    {
-      cmd: "volume",
-      values: [
-        "0",
-        "0.1",
-        "0.2",
-        "0.3",
-        "0.4",
-        "0.5",
-        "0.6",
-        "0.7",
-        "0.8",
-        "0.9",
-        "1.0",
-      ],
-      desc: "Master-Lautstärke.",
-    },
-    {
-      cmd: "voice_scale",
-      values: ["0", "0.2", "0.4", "0.6", "0.8", "1.0"],
-      desc: "Voice-Chat Lautstärke.",
-    },
-    {
-      cmd: "snd_mixahead",
-      values: ["0.02", "0.05", "0.1", "0.2"],
-      desc: "Audio-Puffer.",
-    },
-    {
-      cmd: "snd_headphone_pan_exponent",
-      values: ["1", "1.5", "2"],
-      desc: "Kopfhörer Panorama.",
-    },
-  ],
-  "Mikrofon & Voice": [
-    { cmd: "voice_enable", values: ["0", "1"], desc: "Voice-Chat aktivieren." },
-    {
-      cmd: "voice_threshold",
-      values: ["0", "0.1", "0.2", "0.5", "1.0"],
-      desc: "Mikrofon-Empfindlichkeit.",
-    },
-    { cmd: "voice_loopback", values: ["0", "1"], desc: "Eigene Stimme hören." },
-    {
-      cmd: "voice_mixer_volume",
-      values: ["0", "0.25", "0.5", "0.75", "1.0"],
-      desc: "Mikrofon-Lautstärke.",
-    },
-  ],
-  "Sound Qualität": [
-    {
-      cmd: "snd_musicvolume",
-      values: ["0", "0.2", "0.4", "0.6", "0.8", "1.0"],
-      desc: "Musik-Lautstärke.",
-    },
-    {
-      cmd: "snd_menumusic_volume",
-      values: ["0", "0.2", "0.5", "1.0"],
-      desc: "Menü-Musik.",
-    },
-    {
-      cmd: "snd_roundend_volume",
-      values: ["0", "0.2", "0.5", "1.0"],
-      desc: "Lautstärke am Rundenende.",
-    },
-  ],
-  Interpolation: [
-    {
-      cmd: "cl_interp_ratio",
-      values: ["1", "2"],
-      desc: "Interpolationsverhältnis.",
-    },
-    {
-      cmd: "cl_interp",
-      values: ["0", "0.015625", "0.03125"],
-      desc: "Interpolationszeit.",
-    },
-  ],
-  "Bandbreite & Rate": [
+
+  // ========== NETZWERK & PING ==========
+  "Netzwerk & Ping": [
     {
       cmd: "rate",
       values: ["196608", "393216", "524288", "786432", "1048576"],
-      desc: "Maximale Bandbreite.",
+      desc: "Maximale Download-Rate. 786432 für normale Leitungen, 1048576 für Glasfaser."
     },
     {
       cmd: "cl_updaterate",
       values: ["64", "128"],
-      desc: "Updates pro Sekunde.",
+      desc: "Server-Updates pro Sekunde. 128 für Competitive empfohlen."
     },
-    { cmd: "cl_cmdrate", values: ["64", "128"], desc: "Befehle pro Sekunde." },
-  ],
-  "Latency & Timeout": [
+    {
+      cmd: "cl_cmdrate",
+      values: ["64", "128"],
+      desc: "Client-Befehle pro Sekunde. Sollte gleich cl_updaterate sein."
+    },
+    {
+      cmd: "cl_interp_ratio",
+      values: ["1", "2"],
+      desc: "Interpolationsverhältnis. 1 = niedrigste Latenz."
+    },
+    {
+      cmd: "cl_interp",
+      values: ["0", "0.015625", "0.03125"],
+      desc: "Interpolationszeit. 0 = Auto, 0.015625 = minimal."
+    },
     {
       cmd: "cl_timeout",
       values: ["30", "60", "120", "300"],
-      desc: "Timeout in Sekunden.",
+      desc: "Timeout in Sekunden."
     },
     {
-      cmd: "net_maxcleartime",
-      values: ["0", "1", "2"],
-      desc: "Netzwerk-Clear-Time.",
-    },
-  ],
-  "Connection Optimierung": [
-    { cmd: "cl_predict", values: ["0", "1"], desc: "Bewegungsvorhersage." },
-    {
-      cmd: "cl_predictweapons",
+      cmd: "cq_netgraph",
       values: ["0", "1"],
-      desc: "Waffen-Vorhersage.",
-    },
+      desc: "Netzwerk-Statistiken anzeigen (Ping, Loss, Choke)."
+    }
   ],
-  "Auflösung & Display": [
+
+  // ========== HUD & INTERFACE ==========
+  "HUD & Interface": [
     {
-      cmd: "mat_setvideomode",
-      values: [
-        "1280 720 1",
-        "1366 768 1",
-        "1600 900 1",
-        "1920 1080 1",
-        "2560 1440 1",
-      ],
-      desc: "16:9 Auflösung.",
+      cmd: "hud_scaling",
+      values: ["0.5", "0.6", "0.7", "0.8", "0.85", "0.9", "1.0", "1.1", "1.2"],
+      desc: "HUD-Größe. 0.85 ist Standard."
     },
     {
-      cmd: "mat_setvideomode_ex",
-      values: ["1280 1024 1", "1024 768 1", "800 600 1"],
-      desc: "4:3 Auflösung.",
+      cmd: "cl_hud_color",
+      values: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+      desc: "HUD-Farbe: 0=Hellblau, 1=Rot, 2=Grün, 3=Gelb, 4=Blau, 5=Cyan, 6=Orange, 7=Lila, 8=Magenta, 9=Pink, 10=Weiß."
     },
     {
-      cmd: "mat_monitorgamma",
-      values: ["1.6", "1.8", "2.0", "2.2", "2.4"],
-      desc: "Gamma-Wert.",
-    },
-  ],
-  "Texturen & Details": [
-    { cmd: "mat_picmip", values: ["0", "1", "2"], desc: "Texturqualität." },
-    { cmd: "r_lod", values: ["-1", "0", "1", "2"], desc: "Modell-Detail." },
-    {
-      cmd: "cl_detaildist",
-      values: ["400", "800", "1200", "2000"],
-      desc: "Detail-Reichweite.",
-    },
-  ],
-  "Beleuchtung & Schatten": [
-    { cmd: "r_csm", values: ["0", "1", "2"], desc: "Schattenqualität." },
-    {
-      cmd: "r_shadow_quality",
-      values: ["0", "1", "2"],
-      desc: "Zusätzliche Schattenqualität.",
+      cmd: "cl_hud_radar_scale",
+      values: ["0.8", "0.9", "1.0", "1.1", "1.2", "1.3", "1.4", "1.5"],
+      desc: "Radar-Größe."
     },
     {
-      cmd: "mat_ambient_light_r",
-      values: ["0.1", "0.2", "0.3", "0.4"],
-      desc: "Ambiente Beleuchtung Rot.",
-    },
-    {
-      cmd: "mat_ambient_light_g",
-      values: ["0.1", "0.2", "0.3", "0.4"],
-      desc: "Ambiente Beleuchtung Grün.",
-    },
-    {
-      cmd: "mat_ambient_light_b",
-      values: ["0.1", "0.2", "0.3", "0.4"],
-      desc: "Ambiente Beleuchtung Blau.",
-    },
-  ],
-  "Anti-Aliasing": [
-    {
-      cmd: "mat_msaa",
-      values: ["0", "2", "4", "8"],
-      desc: "Multisample Anti-Aliasing.",
-    },
-    {
-      cmd: "mat_aaquality",
-      values: ["0", "1", "2"],
-      desc: "Anti-Aliasing-Qualität.",
-    },
-    {
-      cmd: "mat_software_aa_strength",
-      values: ["0", "0.5", "1.0"],
-      desc: "Post-Processing AA.",
-    },
-  ],
-  "Post-Processing": [
-    {
-      cmd: "mat_disable_fancy_blending",
+      cmd: "cl_radar_always_centered",
       values: ["0", "1"],
-      desc: "Deaktiviert aufwendige Effekte.",
+      desc: "0 = Radar zeigt Karte, 1 = Radar zentriert auf dich."
     },
     {
-      cmd: "r_ambientboost",
+      cmd: "cl_radar_rotate",
       values: ["0", "1"],
-      desc: "Verstärkt Ambiente Beleuchtung.",
+      desc: "0 = Radar zeigt nach Norden, 1 = Radar rotiert."
     },
     {
-      cmd: "mat_disable_bloom",
-      values: ["0", "1"],
-      desc: "Bloom deaktivieren.",
+      cmd: "cl_radar_scale",
+      values: ["0.25", "0.30", "0.35", "0.40", "0.45", "0.50", "0.55", "0.60"],
+      desc: "Radar-Zoom. Kleiner = mehr Übersicht."
     },
+    {
+      cmd: "cl_showloadout",
+      values: ["0", "1"],
+      desc: "Zeigt immer das Loadout an. 1 = an."
+    },
+    {
+      cmd: "cl_draw_only_deathnotices",
+      values: ["0", "1"],
+      desc: "1 = Zeigt nur Killfeed (Competitive-Modus)."
+    }
   ],
+
+   // ========== AUDIO & VOICE ==========
+  "Audio & Voice": [
+    {
+      cmd: "volume",
+      values: ["0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1.0"],
+      desc: "Master-Lautstärke."
+    },
+    {
+      cmd: "voice_scale",
+      values: ["0", "0.2", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1.0"],
+      desc: "Voice-Chat Lautstärke."
+    },
+    {
+      cmd: "snd_mixahead",
+      values: ["0.02", "0.03", "0.04", "0.05", "0.06", "0.08", "0.1", "0.15", "0.2"],
+      desc: "Audio-Puffer. 0.02 = niedrigste Latenz."
+    },
+    {
+      cmd: "voice_enable",
+      values: ["0", "1"],
+      desc: "Voice-Chat aktivieren."
+    },
+    {
+      cmd: "voice_threshold",
+      values: ["0", "0.05", "0.1", "0.15", "0.2", "0.3", "0.5", "0.7", "1.0"],
+      desc: "Mikrofon-Empfindlichkeit."
+    },
+    {
+      cmd: "voice_mixer_volume",
+      values: ["0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1.0"],
+      desc: "Mikrofon-Lautstärke."
+    },
+    {
+      cmd: "voice_loopback",
+      values: ["0", "1"],
+      desc: "1 = Eigene Stimme hören (Test)."
+    },
+    {
+      cmd: "snd_mute_losefocus",
+      values: ["0", "1"],
+      desc: "1 = Sound stumm bei Fokus-Verlust."
+    }
+  ]
 };
 
 // ======================== PRESETS ========================
@@ -901,92 +808,113 @@ const presetsList = [
   {
     key: "cinematic",
     name: "🎬 Cinematic Ultra",
-    desc: "Maximale visuelle Qualität",
+    desc: "Maximale visuelle Qualität. Für High-End-PCs mit RTX 4080+",
     badge: "RTX 4080+",
     commands: [
-      "mat_setvideomode 2560 1440 1",
-      "mat_vsync 1",
-      "r_dynamic 1",
-      "r_csm 2",
-      "mat_msaa 8",
-      "mat_picmip 0",
-      "r_lod -1",
-      "cl_detaildist 2000",
-      "mat_aaquality 2",
-      "r_shadow_quality 2",
-      "r_3dsky 1",
-      "r_rim_light 1",
-      "mat_disable_fancy_blending 0",
-    ],
+      "fps_max 0",
+      "video_vsync 1",
+      "video_msaa 8",
+      "video_texture_detail 2",
+      "shadow_quality 2",
+      "shadow_dynamic 1",
+      "bloom_scale 1",
+      "render_quality 2",
+      "ambient_occlusion 1",
+      "model_quality 2",
+      "effect_quality 2",
+      "particle_quality 2"
+    ]
   },
   {
     key: "highfps",
-    name: "⚡ HIGH FPS",
-    desc: "Competitive Performance",
+    name: "⚡ High FPS",
+    desc: "Competitive Performance für 240Hz+ Monitore",
     badge: "240Hz+",
     commands: [
-      "mat_setvideomode 1280 960 1",
-      "mat_vsync 0",
-      "r_dynamic 0",
-      "r_csm 0",
-      "mat_msaa 2",
-      "mat_picmip 2",
-      "r_lod 2",
-      "cl_detaildist 400",
-      "mat_aaquality 0",
-      "r_shadow_quality 0",
-      "r_3dsky 0",
-      "r_rim_light 0",
-      "mat_disable_fancy_blending 1",
-      "cl_forcepreload 1",
-    ],
+      "fps_max 400",
+      "video_vsync 0",
+      "video_msaa 2",
+      "video_texture_detail 1",
+      "shadow_quality 1",
+      "shadow_dynamic 0",
+      "bloom_scale 0",
+      "render_quality 1",
+      "ambient_occlusion 0",
+      "model_quality 1",
+      "effect_quality 0",
+      "particle_quality 0",
+      "r_drawtracers_firstperson 0",
+      "engine_low_latency_sleep_after_client_tick 1"
+    ]
   },
   {
     key: "lowend",
-    name: "🔧 LOW-END",
-    desc: "Maximale FPS",
+    name: "🔧 Low-End",
+    desc: "Maximale FPS für schwache PCs. Toaster-Modus",
     badge: "Toaster",
     commands: [
-      "mat_setvideomode 1024 768 1",
-      "mat_vsync 0",
-      "r_dynamic 0",
-      "r_csm 0",
-      "mat_msaa 0",
-      "mat_picmip 2",
-      "r_lod 2",
-      "cl_detaildist 400",
-      "mat_aaquality 0",
-      "r_shadow_quality 0",
-      "r_3dsky 0",
-      "r_rim_light 0",
-      "mat_disable_fancy_blending 1",
-      "cl_forcepreload 1",
-      "mat_disable_bloom 1",
-      "cl_physics_impact_enable 0",
-      "cl_ragdoll_physics_enable 0",
-    ],
+      "fps_max 144",
+      "video_vsync 0",
+      "video_msaa 0",
+      "video_texture_detail 0",
+      "shadow_quality 0",
+      "shadow_dynamic 0",
+      "bloom_scale 0",
+      "render_quality 0",
+      "ambient_occlusion 0",
+      "model_quality 0",
+      "effect_quality 0",
+      "particle_quality 0",
+      "r_drawtracers_firstperson 0",
+      "cl_disable_ragdolls 1",
+      "engine_low_latency_sleep_after_client_tick 1"
+    ]
   },
   {
     key: "balanced",
     name: "⚖️ Balanced",
-    desc: "Gute Grafik & FPS",
+    desc: "Guter Kompromiss zwischen Grafik und FPS",
     badge: "Allrounder",
     commands: [
-      "mat_setvideomode 1920 1080 1",
-      "mat_vsync 0",
-      "r_dynamic 1",
-      "r_csm 1",
-      "mat_msaa 4",
-      "mat_picmip 1",
-      "r_lod 0",
-      "cl_detaildist 1200",
-      "mat_aaquality 1",
-      "r_shadow_quality 1",
-      "r_3dsky 1",
-      "r_rim_light 0",
-      "mat_disable_fancy_blending 0",
-    ],
+      "fps_max 300",
+      "video_vsync 0",
+      "video_msaa 4",
+      "video_texture_detail 1",
+      "shadow_quality 1",
+      "shadow_dynamic 0",
+      "bloom_scale 0.5",
+      "render_quality 1",
+      "ambient_occlusion 0",
+      "model_quality 1",
+      "effect_quality 1",
+      "particle_quality 1",
+      "engine_low_latency_sleep_after_client_tick 1"
+    ]
   },
+  {
+    key: "competitive",
+    name: "🎯 Competitive",
+    desc: "Optimiert für minimale Latenz und maximale Sichtbarkeit",
+    badge: "Pro-Spieler",
+    commands: [
+      "fps_max 0",
+      "video_vsync 0",
+      "video_msaa 0",
+      "video_texture_detail 1",
+      "shadow_quality 0",
+      "shadow_dynamic 0",
+      "bloom_scale 0",
+      "render_quality 1",
+      "ambient_occlusion 0",
+      "model_quality 1",
+      "effect_quality 0",
+      "particle_quality 0",
+      "r_drawtracers_firstperson 0",
+      "cl_disable_ragdolls 1",
+      "cl_draw_only_deathnotices 1",
+      "engine_low_latency_sleep_after_client_tick 1"
+    ]
+  }
 ];
 
 // ======================== SKRIPT-TEMPLATES ========================
@@ -1189,37 +1117,24 @@ const numpadKeys = [
 
 // ======================== CONFIG KATEGORIEN ========================
 const configCategories = {
-  "🎯 Performance & FPS": {
-    subcats: [
-      "Performance Kern",
-      "Shader & Effekte",
-      "Speicher Optimierung",
-      "GPU & Rendering",
-      "CPU & Threading",
-    ],
-    commands: {},
-  },
-  "🔊 Audio & Voice": {
-    subcats: ["Lautstärke", "Mikrofon & Voice", "Sound Qualität"],
-    commands: {},
-  },
-  "🌐 Netzwerk & Multiplayer": {
-    subcats: [
-      "Interpolation",
-      "Bandbreite & Rate",
-      "Latency & Timeout",
-      "Connection Optimierung",
-    ],
-    commands: {},
+  "⚡ Performance & FPS": {
+    subcats: ["FPS & Performance"],
+    commands: {}
   },
   "🎨 Video & Grafik": {
-    subcats: [
-      "Auflösung & Display",
-      "Texturen & Details",
-      "Beleuchtung & Schatten",
-      "Anti-Aliasing",
-      "Post-Processing",
-    ],
-    commands: {},
+    subcats: ["Video & Grafik"],
+    commands: {}
   },
+  "🌐 Netzwerk & Ping": {
+    subcats: ["Netzwerk & Ping"],
+    commands: {}
+  },
+  "🎮 HUD & Interface": {
+    subcats: ["HUD & Interface"],
+    commands: {}
+  },
+  "🔊 Audio & Voice": {
+    subcats: ["Audio & Voice"],
+    commands: {}
+  }
 };

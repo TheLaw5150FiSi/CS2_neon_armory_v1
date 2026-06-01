@@ -7,7 +7,10 @@
       content="width=device-width, initial-scale=1.0, user-scalable=yes"
     />
     <title>CS2 Neon Studio</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
     <link rel="stylesheet" href="css/stylesheet.css" />
   </head>
   <body class="theme-pink">
@@ -21,9 +24,7 @@
           />
           <div class="title">
             <h1>NEON ARMORY CS2</h1>
-            <p>
-              Your config. Your skill. Your win.
-            </p>
+            <p>Your config. Your skill. Your win.</p>
           </div>
         </div>
         <div class="theme-selector">
@@ -36,10 +37,8 @@
       </div>
 
       <div class="tabs">
-        <button class="tab-btn active" data-tab="buyTab">💸 BUYSCRIPT</button>
-        <button class="tab-btn" data-tab="sayTab">💬 SAY BINDS</button>
+        <button class="tab-btn active" data-tab="bindsTab">🔗 BINDS</button>
         <button class="tab-btn" data-tab="configTab">⚙️ CONFIGS</button>
-        <button class="tab-btn" data-tab="scriptsTab">🎮 SKRIPTE</button>
         <button class="tab-btn" data-tab="analyzerTab">
           📊 SYSTEM ANALYZER
         </button>
@@ -48,11 +47,11 @@
         <button class="tab-btn" data-tab="exportTab">📦 EXPORT</button>
       </div>
 
-      <!-- BUYSCRIPT TAB -->
-      <div id="buyTab" class="tab-content active">
+      <!-- BINDS TAB -->
+      <div id="bindsTab" class="tab-content active">
         <div class="layout-toggle-container">
           <button
-            id="toggleKeyboardLayout"
+            id="toggleKeyboardLayoutBinds"
             class="glow"
             style="background: transparent"
           >
@@ -62,106 +61,138 @@
         <div class="card">
           <h2>⌨️ TASTATUR + NUMPAD</h2>
           <div class="info-text">
-            🎨 Farben: 🔴 Rot = BuyScript belegt | 🔵 Blau = Skript belegt | 🟢
-            Grün = Say Bind belegt
+            🎨 Farben: 🔴 Rot = BuyScript | 🔵 Blau = Skript | 🟢 Grün = Say
+            Bind
           </div>
           <div class="keyboard-main">
-            <div class="keyboard-section" id="mainKeyboard"></div>
+            <div class="keyboard-section" id="bindsKeyboardMain"></div>
             <div class="keyboard-section">
               <div>🔢 NUMPAD</div>
-              <div class="numpad-grid" id="numpadContainer"></div>
+              <div class="numpad-grid" id="bindsNumpadContainer"></div>
             </div>
           </div>
         </div>
-        <div class="card">
-          <h2>🛒 KATEGORIEN</h2>
-          <div class="category-row" id="categoryList"></div>
-          <div class="items-grid" id="itemsGrid"></div>
-        </div>
-        <div class="card">
-          <h2>✏️ BUY-BEFEHL für ausgewählte Taste</h2>
-          <textarea
-            id="buyCommandInput"
-            rows="2"
-            placeholder="buy awp; buy vesthelm; ..."
-          ></textarea>
-          <button class="glow" id="saveBindingBtn">💾 Speichern</button>
-          <button class="glow" id="unbindCurrentBtn">
-            🔓 Bindung entfernen
-          </button>
-        </div>
-        <div class="card">
-          <h2>📦 GESPEICHERTE BINDS</h2>
-          <div class="saved-binds" id="savedBindsList"></div>
-          <button class="glow" id="resetBuyBtn">🔄 Alle löschen</button>
-        </div>
-      </div>
 
-      <!-- SAY BINDS TAB -->
-      <div id="sayTab" class="tab-content">
-        <div class="layout-toggle-container">
-          <button
-            id="toggleKeyboardLayoutSay"
-            class="glow"
-            style="background: transparent"
-          >
-            ⌨️ DE Layout
-          </button>
-        </div>
         <div class="card">
-          <h2>⌨️ TASTATUR + NUMPAD</h2>
-          <div class="info-text">
-            🎨 Farben: 🔴 Rot = BuyScript belegt | 🔵 Blau = Skript belegt | 🟢
-            Grün = Say Bind belegt
+          <div class="main-cat-buttons" id="bindTypeSelector">
+            <button class="main-cat-btn active-main" data-bind-type="buy">
+              🛒 BUYSCRIPT
+            </button>
+            <button class="main-cat-btn" data-bind-type="say">
+              💬 SAY BINDS
+            </button>
+            <button class="main-cat-btn" data-bind-type="script">
+              🎮 SKRIPTE
+            </button>
           </div>
-          <div class="keyboard-main">
-            <div class="keyboard-section" id="sayKeyboardMain"></div>
-            <div class="keyboard-section">
-              <div>🔢 NUMPAD</div>
-              <div class="numpad-grid" id="sayNumpadContainer"></div>
+
+          <!-- BUY BIND BEREICH -->
+          <div id="bindsBuyArea" class="bind-type-area active">
+            <div class="category-row" id="bindsCategoryList"></div>
+            <div class="items-grid" id="bindsItemsGrid"></div>
+            <textarea
+              id="bindsBuyCommandInput"
+              rows="2"
+              placeholder="buy awp; buy vesthelm; ..."
+            ></textarea>
+            <button class="glow" id="bindsSaveBuyBtn">
+              💾 Buy-Bindung speichern
+            </button>
+            <button class="glow" id="bindsUnbindBuyBtn">
+              🔓 Bindung entfernen
+            </button>
+          </div>
+
+          <!-- SAY BIND BEREICH -->
+          <div id="bindsSayArea" class="bind-type-area">
+            <div class="say-type-selector">
+              <label
+                ><input
+                  type="radio"
+                  name="bindsSayType"
+                  value="say_team"
+                  checked
+                />
+                💬 Team (say_team)</label
+              >
+              <label
+                ><input type="radio" name="bindsSayType" value="say" /> 🌍 Alle
+                (say)</label
+              >
             </div>
+            <input
+              type="text"
+              id="bindsSayCommandInput"
+              style="
+                width: 100%;
+                background: var(--input-bg);
+                border: 1px solid var(--accent);
+                border-radius: 1rem;
+                padding: 0.8rem;
+                color: var(--text-color);
+                margin-bottom: 0.5rem;
+              "
+              placeholder="Hallo zusammen!"
+            />
+            <button class="glow" id="bindsSaveSayBtn">
+              💾 Say-Bindung speichern
+            </button>
+            <button class="glow" id="bindsUnbindSayBtn">
+              🔓 Bindung entfernen
+            </button>
           </div>
-          
+
+          <!-- SKRIPT BEREICH -->
+          <div id="bindsScriptArea" class="bind-type-area">
+            <input
+              type="text"
+              id="bindsScriptNameInput"
+              placeholder="Skriptname"
+              style="
+                background: var(--input-bg);
+                border: 1px solid var(--accent);
+                border-radius: 2rem;
+                padding: 0.5rem 1rem;
+                width: 100%;
+                margin-bottom: 10px;
+                color: var(--text-color);
+              "
+            />
+            <textarea
+              id="bindsScriptCommandsArea"
+              rows="4"
+              placeholder='alias +jumpthrow "+jump"\nalias -jumpthrow "-jump; -attack"'
+            ></textarea>
+            <div style="margin: 1rem 0 0.5rem 0">
+              <div
+                style="
+                  font-size: 0.8rem;
+                  margin-bottom: 0.5rem;
+                  color: var(--accent-light);
+                "
+              >
+                📚 Vorgefertigte Skripte (klicken zum Übernehmen):
+              </div>
+              <div
+                id="bindsTemplateScripts"
+                style="display: flex; flex-wrap: wrap; gap: 0.5rem"
+              ></div>
+            </div>
+            <button class="glow" id="bindsSaveScriptBtn">
+              💾 Skript speichern
+            </button>
+            <button class="glow" id="bindsUnbindScriptBtn">
+              🔓 Bindung entfernen
+            </button>
+          </div>
         </div>
+
         <div class="card">
-          <h2>✏️ SAY-BEFEHL für ausgewählte Taste</h2>
-          <div class="say-type-selector">
-            <label>
-              <input type="radio" name="sayType" value="say_team" checked /> 💬
-              Team (say_team) - Nur an das eigene Team
-            </label>
-            <label>
-              <input type="radio" name="sayType" value="say" /> 🌍 Alle (say) -
-              An alle Spieler
-            </label>
-          </div>
-          <input
-            type="text"
-            id="sayCommandInput"
-            style="
-              width: 100%;
-              background: var(--input-bg);
-              border: 1px solid var(--accent);
-              border-radius: 1rem;
-              padding: 0.8rem;
-              color: var(--text-color);
-              margin-bottom: 0.5rem;
-            "
-            placeholder=""
-          />
-          <div class="info-text" style="margin-top: 0.3rem">
-            💡 Beispiel: "Hallo zusammen!" → wird zu bind "TASTE" "say Hallo
-            zusammen!"
-          </div>
-          <button class="glow" id="saveSayBindingBtn">💾 Speichern</button>
-          <button class="glow" id="unbindSayKeyBtn">
-            🔓 Bindung entfernen
+          <h2>📦 GESPEICHERTE BINDS (ÜBERSICHT)</h2>
+          <div class="saved-binds" id="bindsSavedList"></div>
+          <button class="glow" id="bindsResetAllBtn">
+            🔄 Alle Bindings löschen (alle Typen)
           </button>
-        </div>
-        <div class="card">
-          <h2>📦 GESPEICHERTE SAY-BINDS</h2>
-          <div class="saved-binds" id="savedSayBindsList"></div>
-          <button class="glow" id="resetSayBindsBtn">🔄 Alle löschen</button>
         </div>
       </div>
 
@@ -204,261 +235,492 @@
         </div>
       </div>
 
-      <!-- SKRIPTE TAB -->
-      <div id="scriptsTab" class="tab-content">
-        <div class="layout-toggle-container">
-          <button
-            id="toggleKeyboardLayoutScript"
-            class="glow"
-            style="background: transparent"
-          >
-            ⌨️ DE Layout
-          </button>
-        </div>
-        <div class="card">
-          <h2>🎮 SKRIPT EDITOR</h2>
-          <div class="info-text">
-            🎨 Farben: 🔴 Rot = BuyScript belegt | 🔵 Blau = Skript belegt | 🟢
-            Grün = Say Bind belegt
-          </div>
-          
-          <div class="keyboard-main">
-            <div class="keyboard-section" id="scriptKeyboardMain"></div>
-            <div class="keyboard-section">
-              <div>🔢 NUMPAD</div>
-              <div class="numpad-grid" id="scriptNumpadContainer"></div>
-            </div>
-          </div>
-          <input
-            type="text"
-            id="scriptNameInput"
-            placeholder="Skriptname"
-            style="
-              background: var(--input-bg);
-              border: 1px solid var(--accent);
-              border-radius: 2rem;
-              padding: 0.5rem 1rem;
-              width: 100%;
-              margin-bottom: 10px;
-              color: var(--text-color);
-            "
-          />
-          <textarea
-            id="scriptCommandsArea"
-            rows="4"
-            placeholder='alias +jumpthrow "+jump"&#10;alias -jumpthrow "-jump; -attack"'
-          ></textarea>
-          <button class="glow" id="saveScriptWithKeyBtn">
-            💾 Speichern (mit ausgewählter Taste)
-          </button>
-          <button class="glow" id="unbindScriptKeyBtn">
-            🔓 Bindung entfernen
-          </button>
-        </div>
-        <div class="card">
-          <h2>📚 VORGEFERTIGTE SKRIPTE</h2>
-          <div id="templateScripts" class="script-templates-vertical"></div>
-          <div class="info-text" style="margin-top: 0.5rem">
-            💡 Klicke auf ein Skript → Taste auswählen → Speichern.
-          </div>
-        </div>
-        <div class="card">
-          <h2>💾 GESPEICHERTE SKRIPT-BINDS</h2>
-          <div class="saved-binds" id="savedScriptsList"></div>
-          <button class="glow" id="deleteSelectedScriptBtn">🗑️ Löschen</button>
-        </div>
-      </div>
-
       <!-- SYSTEM ANALYZER TAB -->
-<!-- SYSTEM ANALYZER TAB -->
-<div id="analyzerTab" class="tab-content">
-  <div class="card">
-    <h2>📊 SYSTEM ANALYZER · CS2 PERFORMANCE INDEX</h2>
-    <div class="info-hint">
-      📊 Wähle CPU, GPU und RAM – der Performance-Score wird live berechnet
-    </div>
-
-    <!-- ZEILE 1: CPU + GPU + RAM nebeneinander -->
-    <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
-      <!-- CPU -->
-      <div style="flex: 1; min-width: 200px; background: var(--btn-bg); border-radius: 1rem; padding: 0.8rem; border: 1px solid var(--border-color);">
-        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-          <i class="fas fa-microchip"></i>
-          <strong>CPU</strong>
-        </div>
-        <select id="analyzerCpuSelect" style="width: 100%; padding: 0.5rem; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 0.6rem; color: var(--text-color);">
-          <option value="" disabled selected>-- CPU auswählen --</option>
-        </select>
-      </div>
-
-      <!-- GPU -->
-      <div style="flex: 1; min-width: 200px; background: var(--btn-bg); border-radius: 1rem; padding: 0.8rem; border: 1px solid var(--border-color);">
-        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-          <i class="fas fa-gamepad"></i>
-          <strong>GPU</strong>
-        </div>
-        <select id="analyzerGpuSelect" style="width: 100%; padding: 0.5rem; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 0.6rem; color: var(--text-color);">
-          <option value="" disabled selected>-- GPU auswählen --</option>
-        </select>
-      </div>
-
-      <!-- RAM -->
-      <div style="flex: 1; min-width: 200px; background: var(--btn-bg); border-radius: 1rem; padding: 0.8rem; border: 1px solid var(--border-color);">
-        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-          <i class="fas fa-memory"></i>
-          <strong>RAM</strong>
-        </div>
-        <div style="display: flex; gap: 0.5rem;">
-          <select id="analyzerRamSelect" style="flex: 1; padding: 0.5rem; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 0.6rem; color: var(--text-color);">
-            <option value="" disabled selected>GB</option>
-            <option value="4">4 GB</option>
-            <option value="8">8 GB</option>
-            <option value="16">16 GB</option>
-            <option value="32">32 GB</option>
-            <option value="64">64 GB</option>
-            <option value="128">128 GB</option>
-          </select>
-          <select id="analyzerRamTypeSelect" style="flex: 1; padding: 0.5rem; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 0.6rem; color: var(--text-color);">
-            <option value="DDR5">DDR5</option>
-            <option value="DDR4">DDR4</option>
-            <option value="DDR3">DDR3</option>
-          </select>
-        </div>
-      </div>
-    </div>
-
-    <!-- ZEILE 2: Monitore + Streaming nebeneinander -->
-    <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
-      <!-- Monitore -->
-      <div style="flex: 1; min-width: 200px; background: var(--btn-bg); border-radius: 1rem; padding: 0.8rem; border: 1px solid var(--border-color);">
-        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-          <i class="fas fa-desktop"></i>
-          <strong>Monitore</strong>
-        </div>
-        <select id="analyzerMonitorsSelect" style="width: 100%; padding: 0.5rem; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 0.6rem; color: var(--text-color);">
-          <option value="1">1 Monitor</option>
-          <option value="2">2 Monitore</option>
-          <option value="3">3 Monitore</option>
-          <option value="4">4+ Monitore</option>
-        </select>
-        <div class="info-text" style="margin-top: 0.3rem; font-size: 0.65rem;">
-          💡 -2% pro Monitor
-        </div>
-      </div>
-
-      <!-- Streaming -->
-      <div style="flex: 1; min-width: 200px; background: var(--btn-bg); border-radius: 1rem; padding: 0.8rem; border: 1px solid var(--border-color);">
-        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-          <i class="fas fa-broadcast-tower"></i>
-          <strong>Streaming</strong>
-        </div>
-        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-          <input type="checkbox" id="analyzerStreamingCheckbox" style="accent-color: var(--accent);">
-          <span>🎥 Aktives Streaming</span>
-        </label>
-        <div class="info-text" style="margin-top: 0.3rem; font-size: 0.65rem;">
-          💡 -8% Performance
-        </div>
-      </div>
-    </div>
-
-    <!-- ERGEBNISBEREICH -->
-    <div class="analyzer-score-section" id="analyzerResultArea">
-      <div id="analyzerEmptyState" class="analyzer-empty-state">
-        <i class="fas fa-desktop"></i>
-        <p>Wähle CPU, GPU und RAM aus<br>Der Score wird automatisch berechnet</p>
-      </div>
-      <div id="analyzerScoreContent" style="display: none">
-        <!-- Score und Kurzinfo -->
-        <div style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; margin-bottom: 1rem;">
-          <div style="text-align: center; min-width: 150px;">
-            <div class="analyzer-score-number" id="analyzerScoreValue" style="font-size: 2.2rem;">0</div>
-            <div class="analyzer-score-label" style="font-size: 0.7rem;">PERFORMANCE SCORE</div>
-            <div class="analyzer-meter-bar" style="width: 150px; margin: 0.3rem auto;">
-              <div class="analyzer-meter-fill" id="analyzerMeterFill" style="width: 0%"></div>
+      <div id="analyzerTab" class="tab-content">
+        <div class="card">
+          <h2>📊 SYSTEM ANALYZER · CS2 PERFORMANCE INDEX</h2>
+          <div class="info-hint">
+            📊 Wähle CPU, GPU und RAM – der Performance-Score wird live
+            berechnet
+          </div>
+          <div
+            style="
+              display: flex;
+              flex-wrap: wrap;
+              gap: 1rem;
+              margin-bottom: 1rem;
+            "
+          >
+            <div
+              style="
+                flex: 1;
+                min-width: 200px;
+                background: var(--btn-bg);
+                border-radius: 1rem;
+                padding: 0.8rem;
+                border: 1px solid var(--border-color);
+              "
+            >
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 0.5rem;
+                  margin-bottom: 0.5rem;
+                "
+              >
+                <i class="fas fa-microchip"></i><strong>CPU</strong>
+              </div>
+              <select
+                id="analyzerCpuSelect"
+                style="
+                  width: 100%;
+                  padding: 0.5rem;
+                  background: var(--input-bg);
+                  border: 1px solid var(--border-color);
+                  border-radius: 0.6rem;
+                  color: var(--text-color);
+                "
+              >
+                <option value="" disabled selected>-- CPU auswählen --</option>
+              </select>
+            </div>
+            <div
+              style="
+                flex: 1;
+                min-width: 200px;
+                background: var(--btn-bg);
+                border-radius: 1rem;
+                padding: 0.8rem;
+                border: 1px solid var(--border-color);
+              "
+            >
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 0.5rem;
+                  margin-bottom: 0.5rem;
+                "
+              >
+                <i class="fas fa-gamepad"></i><strong>GPU</strong>
+              </div>
+              <select
+                id="analyzerGpuSelect"
+                style="
+                  width: 100%;
+                  padding: 0.5rem;
+                  background: var(--input-bg);
+                  border: 1px solid var(--border-color);
+                  border-radius: 0.6rem;
+                  color: var(--text-color);
+                "
+              >
+                <option value="" disabled selected>-- GPU auswählen --</option>
+              </select>
+            </div>
+            <div
+              style="
+                flex: 1;
+                min-width: 200px;
+                background: var(--btn-bg);
+                border-radius: 1rem;
+                padding: 0.8rem;
+                border: 1px solid var(--border-color);
+              "
+            >
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 0.5rem;
+                  margin-bottom: 0.5rem;
+                "
+              >
+                <i class="fas fa-memory"></i><strong>RAM</strong>
+              </div>
+              <div style="display: flex; gap: 0.5rem">
+                <select
+                  id="analyzerRamSelect"
+                  style="
+                    flex: 1;
+                    padding: 0.5rem;
+                    background: var(--input-bg);
+                    border: 1px solid var(--border-color);
+                    border-radius: 0.6rem;
+                    color: var(--text-color);
+                  "
+                >
+                  <option value="" disabled selected>GB</option>
+                  <option value="4">4 GB</option>
+                  <option value="8">8 GB</option>
+                  <option value="16">16 GB</option>
+                  <option value="32">32 GB</option>
+                  <option value="64">64 GB</option>
+                  <option value="128">128 GB</option>
+                </select>
+                <select
+                  id="analyzerRamTypeSelect"
+                  style="
+                    flex: 1;
+                    padding: 0.5rem;
+                    background: var(--input-bg);
+                    border: 1px solid var(--border-color);
+                    border-radius: 0.6rem;
+                    color: var(--text-color);
+                  "
+                >
+                  <option value="DDR5">DDR5</option>
+                  <option value="DDR4">DDR4</option>
+                  <option value="DDR3">DDR3</option>
+                </select>
+              </div>
             </div>
           </div>
-          
-          <div style="flex: 1; background: rgba(0,0,0,0.2); border-radius: 0.8rem; padding: 0.6rem 1rem;">
-            <div id="analyzerSettingsList" style="font-size: 0.8rem;"></div>
+          <div
+            style="
+              display: flex;
+              flex-wrap: wrap;
+              gap: 1rem;
+              margin-bottom: 1.5rem;
+            "
+          >
+            <div
+              style="
+                flex: 1;
+                min-width: 200px;
+                background: var(--btn-bg);
+                border-radius: 1rem;
+                padding: 0.8rem;
+                border: 1px solid var(--border-color);
+              "
+            >
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 0.5rem;
+                  margin-bottom: 0.5rem;
+                "
+              >
+                <i class="fas fa-desktop"></i><strong>Monitore</strong>
+              </div>
+              <select
+                id="analyzerMonitorsSelect"
+                style="
+                  width: 100%;
+                  padding: 0.5rem;
+                  background: var(--input-bg);
+                  border: 1px solid var(--border-color);
+                  border-radius: 0.6rem;
+                  color: var(--text-color);
+                "
+              >
+                <option value="1">1 Monitor</option>
+                <option value="2">2 Monitore</option>
+                <option value="3">3 Monitore</option>
+                <option value="4">4+ Monitore</option>
+              </select>
+              <div
+                class="info-text"
+                style="margin-top: 0.3rem; font-size: 0.65rem"
+              >
+                💡 -2% pro Monitor
+              </div>
+            </div>
+            <div
+              style="
+                flex: 1;
+                min-width: 200px;
+                background: var(--btn-bg);
+                border-radius: 1rem;
+                padding: 0.8rem;
+                border: 1px solid var(--border-color);
+              "
+            >
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 0.5rem;
+                  margin-bottom: 0.5rem;
+                "
+              >
+                <i class="fas fa-broadcast-tower"></i><strong>Streaming</strong>
+              </div>
+              <label
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 0.5rem;
+                  cursor: pointer;
+                "
+                ><input
+                  type="checkbox"
+                  id="analyzerStreamingCheckbox"
+                  style="accent-color: var(--accent)"
+                /><span>🎥 Aktives Streaming</span></label
+              >
+              <div
+                class="info-text"
+                style="margin-top: 0.3rem; font-size: 0.65rem"
+              >
+                💡 -8% Performance
+              </div>
+            </div>
           </div>
-          
-          <div style="font-size: 0.75rem; color: var(--accent-light); background: rgba(0,0,0,0.15); padding: 0.4rem 0.8rem; border-radius: 0.6rem;" id="analyzerHardwareSummary"></div>
-        </div>
-        
-        <!-- OPTIMIERUNGSVORSCHLÄGE (immer sichtbar, größer) -->
-        <div style="margin-top: 1rem; padding-top: 0.8rem; border-top: 1px solid var(--border-color);">
-          <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.8rem;">
-            <i class="fas fa-wrench" style="color: var(--accent-light);"></i>
-            <strong style="font-size: 0.9rem;">🔧 Optimierungsvorschläge für dein System</strong>
+          <div class="analyzer-score-section" id="analyzerResultArea">
+            <div id="analyzerEmptyState" class="analyzer-empty-state">
+              <i class="fas fa-desktop"></i>
+              <p>
+                Wähle CPU, GPU und RAM aus<br />Der Score wird automatisch
+                berechnet
+              </p>
+            </div>
+            <div id="analyzerScoreContent" style="display: none">
+              <div
+                style="
+                  display: flex;
+                  flex-wrap: wrap;
+                  gap: 1rem;
+                  align-items: center;
+                  margin-bottom: 1rem;
+                "
+              >
+                <div style="text-align: center; min-width: 150px">
+                  <div
+                    class="analyzer-score-number"
+                    id="analyzerScoreValue"
+                    style="font-size: 2.2rem"
+                  >
+                    0
+                  </div>
+                  <div class="analyzer-score-label" style="font-size: 0.7rem">
+                    PERFORMANCE SCORE
+                  </div>
+                  <div
+                    class="analyzer-meter-bar"
+                    style="width: 150px; margin: 0.3rem auto"
+                  >
+                    <div
+                      class="analyzer-meter-fill"
+                      id="analyzerMeterFill"
+                      style="width: 0%"
+                    ></div>
+                  </div>
+                </div>
+                <div
+                  style="
+                    flex: 1;
+                    background: rgba(0, 0, 0, 0.2);
+                    border-radius: 0.8rem;
+                    padding: 0.6rem 1rem;
+                  "
+                >
+                  <div
+                    id="analyzerSettingsList"
+                    style="font-size: 0.8rem"
+                  ></div>
+                </div>
+                <div
+                  style="
+                    font-size: 0.75rem;
+                    color: var(--accent-light);
+                    background: rgba(0, 0, 0, 0.15);
+                    padding: 0.4rem 0.8rem;
+                    border-radius: 0.6rem;
+                  "
+                  id="analyzerHardwareSummary"
+                ></div>
+              </div>
+              <div
+                style="
+                  margin-top: 1rem;
+                  padding-top: 0.8rem;
+                  border-top: 1px solid var(--border-color);
+                "
+              >
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                    margin-bottom: 0.8rem;
+                  "
+                >
+                  <i
+                    class="fas fa-wrench"
+                    style="color: var(--accent-light)"
+                  ></i
+                  ><strong style="font-size: 0.9rem"
+                    >🔧 Optimierungsvorschläge für dein System</strong
+                  >
+                </div>
+                <div
+                  id="analyzerOptimizationItems"
+                  style="display: flex; flex-direction: column; gap: 0.5rem"
+                ></div>
+              </div>
+            </div>
           </div>
-          <div id="analyzerOptimizationItems" style="display: flex; flex-direction: column; gap: 0.5rem;"></div>
+          <div
+            style="
+              display: flex;
+              flex-wrap: wrap;
+              justify-content: center;
+              gap: 0.8rem;
+              margin-top: 1rem;
+              padding-top: 0.8rem;
+              border-top: 1px solid var(--border-color);
+              font-size: 0.7rem;
+            "
+          >
+            <span
+              ><span
+                style="
+                  background: linear-gradient(135deg, #ffd700, #a855f7);
+                  padding: 0.15rem 0.4rem;
+                  border-radius: 0.3rem;
+                "
+                >45k+</span
+              >
+              Exzellent</span
+            ><span
+              ><span
+                style="
+                  background: linear-gradient(135deg, #3b82f6, #10b981);
+                  padding: 0.15rem 0.4rem;
+                  border-radius: 0.3rem;
+                "
+                >30k+</span
+              >
+              Gut</span
+            ><span
+              ><span
+                style="
+                  background: linear-gradient(135deg, #f59e0b, #fbbf24);
+                  padding: 0.15rem 0.4rem;
+                  border-radius: 0.3rem;
+                "
+                >18k+</span
+              >
+              Akzeptabel</span
+            ><span
+              ><span
+                style="
+                  background: linear-gradient(135deg, #ef4444, #f87171);
+                  padding: 0.15rem 0.4rem;
+                  border-radius: 0.3rem;
+                "
+                >8k+</span
+              >
+              Befriedigend</span
+            ><span
+              ><span
+                style="
+                  background: #6b7280;
+                  padding: 0.15rem 0.4rem;
+                  border-radius: 0.3rem;
+                "
+                >-8k</span
+              >
+              Schwach</span
+            >
+          </div>
+          <div
+            class="analyzer-disclaimer"
+            style="
+              margin-top: 0.8rem;
+              font-size: 0.65rem;
+              padding: 0.5rem 0.8rem;
+            "
+          >
+            <i class="fas fa-info-circle"></i> Theoretischer Richtwert basierend
+            auf CPU, GPU und RAM. Tatsächliche Leistung kann abweichen.
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Kleine Legende -->
-    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.8rem; margin-top: 1rem; padding-top: 0.8rem; border-top: 1px solid var(--border-color); font-size: 0.7rem;">
-      <span><span style="background: linear-gradient(135deg,#ffd700,#a855f7); padding: 0.15rem 0.4rem; border-radius: 0.3rem;">45k+</span> Exzellent</span>
-      <span><span style="background: linear-gradient(135deg,#3b82f6,#10b981); padding: 0.15rem 0.4rem; border-radius: 0.3rem;">30k+</span> Gut</span>
-      <span><span style="background: linear-gradient(135deg,#f59e0b,#fbbf24); padding: 0.15rem 0.4rem; border-radius: 0.3rem;">18k+</span> Akzeptabel</span>
-      <span><span style="background: linear-gradient(135deg,#ef4444,#f87171); padding: 0.15rem 0.4rem; border-radius: 0.3rem;">8k+</span> Befriedigend</span>
-      <span><span style="background: #6b7280; padding: 0.15rem 0.4rem; border-radius: 0.3rem;">-8k</span> Schwach</span>
-    </div>
-
-    <div class="analyzer-disclaimer" style="margin-top: 0.8rem; font-size: 0.65rem; padding: 0.5rem 0.8rem;">
-      <i class="fas fa-info-circle"></i> Theoretischer Richtwert basierend auf CPU, GPU und RAM. Tatsächliche Leistung kann abweichen.
-    </div>
-  </div>
-</div>
-<!-- PING RADAR TAB -->
-<div id="pingTab" class="tab-content">
-  <div class="card">
-    <h2>📡 PING RADAR – CS2 Server Latenz Test</h2>
-    <div class="info-hint">
-      🌍 Teste deine Verbindung zu allen wichtigen CS2-Server-Regionen.
-      Finde die beste Region für dein nächstes Match!
-    </div>
-    
-    <div style="margin-bottom: 1.5rem;">
-      <button class="glow" id="startPingTestBtn" style="width: auto; background: var(--accent);">
-        🚀 Test starten (alle Regionen)
-      </button>
-      <button class="glow" id="stopPingTestBtn" style="width: auto;">
-        ⏹️ Stoppen
-      </button>
-    </div>
-    
-    <!-- Fortschrittsbalken -->
-    <div class="progress-bar" id="pingProgressBar">
-      <div class="progress-fill" id="pingProgressFill" style="width: 0%;"></div>
-    </div>
-    
-    <!-- Ergebnisse -->
-    <div id="pingResultsContainer" style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1rem;">
-      <div class="empty-message">👉 Klicke auf "Test starten"</div>
-    </div>
-    
-    <!-- Beste Region Empfehlung -->
-    <div id="pingBestRegion" style="margin-top: 1.5rem; padding: 1rem; background: var(--accent); border-radius: 1rem; color: #0a0a0f; display: none;">
-      <strong>🏆 BESTE REGION FÜR DICH:</strong> <span id="bestRegionName"></span> 
-      (<span id="bestRegionPing"></span>ms) – <span id="bestRegionRec"></span>
-    </div>
-    
-    <!-- Letzte Messungen -->
-    <div style="margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem;">
-      <details>
-        <summary style="cursor: pointer; color: var(--accent-light);">📊 Letzte 5 Messungen (Verlauf)</summary>
-        <div id="pingHistory" style="margin-top: 0.5rem; font-size: 0.7rem; font-family: monospace;"></div>
-      </details>
-    </div>
-    
-    <div class="analyzer-disclaimer" style="margin-top: 0.8rem;">
-      <i class="fas fa-info-circle"></i> Die Messungen sind browserbasiert und approximativ. 
-      Tatsächliche CS2-Ingame-Pings können leicht abweichen (meist 5-15ms höher).
-    </div>
-  </div>
-</div>
+      <!-- PING RADAR TAB -->
+      <div id="pingTab" class="tab-content">
+        <div class="card">
+          <h2>📡 PING RADAR – CS2 Server Latenz Test</h2>
+          <div class="info-hint">
+            🌍 Teste deine Verbindung zu allen wichtigen CS2-Server-Regionen.
+            Finde die beste Region für dein nächstes Match!
+          </div>
+          <div style="margin-bottom: 1.5rem">
+            <button
+              class="glow"
+              id="startPingTestBtn"
+              style="width: auto; background: var(--accent)"
+            >
+              🚀 Test starten (alle Regionen)</button
+            ><button class="glow" id="stopPingTestBtn" style="width: auto">
+              ⏹️ Stoppen
+            </button>
+          </div>
+          <div class="progress-bar" id="pingProgressBar">
+            <div
+              class="progress-fill"
+              id="pingProgressFill"
+              style="width: 0%"
+            ></div>
+          </div>
+          <div
+            id="pingResultsContainer"
+            style="
+              display: flex;
+              flex-direction: column;
+              gap: 0.5rem;
+              margin-top: 1rem;
+            "
+          >
+            <div class="empty-message">👉 Klicke auf "Test starten"</div>
+          </div>
+          <div
+            id="pingBestRegion"
+            style="
+              margin-top: 1.5rem;
+              padding: 1rem;
+              background: var(--accent);
+              border-radius: 1rem;
+              color: #0a0a0f;
+              display: none;
+            "
+          >
+            <strong>🏆 BESTE REGION FÜR DICH:</strong>
+            <span id="bestRegionName"></span> (<span id="bestRegionPing"></span
+            >ms) – <span id="bestRegionRec"></span>
+          </div>
+          <div
+            style="
+              margin-top: 1.5rem;
+              border-top: 1px solid var(--border-color);
+              padding-top: 1rem;
+            "
+          >
+            <details>
+              <summary style="cursor: pointer; color: var(--accent-light)">
+                📊 Letzte 5 Messungen (Verlauf)
+              </summary>
+              <div
+                id="pingHistory"
+                style="
+                  margin-top: 0.5rem;
+                  font-size: 0.7rem;
+                  font-family: monospace;
+                "
+              ></div>
+            </details>
+          </div>
+          <div class="analyzer-disclaimer" style="margin-top: 0.8rem">
+            <i class="fas fa-info-circle"></i> Die Messungen sind browserbasiert
+            und approximativ. Tatsächliche CS2-Ingame-Pings können leicht
+            abweichen (meist 5-15ms höher).
+          </div>
+        </div>
+      </div>
 
       <!-- START OPTIONEN TAB -->
       <div id="startTab" class="tab-content">
@@ -493,16 +755,17 @@
       </div>
     </div>
     <script src="js/data.js"></script>
-  <script src="js/theme.js"></script>
-  <script src="js/analyzer.js"></script>
-  <script src="js/pingtest.js"></script>
-  <script src="js/keyboard.js"></script>
-  <script src="js/buyscript.js"></script>
-  <script src="js/saybinds.js"></script>
-  <script src="js/configs.js"></script>
-  <script src="js/scripts.js"></script>
-  <script src="js/startoptions.js"></script>
-  <script src="js/export.js"></script>
-  <script src="js/main.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/keyboard.js"></script>
+    <script src="js/buyscript.js"></script>
+    <script src="js/saybinds.js"></script>
+    <script src="js/configs.js"></script>
+    <script src="js/scripts.js"></script>
+    <script src="js/startoptions.js"></script>
+    <script src="js/export.js"></script>
+    <script src="js/analyzer.js"></script>
+    <script src="js/pingtest.js"></script>
+    <script src="js/binds.js"></script>
+    <script src="js/main.js"></script>
   </body>
 </html>
