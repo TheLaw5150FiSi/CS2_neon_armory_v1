@@ -401,7 +401,7 @@ function renderBindsSavedList() {
     });
 }
 
-// Globale Funktion zum Entfernen eines Bindings aus der Liste
+// Globale Funktoin zum Entfernen eines Bindings aus der Liste
 window.removeBindingFromList = function(key, type) {
     if (confirm(`Binding für Taste "${key}" (${type}) wirklich entfernen?`)) {
         removeSpecificBinding(key, type);

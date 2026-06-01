@@ -33,7 +33,7 @@ function generateFullExport() {
   }
 
 
-  // ========== 3. SKRIPT BINDS (sortiert, mit Namen) ==========
+  // ========== 3. SKRIP BINDS ==========
   if (window.scriptBindings && Object.keys(window.scriptBindings).length > 0) {
     out += "// ========== 🎮 SKRIPT BINDS ==========\n";
     out += "// Aliase und Makros für spezielle Aktionen\n\n";
@@ -64,7 +64,7 @@ function generateFullExport() {
     }
   }
 
-  // ========== 4. CONFIG BEFEHLE (mit Unterkategorien) ==========
+  // ========== 4. CONFIG BEFEHLE ==========
   if (
     typeof globalConfigCommands !== "undefined" &&
     globalConfigCommands.length > 0

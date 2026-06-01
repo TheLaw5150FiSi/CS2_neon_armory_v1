@@ -14,7 +14,6 @@ function getAllKeys() {
 }
 
 // ZENTRALE FUNKTION: Prüft, welche Bindung eine Taste hat (DIREKTER ZUGRIFF auf die globalen Objekte)
-// ZENTRALE FUNKTION: Prüft, welche Bindung eine Taste hat (DIREKTER ZUGRIFF auf die globalen Objekte)
 function getBindingInfo(key) {
     // Direkter Zugriff auf die globalen Variablen
     const hasBuy = (window.buyBindings && window.buyBindings[key]);
