@@ -39,12 +39,11 @@
       <div class="tabs">
         <button class="tab-btn active" data-tab="bindsTab">🔗 BINDS</button>
         <button class="tab-btn" data-tab="configTab">⚙️ CONFIGS</button>
-        <button class="tab-btn" data-tab="analyzerTab">
-          📊 SYSTEM ANALYZER
-        </button>
+        <button class="tab-btn" data-tab="analyzerTab">📊 SYSTEM ANALYZER</button>
         <button class="tab-btn" data-tab="pingTab">📡 PING RADAR</button>
         <button class="tab-btn" data-tab="startTab">🚀 START OPTIONEN</button>
         <button class="tab-btn" data-tab="exportTab">📦 EXPORT</button>
+        <button class="tab-btn" data-tab="aboutTab">👤 ABOUT ME</button>
       </div>
 
       <!-- BINDS TAB -->
@@ -752,8 +751,170 @@
           </button>
           <button class="glow" id="refreshExportBtn">🔄 Aktualisieren</button>
         </div>
+        </div>
+    
+      </div>
+
+      <!-- ABOUT ME TAB -->
+<!-- ABOUT ME TAB -->
+<div id="aboutTab" class="tab-content">
+  <div class="card">
+    <h2>👤 ABOUT ME</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 2rem;">
+      <!-- Profilbild / Avatar Bereich -->
+      <div style="text-align: center; min-width: 150px;">
+        <div style="width: 120px; height: 120px; background: linear-gradient(135deg, var(--accent), var(--accent-dark)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem auto;">
+          <i class="fas fa-shield-haltered" style="font-size: 3rem; color: white;"></i>
+        </div>
+        <h3 style="color: var(--accent-light);">Michael M.</h3>
+        <p style="font-size: 0.8rem;">⚡ TheLaw5150</p>
+      </div>
+
+      <!-- Info Bereich -->
+      <div style="flex: 1;">
+        <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem;">
+          <i class="fas fa-user-astronaut" style="font-size: 1.8rem; color: var(--accent);"></i>
+          <div>
+            <h3 style="margin: 0;">Michael "TheLaw5150" M.</h3>
+            <p style="margin: 0; font-size: 0.8rem; opacity: 0.8;"></p>
+          </div>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem;">
+          <i class="fas fa-shield-virus" style="font-size: 1.5rem; color: var(--accent);"></i>
+          <div>
+            <strong>Spezialisierung:</strong>
+            <span style="font-size: 0.9rem;">🔐 Cyber Security</span>
+          </div>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem;">
+          <i class="fas fa-graduation-cap" style="font-size: 1.5rem; color: var(--accent);"></i>
+          <div>
+            <strong>Ausbildung:</strong>
+            <span style="font-size: 0.9rem;">Fachinformatiker für Systemintegration (FiSi)</span>
+          </div>
+        </div>
+
+<div style="margin-top: 1.5rem;">
+  <h4 style="color: var(--accent-light); margin-bottom: 0.8rem;">🔗 Links & Profile</h4>
+  <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+    <a href="https://steamcommunity.com/id/thelaw5150/" target="_blank" style="background: var(--btn-bg); padding: 0.5rem 1rem; border-radius: 2rem; text-decoration: none; color: var(--text-color); display: inline-flex; align-items: center; gap: 0.5rem; border: 1px solid var(--border-color); transition: 0.2s;">
+      <i class="fab fa-steam" style="color: #00adee;"></i> Steam
+    </a>
+    <a href="https://github.com/TheLaw5150FiSi" target="_blank" style="background: var(--btn-bg); padding: 0.5rem 1rem; border-radius: 2rem; text-decoration: none; color: var(--text-color); display: inline-flex; align-items: center; gap: 0.5rem; border: 1px solid var(--border-color); transition: 0.2s;">
+      <i class="fab fa-github"></i> GitHub
+    </a>
+    <a href="https://www.youtube.com/@The_Law_5150" target="_blank" style="background: var(--btn-bg); padding: 0.5rem 1rem; border-radius: 2rem; text-decoration: none; color: var(--text-color); display: inline-flex; align-items: center; gap: 0.5rem; border: 1px solid var(--border-color); transition: 0.2s;">
+      <i class="fab fa-youtube" style="color: #ff0000;"></i> YouTube
+    </a>
+    <a href="https://www.twitch.tv/thelaw5150" target="_blank" style="background: var(--btn-bg); padding: 0.5rem 1rem; border-radius: 2rem; text-decoration: none; color: var(--text-color); display: inline-flex; align-items: center; gap: 0.5rem; border: 1px solid var(--border-color); transition: 0.2s;">
+      <i class="fab fa-twitch" style="color: #9146ff;"></i> Twitch
+    </a>
+    <a href="https://discord.gg/Q72WJwdCCf" target="_blank" style="background: var(--btn-bg); padding: 0.5rem 1rem; border-radius: 2rem; text-decoration: none; color: var(--text-color); display: inline-flex; align-items: center; gap: 0.5rem; border: 1px solid var(--border-color); transition: 0.2s;">
+      <i class="fab fa-discord" style="color: #5865F2;"></i> Discord Server
+    </a>
+  </div>
+</div>
       </div>
     </div>
+  </div>
+
+  <!-- Skills & Technologien Card -->
+  <div class="card">
+    <h2>🛠️ Skills & Technologien</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 0.8rem;">
+      <span style="background: var(--accent-dark); padding: 0.3rem 0.8rem; border-radius: 2rem; font-size: 0.8rem;">☕ Java</span>
+      <span style="background: var(--accent-dark); padding: 0.3rem 0.8rem; border-radius: 2rem; font-size: 0.8rem;">🌐 HTML</span>
+      <span style="background: var(--accent-dark); padding: 0.3rem 0.8rem; border-radius: 2rem; font-size: 0.8rem;">💻 JavaScript</span>
+      <span style="background: var(--accent-dark); padding: 0.3rem 0.8rem; border-radius: 2rem; font-size: 0.8rem;">🔐 Cyber Security</span>
+      <span style="background: var(--accent-dark); padding: 0.3rem 0.8rem; border-radius: 2rem; font-size: 0.8rem;">🐧 Linux</span>
+      <span style="background: var(--accent-dark); padding: 0.3rem 0.8rem; border-radius: 2rem; font-size: 0.8rem;">🖥️ Windows Server</span>
+      <span style="background: var(--accent-dark); padding: 0.3rem 0.8rem; border-radius: 2rem; font-size: 0.8rem;">🌐 Netzwerktechnik</span>
+    </div>
+  </div>
+
+  <!-- Sprachen Card -->
+  <div class="card">
+    <h2>🌍 Sprachen</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+      <div style="flex: 1;">
+        <div style="display: flex; justify-content: space-between;">
+          <span>🇩🇪 Deutsch</span>
+          <span style="color: var(--accent-light);">Muttersprache</span>
+        </div>
+        <div style="height: 6px; background: var(--btn-bg); border-radius: 3px; margin-top: 0.3rem;">
+          <div style="width: 100%; height: 100%; background: var(--accent); border-radius: 3px;"></div>
+        </div>
+      </div>
+      <div style="flex: 1;">
+        <div style="display: flex; justify-content: space-between;">
+          <span>🇬🇧 Englisch</span>
+          <span style="color: var(--accent-light);">Fließend</span>
+        </div>
+        <div style="height: 6px; background: var(--btn-bg); border-radius: 3px; margin-top: 0.3rem;">
+          <div style="width: 60%; height: 100%; background: var(--accent); border-radius: 3px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Kontakt Card -->
+  <div class="card">
+    <h2>📫 Kontakt</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+      <div style="background: var(--btn-bg); padding: 0.5rem 1rem; border-radius: 2rem; display: inline-flex; align-items: center; gap: 0.5rem; border: 1px solid var(--border-color);">
+        <i class="fab fa-discord" style="color: #5865F2;"></i>
+        <span>Discord: <strong>thelaw5150</strong></span>
+      </div>
+      <a href="mailto:thelaw5150@example.com" style="background: var(--btn-bg); padding: 0.5rem 1rem; border-radius: 2rem; text-decoration: none; color: var(--text-color); display: inline-flex; align-items: center; gap: 0.5rem; border: 1px solid var(--border-color); transition: 0.2s;">
+        <i class="fas fa-envelope"></i> E-Mail
+      </a>
+    </div>
+  </div>
+
+  <!-- Über das Projekt Card -->
+<div class="card">
+  <h2>🎮 Über CS2 Neon Studio</h2>
+  <p style="margin-bottom: 0.8rem; line-height: 1.5;">
+    CS2 Neon Studio ist eine umfassende All-in-One-Anwendung für Counter-Strike 2, 
+    die Spielern ermöglicht, ihre Configs, Buy-Binds, Say-Binds und Skripte 
+    zentral zu verwalten – alles in einer modernen, benutzerfreundlichen Oberfläche.
+  </p>
+  <p style="margin-bottom: 0.8rem; line-height: 1.5;">
+    Das Projekt wurde aus der Leidenschaft für CS2 und dem Wunsch heraus entwickelt, 
+    eine bessere Alternative zu veralteten Config-Tools zu schaffen. 
+    Mit ❤️ entwickelt von Michael "TheLaw5150" M.
+  </p>
+  <p style="margin-bottom: 0.8rem; line-height: 1.5;">
+    <strong>🚀 Aktuelle Features:</strong><br>
+    • Zentrale Bindings-Verwaltung für Buy-, Say- und Script-Binds<br>
+    • Live-Tastatur mit Farbcodierung (🟥 Buy | 🟦 Skript | 🟩 Say)<br>
+    • Hardware-Analyzer mit Performance-Score & Optimierungsvorschlägen<br>
+    • Ping Radar – Teste deine Latenz zu allen CS2-Server-Regionen<br>
+    • Intelligente Startoptionen mit automatischer Hardware-Erkennung<br>
+    • Export aller Einstellungen als autoexec.cfg
+  </p>
+  <p style="margin-bottom: 0.8rem; line-height: 1.5;">
+    <strong>🔜 Geplante Features (Coming Soon):</strong><br>
+    • Cloud-Sync für Configs & Bindings<br>
+    • Workshop-Integration für Community-Presets<br>
+    • Crosshair-Generator & Import/Export<br>
+    • Mobile App für unterwegs<br>
+    • Team-Features für Clans & Teams
+  </p>
+  <p style="margin-bottom: 0.8rem; line-height: 1.5;">
+    <strong>💡 Support & Feedback:</strong><br>
+    Du hast Ideen, Wünsche oder hast einen Bug gefunden? Melde dich gerne auf 
+    meinem Discord (thelaw5150) oder öffne ein Issue auf GitHub. Jedes Feedback hilft, 
+    CS2 Neon Studio weiter zu verbessern!
+  </p>
+  <p style="font-size: 0.85rem; opacity: 0.8; margin-top: 1rem; padding-top: 0.8rem; border-top: 1px solid var(--border-color);">
+    📅 Version 2.0 · Letztes Update: Juni 2026 · <i class="fas fa-code-branch"></i> Continuous Development
+  </p>
+</div>
+</div>
+
     <script src="js/data.js"></script>
     <script src="js/theme.js"></script>
     <script src="js/keyboard.js"></script>
