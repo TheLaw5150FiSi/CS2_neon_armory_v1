@@ -38,8 +38,10 @@
 
       <div class="tabs">
         <button class="tab-btn active" data-tab="bindsTab">🔗 BINDS</button>
-        <button class="tab-btn" data-tab="configTab">⚙️ CONFIGS</button>
-        <button class="tab-btn" data-tab="analyzerTab">📊 SYSTEM ANALYZER</button>
+        <button class="tab-btn" data-tab="configTab">⚙️ SETTINGS</button>
+        <button class="tab-btn" data-tab="analyzerTab">
+          📊 SYSTEM ANALYZER
+        </button>
         <button class="tab-btn" data-tab="pingTab">📡 PING RADAR</button>
         <button class="tab-btn" data-tab="startTab">🚀 START OPTIONEN</button>
         <button class="tab-btn" data-tab="exportTab">📦 EXPORT</button>
@@ -48,27 +50,43 @@
 
       <!-- BINDS TAB -->
       <div id="bindsTab" class="tab-content active">
-        <div class="layout-toggle-container">
-          <button
-            id="toggleKeyboardLayoutBinds"
-            class="glow"
-            style="background: transparent"
-          >
-            ⌨️ DE Layout
-          </button>
-        </div>
+  <div class="layout-toggle-container">
+    <button id="toggleKeyboardLayoutBinds" class="glow layout-toggle-btn" style="background: transparent">
+      ⌨️ DE Layout
+    </button>
+  </div>
+
+
         <div class="card">
           <h2>⌨️ TASTATUR + NUMPAD</h2>
           <div class="info-text">
             🎨 Farben: 🔴 Rot = BuyScript | 🔵 Blau = Skript | 🟢 Grün = Say
             Bind
           </div>
-          <div class="keyboard-main">
-            <div class="keyboard-section" id="bindsKeyboardMain"></div>
-            <div class="keyboard-section">
-              <div>🔢 NUMPAD</div>
-              <div class="numpad-grid" id="bindsNumpadContainer"></div>
-            </div>
+
+          <!-- Haupttastatur – originalgetreues Grid -->
+          <div class="keyboard-wrapper">
+            <div class="keyboard-grid" id="bindsKeyboardGrid"></div>
+          </div>
+
+          <!-- Maus-Bereich (zunächst ausgeblendet) -->
+          <div
+            class="keyboard-wrapper mouse-wrapper"
+            id="mouseWrapper"
+            style="display: none"
+          >
+            <div class="mouse-grid" id="bindsMouseGrid"></div>
+          </div>
+
+          <!-- Toggle-Button für Maus -->
+          <div style="text-align: center; margin-top: 1rem">
+            <button
+              id="toggleMouseArea"
+              class="glow"
+              style="background: transparent; font-size: 0.8rem"
+            >
+              🖱️ Maus-Binds einblenden
+            </button>
           </div>
         </div>
 
@@ -122,15 +140,6 @@
             <input
               type="text"
               id="bindsSayCommandInput"
-              style="
-                width: 100%;
-                background: var(--input-bg);
-                border: 1px solid var(--accent);
-                border-radius: 1rem;
-                padding: 0.8rem;
-                color: var(--text-color);
-                margin-bottom: 0.5rem;
-              "
               placeholder="Hallo zusammen!"
             />
             <button class="glow" id="bindsSaveSayBtn">
@@ -147,36 +156,30 @@
               type="text"
               id="bindsScriptNameInput"
               placeholder="Skriptname"
-              style="
-                background: var(--input-bg);
-                border: 1px solid var(--accent);
-                border-radius: 2rem;
-                padding: 0.5rem 1rem;
-                width: 100%;
-                margin-bottom: 10px;
-                color: var(--text-color);
-              "
             />
             <textarea
               id="bindsScriptCommandsArea"
               rows="4"
               placeholder='alias +jumpthrow "+jump"\nalias -jumpthrow "-jump; -attack"'
             ></textarea>
+
             <div style="margin: 1rem 0 0.5rem 0">
               <div
                 style="
-                  font-size: 0.8rem;
-                  margin-bottom: 0.5rem;
+                  font-size: 0.9rem;
+                  margin-bottom: 0.8rem;
                   color: var(--accent-light);
+                  display: flex;
+                  align-items: center;
+                  gap: 0.5rem;
                 "
               >
-                📚 Vorgefertigte Skripte (klicken zum Übernehmen):
+                <i class="fas fa-file-alt"></i> 📚 Vorgefertigte Skripte
+                (klicken zum Übernehmen):
               </div>
-              <div
-                id="bindsTemplateScripts"
-                style="display: flex; flex-wrap: wrap; gap: 0.5rem"
-              ></div>
+              <div id="bindsTemplateScripts" class="scripts-grid"></div>
             </div>
+
             <button class="glow" id="bindsSaveScriptBtn">
               💾 Skript speichern
             </button>
@@ -209,8 +212,8 @@
           </div>
           <div id="config-commands" class="config-sub-content active">
             <div class="info-hint">
-              📌 1. Hauptkategorie wählen → 2. Unterkategorie wählen → 3. Befehl
-              auswählen & Wert einstellen → 📋 Übernehmen
+              📌 Hauptkategorie wählen → Befehl auswählen & Wert einstellen → 📋
+              Übernehmen
             </div>
             <div id="mainCategoriesContainer" class="main-cat-buttons"></div>
             <div id="subcategoriesContainer"></div>
@@ -242,6 +245,7 @@
             📊 Wähle CPU, GPU und RAM – der Performance-Score wird live
             berechnet
           </div>
+
           <div
             style="
               display: flex;
@@ -376,6 +380,7 @@
               </div>
             </div>
           </div>
+
           <div
             style="
               display: flex;
@@ -454,12 +459,14 @@
                   gap: 0.5rem;
                   cursor: pointer;
                 "
-                ><input
+              >
+                <input
                   type="checkbox"
                   id="analyzerStreamingCheckbox"
                   style="accent-color: var(--accent)"
-                /><span>🎥 Aktives Streaming</span></label
-              >
+                />
+                <span>🎥 Aktives Streaming</span>
+              </label>
               <div
                 class="info-text"
                 style="margin-top: 0.3rem; font-size: 0.65rem"
@@ -468,6 +475,7 @@
               </div>
             </div>
           </div>
+
           <div class="analyzer-score-section" id="analyzerResultArea">
             <div id="analyzerEmptyState" class="analyzer-empty-state">
               <i class="fas fa-desktop"></i>
@@ -550,8 +558,8 @@
                   <i
                     class="fas fa-wrench"
                     style="color: var(--accent-light)"
-                  ></i
-                  ><strong style="font-size: 0.9rem"
+                  ></i>
+                  <strong style="font-size: 0.9rem"
                     >🔧 Optimierungsvorschläge für dein System</strong
                   >
                 </div>
@@ -562,70 +570,7 @@
               </div>
             </div>
           </div>
-          <div
-            style="
-              display: flex;
-              flex-wrap: wrap;
-              justify-content: center;
-              gap: 0.8rem;
-              margin-top: 1rem;
-              padding-top: 0.8rem;
-              border-top: 1px solid var(--border-color);
-              font-size: 0.7rem;
-            "
-          >
-            <span
-              ><span
-                style="
-                  background: linear-gradient(135deg, #ffd700, #a855f7);
-                  padding: 0.15rem 0.4rem;
-                  border-radius: 0.3rem;
-                "
-                >45k+</span
-              >
-              Exzellent</span
-            ><span
-              ><span
-                style="
-                  background: linear-gradient(135deg, #3b82f6, #10b981);
-                  padding: 0.15rem 0.4rem;
-                  border-radius: 0.3rem;
-                "
-                >30k+</span
-              >
-              Gut</span
-            ><span
-              ><span
-                style="
-                  background: linear-gradient(135deg, #f59e0b, #fbbf24);
-                  padding: 0.15rem 0.4rem;
-                  border-radius: 0.3rem;
-                "
-                >18k+</span
-              >
-              Akzeptabel</span
-            ><span
-              ><span
-                style="
-                  background: linear-gradient(135deg, #ef4444, #f87171);
-                  padding: 0.15rem 0.4rem;
-                  border-radius: 0.3rem;
-                "
-                >8k+</span
-              >
-              Befriedigend</span
-            ><span
-              ><span
-                style="
-                  background: #6b7280;
-                  padding: 0.15rem 0.4rem;
-                  border-radius: 0.3rem;
-                "
-                >-8k</span
-              >
-              Schwach</span
-            >
-          </div>
+
           <div
             class="analyzer-disclaimer"
             style="
@@ -654,8 +599,9 @@
               id="startPingTestBtn"
               style="width: auto; background: var(--accent)"
             >
-              🚀 Test starten (alle Regionen)</button
-            ><button class="glow" id="stopPingTestBtn" style="width: auto">
+              🚀 Test starten (alle Regionen)
+            </button>
+            <button class="glow" id="stopPingTestBtn" style="width: auto">
               ⏹️ Stoppen
             </button>
           </div>
@@ -751,168 +697,378 @@
           </button>
           <button class="glow" id="refreshExportBtn">🔄 Aktualisieren</button>
         </div>
-        </div>
-    
       </div>
 
-<!-- ABOUT ME TAB -->
-<div id="aboutTab" class="tab-content">
-  <div class="card">
-    <h2>👤 ABOUT ME</h2>
-    <div style="display: flex; flex-wrap: wrap; gap: 2rem;">
-      <!-- Profilbild / Avatar Bereich -->
-      <div style="text-align: center; min-width: 150px;">
-        <div style="width: 120px; height: 120px; background: linear-gradient(135deg, var(--accent), var(--accent-dark)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem auto;">
-          <i class="fas fa-shield-haltered" style="font-size: 3rem; color: white;"></i>
-        </div>
-        <h3 style="color: var(--accent-light);">Michael M.</h3>
-        <p style="font-size: 0.8rem;">⚡ TheLaw5150</p>
-      </div>
-
-      <!-- Info Bereich -->
-      <div style="flex: 1;">
-        <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem;">
-          <i class="fas fa-user-astronaut" style="font-size: 1.8rem; color: var(--accent);"></i>
-          <div>
-            <h3 style="margin: 0;">Michael "TheLaw5150" M.</h3>
-            <p style="margin: 0; font-size: 0.8rem; opacity: 0.8;"></p>
+      <!-- ABOUT ME TAB -->
+      <div id="aboutTab" class="tab-content">
+        <div class="card">
+          <h2>👤 ABOUT ME</h2>
+          <div style="display: flex; flex-wrap: wrap; gap: 2rem">
+            <div style="text-align: center; min-width: 150px">
+              <div
+                style="
+                  width: 120px;
+                  height: 120px;
+                  background: linear-gradient(
+                    135deg,
+                    var(--accent),
+                    var(--accent-dark)
+                  );
+                  border-radius: 50%;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  margin: 0 auto 1rem auto;
+                "
+              >
+                <i
+                  class="fas fa-shield-haltered"
+                  style="font-size: 3rem; color: white"
+                ></i>
+              </div>
+              <h3 style="color: var(--accent-light)">Michael M.</h3>
+              <p style="font-size: 0.8rem">⚡ TheLaw5150</p>
+            </div>
+            <div style="flex: 1">
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 0.8rem;
+                  margin-bottom: 1rem;
+                "
+              >
+                <i
+                  class="fas fa-user-astronaut"
+                  style="font-size: 1.8rem; color: var(--accent)"
+                ></i>
+                <div><h3 style="margin: 0">Michael "TheLaw5150" M.</h3></div>
+              </div>
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 0.8rem;
+                  margin-bottom: 1rem;
+                "
+              >
+                <i
+                  class="fas fa-shield-virus"
+                  style="font-size: 1.5rem; color: var(--accent)"
+                ></i>
+                <div>
+                  <strong>Spezialisierung:</strong>
+                  <span style="font-size: 0.9rem">🔐 Cyber Security</span>
+                </div>
+              </div>
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 0.8rem;
+                  margin-bottom: 1rem;
+                "
+              >
+                <i
+                  class="fas fa-graduation-cap"
+                  style="font-size: 1.5rem; color: var(--accent)"
+                ></i>
+                <div>
+                  <strong>Ausbildung:</strong>
+                  <span style="font-size: 0.9rem"
+                    >Fachinformatiker für Systemintegration (FiSi)</span
+                  >
+                </div>
+              </div>
+              <div style="margin-top: 1.5rem">
+                <h4 style="color: var(--accent-light); margin-bottom: 0.8rem">
+                  🔗 Links & Profile
+                </h4>
+                <div style="display: flex; flex-wrap: wrap; gap: 1rem">
+                  <a
+                    href="https://steamcommunity.com/id/thelaw5150/"
+                    target="_blank"
+                    style="
+                      background: var(--btn-bg);
+                      padding: 0.5rem 1rem;
+                      border-radius: 2rem;
+                      text-decoration: none;
+                      color: var(--text-color);
+                      display: inline-flex;
+                      align-items: center;
+                      gap: 0.5rem;
+                      border: 1px solid var(--border-color);
+                      transition: 0.2s;
+                    "
+                  >
+                    <i class="fab fa-steam" style="color: #00adee"></i> Steam
+                  </a>
+                  <a
+                    href="https://github.com/TheLaw5150FiSi"
+                    target="_blank"
+                    style="
+                      background: var(--btn-bg);
+                      padding: 0.5rem 1rem;
+                      border-radius: 2rem;
+                      text-decoration: none;
+                      color: var(--text-color);
+                      display: inline-flex;
+                      align-items: center;
+                      gap: 0.5rem;
+                      border: 1px solid var(--border-color);
+                      transition: 0.2s;
+                    "
+                  >
+                    <i class="fab fa-github"></i> GitHub
+                  </a>
+                  <a
+                    href="https://www.youtube.com/@The_Law_5150"
+                    target="_blank"
+                    style="
+                      background: var(--btn-bg);
+                      padding: 0.5rem 1rem;
+                      border-radius: 2rem;
+                      text-decoration: none;
+                      color: var(--text-color);
+                      display: inline-flex;
+                      align-items: center;
+                      gap: 0.5rem;
+                      border: 1px solid var(--border-color);
+                      transition: 0.2s;
+                    "
+                  >
+                    <i class="fab fa-youtube" style="color: #ff0000"></i>
+                    YouTube
+                  </a>
+                  <a
+                    href="https://www.twitch.tv/thelaw5150"
+                    target="_blank"
+                    style="
+                      background: var(--btn-bg);
+                      padding: 0.5rem 1rem;
+                      border-radius: 2rem;
+                      text-decoration: none;
+                      color: var(--text-color);
+                      display: inline-flex;
+                      align-items: center;
+                      gap: 0.5rem;
+                      border: 1px solid var(--border-color);
+                      transition: 0.2s;
+                    "
+                  >
+                    <i class="fab fa-twitch" style="color: #9146ff"></i> Twitch
+                  </a>
+                  <a
+                    href="https://discord.gg/Q72WJwdCCf"
+                    target="_blank"
+                    style="
+                      background: var(--btn-bg);
+                      padding: 0.5rem 1rem;
+                      border-radius: 2rem;
+                      text-decoration: none;
+                      color: var(--text-color);
+                      display: inline-flex;
+                      align-items: center;
+                      gap: 0.5rem;
+                      border: 1px solid var(--border-color);
+                      transition: 0.2s;
+                    "
+                  >
+                    <i class="fab fa-discord" style="color: #5865f2"></i>
+                    Discord Server
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem;">
-          <i class="fas fa-shield-virus" style="font-size: 1.5rem; color: var(--accent);"></i>
-          <div>
-            <strong>Spezialisierung:</strong>
-            <span style="font-size: 0.9rem;">🔐 Cyber Security</span>
+        <div class="card">
+          <h2>🛠️ Skills & Technologien</h2>
+          <div style="display: flex; flex-wrap: wrap; gap: 0.8rem">
+            <span
+              style="
+                background: var(--accent-dark);
+                padding: 0.3rem 0.8rem;
+                border-radius: 2rem;
+                font-size: 0.8rem;
+              "
+              >☕ Java</span
+            >
+            <span
+              style="
+                background: var(--accent-dark);
+                padding: 0.3rem 0.8rem;
+                border-radius: 2rem;
+                font-size: 0.8rem;
+              "
+              >🌐 HTML</span
+            >
+            <span
+              style="
+                background: var(--accent-dark);
+                padding: 0.3rem 0.8rem;
+                border-radius: 2rem;
+                font-size: 0.8rem;
+              "
+              >💻 JavaScript</span
+            >
+            <span
+              style="
+                background: var(--accent-dark);
+                padding: 0.3rem 0.8rem;
+                border-radius: 2rem;
+                font-size: 0.8rem;
+              "
+              >🔐 Cyber Security</span
+            >
+            <span
+              style="
+                background: var(--accent-dark);
+                padding: 0.3rem 0.8rem;
+                border-radius: 2rem;
+                font-size: 0.8rem;
+              "
+              >🐧 Linux</span
+            >
+            <span
+              style="
+                background: var(--accent-dark);
+                padding: 0.3rem 0.8rem;
+                border-radius: 2rem;
+                font-size: 0.8rem;
+              "
+              >🖥️ Windows Server</span
+            >
+            <span
+              style="
+                background: var(--accent-dark);
+                padding: 0.3rem 0.8rem;
+                border-radius: 2rem;
+                font-size: 0.8rem;
+              "
+              >🌐 Netzwerktechnik</span
+            >
           </div>
         </div>
 
-        <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem;">
-          <i class="fas fa-graduation-cap" style="font-size: 1.5rem; color: var(--accent);"></i>
-          <div>
-            <strong>Ausbildung:</strong>
-            <span style="font-size: 0.9rem;">Fachinformatiker für Systemintegration (FiSi)</span>
+        <div class="card">
+          <h2>🌍 Sprachen</h2>
+          <div style="display: flex; flex-wrap: wrap; gap: 1rem">
+            <div style="flex: 1">
+              <div style="display: flex; justify-content: space-between">
+                <span>🇩🇪 Deutsch</span>
+                <span style="color: var(--accent-light)">Muttersprache</span>
+              </div>
+              <div
+                style="
+                  height: 6px;
+                  background: var(--btn-bg);
+                  border-radius: 3px;
+                  margin-top: 0.3rem;
+                "
+              >
+                <div
+                  style="
+                    width: 100%;
+                    height: 100%;
+                    background: var(--accent);
+                    border-radius: 3px;
+                  "
+                ></div>
+              </div>
+            </div>
+            <div style="flex: 1">
+              <div style="display: flex; justify-content: space-between">
+                <span>🇬🇧 Englisch</span>
+                <span style="color: var(--accent-light)">Fließend</span>
+              </div>
+              <div
+                style="
+                  height: 6px;
+                  background: var(--btn-bg);
+                  border-radius: 3px;
+                  margin-top: 0.3rem;
+                "
+              >
+                <div
+                  style="
+                    width: 60%;
+                    height: 100%;
+                    background: var(--accent);
+                    border-radius: 3px;
+                  "
+                ></div>
+              </div>
+            </div>
           </div>
         </div>
 
-<div style="margin-top: 1.5rem;">
-  <h4 style="color: var(--accent-light); margin-bottom: 0.8rem;">🔗 Links & Profile</h4>
-  <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
-    <a href="https://steamcommunity.com/id/thelaw5150/" target="_blank" style="background: var(--btn-bg); padding: 0.5rem 1rem; border-radius: 2rem; text-decoration: none; color: var(--text-color); display: inline-flex; align-items: center; gap: 0.5rem; border: 1px solid var(--border-color); transition: 0.2s;">
-      <i class="fab fa-steam" style="color: #00adee;"></i> Steam
-    </a>
-    <a href="https://github.com/TheLaw5150FiSi" target="_blank" style="background: var(--btn-bg); padding: 0.5rem 1rem; border-radius: 2rem; text-decoration: none; color: var(--text-color); display: inline-flex; align-items: center; gap: 0.5rem; border: 1px solid var(--border-color); transition: 0.2s;">
-      <i class="fab fa-github"></i> GitHub
-    </a>
-    <a href="https://www.youtube.com/@The_Law_5150" target="_blank" style="background: var(--btn-bg); padding: 0.5rem 1rem; border-radius: 2rem; text-decoration: none; color: var(--text-color); display: inline-flex; align-items: center; gap: 0.5rem; border: 1px solid var(--border-color); transition: 0.2s;">
-      <i class="fab fa-youtube" style="color: #ff0000;"></i> YouTube
-    </a>
-    <a href="https://www.twitch.tv/thelaw5150" target="_blank" style="background: var(--btn-bg); padding: 0.5rem 1rem; border-radius: 2rem; text-decoration: none; color: var(--text-color); display: inline-flex; align-items: center; gap: 0.5rem; border: 1px solid var(--border-color); transition: 0.2s;">
-      <i class="fab fa-twitch" style="color: #9146ff;"></i> Twitch
-    </a>
-    <a href="https://discord.gg/Q72WJwdCCf" target="_blank" style="background: var(--btn-bg); padding: 0.5rem 1rem; border-radius: 2rem; text-decoration: none; color: var(--text-color); display: inline-flex; align-items: center; gap: 0.5rem; border: 1px solid var(--border-color); transition: 0.2s;">
-      <i class="fab fa-discord" style="color: #5865F2;"></i> Discord Server
-    </a>
-  </div>
-</div>
+        <div class="card">
+          <h2>📫 Kontakt</h2>
+          <div style="display: flex; flex-wrap: wrap; gap: 1rem">
+            <div
+              style="
+                background: var(--btn-bg);
+                padding: 0.5rem 1rem;
+                border-radius: 2rem;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+                border: 1px solid var(--border-color);
+              "
+            >
+              <i class="fab fa-discord" style="color: #5865f2"></i>
+              <span>Discord: <strong>thelaw5150</strong></span>
+            </div>
+            <a
+              href="mailto:"
+              style="
+                background: var(--btn-bg);
+                padding: 0.5rem 1rem;
+                border-radius: 2rem;
+                text-decoration: none;
+                color: var(--text-color);
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+                border: 1px solid var(--border-color);
+                transition: 0.2s;
+              "
+            >
+              <i class="fas fa-envelope"></i> E-Mail
+            </a>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>🎮 Über CS2 Neon Studio</h2>
+          <p style="margin-bottom: 0.8rem; line-height: 1.5">
+            CS2 Neon Studio ist eine umfassende All-in-One-Anwendung für
+            Counter-Strike 2, die Spielern ermöglicht, ihre Configs, Buy-Binds,
+            Say-Binds und Skripte zentral zu verwalten – alles in einer
+            modernen, benutzerfreundlichen Oberfläche.
+          </p>
+          <p style="margin-bottom: 0.8rem; line-height: 1.5">
+            Das Projekt wurde aus der Leidenschaft für CS2 und dem Wunsch heraus
+            entwickelt, eine bessere Alternative zu veralteten Config-Tools zu
+            schaffen. Mit ❤️ entwickelt von Michael "TheLaw5150" M.
+          </p>
+          <p
+            style="
+              font-size: 0.85rem;
+              opacity: 0.8;
+              margin-top: 1rem;
+              padding-top: 0.8rem;
+              border-top: 1px solid var(--border-color);
+            "
+          >
+            📅 Version 1.0.1.1 · Letztes Update: Juni 2026 ·
+            <i class="fas fa-code-branch"></i> Continuous Development
+          </p>
+        </div>
       </div>
     </div>
-  </div>
-
-  <!-- Skills & Technologien Card -->
-  <div class="card">
-    <h2>🛠️ Skills & Technologien</h2>
-    <div style="display: flex; flex-wrap: wrap; gap: 0.8rem;">
-      <span style="background: var(--accent-dark); padding: 0.3rem 0.8rem; border-radius: 2rem; font-size: 0.8rem;">☕ Java</span>
-      <span style="background: var(--accent-dark); padding: 0.3rem 0.8rem; border-radius: 2rem; font-size: 0.8rem;">🌐 HTML</span>
-      <span style="background: var(--accent-dark); padding: 0.3rem 0.8rem; border-radius: 2rem; font-size: 0.8rem;">💻 JavaScript</span>
-      <span style="background: var(--accent-dark); padding: 0.3rem 0.8rem; border-radius: 2rem; font-size: 0.8rem;">🔐 Cyber Security</span>
-      <span style="background: var(--accent-dark); padding: 0.3rem 0.8rem; border-radius: 2rem; font-size: 0.8rem;">🐧 Linux</span>
-      <span style="background: var(--accent-dark); padding: 0.3rem 0.8rem; border-radius: 2rem; font-size: 0.8rem;">🖥️ Windows Server</span>
-      <span style="background: var(--accent-dark); padding: 0.3rem 0.8rem; border-radius: 2rem; font-size: 0.8rem;">🌐 Netzwerktechnik</span>
-    </div>
-  </div>
-
-  <!-- Sprachen Card -->
-  <div class="card">
-    <h2>🌍 Sprachen</h2>
-    <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
-      <div style="flex: 1;">
-        <div style="display: flex; justify-content: space-between;">
-          <span>🇩🇪 Deutsch</span>
-          <span style="color: var(--accent-light);">Muttersprache</span>
-        </div>
-        <div style="height: 6px; background: var(--btn-bg); border-radius: 3px; margin-top: 0.3rem;">
-          <div style="width: 100%; height: 100%; background: var(--accent); border-radius: 3px;"></div>
-        </div>
-      </div>
-      <div style="flex: 1;">
-        <div style="display: flex; justify-content: space-between;">
-          <span>🇬🇧 Englisch</span>
-          <span style="color: var(--accent-light);">Fließend</span>
-        </div>
-        <div style="height: 6px; background: var(--btn-bg); border-radius: 3px; margin-top: 0.3rem;">
-          <div style="width: 60%; height: 100%; background: var(--accent); border-radius: 3px;"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Kontakt Card -->
-  <div class="card">
-    <h2>📫 Kontakt</h2>
-    <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
-      <div style="background: var(--btn-bg); padding: 0.5rem 1rem; border-radius: 2rem; display: inline-flex; align-items: center; gap: 0.5rem; border: 1px solid var(--border-color);">
-        <i class="fab fa-discord" style="color: #5865F2;"></i>
-        <span>Discord: <strong>thelaw5150</strong></span>
-      </div>
-      <a href="mailto:" style="background: var(--btn-bg); padding: 0.5rem 1rem; border-radius: 2rem; text-decoration: none; color: var(--text-color); display: inline-flex; align-items: center; gap: 0.5rem; border: 1px solid var(--border-color); transition: 0.2s;">
-        <i class="fas fa-envelope"></i> E-Mail
-      </a>
-    </div>
-  </div>
-
-  <!-- Projekt Card -->
-<div class="card">
-  <h2>🎮 Über CS2 Neon Studio</h2>
-  <p style="margin-bottom: 0.8rem; line-height: 1.5;">
-    CS2 Neon Studio ist eine umfassende All-in-One-Anwendung für Counter-Strike 2, 
-    die Spielern ermöglicht, ihre Configs, Buy-Binds, Say-Binds und Skripte 
-    zentral zu verwalten – alles in einer modernen, benutzerfreundlichen Oberfläche.
-  </p>
-  <p style="margin-bottom: 0.8rem; line-height: 1.5;">
-    Das Projekt wurde aus der Leidenschaft für CS2 und dem Wunsch heraus entwickelt, 
-    eine bessere Alternative zu veralteten Config-Tools zu schaffen. 
-    Mit ❤️ entwickelt von Michael "TheLaw5150" M.
-  </p>
-  <p style="margin-bottom: 0.8rem; line-height: 1.5;">
-    <strong>🚀 Aktuelle Features:</strong><br>
-    • Zentrale Bindings-Verwaltung für Buy-, Say- und Script-Binds<br>
-    • Live-Tastatur mit Farbcodierung (🟥 Buy | 🟦 Skript | 🟩 Say)<br>
-    • Hardware-Analyzer mit Performance-Score & Optimierungsvorschlägen<br>
-    • Ping Radar – Teste deine Latenz zu allen CS2-Server-Regionen<br>
-    • Intelligente Startoptionen mit automatischer Hardware-Erkennung<br>
-    • Export aller Einstellungen als autoexec.cfg
-  </p>
-  <p style="margin-bottom: 0.8rem; line-height: 1.5;">
-    <strong>🔜 Geplante Features (Coming Soon):</strong><br>
-    • ...<br>
-    • ...<br>
-    • ...<br>
-    • ...<br>
-    • ...
-  </p>
-  <p style="margin-bottom: 0.8rem; line-height: 1.5;">
-    <strong>💡 Support & Feedback:</strong><br>
-    Du hast Ideen, Wünsche oder hast einen Bug gefunden? Melde dich gerne auf 
-    meinem Discord (thelaw5150) oder öffne ein Issue auf GitHub. Jedes Feedback hilft, 
-    CS2 Neon Studio weiter zu verbessern!
-  </p>
-  <p style="font-size: 0.85rem; opacity: 0.8; margin-top: 1rem; padding-top: 0.8rem; border-top: 1px solid var(--border-color);">
-    📅 Version 1.0.1.1 · Letztes Update: Juni 2026 · <i class="fas fa-code-branch"></i> Continuous Development
-  </p>
-</div>
-</div>
 
     <script src="js/data.js"></script>
     <script src="js/theme.js"></script>

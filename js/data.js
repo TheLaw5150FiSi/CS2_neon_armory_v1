@@ -427,9 +427,9 @@ const analyzerGpuData = {
   "NVIDIA RTX 5070 Ti (16GB)": 24500,
   "NVIDIA RTX 5070 (12GB)": 22800,
   "NVIDIA RTX 5060 Ti (16GB)": 18800,
-    "NVIDIA RTX 5060 Ti (8GB)": 18400,
+  "NVIDIA RTX 5060 Ti (8GB)": 18400,
   "NVIDIA RTX 5060 (8GB)": 16800,
-  
+
   // ======================== NVIDIA RTX 40 SERIES ========================
   "NVIDIA RTX 4090 (24GB)": 26800,
   "NVIDIA RTX 4080 SUPER (16GB)": 25500,
@@ -441,7 +441,7 @@ const analyzerGpuData = {
   "NVIDIA RTX 4060 Ti (16GB)": 17000,
   "NVIDIA RTX 4060 Ti (8GB)": 16700,
   "NVIDIA RTX 4060 (8GB)": 15000,
-  
+
   // ======================== NVIDIA RTX 30 SERIES ========================
   "NVIDIA RTX 3090 Ti (24GB)": 23200,
   "NVIDIA RTX 3090 (24GB)": 21800,
@@ -454,7 +454,7 @@ const analyzerGpuData = {
   "NVIDIA RTX 3060 (12GB)": 14000,
   "NVIDIA RTX 3060 (8GB)": 13000,
   "NVIDIA RTX 3050 (8GB)": 10500,
-  
+
   // ======================== NVIDIA RTX 20 SERIES ========================
   "NVIDIA RTX 2080 Ti (11GB)": 16500,
   "NVIDIA RTX 2080 SUPER (8GB)": 15000,
@@ -463,14 +463,14 @@ const analyzerGpuData = {
   "NVIDIA RTX 2070 (8GB)": 12500,
   "NVIDIA RTX 2060 SUPER (8GB)": 11500,
   "NVIDIA RTX 2060 (6GB)": 10500,
-  
+
   // ======================== NVIDIA GTX 16 SERIES ========================
   "NVIDIA GTX 1660 SUPER (6GB)": 9000,
   "NVIDIA GTX 1660 Ti (6GB)": 8800,
   "NVIDIA GTX 1660 (6GB)": 8200,
   "NVIDIA GTX 1650 SUPER (4GB)": 7200,
   "NVIDIA GTX 1650 (4GB)": 6200,
-  
+
   // ======================== NVIDIA GTX 10 SERIES ========================
   "NVIDIA GTX 1080 Ti (11GB)": 12500,
   "NVIDIA GTX 1080 (8GB)": 11000,
@@ -479,14 +479,14 @@ const analyzerGpuData = {
   "NVIDIA GTX 1060 (6GB)": 8000,
   "NVIDIA GTX 1050 Ti (4GB)": 6500,
   "NVIDIA GTX 1050 (2GB/3GB)": 5500,
-  
+
   // ======================== NVIDIA GTX 9 SERIES ========================
   "NVIDIA GTX 980 Ti (6GB)": 9000,
   "NVIDIA GTX 980 (4GB)": 7500,
   "NVIDIA GTX 970 (4GB)": 6500,
   "NVIDIA GTX 960 (4GB/2GB)": 5200,
   "NVIDIA GTX 950 (2GB)": 4500,
-  
+
   // ======================== AMD RADEON RX 9000 SERIES ========================
   "AMD RX 9090 XT (32GB)": 26500,
   "AMD RX 9080 XT (24GB)": 25200,
@@ -494,7 +494,7 @@ const analyzerGpuData = {
   "AMD RX 9070 (16GB)": 22200,
   "AMD RX 9060 XT (16GB)": 18500,
   "AMD RX 9060 XT (8GB)": 18000,
-  
+
   // ======================== AMD RADEON RX 7000 SERIES ========================
   "AMD RX 7900 XTX (24GB)": 24800,
   "AMD RX 7900 XT (20GB)": 23500,
@@ -503,7 +503,7 @@ const analyzerGpuData = {
   "AMD RX 7700 XT (12GB)": 18500,
   "AMD RX 7600 XT (16GB)": 16500,
   "AMD RX 7600 (8GB)": 14800,
-  
+
   // ======================== AMD RADEON RX 6000 SERIES ========================
   "AMD RX 6950 XT (16GB)": 21800,
   "AMD RX 6900 XT (16GB)": 21000,
@@ -517,14 +517,14 @@ const analyzerGpuData = {
   "AMD RX 6600 (8GB)": 12800,
   "AMD RX 6500 XT (4GB)": 8800,
   "AMD RX 6400 (4GB)": 7800,
-  
+
   // ======================== AMD RADEON RX 5000 SERIES ========================
   "AMD RX 5700 XT (8GB)": 11800,
   "AMD RX 5700 (8GB)": 10800,
   "AMD RX 5600 XT (6GB)": 9500,
   "AMD RX 5500 XT (8GB)": 8200,
   "AMD RX 5500 XT (4GB)": 8000,
-  
+
   // ======================== AMD RADEON VEGA / RX 500 ========================
   "AMD RX Vega 64 (8GB HBM2)": 10500,
   "AMD RX Vega 56 (8GB HBM2)": 9500,
@@ -532,7 +532,7 @@ const analyzerGpuData = {
   "AMD RX 580 (8GB)": 7500,
   "AMD RX 570 (8GB)": 6800,
   "AMD RX 480 (8GB)": 7000,
-  
+
   // ======================== INTEL ARC SERIES ========================
   "Intel Arc B580 (12GB)": 16500,
   "Intel Arc B570 (10GB)": 14800,
@@ -541,7 +541,7 @@ const analyzerGpuData = {
   "Intel Arc A580 (8GB)": 12500,
   "Intel Arc A380 (6GB)": 8500,
   "Intel Arc A310 (4GB)": 7000,
-  
+
   // ======================== INTEL INTEGRATED GRAPHICS ========================
   "Intel UHD Graphics 770": 3500,
   "Intel UHD Graphics 750": 3200,
@@ -552,6 +552,7 @@ const analyzerGpuData = {
   "Intel HD Graphics 530": 1800,
 };
 
+// ======================== GPU GRUPPIERUNG ========================
 // ======================== GPU GRUPPIERUNG ========================
 const gpuGroups = {
   "NVIDIA RTX 50 Series (2025)": [],
@@ -570,40 +571,52 @@ const gpuGroups = {
   "Intel Integrated Graphics": [],
 };
 
-// ======================== CONFIG COMMANDS ========================
+// ======================== CONFIG COMMANDS (CS2 KOMPATIBEL) ========================
 const allCommandsLibrary = {
   // ========== PERFORMANCE & FPS ==========
   "FPS & Performance": [
     {
       cmd: "fps_max",
-      values: ["0", "60", "120", "144", "165", "240", "300", "360", "400", "500", "1000"],
-      desc: "Maximale Bildrate. 0 = unlimitiert (niedrigste Latenz)."
+      values: [
+        "0",
+        "60",
+        "120",
+        "144",
+        "165",
+        "240",
+        "300",
+        "360",
+        "400",
+        "500",
+        "1000",
+      ],
+      desc: "Begrenzt die maximale Bildrate (FPS). 0 = unbegrenzt (beste Latenz, aber höhere GPU-Last). Niedrige Werte sparen Energie, hohe Werte reduzieren Input-Lag. Empfehlung: 0 für Competitive, 144 für 144Hz-Monitore.",
     },
     {
       cmd: "cl_showfps",
       values: ["0", "1", "2", "3"],
-      desc: "FPS-Anzeige: 0=Aus, 1=Text, 2=Graph, 3=Details."
+      desc: "Zeigt FPS im Spiel an. 0 = Aus, 1 = Nur Zahlen (oben rechts), 2 = Balkendiagramm, 3 = Detaillierte Ansicht mit Frame-Zeiten. Praktisch zum Performance-Monitoring während des Spiels.",
     },
     {
       cmd: "engine_low_latency_sleep_after_client_tick",
       values: ["0", "1"],
-      desc: "Reduziert Input-Latenz. 1 = aktiviert (empfohlen)."
+      desc: "Reduziert die Eingabelatenz (Input Lag) signifikant. 1 = aktiviert (empfohlen!). Lässt die CPU kurz schlafen nach jedem Frame, was die Reaktionszeit verbessert. Besonders wichtig für Competitive-Spieler.",
     },
     {
       cmd: "r_drawtracers_firstperson",
       values: ["0", "1"],
-      desc: "Eigene Schuss-Tracer. 0 = aus (mehr FPS)."
+      desc: "Zeigt eigene Schuss-Tracer (sichtbare Projektile). 0 = aus (deutlich mehr FPS, da weniger Effekte gerendert werden müssen). Beeinflusst nur deine eigene Sicht, nicht die anderer Spieler.",
     },
     {
       cmd: "cl_disable_ragdolls",
       values: ["0", "1"],
-      desc: "Deaktiviert Leichen-Physik. 1 = aus (mehr FPS)."
+      desc: "Deaktiviert die Physik von Leichen (Ragdolls). 1 = aus (mehr FPS, besonders auf älteren Systemen). Leichen verschwinden sofort oder haben keine aufwändige Physik mehr.",
     },
     {
-      cmd: "mat_queue_mode",
-      values: ["-1", "0", "1", "2"],
-      desc: "Multi-Core-Rendering: -1=Auto, 2=Multikern (empfohlen)."
-    }
+      cmd: "cq_netgraph",
+      values: ["0", "1"],
+      desc: "Zeigt ein detailliertes Netzwerk-Overlay mit Ping, Packet Loss, Choke und Latenz-Schwankungen (Jitter). Unverzichtbar zur Diagnose von Verbindungsproblemen. Positioniert sich unten links.",
+    },
   ],
 
   // ========== VIDEO & GRAFIK ==========
@@ -611,107 +624,82 @@ const allCommandsLibrary = {
     {
       cmd: "video_fullscreen",
       values: ["0", "1"],
-      desc: "0 = Fenstermodus, 1 = Vollbild."
+      desc: "0 = Fenstermodus (schnelleres Alt-Tab, leicht höhere Latenz). 1 = Exklusiver Vollbildmodus (beste Performance, niedrigste Latenz). Für Competitive-Spieler ist Vollbild Pflicht.",
     },
     {
       cmd: "video_vsync",
       values: ["0", "1"],
-      desc: "Vertikale Synchronisation. 0 = aus (niedrigere Latenz)."
+      desc: "Vertikale Synchronisation. 0 = aus (kein Input Lag, aber mögliches Screen Tearing). 1 = an (glatte Bilder, aber spürbare Eingabeverzögerung). Für Competitive IMMER auf 0 lassen!",
     },
     {
       cmd: "video_msaa",
       values: ["0", "2", "4", "8"],
-      desc: "Kantenglättung. 0 = aus (max FPS), 8 = beste Qualität."
+      desc: "Kantenglättung (Multisample Anti-Aliasing). 0 = aus (maximale FPS, aber Treppeneffekte). 8 = beste Qualität (großer FPS-Einbruch). Kompromiss: 2x oder 4x für 1440p/4K.",
     },
     {
       cmd: "video_texture_detail",
       values: ["0", "1", "2"],
-      desc: "Texturqualität: 0 = Niedrig (max FPS), 2 = Hoch."
+      desc: "Texturqualität. 0 = Niedrig (spart VRAM, mehr FPS). 2 = Hoch (scharfe Texturen, benötigt mehr Grafikspeicher). Auf aktuellen GPUs hat das kaum FPS-Einfluss.",
     },
     {
       cmd: "shadow_quality",
       values: ["0", "1", "2"],
-      desc: "Schattenqualität: 0 = Aus (max FPS), 2 = Hoch."
+      desc: "Schattenqualität. 0 = Aus/Sehr niedrig (deutlich mehr FPS). 2 = Hoch (realistischere Schatten, aber FPS-Einbruch). Achtung: Höhere Schatten helfen Gegner früher zu sehen!",
     },
     {
       cmd: "shadow_dynamic",
       values: ["0", "1"],
-      desc: "Dynamische Schatten. 0 = aus (mehr FPS)."
+      desc: "Dynamische Schatten von Lichtquellen und Explosionen. 0 = aus (spart FPS). 1 = an (immersiver, aber Performance-Kosten). In Competitive meist deaktiviert.",
     },
     {
       cmd: "bloom_scale",
       values: ["0", "0.25", "0.5", "0.75", "1"],
-      desc: "Bloom-Effekt Stärke. 0 = aus."
+      desc: "Stärke des Bloom-Effekts (Lichtreflexionen). 0 = komplett aus (mehr FPS, klareres Bild). Höhere Werte erzeugen einen weichen, hellen Glanz um Lichtquellen. In Competitive ist 0 empfehlenswert.",
     },
     {
       cmd: "render_quality",
       values: ["0", "1", "2"],
-      desc: "Render-Auflösung: 0 = Niedrig, 2 = Hoch."
+      desc: "Render-Auflösung relativ zur Bildschirmauflösung. 0 = Niedrig (deutlich mehr FPS, aber unscharfes Bild). 2 = Hoch (beste Bildqualität). Wie eine interne Skalierung.",
     },
     {
       cmd: "ambient_occlusion",
       values: ["0", "1"],
-      desc: "Ambient Occlusion. 0 = aus (mehr FPS)."
+      desc: "Ambient Occlusion (SSAO) – Schattierung an Kanten und Ecken. 0 = aus (mehr FPS). 1 = an (bessere Tiefenwirkung). In Competitive deaktiviert, da es die Sichtbarkeit kaum verbessert.",
     },
     {
       cmd: "model_quality",
       values: ["0", "1", "2"],
-      desc: "Modell-Detailstufe: 0 = Niedrig, 2 = Hoch."
+      desc: "Detailgrad der Spielermodelle und Waffen. 0 = Niedrig (mehr FPS, einfachere Modelle). 2 = Hoch (beste Detailtreue). Hat moderaten Einfluss auf die FPS.",
     },
     {
       cmd: "effect_quality",
       values: ["0", "1", "2"],
-      desc: "Effektqualität. 0 = Niedrig (mehr FPS)."
+      desc: "Qualität von Effekten wie Feuer, Rauch, Explosionen. 0 = Niedrig (deutlich mehr FPS, insbesondere bei vielen Effekten). 2 = Hoch (aufwändigere Partikel). Competitive = 0.",
     },
     {
       cmd: "particle_quality",
       values: ["0", "1", "2"],
-      desc: "Partikelqualität. 0 = Niedrig (mehr FPS)."
+      desc: "Detailgrad von Partikeleffekten (Staub, Funken, Mündungsfeuer). 0 = Niedrig (spart FPS). 2 = Hoch (realistischer). Ähnlich wie Effect Quality, separater Regler.",
     },
     {
       cmd: "r_fullscreen_gamma",
       values: ["1.6", "1.8", "2.0", "2.2", "2.4", "2.6"],
-      desc: "Helligkeitseinstellung. Empfohlen: 2.2."
-    }
+      desc: "Helligkeitseinstellung (Gamma-Korrektur). Höhere Werte = heller. Empfehlung: 2.2 (Standard). Zu hell verringert den Kontrast, zu dunkel macht Schatten unübersichtlich.",
+    },
   ],
 
-  // ========== NETZWERK & PING ==========
+  // ========== NETZWERK & PING (CS2 OPTIMIERT) ==========
   "Netzwerk & Ping": [
     {
       cmd: "rate",
       values: ["196608", "393216", "524288", "786432", "1048576"],
-      desc: "Maximale Download-Rate. 786432 für normale Leitungen, 1048576 für Glasfaser."
-    },
-    {
-      cmd: "cl_updaterate",
-      values: ["64", "128"],
-      desc: "Server-Updates pro Sekunde. 128 für Competitive empfohlen."
-    },
-    {
-      cmd: "cl_cmdrate",
-      values: ["64", "128"],
-      desc: "Client-Befehle pro Sekunde. Sollte gleich cl_updaterate sein."
-    },
-    {
-      cmd: "cl_interp_ratio",
-      values: ["1", "2"],
-      desc: "Interpolationsverhältnis. 1 = niedrigste Latenz."
-    },
-    {
-      cmd: "cl_interp",
-      values: ["0", "0.015625", "0.03125"],
-      desc: "Interpolationszeit. 0 = Auto, 0.015625 = minimal."
+      desc: "Maximale Download-Rate in Bytes/Sekunde. 196608 = 1,5 Mbit/s (langsam). 786432 = 6 Mbit/s (empfohlen für DSL/Kabel). 1048576 = 8 Mbit/s (für Glasfaser). Höher ist besser, solange deine Leitung mitspielt.",
     },
     {
       cmd: "cl_timeout",
       values: ["30", "60", "120", "300"],
-      desc: "Timeout in Sekunden."
+      desc: "Zeit in Sekunden, nach der CS2 die Verbindung zum Server trennt, wenn kein Paket mehr ankommt. Niedrig = schnellerer Timeout (30), Hoch = geduldiger (120+). Standard ist meist 30.",
     },
-    {
-      cmd: "cq_netgraph",
-      values: ["0", "1"],
-      desc: "Netzwerk-Statistiken anzeigen (Ping, Loss, Choke)."
-    }
   ],
 
   // ========== HUD & INTERFACE ==========
@@ -719,88 +707,122 @@ const allCommandsLibrary = {
     {
       cmd: "hud_scaling",
       values: ["0.5", "0.6", "0.7", "0.8", "0.85", "0.9", "1.0", "1.1", "1.2"],
-      desc: "HUD-Größe. 0.85 ist Standard."
+      desc: "Skaliert die Größe des gesamten HUDs (Health, Ammo, Radar, etc.). 0.5 = sehr klein (mehr Sichtfeld). 1.0 = Standard. 1.2 = groß (besser für hohe Auflösungen/Sehschwäche).",
     },
     {
       cmd: "cl_hud_color",
       values: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
-      desc: "HUD-Farbe: 0=Hellblau, 1=Rot, 2=Grün, 3=Gelb, 4=Blau, 5=Cyan, 6=Orange, 7=Lila, 8=Magenta, 9=Pink, 10=Weiß."
+      desc: "Ändert die Akzentfarbe des HUDs. 0=Hellblau, 1=Rot, 2=Grün, 3=Gelb, 4=Blau, 5=Cyan, 6=Orange, 7=Lila, 8=Magenta, 9=Pink, 10=Weiß. Rein optische Anpassung.",
     },
     {
       cmd: "cl_hud_radar_scale",
       values: ["0.8", "0.9", "1.0", "1.1", "1.2", "1.3", "1.4", "1.5"],
-      desc: "Radar-Größe."
+      desc: "Vergrößert oder verkleinert das Radar separat vom restlichen HUD. Größeres Radar = bessere Übersicht, aber mehr Bildschirmfläche. Kleineres Radar = mehr Sichtfeld.",
     },
     {
       cmd: "cl_radar_always_centered",
       values: ["0", "1"],
-      desc: "0 = Radar zeigt Karte, 1 = Radar zentriert auf dich."
+      desc: "0 = Radar zeigt die gesamte Karte (Spieler zentriert). 1 = Radar ist immer auf deine Position zentriert (scrollt mit). Persönliche Präferenz – 1 ist oft intuitiver.",
     },
     {
       cmd: "cl_radar_rotate",
       values: ["0", "1"],
-      desc: "0 = Radar zeigt nach Norden, 1 = Radar rotiert."
+      desc: "0 = Radar zeigt immer nach Norden (wie eine echte Karte). 1 = Radar rotiert mit deiner Blickrichtung (du bist immer oben). 1 ist für die meisten Spieler angenehmer.",
     },
     {
       cmd: "cl_radar_scale",
       values: ["0.25", "0.30", "0.35", "0.40", "0.45", "0.50", "0.55", "0.60"],
-      desc: "Radar-Zoom. Kleiner = mehr Übersicht."
+      desc: "Zoom-Level des Radars. Kleinere Werte = weiter rausgezoomt (mehr Kartenübersicht). Größere Werte = näher rangezoomt (detailreicher). 0.30-0.40 ist ein guter Kompromiss.",
     },
     {
       cmd: "cl_showloadout",
       values: ["0", "1"],
-      desc: "Zeigt immer das Loadout an. 1 = an."
+      desc: "1 = Zeigt dein aktuelles Loadout (Waffen, Granaten, Equipment) permanent an. 0 = Nur beim Waffenwechsel sichtbar. Praktisch für Competitive, um den Überblick zu behalten.",
     },
     {
       cmd: "cl_draw_only_deathnotices",
       values: ["0", "1"],
-      desc: "1 = Zeigt nur Killfeed (Competitive-Modus)."
-    }
+      desc: "1 = Zeigt NUR den Killfeed (Todesbenachrichtigungen) – kein HUD, keine Health, keine Ammo. Wird oft in Turnieren oder für Clips verwendet. Für normales Spiel auf 0 lassen!",
+    },
   ],
 
-   // ========== AUDIO & VOICE ==========
+  // ========== AUDIO & VOICE ==========
   "Audio & Voice": [
     {
       cmd: "volume",
-      values: ["0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1.0"],
-      desc: "Master-Lautstärke."
+      values: [
+        "0",
+        "0.1",
+        "0.2",
+        "0.3",
+        "0.4",
+        "0.5",
+        "0.6",
+        "0.7",
+        "0.8",
+        "0.9",
+        "1.0",
+      ],
+      desc: "Master-Lautstärke des Spiels. 0 = stumm, 1.0 = 100%. Beeinflusst alle Sounds (Schüsse, Schritte, Umgebung, Voice). Persönliche Präferenz, meist zwischen 0.3 und 0.7.",
     },
     {
       cmd: "voice_scale",
       values: ["0", "0.2", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1.0"],
-      desc: "Voice-Chat Lautstärke."
+      desc: "Lautstärke der Voice-Chat-Kommunikation (Team-Mates). Unabhängig von der Master-Lautstärke. Empfehlung: 0.5-0.7, damit man Team-Info hört, aber Schritte nicht übertönt werden.",
     },
     {
       cmd: "snd_mixahead",
-      values: ["0.02", "0.03", "0.04", "0.05", "0.06", "0.08", "0.1", "0.15", "0.2"],
-      desc: "Audio-Puffer. 0.02 = niedrigste Latenz."
+      values: [
+        "0.02",
+        "0.03",
+        "0.04",
+        "0.05",
+        "0.06",
+        "0.08",
+        "0.1",
+        "0.15",
+        "0.2",
+      ],
+      desc: "Audio-Puffer-Größe in Sekunden. NIEDRIGER = weniger Audio-Latenz (0.02 ist am schnellsten), aber Risiko von Knackern/Rucklern. HÖHER = stabiler, aber mehr Delay. Empfehlung: 0.02-0.04 für Competitive.",
     },
     {
       cmd: "voice_enable",
       values: ["0", "1"],
-      desc: "Voice-Chat aktivieren."
+      desc: "Aktiviert oder deaktiviert den Voice-Chat komplett. 1 = an (höre Team-Mates). 0 = aus (ruhig, aber keine Team-Info). Temporär nutzbar, wenn jemand nervt.",
     },
     {
       cmd: "voice_threshold",
       values: ["0", "0.05", "0.1", "0.15", "0.2", "0.3", "0.5", "0.7", "1.0"],
-      desc: "Mikrofon-Empfindlichkeit."
+      desc: "Mikrofon-Empfindlichkeit (Threshold). Niedrig = Mikrofon spricht schon bei leisen Geräuschen an (mehr Hintergrundrauschen). Hoch = erst bei lauten Tönen. Je nach Mikrofon anpassen.",
     },
     {
       cmd: "voice_mixer_volume",
-      values: ["0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1.0"],
-      desc: "Mikrofon-Lautstärke."
+      values: [
+        "0",
+        "0.1",
+        "0.2",
+        "0.3",
+        "0.4",
+        "0.5",
+        "0.6",
+        "0.7",
+        "0.8",
+        "0.9",
+        "1.0",
+      ],
+      desc: "Deine eigene Mikrofon-Lautstärke für andere Spieler. Zu leise = keiner versteht dich. Zu laut = Verzerrung. Empfehlung: 0.7-0.9, dann im System-Test anpassen.",
     },
     {
       cmd: "voice_loopback",
       values: ["0", "1"],
-      desc: "1 = Eigene Stimme hören (Test)."
+      desc: "1 = Du hörst deine eigene Stimme über Voice-Chat (Loopback). Nützlich zum Testen deines Mikrofons. Im normalen Spiel auf 0 lassen, da es irritiert.",
     },
     {
       cmd: "snd_mute_losefocus",
       values: ["0", "1"],
-      desc: "1 = Sound stumm bei Fokus-Verlust."
-    }
-  ]
+      desc: "1 = Spiel-Sound wird stummgeschaltet, wenn du CS2 verlässt (Alt-Tab). 0 = Sound läuft weiter im Hintergrund. Persönliche Präferenz – viele stellen auf 0 für Musik beim Alt-Tab.",
+    },
+  ],
 };
 
 // ======================== PRESETS ========================
@@ -822,8 +844,8 @@ const presetsList = [
       "ambient_occlusion 1",
       "model_quality 2",
       "effect_quality 2",
-      "particle_quality 2"
-    ]
+      "particle_quality 2",
+    ],
   },
   {
     key: "highfps",
@@ -844,8 +866,8 @@ const presetsList = [
       "effect_quality 0",
       "particle_quality 0",
       "r_drawtracers_firstperson 0",
-      "engine_low_latency_sleep_after_client_tick 1"
-    ]
+      "engine_low_latency_sleep_after_client_tick 1",
+    ],
   },
   {
     key: "lowend",
@@ -867,8 +889,8 @@ const presetsList = [
       "particle_quality 0",
       "r_drawtracers_firstperson 0",
       "cl_disable_ragdolls 1",
-      "engine_low_latency_sleep_after_client_tick 1"
-    ]
+      "engine_low_latency_sleep_after_client_tick 1",
+    ],
   },
   {
     key: "balanced",
@@ -888,8 +910,8 @@ const presetsList = [
       "model_quality 1",
       "effect_quality 1",
       "particle_quality 1",
-      "engine_low_latency_sleep_after_client_tick 1"
-    ]
+      "engine_low_latency_sleep_after_client_tick 1",
+    ],
   },
   {
     key: "competitive",
@@ -912,47 +934,58 @@ const presetsList = [
       "r_drawtracers_firstperson 0",
       "cl_disable_ragdolls 1",
       "cl_draw_only_deathnotices 1",
-      "engine_low_latency_sleep_after_client_tick 1"
-    ]
-  }
+      "engine_low_latency_sleep_after_client_tick 1",
+    ],
+  },
 ];
 
-// ======================== SKRIPT-TEMPLATES ========================
+// ======================== SKRIPT-TEMPLATES (AUSFÜHRLICH WIE CONFIGS) ========================
 const scriptTemplatesList = [
-  {
-    name: "🦘 Jumpthrow",
-    key: "jumpthrow",
-    desc: "Springt und wirft gleichzeitig eine Granate.",
-    content:
-      'alias +jumpthrow "+jump"\nalias -jumpthrow "-jump; -attack"\nbind "KEY" "+jumpthrow"',
-  },
   {
     name: "📊 NetGraph Toggle",
     key: "netgraph",
-    desc: "Zeigt FPS und Ping an.",
+    desc: "WICHTIG: Unbedingt auf die Tabtaste binden. Zeigt ein detailliertes Netzwerk-Overlay mit FPS, Ping, Loss und Choke an – Das Overlay erscheint nur, solange du die Scoreboard-Taste drückst.",
+    longDesc:
+      "Dieses Skript aktiviert die Netzwerkanzeige (NetGraph) von CS2, während du die Scoreboard-Taste (Standard: TAB) gedrückt hältst. Es zeigt dir:\n\n• Aktuelle FPS (Frames pro Sekunde)\n• Ping/Latenz zum Server\n• Packet Loss (verlorene Datenpakete)\n• Choke (überlastete Verbindung)\n\nSobald du die Taste loslässt, verschwindet das Overlay wieder. Perfekt für schnelle Performance-Checks ohne permanente Bildschirm-Unordnung.",
     content:
-      'alias +netg "cl_showfps 2;+showscores"\nalias -netg "cl_showfps 0;-showscores"\nbind "KEY" "+netg"',
+      '// 📊 NETGRAPH TOGGLE SKRIPT\n// Zeigt FPS, Ping, Loss & Choke beim Drücken der Scoreboard-Taste\n// Weist die gewünschte Taste zu, z.B. bind "TAB" "+netg"\n\nalias +netg "cl_showfps 2; cq_netgraph 1; +showscores"\nalias -netg "cl_showfps 0; cq_netgraph 0; -showscores"\nbind "KEY" "+netg"',
   },
   {
-    name: "💣 Quick Nade",
+    name: "💣 Quick Nade Selector",
     key: "quicknade",
-    desc: "Sofort zur nächsten Granate wechseln.",
+    desc: "Durchlaufe alle Granaten mit einer einzigen Taste – perfekt für schnelle Reaktionen. Das Skript wechselt der Reihe nach durch: HE-Granate → Flashbang → Smoke → Molotov/Incendiary.",
+    longDesc:
+      "Mit diesem Skript musst du dir nicht mehr merken, welche Taste für welche Granate zuständig ist. Ein einziger Tastendruck wählt die nächste verfügbare Granate aus deinem Inventar aus. Die Reihenfolge ist:\n\n1️⃣ HE-Granate (Sprengstoff)\n2️⃣ Flashbang (Blendgranate)\n3️⃣ Smoke (Rauchgranate)\n4️⃣ Molotov / Incendiary (Feuer)\n\nDrückst du die Taste mehrfach, springst du durch alle Granaten. Ideal für Competitive-Spieler, die schnell zwischen verschiedenen Wurfgeschossen wechseln müssen.",
     content:
-      'alias nextnade "use weapon_hegrenade; use weapon_flashbang; use weapon_smokegrenade; use weapon_molotov"\nbind "KEY" "nextnade"',
+      '// 💣 QUICK NADE SELECTOR SKRIPT\n// Durchlaufe alle Granaten mit einer Taste\n// Weist die gewünschte Taste zu, z.B. bind "C" "nextnade"\n\nalias nextnade "use weapon_hegrenade; use weapon_flashbang; use weapon_smokegrenade; use weapon_molotov; use weapon_incgrenade"\nbind "KEY" "nextnade"',
   },
   {
     name: "🌈 Rainbow-HUD",
     key: "rainbowhud",
-    desc: "Farbiges HUD bei Bewegung.",
+    desc: "Ein optisches Gimmick: Dein HUD wechselt dynamisch die Farbe, je nachdem welche Bewegungstaste du drückst. Vorwärts = Lila, Rückwärts = Gelb, Springen = Cyan, Ducken = Blau, etc.",
+    longDesc:
+      "Dieses Skript ist ein reines optisches Feature – es verändert nichts an deiner Performance, macht aber Spaß! Jede Bewegungstaste bekommt eine eigene HUD-Farbe zugewiesen:\n\n• W (Vorwärts) → Lila\n• S (Rückwärts) → Gelb  \n• A (Links) → Magenta\n• D (Rechts) → Weiß\n• Leertaste (Springen) → Cyan\n• STRG (Ducken) → Blau\n• SHIFT (Schleichen) → Pink\n\nSobald du die Taste loslässt, wird die Farbe zurückgesetzt. Drücke die eingestellte Taste, um das Skript ein- und auszuschalten.",
     content:
-      'alias hudToggle "hud_on"\nalias "hud_off" "\n    bind w +forward;\n    bind s +back;\n    bind a +left;\n    bind d +right;\n    bind space +jump;\n    bind ctrl +duck;\n    bind shift +speed;\n    cl_hud_color 0;\n    echo \"🌈 HUD-Farben AUS\";\n    alias hudToggle hud_on\n"\nalias "hud_on" "\n    bind w +_forward;\n    bind s +_back;\n    bind a +_left;\n    bind d +_right;\n    bind space +_jump;\n    bind ctrl +_duck;\n    bind shift +_walk;\n    echo \"🌈 HUD-Farben AN\";\n    alias hudToggle hud_off\n"\nalias "+_forward" "+forward; cl_hud_color 7"\nalias "-_forward" "-forward; cl_hud_color 0"\nalias "+_back" "+back; cl_hud_color 3"\nalias "-_back" "-back; cl_hud_color 0"\nalias "+_left" "+left; cl_hud_color 8"\nalias "-_left" "-left; cl_hud_color 0"\nalias "+_right" "+right; cl_hud_color 10"\nalias "-_right" "-right; cl_hud_color 0"\nalias "+_jump" "+jump; cl_hud_color 6"\nalias "-_jump" "-jump; cl_hud_color 0"\nalias "+_duck" "+duck; cl_hud_color 5"\nalias "-_duck" "-duck; cl_hud_color 0"\nalias "+_walk" "+speed; cl_hud_color 9"\nalias "-_walk" "-speed; cl_hud_color 0"\nbind "KEY" "hudToggle"\nhud_on',
+      '// 🌈 RAINBOW-HUD SKRIPT\n// Dynamische HUD-Farben basierend auf Bewegung\n// Drücke die eingestellte Taste zum Ein-/Ausschalten\n\nalias hudToggle "hud_on"\n\nalias "hud_off" "\n    bind w +forward;\n    bind s +back;\n    bind a +left;\n    bind d +right;\n    bind space +jump;\n    bind ctrl +duck;\n    bind shift +speed;\n    cl_hud_color 0;\n    echo "🌈 HUD-Farben AUS";\n    alias hudToggle hud_on\n"\n\nalias "hud_on" "\n    bind w +_forward;\n    bind s +_back;\n    bind a +_left;\n    bind d +_right;\n    bind space +_jump;\n    bind ctrl +_duck;\n    bind shift +_walk;\n    echo "🌈 HUD-Farben AN";\n    alias hudToggle hud_off\n"\n\nalias "+_forward" "+forward; cl_hud_color 7"\nalias "-_forward" "-forward; cl_hud_color 0"\nalias "+_back" "+back; cl_hud_color 3"\nalias "-_back" "-back; cl_hud_color 0"\nalias "+_left" "+left; cl_hud_color 8"\nalias "-_left" "-left; cl_hud_color 0"\nalias "+_right" "+right; cl_hud_color 10"\nalias "-_right" "-right; cl_hud_color 0"\nalias "+_jump" "+jump; cl_hud_color 6"\nalias "-_jump" "-jump; cl_hud_color 0"\nalias "+_duck" "+duck; cl_hud_color 5"\nalias "-_duck" "-duck; cl_hud_color 0"\nalias "+_walk" "+speed; cl_hud_color 9"\nalias "-_walk" "-speed; cl_hud_color 0"\n\nbind "KEY" "hudToggle"\nhud_on',
   },
   {
     name: "💣 Quick Bomb Drop",
     key: "bombdrop",
-    desc: "Bombe sofort fallen lassen.",
+    desc: "Lässt die C4-Bombe sofort fallen – ideal, wenn ein Team-Mate sie übernehmen soll oder du sie schnell ablegen musst, um zu kämpfen.",
+    longDesc:
+      "Dieses Skript ist besonders nützlich, wenn du die Bombe trägst und sie schnell an einen Team-Maten übergeben möchtest, ohne durch dein Inventar zu navigieren. Ein einziger Tastendruck:\n\n• Wenn du die Bombe trägst → lässt sie sofort fallen\n• Wenn du keine Bombe hast → wechselt zurück zur Primärwaffe\n\nDas Skript funktioniert als „Hold“-Skript: Solange du die Taste gedrückt hältst, versucht es die Bombe fallen zu lassen. Perfekt für Situationen, in denen du schnell handeln musst – zum Beispiel, wenn dein Team-Mate bereits in Position für den Plant ist.",
     content:
-      'alias "+bombdrop" "use weapon_c4; drop"\nalias "-bombdrop" "slot10"\nbind "KEY" "+bombdrop"',
+      '// 💣 QUICK BOMB DROP SKRIPT\n// Lasse die C4-Bombe sofort fallen\n// Weist die gewünschte Taste zu, z.B. bind "H" "+bombdrop"\n\nalias "+bombdrop" "use weapon_c4; drop"\nalias "-bombdrop" "slot1"\nbind "KEY" "+bombdrop"',
+  },
+  
+  {
+    name: "🎬 Demo Recorder",
+    key: "demo",
+    desc: "Starte und stoppe Aufnahmen von deinen Matches mit einer Taste – perfekt für Highlight-Reels oder zur Analyse deiner eigenen Performance.",
+    longDesc:
+      "Mit diesem Skript kannst du deine Matches aufnehmen, ohne die Konsole öffnen zu müssen. Features:\n\n• Eine Taste startet die Aufnahme mit einem timestamp-basierten Dateinamen\n• Eine andere Taste stoppt die Aufnahme\n• Automatische Benennung nach Datum und Uhrzeit (z.B. demo_2025_01_15_14_30)\n\nDie Aufnahmen werden im CS2-Ordner gespeichert und können später in der Spiel-Engine abgespielt werden. Ideal für:\n\n• Analyse deiner eigenen Fehler\n• Erstellung von Highlight-Videos\n• Beweissicherung bei verdächtigen Spielern",
+    content:
+      '// 🎬 DEMO RECORDER SKRIPT\n// Starte/stoppe Match-Aufnahmen mit einer Taste\n// Weist die gewünschten Tasten zu, z.B.:\n// bind "F8" "demo_start"\n// bind "F9" "demo_stop"\n\nalias demo_start "record demo_$TIMESTAMP"\nalias demo_stop "stop"\n\n// Beispiel mit festem Dateinamen:\n// alias demo_start "record my_match"\n// alias demo_stop "stop"\n\necho "🎬 Demo Recorder geladen! F8 = Start, F9 = Stop"',
   },
 ];
 
@@ -1119,22 +1152,22 @@ const numpadKeys = [
 const configCategories = {
   "⚡ Performance & FPS": {
     subcats: ["FPS & Performance"],
-    commands: {}
+    commands: {},
   },
   "🎨 Video & Grafik": {
     subcats: ["Video & Grafik"],
-    commands: {}
+    commands: {},
   },
   "🌐 Netzwerk & Ping": {
     subcats: ["Netzwerk & Ping"],
-    commands: {}
+    commands: {},
   },
   "🎮 HUD & Interface": {
     subcats: ["HUD & Interface"],
-    commands: {}
+    commands: {},
   },
   "🔊 Audio & Voice": {
     subcats: ["Audio & Voice"],
-    commands: {}
-  }
+    commands: {},
+  },
 };

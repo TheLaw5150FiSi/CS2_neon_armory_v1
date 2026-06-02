@@ -2,13 +2,19 @@
 let globalConfigCommands = [];
 let configMetadata = [];
 let currentPreset = null;
-let currentMainCat = null, currentSubCat = null;
+let currentMainCat = null;
 
 function fillCategories() {
+  // Die Subkategorien entfallen - alle Befehle einer Hauptkategorie werden direkt zugeordnet
   for (let mainCat in configCategories) {
+    // Sammle alle Befehle aus allen Subkategorien dieser Hauptkategorie
+    let allCommands = [];
     for (let subCat of configCategories[mainCat].subcats) {
-      configCategories[mainCat].commands[subCat] = allCommandsLibrary[subCat] || [];
+      if (allCommandsLibrary[subCat]) {
+        allCommands.push(...allCommandsLibrary[subCat]);
+      }
     }
+    configCategories[mainCat].commands = allCommands;
   }
 }
 
@@ -26,11 +32,14 @@ function loadGlobalConfigs() {
 }
 
 function saveGlobalConfigs() {
-  localStorage.setItem("cs2_neon_global_configs", JSON.stringify({
-    commands: globalConfigCommands,
-    metadata: configMetadata,
-    currentPreset: currentPreset
-  }));
+  localStorage.setItem(
+    "cs2_neon_global_configs",
+    JSON.stringify({
+      commands: globalConfigCommands,
+      metadata: configMetadata,
+      currentPreset: currentPreset,
+    }),
+  );
   renderSavedConfigsList();
   if (window.refreshFullExport) window.refreshFullExport();
   renderPresetsTab();
@@ -60,7 +69,7 @@ function togglePreset(presetKey) {
       currentPreset = null;
       saveGlobalConfigs();
       alert(`✅ Preset entfernt!`);
-      if (currentMainCat && currentSubCat) renderCommands(currentMainCat, currentSubCat);
+      if (currentMainCat) renderCommands(currentMainCat);
       renderPresetsTab();
     }
   } else {
@@ -69,32 +78,29 @@ function togglePreset(presetKey) {
       configMetadata = [];
       for (let cmd of preset.commands) {
         let cmdName = cmd.split(" ")[0];
-        let foundCat = "🎨 Video & Grafik", foundSub = "Auflösung & Display";
+        let foundCat = "🎨 Video & Grafik";
         for (let mc in configCategories) {
-          for (let sc of configCategories[mc].subcats) {
-            let cmdList = allCommandsLibrary[sc] || [];
-            if (cmdList.some((c) => c.cmd === cmdName)) {
-              foundCat = mc;
-              foundSub = sc;
-              break;
-            }
+          let cmdList = configCategories[mc].commands || [];
+          if (cmdList.some((c) => c.cmd === cmdName)) {
+            foundCat = mc;
+            break;
           }
         }
-        configMetadata.push({ command: cmd, mainCat: foundCat, subCat: foundSub });
+        configMetadata.push({ command: cmd, mainCat: foundCat });
       }
       currentPreset = presetKey;
       saveGlobalConfigs();
       alert(`✅ Preset geladen!`);
-      if (currentMainCat && currentSubCat) renderCommands(currentMainCat, currentSubCat);
+      if (currentMainCat) renderCommands(currentMainCat);
       renderPresetsTab();
     }
   }
 }
 
-function addConfigDirectly(cmdString, mainCat, subCat) {
+function addConfigDirectly(cmdString, mainCat) {
   if (cmdString && !globalConfigCommands.includes(cmdString)) {
     globalConfigCommands.push(cmdString);
-    configMetadata.push({ command: cmdString, mainCat: mainCat, subCat: subCat });
+    configMetadata.push({ command: cmdString, mainCat: mainCat });
     if (currentPreset) {
       currentPreset = null;
       saveGlobalConfigs();
@@ -127,7 +133,7 @@ function clearAllConfigs() {
     currentPreset = null;
     saveGlobalConfigs();
     renderPresetsTab();
-    if (currentMainCat && currentSubCat) renderCommands(currentMainCat, currentSubCat);
+    if (currentMainCat) renderCommands(currentMainCat);
   }
 }
 
@@ -136,7 +142,8 @@ function renderSavedConfigsList() {
   if (!container) return;
   container.innerHTML = "";
   if (globalConfigCommands.length === 0) {
-    container.innerHTML = '<div class="empty-message">📭 Keine Config-Befehle gespeichert</div>';
+    container.innerHTML =
+      '<div class="empty-message">📭 Keine Config-Befehle gespeichert</div>';
     return;
   }
   globalConfigCommands.forEach((cmd, idx) => {
@@ -156,7 +163,7 @@ window.removeConfigCommand = (idx) => {
     renderPresetsTab();
   } else saveGlobalConfigs();
   if (window.refreshFullExport) window.refreshFullExport();
-  if (currentMainCat && currentSubCat) renderCommands(currentMainCat, currentSubCat);
+  if (currentMainCat) renderCommands(currentMainCat);
 };
 
 function renderMainCategories() {
@@ -168,72 +175,70 @@ function renderMainCategories() {
     btn.className = "main-cat-btn";
     btn.textContent = mainCatName;
     btn.onclick = () => {
-      document.querySelectorAll(".main-cat-btn").forEach((b) => b.classList.remove("active-main"));
+      document
+        .querySelectorAll(".main-cat-btn")
+        .forEach((b) => b.classList.remove("active-main"));
       btn.classList.add("active-main");
       currentMainCat = mainCatName;
-      currentSubCat = null;
-      renderSubcategories(mainCatName);
+      renderCommands(mainCatName);
     };
     container.appendChild(btn);
   }
-}
 
-function renderSubcategories(mainCatName) {
+  // Verstecke den Subcategories Container komplett
   const subContainer = document.getElementById("subcategoriesContainer");
-  const commandsContainer = document.getElementById("commandsContainer");
-  if (!subContainer || !commandsContainer) return;
-  const catData = configCategories[mainCatName];
-  if (!catData) return;
-  subContainer.innerHTML = "";
-  let subButtonsDiv = document.createElement("div");
-  subButtonsDiv.className = "subcat-buttons visible";
-  catData.subcats.forEach((sub) => {
-    let btn = document.createElement("div");
-    btn.className = "subcat-btn";
-    btn.textContent = sub;
-    btn.onclick = () => {
-      document.querySelectorAll(".subcat-btn").forEach((b) => b.classList.remove("active-subcat"));
-      btn.classList.add("active-subcat");
-      currentSubCat = sub;
-      renderCommands(mainCatName, sub);
-    };
-    subButtonsDiv.appendChild(btn);
-  });
-  subContainer.appendChild(subButtonsDiv);
-  commandsContainer.innerHTML = "";
+  if (subContainer) {
+    subContainer.innerHTML = "";
+    subContainer.style.display = "none";
+  }
 }
 
 function isCommandInConfig(cmdString) {
   return globalConfigCommands.includes(cmdString);
 }
 
-function renderCommands(mainCatName, subCatName) {
+function renderCommands(mainCatName) {
   const commandsContainer = document.getElementById("commandsContainer");
   if (!commandsContainer) return;
+
   const catData = configCategories[mainCatName];
-  if (!catData || !catData.commands[subCatName]) return;
-  let commandsList = catData.commands[subCatName];
+  if (!catData || !catData.commands || catData.commands.length === 0) {
+    commandsContainer.innerHTML =
+      '<div class="empty-message">📭 Keine Befehle in dieser Kategorie</div>';
+    return;
+  }
+
+  let commandsList = catData.commands;
   let gridDiv = document.createElement("div");
   gridDiv.className = "config-grid visible";
+
   commandsList.forEach((cf) => {
     let item = document.createElement("div");
     item.className = "config-item";
     let selectHtml = "";
-    let defaultVal = cf.values[0];
+    let defaultVal = cf.values && cf.values.length > 0 ? cf.values[0] : "";
+
     if (cf.values && cf.values.length > 0) {
       selectHtml = `<select class="config-select" data-cmd="${cf.cmd}">`;
-      cf.values.forEach((val) => { selectHtml += `<option value="${val}">${val}</option>`; });
+      cf.values.forEach((val) => {
+        selectHtml += `<option value="${val}">${val}</option>`;
+      });
       selectHtml += `</select>`;
     }
+
     item.innerHTML = `<div class="config-item-header"><div class="config-info"><div class="config-cmd">${cf.cmd}</div><div class="config-desc">${cf.desc}</div></div><button class="takeover-btn">📋 Übernehmen</button></div>${selectHtml}<div class="config-preview">${cf.cmd} ${defaultVal}</div>`;
+
     const select = item.querySelector(".config-select");
     const preview = item.querySelector(".config-preview");
     const takeoverBtn = item.querySelector(".takeover-btn");
-    
+
     function updateButtonState() {
       let finalCmd = cf.cmd;
       let selectedVal = defaultVal;
-      if (select) { selectedVal = select.value; finalCmd = `${cf.cmd} ${selectedVal}`; }
+      if (select) {
+        selectedVal = select.value;
+        finalCmd = `${cf.cmd} ${selectedVal}`;
+      }
       if (isCommandInConfig(finalCmd)) {
         takeoverBtn.classList.add("success");
         takeoverBtn.innerHTML = "✓ Abgeschlossen";
@@ -242,19 +247,22 @@ function renderCommands(mainCatName, subCatName) {
         takeoverBtn.innerHTML = "📋 Übernehmen";
       }
     }
-    
+
     if (select) {
       select.addEventListener("change", (e) => {
         preview.textContent = `${cf.cmd} ${e.target.value}`;
         updateButtonState();
       });
     }
-    
+
     takeoverBtn.addEventListener("click", (e) => {
       e.stopPropagation();
       let finalCmd = cf.cmd;
       let selectedVal = defaultVal;
-      if (select) { selectedVal = select.value; finalCmd = `${cf.cmd} ${selectedVal}`; }
+      if (select) {
+        selectedVal = select.value;
+        finalCmd = `${cf.cmd} ${selectedVal}`;
+      }
       if (isCommandInConfig(finalCmd)) {
         if (confirm(`"${finalCmd}" entfernen?`)) {
           removeConfigByCommand(finalCmd);
@@ -263,25 +271,28 @@ function renderCommands(mainCatName, subCatName) {
           setTimeout(() => updateButtonState(), 800);
         }
       } else {
-        addConfigDirectly(finalCmd, mainCatName, subCatName);
+        addConfigDirectly(finalCmd, mainCatName);
         updateButtonState();
         takeoverBtn.innerHTML = "✓ Gespeichert!";
         setTimeout(() => updateButtonState(), 800);
       }
     });
-    
+
     item.addEventListener("click", (e) => {
       if (e.target !== takeoverBtn && e.target.tagName !== "SELECT") {
         let finalCmd = cf.cmd;
         let selectedVal = defaultVal;
-        if (select) { selectedVal = select.value; finalCmd = `${cf.cmd} ${selectedVal}`; }
+        if (select) {
+          selectedVal = select.value;
+          finalCmd = `${cf.cmd} ${selectedVal}`;
+        }
         if (isCommandInConfig(finalCmd)) {
           if (confirm(`"${finalCmd}" entfernen?`)) {
             removeConfigByCommand(finalCmd);
             updateButtonState();
           }
         } else {
-          addConfigDirectly(finalCmd, mainCatName, subCatName);
+          addConfigDirectly(finalCmd, mainCatName);
           updateButtonState();
           takeoverBtn.innerHTML = "✓ Gespeichert!";
           setTimeout(() => updateButtonState(), 800);
@@ -291,6 +302,7 @@ function renderCommands(mainCatName, subCatName) {
     updateButtonState();
     gridDiv.appendChild(item);
   });
+
   commandsContainer.innerHTML = "";
   commandsContainer.appendChild(gridDiv);
 }
