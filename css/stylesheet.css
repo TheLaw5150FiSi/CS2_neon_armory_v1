@@ -1416,7 +1416,9 @@ button.glow:hover {
   background: #1e2129;
   border-radius: 20px;
   padding: 20px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
   display: inline-block;
   border: 1px solid #2f3542;
   width: 100%;
@@ -1448,10 +1450,10 @@ button.glow:hover {
   border-radius: 8px;
   box-shadow: 0 2px 0 #0a0c10, inset 0 1px 0 rgba(255, 255, 255, 0.08);
   color: #eef2ff;
-  font-family: 'Segoe UI', 'Roboto', monospace;
+  font-family: "Segoe UI", "Roboto", monospace;
   font-weight: 600;
   font-size: 10px;
-  text-transform: lowercase;
+  /* text-transform: lowercase;  <- DIESE ZEILE LÖSCHEN ODER AUSKOMMENTIEREN */
   cursor: pointer;
   transition: all 0.05s linear;
   display: flex;
@@ -1480,21 +1482,21 @@ button.glow:hover {
   background: radial-gradient(circle at 35% 25%, #ff4444, #aa0000);
   box-shadow: 0 2px 0 #550000;
   color: white;
-  text-shadow: 0 0 2px rgba(255,255,255,0.5);
+  text-shadow: 0 0 2px rgba(255, 255, 255, 0.5);
 }
 
 .app__key--bound-script {
   background: radial-gradient(circle at 35% 25%, #2288dd, #0044aa);
   box-shadow: 0 2px 0 #002255;
   color: white;
-  text-shadow: 0 0 2px rgba(255,255,255,0.5);
+  text-shadow: 0 0 2px rgba(255, 255, 255, 0.5);
 }
 
 .app__key--bound-say {
   background: radial-gradient(circle at 35% 25%, #2a882a, #0a550a);
   box-shadow: 0 2px 0 #003300;
   color: white;
-  text-shadow: 0 0 2px rgba(255,255,255,0.5);
+  text-shadow: 0 0 2px rgba(255, 255, 255, 0.5);
 }
 
 /* Gesperrte Tasten (ESC, Win) */
@@ -1527,9 +1529,11 @@ button.glow:hover {
   background: radial-gradient(circle at 35% 25%, #2d323e, #1b1f29);
   border: none;
   border-radius: 8px;
-  box-shadow: 0 2px 0 #0a0c10, inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 2px 0 #0a0c10,
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
   color: #eef2ff;
-  font-family: 'Segoe UI', 'Roboto', monospace;
+  font-family: "Segoe UI", "Roboto", monospace;
   font-weight: 600;
   font-size: 9px;
   cursor: pointer;
@@ -1575,4 +1579,120 @@ button.glow:hover {
 #toggleMouseArea:hover {
   background: var(--accent);
   color: #0a0a0f;
+}
+
+/* Für kyrillische Zeichen in Tasten */
+.app__key {
+  font-family:
+    "Segoe UI", "Inter", "Fira Code", monospace, "Microsoft YaHei",
+    "Noto Sans CJK SC";
+}
+
+/* Bei sehr kleinen Tasten kyrillische Schrift etwas kleiner */
+.app__key--small {
+  font-size: 7px;
+}
+
+/* Maus-Tasten */
+.mouse-key {
+  font-family: "Segoe UI", "Inter", "Fira Code", monospace;
+}
+
+/* ======================== HOVER EFFEKT ======================== */
+
+/* Hover-Effekt für alle Tasten */
+.app__key:hover {
+  transform: translateY(-2px) scale(1.05);
+  filter: brightness(1.2);
+  transition: all 0.1s ease;
+  z-index: 10;
+}
+
+.app__key:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+/* Gebundene Tasten Hover */
+.app__key--bound-buy:hover,
+.app__key--bound-script:hover,
+.app__key--bound-say:hover {
+  transform: translateY(-2px) scale(1.05);
+  filter: brightness(1.15);
+  transition: all 0.1s ease;
+}
+
+/* Gesperrte Tasten - kein Hover-Effekt */
+.app__key--locked {
+  opacity: 0.5;
+}
+
+.app__key--locked:hover {
+  transform: none;
+  filter: none;
+  cursor: not-allowed;
+}
+
+/* Maus-Tasten Hover-Effekt */
+.mouse-key:hover {
+  transform: translateY(-2px) scale(1.05);
+  filter: brightness(1.2);
+  transition: all 0.1s ease;
+}
+
+.mouse-key:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+/* Gebundene Maus-Tasten Hover */
+.mouse-key--bound-buy:hover,
+.mouse-key--bound-script:hover,
+.mouse-key--bound-say:hover {
+  transform: translateY(-2px) scale(1.05);
+  filter: brightness(1.15);
+}
+
+/* Leuchtender Glow beim Hover für alle Tasten */
+.app__key:hover,
+.mouse-key:hover {
+  box-shadow:
+    0 0 12px var(--accent-glow),
+    0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Spezifische Hover-Farben für gebundene Tasten */
+.app__key--bound-buy:hover {
+  box-shadow:
+    0 0 12px #ff0000,
+    0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.app__key--bound-script:hover {
+  box-shadow:
+    0 0 12px #2288dd,
+    0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.app__key--bound-say:hover {
+  box-shadow:
+    0 0 12px #44cc44,
+    0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Maus-Tasten Hover Glow */
+.mouse-key--bound-buy:hover {
+  box-shadow:
+    0 0 12px #ff0000,
+    0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.mouse-key--bound-script:hover {
+  box-shadow:
+    0 0 12px #2288dd,
+    0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.mouse-key--bound-say:hover {
+  box-shadow:
+    0 0 12px #44cc44,
+    0 4px 8px rgba(0, 0, 0, 0.3);
 }

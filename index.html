@@ -48,26 +48,33 @@
         <button class="tab-btn" data-tab="aboutTab">👤 ABOUT ME</button>
       </div>
 
-      <!-- BINDS TAB -->
-      <div id="bindsTab" class="tab-content active">
-  <div class="layout-toggle-container">
-    <button id="toggleKeyboardLayoutBinds" class="glow layout-toggle-btn" style="background: transparent">
-      ⌨️ DE Layout
-    </button>
-  </div>
+<!-- BINDS TAB -->
+<div id="bindsTab" class="tab-content active">
+  <div class="card">
+    <h2>⌨️ TASTATUR + NUMPAD</h2>
+    
+    <!-- Layout-Auswahl direkt über der Tastatur -->
+    <div style="display: flex; justify-content: flex-end; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+      <div style="display: flex; align-items: center; gap: 0.rem; background: var(--btn-bg); padding: 0.3rem 1rem; border-radius: 2rem; border: 1px solid var(--border-color);">
+        <i class="fas fa-keyboard" style="color: var(--accent-light);"></i>
+        <span style="font-size: 0.8rem;">Tastaturlayout: </span>
+        <select id="keyboardLayoutSelect" style="background: var(--input-bg); border: 1px solid var(--accent); border-radius: 1.5rem; padding: 0.3rem 0.8rem; color: var(--text-color); font-size: 0.8rem; cursor: pointer;">
+          <option value="DE">🇩🇪 Deutsch (DE)</option>
+          <option value="US">🇺🇸 Englisch (US)</option>
+          <option value="RU">🇷🇺 Russisch (RU)</option>
+        </select>
+      </div>
+    </div>
 
+    <div class="info-text">
+      🎨 Farben: 🔴 Rot = BuyScript | 🔵 Blau = Skript | 🟢 Grün = Say Bind
+    </div>
 
-        <div class="card">
-          <h2>⌨️ TASTATUR + NUMPAD</h2>
-          <div class="info-text">
-            🎨 Farben: 🔴 Rot = BuyScript | 🔵 Blau = Skript | 🟢 Grün = Say
-            Bind
-          </div>
-
-          <!-- Haupttastatur – originalgetreues Grid -->
-          <div class="keyboard-wrapper">
-            <div class="keyboard-grid" id="bindsKeyboardGrid"></div>
-          </div>
+    <!-- Haupttastatur – originalgetreues Grid -->
+    <div class="keyboard-wrapper">
+      <div class="keyboard-grid" id="bindsKeyboardGrid"></div>
+    </div>
+    <!-- Rest bleibt gleich... -->
 
           <!-- Maus-Bereich (zunächst ausgeblendet) -->
           <div

@@ -977,7 +977,7 @@ const scriptTemplatesList = [
     content:
       '// 💣 QUICK BOMB DROP SKRIPT\n// Lasse die C4-Bombe sofort fallen\n// Weist die gewünschte Taste zu, z.B. bind "H" "+bombdrop"\n\nalias "+bombdrop" "use weapon_c4; drop"\nalias "-bombdrop" "slot1"\nbind "KEY" "+bombdrop"',
   },
-  
+
   {
     name: "🎬 Demo Recorder",
     key: "demo",
@@ -1057,6 +1057,7 @@ const categories = {
 };
 
 // ======================== TASTATUR LAYOUT ========================
+// ======================== TASTATUR LAYOUTS ========================
 const deKeysRows = [
   [
     "ESC",
@@ -1133,6 +1134,45 @@ const usKeysRows = [
   ["LCTRL", "LALT", "SPACE", "RALT", "RCTRL", "LEFT", "DOWN", "UP", "RIGHT"],
 ];
 
+// ======================== RUSSISCHES LAYOUT (ЙЦУКЕН) ========================
+const ruKeysRows = [
+  [
+    "ESC",
+    "F1",
+    "F2",
+    "F3",
+    "F4",
+    "F5",
+    "F6",
+    "F7",
+    "F8",
+    "F9",
+    "F10",
+    "F11",
+    "F12",
+  ],
+  [
+    "Ё",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "0",
+    "-",
+    "=",
+    "BACKSPACE",
+  ],
+  ["TAB", "Й", "Ц", "У", "К", "Е", "Н", "Г", "Ш", "Щ", "З", "Х", "Ъ", "\\"],
+  ["CAPS", "Ф", "Ы", "В", "А", "П", "Р", "О", "Л", "Д", "Ж", "Э", "ENTER"],
+  ["LSHIFT", "Я", "Ч", "С", "М", "И", "Т", "Ь", "Б", "Ю", ".", "RSHIFT"],
+  ["LCTRL", "LALT", "SPACE", "RALT", "RCTRL", "LEFT", "DOWN", "UP", "RIGHT"],
+];
+
 const numpadKeys = [
   "KP_7",
   "KP_8",
@@ -1147,6 +1187,26 @@ const numpadKeys = [
   "KP_DEL",
   "KP_PLUS",
 ];
+
+// NumPad Anzeigenamen (für bessere Lesbarkeit)
+const numpadDisplayNames = {
+  KP_0: "0",
+  KP_1: "1",
+  KP_2: "2",
+  KP_3: "3",
+  KP_4: "4",
+  KP_5: "5",
+  KP_6: "6",
+  KP_7: "7",
+  KP_8: "8",
+  KP_9: "9",
+  KP_DEL: ".",
+  KP_PLUS: "+",
+  KP_MINUS: "-",
+  KP_SLASH: "/",
+  KP_STAR: "*",
+  KP_ENTER: "Enter",
+};
 
 // ======================== CONFIG KATEGORIEN ========================
 const configCategories = {

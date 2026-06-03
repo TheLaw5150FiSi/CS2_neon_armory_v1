@@ -62,6 +62,7 @@ function renderPresetsTab() {
 function togglePreset(presetKey) {
   const preset = presetsList.find((p) => p.key === presetKey);
   if (!preset) return;
+  
   if (currentPreset === presetKey) {
     if (confirm(`Preset "${preset.name}" entfernen?`)) {
       globalConfigCommands = [];
@@ -69,8 +70,11 @@ function togglePreset(presetKey) {
       currentPreset = null;
       saveGlobalConfigs();
       alert(`✅ Preset entfernt!`);
-      if (currentMainCat) renderCommands(currentMainCat);
+      if (currentMainCat) {
+        renderCommands(currentMainCat);
+      }
       renderPresetsTab();
+      if (window.refreshFullExport) window.refreshFullExport();
     }
   } else {
     if (confirm(`Preset "${preset.name}" laden?`)) {
@@ -91,8 +95,22 @@ function togglePreset(presetKey) {
       currentPreset = presetKey;
       saveGlobalConfigs();
       alert(`✅ Preset geladen!`);
-      if (currentMainCat) renderCommands(currentMainCat);
+      
+      // Aktualisiere die aktuelle Kategorie-Ansicht
+      if (currentMainCat) {
+        renderCommands(currentMainCat);
+      } else if (Object.keys(configCategories).length > 0) {
+        const firstCat = Object.keys(configCategories)[0];
+        currentMainCat = firstCat;
+        renderCommands(firstCat);
+        document.querySelectorAll(".main-cat-btn").forEach((btn) => {
+          btn.classList.remove("active-main");
+          if (btn.textContent === firstCat) btn.classList.add("active-main");
+        });
+      }
+      
       renderPresetsTab();
+      if (window.refreshFullExport) window.refreshFullExport();
     }
   }
 }
@@ -105,7 +123,9 @@ function addConfigDirectly(cmdString, mainCat) {
       currentPreset = null;
       saveGlobalConfigs();
       renderPresetsTab();
-    } else saveGlobalConfigs();
+    } else {
+      saveGlobalConfigs();
+    }
     return true;
   }
   return false;
@@ -120,7 +140,9 @@ function removeConfigByCommand(cmdString) {
       currentPreset = null;
       saveGlobalConfigs();
       renderPresetsTab();
-    } else saveGlobalConfigs();
+    } else {
+      saveGlobalConfigs();
+    }
     return true;
   }
   return false;
@@ -161,7 +183,9 @@ window.removeConfigCommand = (idx) => {
     currentPreset = null;
     saveGlobalConfigs();
     renderPresetsTab();
-  } else saveGlobalConfigs();
+  } else {
+    saveGlobalConfigs();
+  }
   if (window.refreshFullExport) window.refreshFullExport();
   if (currentMainCat) renderCommands(currentMainCat);
 };
@@ -232,19 +256,34 @@ function renderCommands(mainCatName) {
     const preview = item.querySelector(".config-preview");
     const takeoverBtn = item.querySelector(".takeover-btn");
 
-    function updateButtonState() {
-      let finalCmd = cf.cmd;
+    // Funktion zum Aktualisieren des Button-Zustands
+    const updateButtonState = () => {
       let selectedVal = defaultVal;
       if (select) {
         selectedVal = select.value;
-        finalCmd = `${cf.cmd} ${selectedVal}`;
       }
-      if (isCommandInConfig(finalCmd)) {
+      const finalCmd = `${cf.cmd} ${selectedVal}`;
+      
+      // Prüfe ob EXAKT dieser Befehl in der Config ist
+      if (globalConfigCommands.includes(finalCmd)) {
         takeoverBtn.classList.add("success");
         takeoverBtn.innerHTML = "✓ Abgeschlossen";
       } else {
         takeoverBtn.classList.remove("success");
         takeoverBtn.innerHTML = "📋 Übernehmen";
+      }
+    };
+
+    // Setze den Select auf den Wert, der bereits in der Config ist (falls vorhanden)
+    if (select && globalConfigCommands.length > 0) {
+      // Suche nach einem Befehl, der mit diesem cmd beginnt
+      const existingCmd = globalConfigCommands.find(cmd => cmd.startsWith(cf.cmd + " "));
+      if (existingCmd) {
+        const existingValue = existingCmd.replace(cf.cmd + " ", "");
+        if (cf.values.includes(existingValue)) {
+          select.value = existingValue;
+          preview.textContent = `${cf.cmd} ${existingValue}`;
+        }
       }
     }
 
@@ -257,48 +296,59 @@ function renderCommands(mainCatName) {
 
     takeoverBtn.addEventListener("click", (e) => {
       e.stopPropagation();
-      let finalCmd = cf.cmd;
       let selectedVal = defaultVal;
       if (select) {
         selectedVal = select.value;
-        finalCmd = `${cf.cmd} ${selectedVal}`;
       }
-      if (isCommandInConfig(finalCmd)) {
+      const finalCmd = `${cf.cmd} ${selectedVal}`;
+      
+      if (globalConfigCommands.includes(finalCmd)) {
         if (confirm(`"${finalCmd}" entfernen?`)) {
           removeConfigByCommand(finalCmd);
           updateButtonState();
           takeoverBtn.innerHTML = "🗑 Gelöscht!";
-          setTimeout(() => updateButtonState(), 800);
+          setTimeout(() => {
+            updateButtonState();
+            if (window.refreshFullExport) window.refreshFullExport();
+          }, 800);
         }
       } else {
         addConfigDirectly(finalCmd, mainCatName);
         updateButtonState();
         takeoverBtn.innerHTML = "✓ Gespeichert!";
-        setTimeout(() => updateButtonState(), 800);
+        setTimeout(() => {
+          updateButtonState();
+          if (window.refreshFullExport) window.refreshFullExport();
+        }, 800);
       }
     });
 
     item.addEventListener("click", (e) => {
       if (e.target !== takeoverBtn && e.target.tagName !== "SELECT") {
-        let finalCmd = cf.cmd;
         let selectedVal = defaultVal;
         if (select) {
           selectedVal = select.value;
-          finalCmd = `${cf.cmd} ${selectedVal}`;
         }
-        if (isCommandInConfig(finalCmd)) {
+        const finalCmd = `${cf.cmd} ${selectedVal}`;
+        
+        if (globalConfigCommands.includes(finalCmd)) {
           if (confirm(`"${finalCmd}" entfernen?`)) {
             removeConfigByCommand(finalCmd);
             updateButtonState();
+            if (window.refreshFullExport) window.refreshFullExport();
           }
         } else {
           addConfigDirectly(finalCmd, mainCatName);
           updateButtonState();
           takeoverBtn.innerHTML = "✓ Gespeichert!";
-          setTimeout(() => updateButtonState(), 800);
+          setTimeout(() => {
+            updateButtonState();
+            if (window.refreshFullExport) window.refreshFullExport();
+          }, 800);
         }
       }
     });
+    
     updateButtonState();
     gridDiv.appendChild(item);
   });
