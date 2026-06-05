@@ -5,9 +5,18 @@ let showMouseArea = false;
 
 // Gesperrte Tasten (können nicht gebindet werden)
 const lockedKeys = [
-    "esc", "win", "alt gr", "menu",
-    "Print Screen", "Scroll Lock", "Pause Break", "Num Lock",
-    "prtsc", "srclk", "pause", "numlock"
+  "esc",
+  "win",
+  "alt gr",
+  "menu",
+  "Print Screen",
+  "Scroll Lock",
+  "Pause Break",
+  "Num Lock",
+  "prtsc",
+  "srclk",
+  "pause",
+  "numlock",
 ];
 
 // Maus-Tasten für Bindings
@@ -22,305 +31,323 @@ const mouseKeys = [
 ];
 
 function initBindsTab() {
-    // Stelle sicher, dass mainKeysRows initialisiert ist
-    if (typeof mainKeysRows === "undefined" || mainKeysRows.length === 0) {
-        if (typeof deKeysRows !== "undefined") {
-            mainKeysRows = JSON.parse(JSON.stringify(deKeysRows));
-            currentLayout = "DE";
-        }
+  // Stelle sicher, dass mainKeysRows initialisiert ist
+  if (typeof mainKeysRows === "undefined" || mainKeysRows.length === 0) {
+    if (typeof deKeysRows !== "undefined") {
+      mainKeysRows = JSON.parse(JSON.stringify(deKeysRows));
+      currentLayout = "DE";
     }
-    
-    renderBindsKeyboardGrid();
-    renderBindsMouseGrid();
-    renderBindsBuyCategories();
-    renderBindsSavedList();
-    renderBindsTemplates();
-    attachBindsEventListeners();
-    attachMouseToggleListener();
-    initLayoutDropdown();  // Statt initLayoutToggleButton
+  }
+
+  // Lade die CS2 Standard-Bindings (damit die Datenbank verfügbar ist)
+  if (typeof cs2DefaultBinds !== "undefined" && !window.cs2DefaultBindsLoaded) {
+    // Datenbank ist bereits durch defaultbinds.js geladen
+    window.cs2DefaultBindsLoaded = true;
+    console.log(
+      "✅ CS2 Standard-Bindings geladen:",
+      Object.keys(cs2DefaultBinds).length,
+      "Tasten",
+    );
+  }
+
+  renderBindsKeyboardGrid();
+  renderBindsMouseGrid();
+  renderBindsBuyCategories();
+  renderBindsSavedList();
+  renderBindsTemplates();
+  attachBindsEventListeners();
+  attachMouseToggleListener();
+  initLayoutDropdown();
 }
 
 // Neue Funktion für den Layout-Toggle-Button
-// Neue Funktion für den Layout-Toggle-Button
 function initLayoutDropdown() {
-    const dropdown = document.getElementById("keyboardLayoutSelect");
-    if (!dropdown) return;
-    
-    // Setze den aktuellen Wert im Dropdown
-    dropdown.value = currentLayout;
-    
-    // Event-Listener für Änderungen
-    dropdown.addEventListener("change", (e) => {
-        const newLayout = e.target.value;
-        if (typeof setKeyboardLayout === "function") {
-            setKeyboardLayout(newLayout);
-        }
-        // Tastatur neu rendern
-        renderBindsKeyboardGrid();
-        renderBindsMouseGrid();
-        console.log("Layout gewechselt zu:", newLayout);
-    });
+  const dropdown = document.getElementById("keyboardLayoutSelect");
+  if (!dropdown) return;
+
+  // Setze den aktuellen Wert im Dropdown
+  dropdown.value = currentLayout;
+
+  // Event-Listener für Änderungen
+  dropdown.addEventListener("change", (e) => {
+    const newLayout = e.target.value;
+    if (typeof setKeyboardLayout === "function") {
+      setKeyboardLayout(newLayout);
+    }
+    // Tastatur neu rendern
+    renderBindsKeyboardGrid();
+    renderBindsMouseGrid();
+    console.log("Layout gewechselt zu:", newLayout);
+  });
 }
 
 function renderBindsKeyboard() {
   renderBindsKeyboardGrid();
 }
+
 function renderBindsKeyboardGrid() {
-    const container = document.getElementById("bindsKeyboardGrid");
-    if (!container) return;
-    container.innerHTML = "";
-    
-    // Definiere die Grid-Positionen mit korrekten Indizes für jedes Layout
-    const keyPositions = [
-        // Zeile 1: Esc, F1–F12, Print Screen, Scroll Lock, Pause Break
-        { col: "1 / 3", row: "1 / 3", small: false, keyName: "ESC" },
-        { col: "4 / 6", row: "1 / 3", small: false, keyName: "F1" },
-        { col: "6 / 8", row: "1 / 3", small: false, keyName: "F2" },
-        { col: "8 / 10", row: "1 / 3", small: false, keyName: "F3" },
-        { col: "10 / 12", row: "1 / 3", small: false, keyName: "F4" },
-        { col: "13 / 15", row: "1 / 3", small: false, keyName: "F5" },
-        { col: "15 / 17", row: "1 / 3", small: false, keyName: "F6" },
-        { col: "17 / 19", row: "1 / 3", small: false, keyName: "F7" },
-        { col: "19 / 21", row: "1 / 3", small: false, keyName: "F8" },
-        { col: "22 / 24", row: "1 / 3", small: false, keyName: "F9" },
-        { col: "24 / 26", row: "1 / 3", small: false, keyName: "F10" },
-        { col: "26 / 28", row: "1 / 3", small: false, keyName: "F11" },
-        { col: "28 / 30", row: "1 / 3", small: false, keyName: "F12" },
-        { col: "31 / 33", row: "1 / 3", small: true, keyName: "Print Screen" },
-        { col: "33 / 35", row: "1 / 3", small: true, keyName: "Scroll Lock" },
-        { col: "35 / 37", row: "1 / 3", small: true, keyName: "Pause Break" },
-        
-        // Zeile 2: Ziffernreihe
-        { col: "1 / 3", row: "4 / 6", small: false, rowIdx: 1, colIdx: 0 },
-        { col: "3 / 5", row: "4 / 6", small: false, rowIdx: 1, colIdx: 1 },
-        { col: "5 / 7", row: "4 / 6", small: false, rowIdx: 1, colIdx: 2 },
-        { col: "7 / 9", row: "4 / 6", small: false, rowIdx: 1, colIdx: 3 },
-        { col: "9 / 11", row: "4 / 6", small: false, rowIdx: 1, colIdx: 4 },
-        { col: "11 / 13", row: "4 / 6", small: false, rowIdx: 1, colIdx: 5 },
-        { col: "13 / 15", row: "4 / 6", small: false, rowIdx: 1, colIdx: 6 },
-        { col: "15 / 17", row: "4 / 6", small: false, rowIdx: 1, colIdx: 7 },
-        { col: "17 / 19", row: "4 / 6", small: false, rowIdx: 1, colIdx: 8 },
-        { col: "19 / 21", row: "4 / 6", small: false, rowIdx: 1, colIdx: 9 },
-        { col: "21 / 23", row: "4 / 6", small: false, rowIdx: 1, colIdx: 10 },
-        { col: "23 / 25", row: "4 / 6", small: false, rowIdx: 1, colIdx: 11 },
-        { col: "25 / 27", row: "4 / 6", small: false, rowIdx: 1, colIdx: 12 },
-        { col: "27 / 30", row: "4 / 6", small: true, keyName: "BACKSPACE" },
-        { col: "31 / 33", row: "4 / 6", small: true, keyName: "Insert" },
-        { col: "33 / 35", row: "4 / 6", small: true, keyName: "Home" },
-        { col: "35 / 37", row: "4 / 6", small: true, keyName: "Page Up" },
-        { col: "38 / 40", row: "4 / 6", small: true, keyName: "Num Lock" },
-        { col: "40 / 42", row: "4 / 6", small: false, keyName: "KP_SLASH" },
-        { col: "42 / 44", row: "4 / 6", small: false, keyName: "KP_STAR" },
-        { col: "44 / 46", row: "4 / 6", small: false, keyName: "KP_MINUS" },
-        
-        // Zeile 3: Tab + Buchstabenreihe 1
-        { col: "1 / 4", row: "6 / 8", small: false, keyName: "TAB" },
-        { col: "4 / 6", row: "6 / 8", small: false, rowIdx: 2, colIdx: 1 },
-        { col: "6 / 8", row: "6 / 8", small: false, rowIdx: 2, colIdx: 2 },
-        { col: "8 / 10", row: "6 / 8", small: false, rowIdx: 2, colIdx: 3 },
-        { col: "10 / 12", row: "6 / 8", small: false, rowIdx: 2, colIdx: 4 },
-        { col: "12 / 14", row: "6 / 8", small: false, rowIdx: 2, colIdx: 5 },
-        { col: "14 / 16", row: "6 / 8", small: false, rowIdx: 2, colIdx: 6 },
-        { col: "16 / 18", row: "6 / 8", small: false, rowIdx: 2, colIdx: 7 },
-        { col: "18 / 20", row: "6 / 8", small: false, rowIdx: 2, colIdx: 8 },
-        { col: "20 / 22", row: "6 / 8", small: false, rowIdx: 2, colIdx: 9 },
-        { col: "22 / 24", row: "6 / 8", small: false, rowIdx: 2, colIdx: 10 },
-        { col: "24 / 26", row: "6 / 8", small: false, rowIdx: 2, colIdx: 11 },
-        { col: "26 / 28", row: "6 / 8", small: false, rowIdx: 2, colIdx: 12 },
-        { col: "28 / 30", row: "6 / 8", small: false, rowIdx: 2, colIdx: 13 },
-        { col: "31 / 33", row: "6 / 8", small: true, keyName: "delete" },
-        { col: "33 / 35", row: "6 / 8", small: true, keyName: "end" },
-        { col: "35 / 37", row: "6 / 8", small: true, keyName: "page down" },
-        { col: "38 / 40", row: "6 / 8", small: false, keyName: "KP_7" },
-        { col: "40 / 42", row: "6 / 8", small: false, keyName: "KP_8" },
-        { col: "42 / 44", row: "6 / 8", small: false, keyName: "KP_9" },
-        { col: "44 / 46", row: "6 / 10", small: false, keyName: "KP_PLUS" },
-        
-        // Zeile 4: Caps + Buchstabenreihe 2
-        { col: "1 / 5", row: "8 / 10", small: false, keyName: "CAPS" },
-        { col: "5 / 7", row: "8 / 10", small: false, rowIdx: 3, colIdx: 1 },
-        { col: "7 / 9", row: "8 / 10", small: false, rowIdx: 3, colIdx: 2 },
-        { col: "9 / 11", row: "8 / 10", small: false, rowIdx: 3, colIdx: 3 },
-        { col: "11 / 13", row: "8 / 10", small: false, rowIdx: 3, colIdx: 4 },
-        { col: "13 / 15", row: "8 / 10", small: false, rowIdx: 3, colIdx: 5 },
-        { col: "15 / 17", row: "8 / 10", small: false, rowIdx: 3, colIdx: 6 },
-        { col: "17 / 19", row: "8 / 10", small: false, rowIdx: 3, colIdx: 7 },
-        { col: "19 / 21", row: "8 / 10", small: false, rowIdx: 3, colIdx: 8 },
-        { col: "21 / 23", row: "8 / 10", small: false, rowIdx: 3, colIdx: 9 },
-        { col: "23 / 25", row: "8 / 10", small: false, rowIdx: 3, colIdx: 10 },
-        { col: "25 / 27", row: "8 / 10", small: false, rowIdx: 3, colIdx: 11 },
-        { col: "27 / 30", row: "8 / 10", small: false, keyName: "ENTER" },
-        { col: "38 / 40", row: "8 / 10", small: false, keyName: "KP_4" },
-        { col: "40 / 42", row: "8 / 10", small: false, keyName: "KP_5" },
-        { col: "42 / 44", row: "8 / 10", small: false, keyName: "KP_6" },
-        
-        // Zeile 5: Shift + Buchstabenreihe 3
-        { col: "1 / 6", row: "10 / 12", small: false, keyName: "LSHIFT" },
-        { col: "6 / 8", row: "10 / 12", small: false, rowIdx: 4, colIdx: 1 },
-        { col: "8 / 10", row: "10 / 12", small: false, rowIdx: 4, colIdx: 2 },
-        { col: "10 / 12", row: "10 / 12", small: false, rowIdx: 4, colIdx: 3 },
-        { col: "12 / 14", row: "10 / 12", small: false, rowIdx: 4, colIdx: 4 },
-        { col: "14 / 16", row: "10 / 12", small: false, rowIdx: 4, colIdx: 5 },
-        { col: "16 / 18", row: "10 / 12", small: false, rowIdx: 4, colIdx: 6 },
-        { col: "18 / 20", row: "10 / 12", small: false, rowIdx: 4, colIdx: 7 },
-        { col: "20 / 22", row: "10 / 12", small: false, rowIdx: 4, colIdx: 8 },
-        { col: "22 / 24", row: "10 / 12", small: false, rowIdx: 4, colIdx: 9 },
-        { col: "24 / 26", row: "10 / 12", small: false, rowIdx: 4, colIdx: 10 },
-        { col: "26 / 30", row: "10 / 12", small: false, keyName: "RSHIFT" },
-        { col: "33 / 35", row: "10 / 12", small: false, keyName: "UP" },
-        { col: "38 / 40", row: "10 / 12", small: false, keyName: "KP_1" },
-        { col: "40 / 42", row: "10 / 12", small: false, keyName: "KP_2" },
-        { col: "42 / 44", row: "10 / 12", small: false, keyName: "KP_3" },
-        { col: "44 / 46", row: "10 / 14", small: true, keyName: "KP_ENTER" },
-        
-        // Zeile 6: Strg, Win, Alt, Space, etc.
-        { col: "1 / 4", row: "12 / 14", small: false, keyName: "LCTRL" },
-        { col: "4 / 6", row: "12 / 14", small: false, keyName: "win" },
-        { col: "6 / 9", row: "12 / 14", small: false, keyName: "LALT" },
-        { col: "9 / 19", row: "12 / 14", small: false, keyName: "SPACE" },
-        { col: "19 / 22", row: "12 / 14", small: false, keyName: "RALT" },
-        { col: "22 / 24", row: "12 / 14", small: false, keyName: "win" },
-        { col: "24 / 27", row: "12 / 14", small: false, keyName: "menu" },
-        { col: "27 / 30", row: "12 / 14", small: false, keyName: "RCTRL" },
-        { col: "31 / 33", row: "12 / 14", small: false, keyName: "LEFT" },
-        { col: "33 / 35", row: "12 / 14", small: false, keyName: "DOWN" },
-        { col: "35 / 37", row: "12 / 14", small: false, keyName: "RIGHT" },
-        { col: "38 / 42", row: "12 / 14", small: false, keyName: "KP_0" },
-        { col: "42 / 44", row: "12 / 14", small: false, keyName: "KP_DEL" }
-    ];
-    
-    // Definiere welche Sonderzeichen wie dargestellt werden
-    const specialDisplayNames = {
-        "SPACE": "␣",
-        "LSHIFT": "Shift",
-        "RSHIFT": "Shift",
-        "LCTRL": "Ctrl",
-        "RCTRL": "Ctrl",
-        "LALT": "Alt",
-        "RALT": "AltGr",
-        "ENTER": "Enter",
-        "BACKSPACE": "⌫",
-        "TAB": "Tab",
-        "CAPS": "Caps",
-        "ESC": "Esc",
-        "UP": "▲",
-        "DOWN": "▼",
-        "LEFT": "◀",
-        "RIGHT": "▶",
-        "win": "Win",
-        "menu": "Menu",
-        "Print Screen": "PrtSc",
-        "Scroll Lock": "Scrlk",
-        "Pause Break": "Pause",
-        "Insert": "Ins",
-        "Home": "Home",
-        "Page Up": "PgUp",
-        "page down": "PgDn",
-        "delete": "Del",
-        "end": "End",
-        "home": "Home",
-        "Num Lock": "Num",
-        "KP_SLASH": "/",
-        "KP_STAR": "*",
-        "KP_MINUS": "-",
-        "KP_PLUS": "+",
-        "KP_ENTER": "Enter",
-        "KP_DEL": ".",
-        "KP_0": "0",
-        "KP_1": "1",
-        "KP_2": "2",
-        "KP_3": "3",
-        "KP_4": "4",
-        "KP_5": "5",
-        "KP_6": "6",
-        "KP_7": "7",
-        "KP_8": "8",
-        "KP_9": "9"
-    };
-    
-    // Für jede Position hole die Taste aus dem aktuellen Layout
-    keyPositions.forEach(pos => {
-        const btn = document.createElement("button");
-        
-        let keyName = "";
-        let displayText = "";
-        
-        // Wenn direkter keyName angegeben ist (für F-Tasten, NumPad, etc.)
-        if (pos.keyName) {
-            keyName = pos.keyName;
-            // F-Tasten in Großbuchstaben
-            if (keyName.match(/^F\d+$/)) {
-                displayText = keyName.toUpperCase();
-            }
-            // Print Screen, Scroll Lock, Pause Break, Num Lock - bleiben wie sie sind
-            else if (keyName === "Print Screen" || keyName === "Scroll Lock" || keyName === "Pause Break" || keyName === "Num Lock") {
-                displayText = specialDisplayNames[keyName] || keyName;
-            }
-            else {
-                displayText = specialDisplayNames[keyName] || keyName;
-            }
-        }
-        // Ansonsten aus dem Layout-Array holen (für Buchstaben)
-        else if (pos.rowIdx !== undefined && pos.colIdx !== undefined && mainKeysRows && mainKeysRows[pos.rowIdx]) {
-            if (mainKeysRows[pos.rowIdx][pos.colIdx]) {
-                keyName = mainKeysRows[pos.rowIdx][pos.colIdx];
-                // Buchstaben in Großbuchstaben
-                if (keyName.length === 1 && keyName.match(/[A-Za-zА-Яа-яЁё]/)) {
-                    displayText = keyName.toUpperCase();
-                } else {
-                    displayText = specialDisplayNames[keyName] || keyName;
-                }
-            } else {
-                keyName = "?";
-                displayText = "?";
-            }
+  const container = document.getElementById("bindsKeyboardGrid");
+  if (!container) return;
+  container.innerHTML = "";
+
+  // Definiere die Grid-Positionen mit korrekten Indizes für jedes Layout
+  const keyPositions = [
+    // Zeile 1: Esc, F1–F12, Print Screen, Scroll Lock, Pause Break
+    { col: "1 / 3", row: "1 / 3", small: false, keyName: "ESC" },
+    { col: "4 / 6", row: "1 / 3", small: false, keyName: "F1" },
+    { col: "6 / 8", row: "1 / 3", small: false, keyName: "F2" },
+    { col: "8 / 10", row: "1 / 3", small: false, keyName: "F3" },
+    { col: "10 / 12", row: "1 / 3", small: false, keyName: "F4" },
+    { col: "13 / 15", row: "1 / 3", small: false, keyName: "F5" },
+    { col: "15 / 17", row: "1 / 3", small: false, keyName: "F6" },
+    { col: "17 / 19", row: "1 / 3", small: false, keyName: "F7" },
+    { col: "19 / 21", row: "1 / 3", small: false, keyName: "F8" },
+    { col: "22 / 24", row: "1 / 3", small: false, keyName: "F9" },
+    { col: "24 / 26", row: "1 / 3", small: false, keyName: "F10" },
+    { col: "26 / 28", row: "1 / 3", small: false, keyName: "F11" },
+    { col: "28 / 30", row: "1 / 3", small: false, keyName: "F12" },
+    { col: "31 / 33", row: "1 / 3", small: true, keyName: "Print Screen" },
+    { col: "33 / 35", row: "1 / 3", small: true, keyName: "Scroll Lock" },
+    { col: "35 / 37", row: "1 / 3", small: true, keyName: "Pause Break" },
+
+    // Zeile 2: Ziffernreihe
+    { col: "1 / 3", row: "4 / 6", small: false, rowIdx: 1, colIdx: 0 },
+    { col: "3 / 5", row: "4 / 6", small: false, rowIdx: 1, colIdx: 1 },
+    { col: "5 / 7", row: "4 / 6", small: false, rowIdx: 1, colIdx: 2 },
+    { col: "7 / 9", row: "4 / 6", small: false, rowIdx: 1, colIdx: 3 },
+    { col: "9 / 11", row: "4 / 6", small: false, rowIdx: 1, colIdx: 4 },
+    { col: "11 / 13", row: "4 / 6", small: false, rowIdx: 1, colIdx: 5 },
+    { col: "13 / 15", row: "4 / 6", small: false, rowIdx: 1, colIdx: 6 },
+    { col: "15 / 17", row: "4 / 6", small: false, rowIdx: 1, colIdx: 7 },
+    { col: "17 / 19", row: "4 / 6", small: false, rowIdx: 1, colIdx: 8 },
+    { col: "19 / 21", row: "4 / 6", small: false, rowIdx: 1, colIdx: 9 },
+    { col: "21 / 23", row: "4 / 6", small: false, rowIdx: 1, colIdx: 10 },
+    { col: "23 / 25", row: "4 / 6", small: false, rowIdx: 1, colIdx: 11 },
+    { col: "25 / 27", row: "4 / 6", small: false, rowIdx: 1, colIdx: 12 },
+    { col: "27 / 30", row: "4 / 6", small: true, keyName: "BACKSPACE" },
+    { col: "31 / 33", row: "4 / 6", small: true, keyName: "Insert" },
+    { col: "33 / 35", row: "4 / 6", small: true, keyName: "Home" },
+    { col: "35 / 37", row: "4 / 6", small: true, keyName: "Page Up" },
+    { col: "38 / 40", row: "4 / 6", small: true, keyName: "Num Lock" },
+    { col: "40 / 42", row: "4 / 6", small: false, keyName: "KP_SLASH" },
+    { col: "42 / 44", row: "4 / 6", small: false, keyName: "KP_STAR" },
+    { col: "44 / 46", row: "4 / 6", small: false, keyName: "KP_MINUS" },
+
+    // Zeile 3: Tab + Buchstabenreihe 1
+    { col: "1 / 4", row: "6 / 8", small: false, keyName: "TAB" },
+    { col: "4 / 6", row: "6 / 8", small: false, rowIdx: 2, colIdx: 1 },
+    { col: "6 / 8", row: "6 / 8", small: false, rowIdx: 2, colIdx: 2 },
+    { col: "8 / 10", row: "6 / 8", small: false, rowIdx: 2, colIdx: 3 },
+    { col: "10 / 12", row: "6 / 8", small: false, rowIdx: 2, colIdx: 4 },
+    { col: "12 / 14", row: "6 / 8", small: false, rowIdx: 2, colIdx: 5 },
+    { col: "14 / 16", row: "6 / 8", small: false, rowIdx: 2, colIdx: 6 },
+    { col: "16 / 18", row: "6 / 8", small: false, rowIdx: 2, colIdx: 7 },
+    { col: "18 / 20", row: "6 / 8", small: false, rowIdx: 2, colIdx: 8 },
+    { col: "20 / 22", row: "6 / 8", small: false, rowIdx: 2, colIdx: 9 },
+    { col: "22 / 24", row: "6 / 8", small: false, rowIdx: 2, colIdx: 10 },
+    { col: "24 / 26", row: "6 / 8", small: false, rowIdx: 2, colIdx: 11 },
+    { col: "26 / 28", row: "6 / 8", small: false, rowIdx: 2, colIdx: 12 },
+    { col: "28 / 30", row: "6 / 8", small: false, rowIdx: 2, colIdx: 13 },
+    { col: "31 / 33", row: "6 / 8", small: true, keyName: "delete" },
+    { col: "33 / 35", row: "6 / 8", small: true, keyName: "end" },
+    { col: "35 / 37", row: "6 / 8", small: true, keyName: "page down" },
+    { col: "38 / 40", row: "6 / 8", small: false, keyName: "KP_7" },
+    { col: "40 / 42", row: "6 / 8", small: false, keyName: "KP_8" },
+    { col: "42 / 44", row: "6 / 8", small: false, keyName: "KP_9" },
+    { col: "44 / 46", row: "6 / 10", small: false, keyName: "KP_PLUS" },
+
+    // Zeile 4: Caps + Buchstabenreihe 2
+    { col: "1 / 5", row: "8 / 10", small: false, keyName: "CAPS" },
+    { col: "5 / 7", row: "8 / 10", small: false, rowIdx: 3, colIdx: 1 },
+    { col: "7 / 9", row: "8 / 10", small: false, rowIdx: 3, colIdx: 2 },
+    { col: "9 / 11", row: "8 / 10", small: false, rowIdx: 3, colIdx: 3 },
+    { col: "11 / 13", row: "8 / 10", small: false, rowIdx: 3, colIdx: 4 },
+    { col: "13 / 15", row: "8 / 10", small: false, rowIdx: 3, colIdx: 5 },
+    { col: "15 / 17", row: "8 / 10", small: false, rowIdx: 3, colIdx: 6 },
+    { col: "17 / 19", row: "8 / 10", small: false, rowIdx: 3, colIdx: 7 },
+    { col: "19 / 21", row: "8 / 10", small: false, rowIdx: 3, colIdx: 8 },
+    { col: "21 / 23", row: "8 / 10", small: false, rowIdx: 3, colIdx: 9 },
+    { col: "23 / 25", row: "8 / 10", small: false, rowIdx: 3, colIdx: 10 },
+    { col: "25 / 27", row: "8 / 10", small: false, rowIdx: 3, colIdx: 11 },
+    { col: "27 / 30", row: "8 / 10", small: false, keyName: "ENTER" },
+    { col: "38 / 40", row: "8 / 10", small: false, keyName: "KP_4" },
+    { col: "40 / 42", row: "8 / 10", small: false, keyName: "KP_5" },
+    { col: "42 / 44", row: "8 / 10", small: false, keyName: "KP_6" },
+
+    // Zeile 5: Shift + Buchstabenreihe 3
+    { col: "1 / 6", row: "10 / 12", small: false, keyName: "LSHIFT" },
+    { col: "6 / 8", row: "10 / 12", small: false, rowIdx: 4, colIdx: 1 },
+    { col: "8 / 10", row: "10 / 12", small: false, rowIdx: 4, colIdx: 2 },
+    { col: "10 / 12", row: "10 / 12", small: false, rowIdx: 4, colIdx: 3 },
+    { col: "12 / 14", row: "10 / 12", small: false, rowIdx: 4, colIdx: 4 },
+    { col: "14 / 16", row: "10 / 12", small: false, rowIdx: 4, colIdx: 5 },
+    { col: "16 / 18", row: "10 / 12", small: false, rowIdx: 4, colIdx: 6 },
+    { col: "18 / 20", row: "10 / 12", small: false, rowIdx: 4, colIdx: 7 },
+    { col: "20 / 22", row: "10 / 12", small: false, rowIdx: 4, colIdx: 8 },
+    { col: "22 / 24", row: "10 / 12", small: false, rowIdx: 4, colIdx: 9 },
+    { col: "24 / 26", row: "10 / 12", small: false, rowIdx: 4, colIdx: 10 },
+    { col: "26 / 30", row: "10 / 12", small: false, keyName: "RSHIFT" },
+    { col: "33 / 35", row: "10 / 12", small: false, keyName: "UP" },
+    { col: "38 / 40", row: "10 / 12", small: false, keyName: "KP_1" },
+    { col: "40 / 42", row: "10 / 12", small: false, keyName: "KP_2" },
+    { col: "42 / 44", row: "10 / 12", small: false, keyName: "KP_3" },
+    { col: "44 / 46", row: "10 / 14", small: true, keyName: "KP_ENTER" },
+
+    // Zeile 6: Strg, Win, Alt, Space, etc.
+    { col: "1 / 4", row: "12 / 14", small: false, keyName: "LCTRL" },
+    { col: "4 / 6", row: "12 / 14", small: false, keyName: "win" },
+    { col: "6 / 9", row: "12 / 14", small: false, keyName: "LALT" },
+    { col: "9 / 19", row: "12 / 14", small: false, keyName: "SPACE" },
+    { col: "19 / 22", row: "12 / 14", small: false, keyName: "RALT" },
+    { col: "22 / 24", row: "12 / 14", small: false, keyName: "win" },
+    { col: "24 / 27", row: "12 / 14", small: false, keyName: "menu" },
+    { col: "27 / 30", row: "12 / 14", small: false, keyName: "RCTRL" },
+    { col: "31 / 33", row: "12 / 14", small: false, keyName: "LEFT" },
+    { col: "33 / 35", row: "12 / 14", small: false, keyName: "DOWN" },
+    { col: "35 / 37", row: "12 / 14", small: false, keyName: "RIGHT" },
+    { col: "38 / 42", row: "12 / 14", small: false, keyName: "KP_0" },
+    { col: "42 / 44", row: "12 / 14", small: false, keyName: "KP_DEL" }
+  ];
+
+  // Definiere welche Sonderzeichen wie dargestellt werden
+  const specialDisplayNames = {
+    SPACE: "␣",
+    LSHIFT: "Shift",
+    RSHIFT: "Shift",
+    LCTRL: "Ctrl",
+    RCTRL: "Ctrl",
+    LALT: "Alt",
+    RALT: "AltGr",
+    ENTER: "Enter",
+    BACKSPACE: "⌫",
+    TAB: "Tab",
+    CAPS: "Caps",
+    ESC: "Esc",
+    UP: "▲",
+    DOWN: "▼",
+    LEFT: "◀",
+    RIGHT: "▶",
+    win: "Win",
+    menu: "Menu",
+    "Print Screen": "PrtSc",
+    "Scroll Lock": "Scrlk",
+    "Pause Break": "Pause",
+    Insert: "Ins",
+    Home: "Home",
+    "Page Up": "PgUp",
+    "page down": "PgDn",
+    delete: "Del",
+    end: "End",
+    home: "Home",
+    "Num Lock": "Num",
+    KP_SLASH: "/",
+    KP_STAR: "*",
+    KP_MINUS: "-",
+    KP_PLUS: "+",
+    KP_ENTER: "Enter",
+    KP_DEL: ".",
+    KP_0: "0",
+    KP_1: "1",
+    KP_2: "2",
+    KP_3: "3",
+    KP_4: "4",
+    KP_5: "5",
+    KP_6: "6",
+    KP_7: "7",
+    KP_8: "8",
+    KP_9: "9",
+  };
+
+  // Für jede Position hole die Taste aus dem aktuellen Layout
+  keyPositions.forEach((pos) => {
+    const btn = document.createElement("button");
+
+    let keyName = "";
+    let displayText = "";
+
+    // Wenn direkter keyName angegeben ist (für F-Tasten, NumPad, etc.)
+    if (pos.keyName) {
+      keyName = pos.keyName;
+      if (keyName.match(/^F\d+$/)) {
+        displayText = keyName.toUpperCase();
+      } else if (
+        keyName === "Print Screen" ||
+        keyName === "Scroll Lock" ||
+        keyName === "Pause Break" ||
+        keyName === "Num Lock"
+      ) {
+        displayText = specialDisplayNames[keyName] || keyName;
+      } else {
+        displayText = specialDisplayNames[keyName] || keyName;
+      }
+    }
+    // Ansonsten aus dem Layout-Array holen (für Buchstaben)
+    else if (
+      pos.rowIdx !== undefined &&
+      pos.colIdx !== undefined &&
+      mainKeysRows &&
+      mainKeysRows[pos.rowIdx]
+    ) {
+      if (mainKeysRows[pos.rowIdx][pos.colIdx]) {
+        keyName = mainKeysRows[pos.rowIdx][pos.colIdx];
+        if (keyName.length === 1 && keyName.match(/[A-Za-zА-Яа-яЁё]/)) {
+          displayText = keyName.toUpperCase();
         } else {
-            keyName = "?";
-            displayText = "?";
+          displayText = specialDisplayNames[keyName] || keyName;
         }
-        
-        // Prüfe ob die Taste gesperrt ist
-        const isLocked = lockedKeys.includes(keyName) || 
-                         lockedKeys.includes(keyName.toLowerCase()) ||
-                         keyName === "Print Screen" || 
-                         keyName === "Scroll Lock" || 
-                         keyName === "Pause Break" || 
-                         keyName === "Num Lock";
-        
-        // Bestimme die Bind-Klasse
-        let bindClass = "";
-        if (!isLocked && keyName !== "?") {
-            const bindingInfo = getBindingInfo(keyName);
-            if (bindingInfo.type === "buy") bindClass = "app__key--bound-buy";
-            if (bindingInfo.type === "script") bindClass = "app__key--bound-script";
-            if (bindingInfo.type === "say") bindClass = "app__key--bound-say";
-        }
-        
-        btn.className = `app__key ${bindClass} ${isLocked ? 'app__key--locked' : ''} ${pos.small ? 'app__key--small' : ''}`.trim();
-        
-        if (selectedBindKey === keyName && !isLocked && keyName !== "?") {
-            btn.classList.add("app__key--active");
-        }
-        
-        btn.textContent = displayText;
-        btn.style.gridColumn = pos.col;
-        btn.style.gridRow = pos.row;
-        
-        if (!isLocked && keyName !== "?") {
-            btn.onclick = () => {
-                selectedBindKey = keyName;
-                renderBindsKeyboardGrid();
-                renderBindsMouseGrid();
-                updateBindsInputFields();
-            };
-        } else {
-            btn.onclick = () => {
-                alert(`⚠️ Die Taste "${displayText}" kann nicht gebindet werden, da sie systemrelevant ist.`);
-            };
-        }
-        
-        container.appendChild(btn);
-    });
+      } else {
+        keyName = "?";
+        displayText = "?";
+      }
+    } else {
+      keyName = "?";
+      displayText = "?";
+    }
+
+    // Prüfe ob die Taste gesperrt ist
+    const isLocked =
+      lockedKeys.includes(keyName) ||
+      lockedKeys.includes(keyName.toLowerCase()) ||
+      keyName === "Print Screen" ||
+      keyName === "Scroll Lock" ||
+      keyName === "Pause Break" ||
+      keyName === "Num Lock";
+
+    // Bestimme die Bind-Klasse (KORREKT: mit keyName, nicht key.cmd)
+    let bindClass = "";
+    if (!isLocked && keyName !== "?") {
+      const bindingInfo = getBindingInfo(keyName);
+      if (bindingInfo.type === "buy") bindClass = "app__key--bound-buy";
+      if (bindingInfo.type === "script") bindClass = "app__key--bound-script";
+      if (bindingInfo.type === "say") bindClass = "app__key--bound-say";
+      if (bindingInfo.type === "default") bindClass = "app__key--bound-default";
+    }
+
+    btn.className = `app__key ${bindClass} ${isLocked ? "app__key--locked" : ""} ${pos.small ? "app__key--small" : ""}`.trim();
+
+    if (selectedBindKey === keyName && !isLocked && keyName !== "?") {
+      btn.classList.add("app__key--active");
+    }
+
+    btn.textContent = displayText;
+    btn.style.gridColumn = pos.col;
+    btn.style.gridRow = pos.row;
+
+    if (!isLocked && keyName !== "?") {
+      btn.onclick = () => {
+        selectedBindKey = keyName;
+        renderBindsKeyboardGrid();
+        renderBindsMouseGrid();
+        updateBindsInputFields();
+      };
+    } else {
+      btn.onclick = () => {
+        alert(`⚠️ Die Taste "${displayText}" kann nicht gebindet werden, da sie systemrelevant ist.`);
+      };
+    }
+
+    container.appendChild(btn);
+  });
 }
 
 function renderBindsMouseGrid() {
@@ -328,7 +355,6 @@ function renderBindsMouseGrid() {
   if (!container) return;
   container.innerHTML = "";
 
-  // Maus-Grid: 7 Spalten
   const gridCols = [1, 6, 11, 17, 22, 27, 32];
 
   mouseKeys.forEach((key, idx) => {
@@ -337,9 +363,9 @@ function renderBindsMouseGrid() {
 
     const bindingInfo = getBindingInfo(key.cmd);
     if (bindingInfo.type === "buy") btn.classList.add("mouse-key--bound-buy");
-    if (bindingInfo.type === "script")
-      btn.classList.add("mouse-key--bound-script");
+    if (bindingInfo.type === "script") btn.classList.add("mouse-key--bound-script");
     if (bindingInfo.type === "say") btn.classList.add("mouse-key--bound-say");
+    if (bindingInfo.type === "default") btn.classList.add("mouse-key--bound-default"); // DAS FEHLTE
 
     if (selectedBindKey === key.cmd) {
       btn.classList.add("mouse-key--active");
@@ -382,24 +408,31 @@ function updateBindsInputFields() {
 
   // Buy Input
   const buyInput = document.getElementById("bindsBuyCommandInput");
-  if (buyInput && window.buyBindings) {
-    buyInput.value = window.buyBindings[selectedBindKey] || "";
+  if (buyInput) {
+    // Zuerst benutzerdefinierten Bind prüfen, dann Default
+    if (window.buyBindings && window.buyBindings[selectedBindKey]) {
+      buyInput.value = window.buyBindings[selectedBindKey];
+    } else if (window.cs2DefaultBinds && window.cs2DefaultBinds[selectedBindKey]) {
+      buyInput.value = window.cs2DefaultBinds[selectedBindKey];
+    } else {
+      buyInput.value = "";
+    }
   }
 
   // Say Input
   const sayInput = document.getElementById("bindsSayCommandInput");
   if (sayInput && window.sayBindings) {
     let val = window.sayBindings[selectedBindKey] || "";
+    if (!val && window.cs2DefaultBinds && window.cs2DefaultBinds[selectedBindKey] && 
+        (window.cs2DefaultBinds[selectedBindKey].startsWith("say") || window.cs2DefaultBinds[selectedBindKey].startsWith("say_team"))) {
+      val = window.cs2DefaultBinds[selectedBindKey];
+    }
     sayInput.value = val.replace(/^(say_team|say) /, "");
     if (val.startsWith("say_team")) {
-      const teamRadio = document.querySelector(
-        'input[name="bindsSayType"][value="say_team"]',
-      );
+      const teamRadio = document.querySelector('input[name="bindsSayType"][value="say_team"]');
       if (teamRadio) teamRadio.checked = true;
     } else if (val.startsWith("say")) {
-      const allRadio = document.querySelector(
-        'input[name="bindsSayType"][value="say"]',
-      );
+      const allRadio = document.querySelector('input[name="bindsSayType"][value="say"]');
       if (allRadio) allRadio.checked = true;
     }
   }
@@ -709,102 +742,122 @@ function renderBindsSavedList() {
 
   let allBinds = [];
 
-  // Sammle alle Buy-Bindings
+  // Sammle alle benutzerdefinierten Buy-Bindings
   if (window.buyBindings) {
     for (let [k, cmd] of Object.entries(window.buyBindings)) {
       allBinds.push({
         key: k,
         type: "buy",
-        display: `bind "${k}" → "${cmd}"`,
         cmd: cmd,
+        isCustom: true
       });
     }
   }
 
-  // Sammle alle Say-Bindings
+  // Sammle alle benutzerdefinierten Say-Bindings
   if (window.sayBindings) {
     for (let [k, cmd] of Object.entries(window.sayBindings)) {
       allBinds.push({
         key: k,
         type: "say",
-        display: `bind "${k}" → "${cmd}"`,
         cmd: cmd,
+        isCustom: true
       });
     }
   }
 
-  // Sammle alle Script-Bindings
+  // Sammle alle benutzerdefinierten Script-Bindings
   if (window.scriptBindings) {
     for (let [k, val] of Object.entries(window.scriptBindings)) {
       let firstLine = val.split("\n")[0].replace("//", "").trim();
       allBinds.push({
         key: k,
         type: "script",
-        display: `bind "${k}" → 🎮 ${firstLine.substring(0, 50)}`,
-        cmd: val,
+        cmd: firstLine.substring(0, 50),
+        fullCmd: val,
+        isCustom: true
       });
     }
   }
 
-  // Wenn keine Bindings vorhanden
-  if (allBinds.length === 0) {
-    cont.innerHTML =
-      '<div class="empty-message">✨ Keine Bindings vorhanden. Klicke auf eine Taste, um ein Binding zu erstellen!</div>';
-    return;
+  // Sammle alle CS2 Standard-Bindings (DEFAULT)
+  // Aber nur, wenn sie NICHT durch benutzerdefinierte Bindings überschrieben wurden
+  if (window.cs2DefaultBinds) {
+    for (let [k, cmd] of Object.entries(window.cs2DefaultBinds)) {
+      const alreadyBound = allBinds.some(b => b.key === k && b.isCustom === true);
+      if (!alreadyBound) {
+        allBinds.push({
+          key: k,
+          type: "default",
+          cmd: cmd,
+          isCustom: false
+        });
+      }
+    }
   }
 
   // Sortiere nach Taste (alphabetisch)
   allBinds.sort((a, b) => a.key.localeCompare(b.key));
 
+  // Wenn keine Bindings vorhanden
+  if (allBinds.length === 0) {
+    cont.innerHTML = '<div class="empty-message">✨ Keine Bindings vorhanden. Klicke auf eine Taste, um ein Binding zu erstellen!</div>';
+    return;
+  }
+
   // Zeige alle Bindings an
   allBinds.forEach((bind) => {
     let e = document.createElement("div");
     e.className = "bind-entry";
-
-    let typeIcon =
-      bind.type === "buy" ? "🛒" : bind.type === "say" ? "💬" : "🎮";
-    let typeColor =
-      bind.type === "buy"
-        ? "#ff3333"
-        : bind.type === "say"
-          ? "#44cc44"
-          : "#2288dd";
-
+    
+    let typeIcon = bind.type === "buy" ? "🛒" : bind.type === "say" ? "💬" : bind.type === "script" ? "🎮" : "⭐";
+    let typeColor = bind.type === "buy" ? "#ff3333" : bind.type === "say" ? "#44cc44" : bind.type === "script" ? "#2288dd" : "#cc9900";
+    
+    // Nur bei benutzerdefinierten Bindings Lösch-Button anzeigen
+    const deleteButton = bind.isCustom ? 
+      `<span style="float: right; cursor: pointer; color: #ff6666; margin-left: 0.5rem;" onclick="window.removeBindingFromList('${bind.key}', '${bind.type}')">[x]</span>` : 
+      `<span style="float: right; margin-left: 0.5rem; opacity: 0.5;" title="Standard-Bindung (kann durch eigenen Bind überschrieben werden)">[Standard]</span>`;
+    
     e.innerHTML = `
-            <span class="bind-key" style="color: ${typeColor};">${typeIcon} bind "${bind.key}"</span> 
-            → <span class="bind-command">"${bind.cmd.substring(0, 80)}${bind.cmd.length > 80 ? "..." : ""}"</span>
-            <span style="float: right; cursor: pointer; color: #ff6666; margin-left: 0.5rem;" onclick="window.removeBindingFromList('${bind.key}', '${bind.type}')">[x]</span>
-        `;
+      <span class="bind-key" style="color: ${typeColor};">${typeIcon} bind "${bind.key}"</span> 
+      → <span class="bind-command">"${bind.cmd.substring(0, 80)}${bind.cmd.length > 80 ? "..." : ""}"</span>
+      ${deleteButton}
+    `;
+    
+    // Tooltip für Default-Bindings
+    if (!bind.isCustom && window.getCs2DefaultDescription) {
+      e.title = window.getCs2DefaultDescription(bind.key);
+    }
 
     e.onclick = (event) => {
-      if (event.target.tagName === "SPAN" && event.target.textContent === "[x]")
-        return;
-
+      if (event.target.tagName === "SPAN" && (event.target.textContent === "[x]" || event.target.textContent === "[Standard]")) return;
+      
       selectedBindKey = bind.key;
-      currentBindType = bind.type;
-
-      document
-        .querySelectorAll("#bindTypeSelector .main-cat-btn")
-        .forEach((btn) => {
-          btn.classList.remove("active-main");
-          if (btn.dataset.bindType === bind.type)
-            btn.classList.add("active-main");
-        });
-
-      document
-        .querySelectorAll(".bind-type-area")
-        .forEach((area) => area.classList.remove("active"));
-      document
-        .getElementById(
-          `binds${bind.type === "buy" ? "Buy" : bind.type === "say" ? "Say" : "Script"}Area`,
-        )
-        .classList.add("active");
-
+      
+      // Bestimme den Typ für die Anzeige
+      if (bind.type === "default") {
+        currentBindType = "buy";
+      } else {
+        currentBindType = bind.type;
+      }
+      
+      // Aktiviere den entsprechenden Tab
+      document.querySelectorAll("#bindTypeSelector .main-cat-btn").forEach((btn) => {
+        btn.classList.remove("active-main");
+        let targetType = bind.type === "default" ? "buy" : bind.type;
+        if (btn.dataset.bindType === targetType) btn.classList.add("active-main");
+      });
+      
+      // Aktiviere das richtige Area
+      document.querySelectorAll(".bind-type-area").forEach((area) => area.classList.remove("active"));
+      let areaId = `binds${bind.type === "buy" ? "Buy" : bind.type === "say" ? "Say" : bind.type === "script" ? "Script" : "Buy"}Area`;
+      document.getElementById(areaId).classList.add("active");
+      
       renderBindsKeyboardGrid();
       renderBindsMouseGrid();
       updateBindsInputFields();
     };
-
+    
     cont.appendChild(e);
   });
 }

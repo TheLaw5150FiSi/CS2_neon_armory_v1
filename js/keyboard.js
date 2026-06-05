@@ -39,15 +39,18 @@ function getAllKeys() {
   return [...mainKeysRows.flat(), ...numpad];
 }
 
-// ZENTRALE FUNKTION: Prüft, welche Bindung eine Taste hat
+// ZENTRALE FUNKTION: Prüft, welche Bindung eine Taste hat (inkl. Default)
 function getBindingInfo(key) {
   const hasBuy = window.buyBindings && window.buyBindings[key];
   const hasScript = window.scriptBindings && window.scriptBindings[key];
   const hasSay = window.sayBindings && window.sayBindings[key];
+  const hasDefault = window.isCs2DefaultBind ? window.isCs2DefaultBind(key) : false;
 
+  // Priorität: Benutzerdefinierte Bindings überschreiben Default
   if (hasBuy) return { type: "buy", class: "bound-buy" };
   if (hasScript) return { type: "script", class: "bound-script" };
   if (hasSay) return { type: "say", class: "bound-say" };
+  if (hasDefault) return { type: "default", class: "bound-default" };
   return { type: "none", class: "" };
 }
 

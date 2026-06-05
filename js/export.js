@@ -3,17 +3,28 @@
 function generateFullExport() {
   let out = "";
 
-  // ========== HEADER ==========
   out += "// ==========================================\n";
   out += "//           CS2 NEON ARMORY CONFIG\n";
   out += "// ==========================================\n";
   out += `// Generiert: ${new Date().toLocaleString()}\n`;
   out += "// ==========================================\n\n";
 
-  // ========== 1. BUY BINDS (sortiert) ==========
+  // ========== 1. DEFAULT BINDS (CS2 Standard) ==========
+  if (window.cs2DefaultBinds && Object.keys(window.cs2DefaultBinds).length > 0) {
+    out += "// ========== ⭐ DEFAULT BINDS (CS2 Standard) ==========\n";
+    out += "// Diese Tasten sind standardmäßig in CS2 belegt\n";
+    out += "// Werden von benutzerdefinierten Bindings überschrieben\n";
+    const sortedKeys = Object.keys(window.cs2DefaultBinds).sort();
+    for (let k of sortedKeys) {
+      out += `bind "${k}" "${window.cs2DefaultBinds[k]}"\n`;
+    }
+    out += "\n";
+  }
+
+  // ========== 2. BENUTZERDEFINIERTE BUY BINDS ==========
   if (window.buyBindings && Object.keys(window.buyBindings).length > 0) {
-    out += "// ========== 🛒 BUY BINDS ==========\n";
-    out += "// Einkaufsbefehle für Waffen und Ausrüstung\n";
+    out += "// ========== 🛒 BUY BINDS (benutzerdefiniert) ==========\n";
+    out += "// Überschreibt die Standardbelegung\n";
     const sortedKeys = Object.keys(window.buyBindings).sort();
     for (let k of sortedKeys) {
       out += `bind "${k}" "${window.buyBindings[k]}"\n`;
@@ -21,10 +32,10 @@ function generateFullExport() {
     out += "\n";
   }
 
-  // ========== 2. SAY BINDS (sortiert) ==========
+  // ========== 3. BENUTZERDEFINIERTE SAY BINDS ==========
   if (window.sayBindings && Object.keys(window.sayBindings).length > 0) {
-    out += "// ========== 💬 SAY BINDS ==========\n";
-    out += "// Chat-Nachrichten (Team / Alle)\n";
+    out += "// ========== 💬 SAY BINDS (benutzerdefiniert) ==========\n";
+    out += "// Überschreibt die Standardbelegung\n";
     const sortedKeys = Object.keys(window.sayBindings).sort();
     for (let k of sortedKeys) {
       out += `bind "${k}" "${window.sayBindings[k]}"\n`;
@@ -32,11 +43,10 @@ function generateFullExport() {
     out += "\n";
   }
 
-
-  // ========== 3. SKRIP BINDS ==========
+  // ========== 4. BENUTZERDEFINIERTE SKRIPT BINDS ==========
   if (window.scriptBindings && Object.keys(window.scriptBindings).length > 0) {
-    out += "// ========== 🎮 SKRIPT BINDS ==========\n";
-    out += "// Aliase und Makros für spezielle Aktionen\n\n";
+    out += "// ========== 🎮 SKRIPT BINDS (benutzerdefiniert) ==========\n";
+    out += "// Aliase und Makros - überschreibt Standardbelegung\n\n";
 
     const sortedKeys = Object.keys(window.scriptBindings).sort();
     for (let key of sortedKeys) {
@@ -64,63 +74,24 @@ function generateFullExport() {
     }
   }
 
-  // ========== 4. CONFIG BEFEHLE ==========
-  if (
-    typeof globalConfigCommands !== "undefined" &&
-    globalConfigCommands.length > 0
-  ) {
+  // ========== 5. CONFIG BEFEHLE ==========
+  if (typeof globalConfigCommands !== "undefined" && globalConfigCommands.length > 0) {
     out += "// ========== ⚙️ CONFIG BEFEHLE ==========\n";
-    out += "// System- und Performance-Einstellungen\n";
-
-    const groupedCommands = {};
-
-    for (let i = 0; i < globalConfigCommands.length; i++) {
-      const cmd = globalConfigCommands[i];
-      const meta =
-        typeof configMetadata !== "undefined" && configMetadata[i]
-          ? configMetadata[i]
-          : null;
-
-      if (meta && meta.mainCat) {
-        if (!groupedCommands[meta.mainCat]) groupedCommands[meta.mainCat] = {};
-        const subKey = meta.subCat || "Allgemein";
-        if (!groupedCommands[meta.mainCat][subKey])
-          groupedCommands[meta.mainCat][subKey] = [];
-        groupedCommands[meta.mainCat][subKey].push(cmd);
-      } else {
-        if (!groupedCommands["📦 Weitere Befehle"])
-          groupedCommands["📦 Weitere Befehle"] = {};
-        if (!groupedCommands["📦 Weitere Befehle"]["Allgemein"])
-          groupedCommands["📦 Weitere Befehle"]["Allgemein"] = [];
-        groupedCommands["📦 Weitere Befehle"]["Allgemein"].push(cmd);
-      }
-    }
-
-    for (const [mainCat, subCats] of Object.entries(groupedCommands)) {
-      out += `\n  // ----- ${mainCat} -----\n`;
-      for (const [subCat, commands] of Object.entries(subCats)) {
-        if (commands.length > 0) {
-          out += `  // [${subCat}]\n`;
-          for (const cmd of commands) {
-            out += `  ${cmd}\n`;
-          }
-        }
-      }
+    for (let cmd of globalConfigCommands) {
+      out += `${cmd}\n`;
     }
     out += "\n";
   }
 
-  // ========== 5. START OPTIONEN ==========
+  // ========== 6. START OPTIONEN ==========
   if (typeof getSelectedStartOptionsString === "function") {
     const startOpts = getSelectedStartOptionsString();
     if (startOpts && startOpts !== "(Keine)") {
       out += "// ========== 🚀 START OPTIONEN ==========\n";
-      out += "// Für Steam → CS2 → Eigenschaften → Startoptionen\n";
       out += `// ${startOpts}\n\n`;
     }
   }
 
-  // ========== FOOTER ==========
   out += "// ==========================================\n";
   out += "//           Ende der Konfiguration\n";
   out += "// ==========================================\n";
