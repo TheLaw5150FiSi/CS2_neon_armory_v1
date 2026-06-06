@@ -33,7 +33,7 @@ body.theme-pink {
   --tab-bg: #11101c;
 }
 body.theme-red {
-  --bg-gradient: radial-gradient(circle at 10% 20%, #0a0a0a, #1a0000);
+  --bg-gradient: radial-gradient(circle at 10% 20%, #0a0a0f, #010101);
   --card-bg: rgba(20, 5, 5, 0.85);
   --text-color: #ffe0e0;
   --border-color: #ff3333;
@@ -46,7 +46,7 @@ body.theme-red {
   --tab-bg: #1a0505;
 }
 body.theme-yellow {
-  --bg-gradient: radial-gradient(circle at 10% 20%, #1a1a00, #0a0a00);
+  --bg-gradient: radial-gradient(circle at 10% 20%, #0a0a0f, #010101);
   --card-bg: rgba(30, 30, 5, 0.85);
   --text-color: #ffffe0;
   --border-color: #ffcc33;
@@ -59,7 +59,7 @@ body.theme-yellow {
   --tab-bg: #1a1a05;
 }
 body.theme-green {
-  --bg-gradient: radial-gradient(circle at 10% 20%, #0a1a0a, #000a00);
+  --bg-gradient: radial-gradient(circle at 10% 20%, #0a0a0f, #010101);
   --card-bg: rgba(5, 30, 5, 0.85);
   --text-color: #e0ffe0;
   --border-color: #33ff33;
@@ -72,7 +72,7 @@ body.theme-green {
   --tab-bg: #051a05;
 }
 body.theme-blue {
-  --bg-gradient: radial-gradient(circle at 10% 20%, #0a0a2a, #00001a);
+  --bg-gradient: radial-gradient(circle at 10% 20%, #0a0a0f, #010101);
   --card-bg: rgba(5, 5, 40, 0.85);
   --text-color: #e0e0ff;
   --border-color: #3399ff;
