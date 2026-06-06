@@ -757,15 +757,41 @@
         </div>
       </div>
 
-      <!-- EXPORT TAB -->
+            <!-- EXPORT TAB -->
       <div id="exportTab" class="tab-content">
         <div class="card">
           <h2>📦 ALL-IN-ONE EXPORT</h2>
+          
+          <!-- ANLEITUNG: Wohin mit der autoexec.cfg -->
+          <div style="background: var(--accent); border-radius: 1rem; padding: 1rem; margin-bottom: 1.5rem; color: #0a0a0f;">
+            <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem;">
+              <i class="fas fa-folder-open" style="font-size: 1.5rem;"></i>
+              <strong style="font-size: 1.1rem;">📁 Wohin mit der autoexec.cfg?</strong>
+            </div>
+            <div style="font-size: 0.85rem; line-height: 1.5;">
+              <p style="margin-bottom: 0.5rem;"><strong>1️⃣ Datei erstellen:</strong><br>
+              <code style="background: rgba(0,0,0,0.2); padding: 0.2rem 0.4rem; border-radius: 0.3rem;">
+              Speichere die Datei als <strong style="background: rgba(0,0,0,0.2); padding: 0.1rem 0.3rem; border-radius: 0.2rem;">autoexec.cfg</strong>.
+              </code>
+              </p>
+              <p style="margin-bottom: 0.5rem;"><strong>2️⃣ Speicherort:</strong><br>
+              Verschiebe die Datei in den folgenden Ordner:<br>
+              <code style="background: rgba(0,0,0,0.2); padding: 0.2rem 0.4rem; border-radius: 0.3rem;">
+                C:\Program Files (x86)\Steam\steamapps\common\Counter-Strike Global Offensive\game\csgo\cfg\
+              </code>
+              </p>
+              <p style="margin-bottom: 0;"><strong>3️⃣ Startoptionen (veraltet):</strong><br>
+              Füge in Steam → CS2 → Eigenschaften → Startoptionen folgendes hinzu:<br>
+              <code style="background: rgba(0,0,0,0.2); padding: 0.2rem 0.4rem; border-radius: 0.3rem;">+exec autoexec.cfg</code>
+              </p>
+            </div>
+          </div>
+          
+          <div style="border-top: 1px solid var(--border-color); margin: 1rem 0;"></div>
+          
           <textarea id="fullExportTextarea" rows="12" readonly></textarea>
           <button class="glow" id="copyFullExportBtn">📋 Kopieren</button>
-          <button class="glow" id="downloadFullCfgBtn">
-            💾 Als autoexec.cfg
-          </button>
+          <button class="glow" id="downloadFullCfgBtn">💾 Als autoexec.cfg</button>
           <button class="glow" id="refreshExportBtn">🔄 Aktualisieren</button>
         </div>
       </div>
@@ -776,27 +802,12 @@
           <h2>👤 ABOUT ME</h2>
           <div style="display: flex; flex-wrap: wrap; gap: 2rem">
             <div style="text-align: center; min-width: 150px">
-              <div
-                style="
-                  width: 120px;
-                  height: 120px;
-                  background: linear-gradient(
-                    135deg,
-                    var(--accent),
-                    var(--accent-dark)
-                  );
-                  border-radius: 10%;
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-                  margin: 0 auto 1rem auto;
-                "
-              >
-                <i
-                  class="fas fa-shield-haltered"
-                  style="font-size: 3rem; color: white"
-                ></i>
-              </div>
+              <img 
+  src="img/thelaw5150logo_new.png" 
+  alt="TheLaw5150 Logo"
+  style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin: 0 auto 1rem auto; display: block; border: 2px solid var(--accent); box-shadow: 0 0 15px var(--accent-glow);"
+  onerror="this.src = 'https://via.placeholder.com/120x120?text=TheLaw5150'"
+/>
               <h3 style="color: var(--accent-light)">Michael M.</h3>
               <p style="font-size: 0.8rem">⚡ TheLaw5150</p>
             </div>

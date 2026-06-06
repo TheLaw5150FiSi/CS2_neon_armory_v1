@@ -1,5 +1,8 @@
 // ======================== EXPORT MIT KATEGORIEN ========================
 
+// Globale Variable für benutzerdefinierte Config
+let customConfigContent = "";
+
 function generateFullExport() {
   let out = "";
 
@@ -83,7 +86,16 @@ function generateFullExport() {
     out += "\n";
   }
 
-  // ========== 6. START OPTIONEN ==========
+  // ========== 6. BENUTZERDEFINIERTE CONFIG (EIGENE CFG) ==========
+  if (customConfigContent && customConfigContent.trim()) {
+    out += "// ========== 📝 EIGENE CONFIG ==========\n";
+    out += "// Hier wurde dein eigener Config-Code eingefügt\n";
+    out += customConfigContent;
+    if (!customConfigContent.endsWith("\n")) out += "\n";
+    out += "\n";
+  }
+
+  // ========== 7. START OPTIONEN ==========
   if (typeof getSelectedStartOptionsString === "function") {
     const startOpts = getSelectedStartOptionsString();
     if (startOpts && startOpts !== "(Keine)") {
@@ -113,12 +125,33 @@ function downloadFullCfg() {
   let blob = new Blob([generateFullExport()], { type: "text/plain" });
   let a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
-  a.download = "cs2_neon_autoexec.cfg";
+  a.download = "autoexec.cfg";
   a.click();
   URL.revokeObjectURL(a.href);
-  alert("✅ Download: cs2_neon_autoexec.cfg");
+  alert("✅ Download: autoexec.cfg");
+}
+
+// Funktion zum Speichern/Laden der benutzerdefinierten Config
+function saveCustomConfig() {
+  const textarea = document.getElementById("customConfigTextarea");
+  if (textarea) {
+    customConfigContent = textarea.value;
+    localStorage.setItem("cs2_neon_custom_config", customConfigContent);
+    refreshFullExport();
+  }
+}
+
+function loadCustomConfig() {
+  const saved = localStorage.getItem("cs2_neon_custom_config");
+  if (saved !== null) {
+    customConfigContent = saved;
+    const textarea = document.getElementById("customConfigTextarea");
+    if (textarea) textarea.value = customConfigContent;
+  }
 }
 
 // Globale Funktionen für andere Module
 window.refreshFullExport = refreshFullExport;
 window.generateFullExport = generateFullExport;
+window.saveCustomConfig = saveCustomConfig;
+window.loadCustomConfig = loadCustomConfig;

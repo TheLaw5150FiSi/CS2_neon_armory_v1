@@ -110,6 +110,17 @@ function init() {
   // Export initial aktualisieren
   if (typeof refreshFullExport === "function") refreshFullExport();
 
+    // Custom Config laden
+  if (typeof loadCustomConfig === "function") loadCustomConfig();
+
+  // Event-Listener für Custom Config speichern
+  const saveCustomConfigBtn = document.getElementById("saveCustomConfigBtn");
+  if (saveCustomConfigBtn) {
+    saveCustomConfigBtn.addEventListener("click", () => {
+      if (typeof saveCustomConfig === "function") saveCustomConfig();
+    });
+  }
+
   console.log("✅ Initialisierung abgeschlossen!");
 }
 
