@@ -1,6 +1,5 @@
 // ======================== CS2 ORIGINAL STANDARD BINDINGS ========================
 // Nur die Tasten, die CS2 ab Werk standardmäßig belegt hat
-// (Ohne NumPad - diese sind NICHT standardmäßig belegt!)
 
 const cs2DefaultBinds = {
     // ========== BEWEGUNG ==========
