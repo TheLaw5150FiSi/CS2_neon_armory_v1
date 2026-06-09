@@ -1,6 +1,5 @@
 // ======================== EXPORT MIT KATEGORIEN ========================
 
-// Globale Variable für benutzerdefinierte Config
 let customConfigContent = "";
 
 function generateFullExport() {
@@ -19,7 +18,7 @@ function generateFullExport() {
     out += "// Werden von benutzerdefinierten Bindings überschrieben\n";
     const sortedKeys = Object.keys(window.cs2DefaultBinds).sort();
     for (let k of sortedKeys) {
-      out += `bind "${k}" "${window.cs2DefaultBinds[k]}"\n`;
+      out += `bind "${k.toLowerCase()}" "${window.cs2DefaultBinds[k]}"\n`;
     }
     out += "\n";
   }
@@ -30,7 +29,7 @@ function generateFullExport() {
     out += "// Überschreibt die Standardbelegung\n";
     const sortedKeys = Object.keys(window.buyBindings).sort();
     for (let k of sortedKeys) {
-      out += `bind "${k}" "${window.buyBindings[k]}"\n`;
+      out += `bind "${k.toLowerCase()}" "${window.buyBindings[k]}"\n`;
     }
     out += "\n";
   }
@@ -41,7 +40,7 @@ function generateFullExport() {
     out += "// Überschreibt die Standardbelegung\n";
     const sortedKeys = Object.keys(window.sayBindings).sort();
     for (let k of sortedKeys) {
-      out += `bind "${k}" "${window.sayBindings[k]}"\n`;
+      out += `bind "${k.toLowerCase()}" "${window.sayBindings[k]}"\n`;
     }
     out += "\n";
   }
@@ -70,7 +69,7 @@ function generateFullExport() {
 
       const bindMatch = val.match(/bind\s+"[^"]*"\s+"([^"]+)"/);
       if (bindMatch && bindMatch[1]) {
-        out += `bind "${key}" "${bindMatch[1]}"\n`;
+        out += `bind "${key.toLowerCase()}" "${bindMatch[1]}"\n`;
       }
 
       out += "\n";
@@ -131,7 +130,6 @@ function downloadFullCfg() {
   alert("✅ Download: autoexec.cfg");
 }
 
-// Funktion zum Speichern/Laden der benutzerdefinierten Config
 function saveCustomConfig() {
   const textarea = document.getElementById("customConfigTextarea");
   if (textarea) {
@@ -150,7 +148,6 @@ function loadCustomConfig() {
   }
 }
 
-// Globale Funktionen für andere Module
 window.refreshFullExport = refreshFullExport;
 window.generateFullExport = generateFullExport;
 window.saveCustomConfig = saveCustomConfig;

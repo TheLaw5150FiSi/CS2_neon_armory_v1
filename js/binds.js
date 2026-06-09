@@ -3,20 +3,28 @@ let selectedBindKey = null;
 let currentBindType = "buy";
 let showMouseArea = false;
 
+// Mapping für russisches Layout: Angezeigter kyrillischer Buchstabe -> CS2-Befehl (englischer Buchstabe)
+const ruToEnKeyMap = {
+    'Й': 'q', 'Ц': 'w', 'У': 'e', 'К': 'r', 'Е': 't', 'Н': 'y', 'Г': 'u', 'Ш': 'i', 'Щ': 'o', 'З': 'p',
+    'Х': '[', 'Ъ': ']', '\\': '\\',
+    'Ф': 'a', 'Ы': 's', 'В': 'd', 'А': 'f', 'П': 'g', 'Р': 'h', 'О': 'j', 'Л': 'k', 'Д': 'l', 'Ж': ';', 'Э': "'",
+    'Я': 'z', 'Ч': 'x', 'С': 'c', 'М': 'v', 'И': 'b', 'Т': 'n', 'Ь': 'm', 'Б': ',', 'Ю': '.', '/': '/',
+    'Ё': '`', '1': '1', '2': '2', '3': '3', '4': '4', '5': '5', '6': '6', '7': '7', '8': '8', '9': '9', '0': '0',
+    '-': '-', '=': '=', '~': '~', '!': '1', '@': '2', '#': '3', '$': '4', '%': '5', '^': '6', '&': '7',
+    '*': '8', '(': '9', ')': '0', '_': '-', '+': '=', '{': '[', '}': ']', '|': '\\', ':': ';', '"': "'",
+    '<': ',', '>': '.', '?': '/', ' ':' '
+};
+
 // Gesperrte Tasten (können nicht gebindet werden)
 const lockedKeys = [
-  "esc",
-  "win",
-  "alt gr",
+  "esc", "escape",
+  "win", "lwin", "rwin",
+  "alt gr", "ralt",
   "menu",
-  "Print Screen",
-  "Scroll Lock",
-  "Pause Break",
-  "Num Lock",
-  "prtsc",
-  "srclk",
-  "pause",
-  "numlock",
+  "print screen", "prtsc",
+  "scroll lock", "srclk",
+  "pause break", "pause",
+  "num lock", "numlock",
 ];
 
 // Maus-Tasten für Bindings
@@ -60,6 +68,33 @@ function initBindsTab() {
   initLayoutDropdown();
 }
 
+// Hilfsfunktion: Konvertiert einen angezeigten Tastennamen (z.B. kyrillisch) in den CS2-Befehl
+function getKeyCommandName(displayKey, layout) {
+  if (layout === "RU") {
+    // Bei russischem Layout: Kyrillischen Buchstaben in englischen Befehl umwandeln
+    if (ruToEnKeyMap[displayKey]) {
+      return ruToEnKeyMap[displayKey];
+    }
+    // Großbuchstaben-Version prüfen
+    const upperKey = displayKey.toUpperCase();
+    if (ruToEnKeyMap[upperKey]) {
+      return ruToEnKeyMap[upperKey];
+    }
+  }
+  // Bei DE/US oder wenn keine Umwandlung nötig: Kleinschreibung zurückgeben
+  return displayKey.toLowerCase();
+}
+
+// Hilfsfunktion: Holt den tatsächlichen Befehl für eine Taste (für Bindings)
+function getKeyCommandForBinding(displayKey, layout, actualKeyFromRow = null) {
+  if (layout === "RU" && actualKeyFromRow) {
+    // Bei russischem Layout verwende den tatsächlichen Wert aus dem Layout-Array
+    // (das sind bereits die englischen Entsprechungen, weil ruKeysRows englische Zeichen hat)
+    return actualKeyFromRow.toLowerCase();
+  }
+  return getKeyCommandName(displayKey, layout);
+}
+
 // Neue Funktion für den Layout-Toggle-Button
 function initLayoutDropdown() {
   const dropdown = document.getElementById("keyboardLayoutSelect");
@@ -74,7 +109,6 @@ function initLayoutDropdown() {
     if (typeof setKeyboardLayout === "function") {
       setKeyboardLayout(newLayout);
     }
-    // Tastatur neu rendern
     renderBindsKeyboardGrid();
     renderBindsMouseGrid();
     console.log("Layout gewechselt zu:", newLayout);
@@ -89,6 +123,16 @@ function renderBindsKeyboardGrid() {
   const container = document.getElementById("bindsKeyboardGrid");
   if (!container) return;
   container.innerHTML = "";
+
+  // Mapping: Englischer Buchstabe -> Kyrillische Anzeige für russisches Layout
+  const enToRuDisplayMap = {
+    'q': 'Й', 'w': 'Ц', 'e': 'У', 'r': 'К', 't': 'Е', 'y': 'Н', 'u': 'Г', 'i': 'Ш', 'o': 'Щ', 'p': 'З',
+    '[': 'Х', ']': 'Ъ', '\\': '\\',
+    'a': 'Ф', 's': 'Ы', 'd': 'В', 'f': 'А', 'g': 'П', 'h': 'Р', 'j': 'О', 'k': 'Л', 'l': 'Д', ';': 'Ж', "'": 'Э',
+    'z': 'Я', 'x': 'Ч', 'c': 'С', 'v': 'М', 'b': 'И', 'n': 'Т', 'm': 'Ь', ',': 'Б', '.': 'Ю', '/': '/',
+    '`': 'Ё', '1': '1', '2': '2', '3': '3', '4': '4', '5': '5', '6': '6', '7': '7', '8': '8', '9': '9', '0': '0',
+    '-': '-', '=': '=', '~': '~'
+  };
 
   // Definiere die Grid-Positionen mit korrekten Indizes für jedes Layout
   const keyPositions = [
@@ -232,13 +276,12 @@ function renderBindsKeyboardGrid() {
     "Print Screen": "PrtSc",
     "Scroll Lock": "Scrlk",
     "Pause Break": "Pause",
-    Insert: "Ins",
+    Insert: "Ins",        // ← Ins statt Insert
     Home: "Home",
-    "Page Up": "PgUp",
-    "page down": "PgDn",
-    delete: "Del",
+    "Page Up": "PgUp",    // ← PgUp
+    "page down": "PgDn",  // ← PgDn
+    delete: "Del",        // ← Del
     end: "End",
-    home: "Home",
     "Num Lock": "Num",
     KP_SLASH: "/",
     KP_STAR: "*",
@@ -256,29 +299,32 @@ function renderBindsKeyboardGrid() {
     KP_7: "7",
     KP_8: "8",
     KP_9: "9",
-  };
+};
 
   // Für jede Position hole die Taste aus dem aktuellen Layout
   keyPositions.forEach((pos) => {
     const btn = document.createElement("button");
 
-    let keyName = "";
-    let displayText = "";
+    let rawKeyValue = "";      // Der Wert aus dem Layout (für CS2-Bindings, z.B. "o")
+    let displayText = "";      // Was auf der Taste steht (z.B. "Щ" bei russischem Layout)
+    let isSpecialKey = false;  // Ob es eine Sondertaste ist (Shift, Ctrl, etc.)
 
     // Wenn direkter keyName angegeben ist (für F-Tasten, NumPad, etc.)
     if (pos.keyName) {
-      keyName = pos.keyName;
-      if (keyName.match(/^F\d+$/)) {
-        displayText = keyName.toUpperCase();
+      rawKeyValue = pos.keyName;
+      isSpecialKey = true;
+      
+      if (rawKeyValue.match(/^F\d+$/)) {
+        displayText = rawKeyValue.toUpperCase();
       } else if (
-        keyName === "Print Screen" ||
-        keyName === "Scroll Lock" ||
-        keyName === "Pause Break" ||
-        keyName === "Num Lock"
+        rawKeyValue === "Print Screen" ||
+        rawKeyValue === "Scroll Lock" ||
+        rawKeyValue === "Pause Break" ||
+        rawKeyValue === "Num Lock"
       ) {
-        displayText = specialDisplayNames[keyName] || keyName;
+        displayText = specialDisplayNames[rawKeyValue] || rawKeyValue;
       } else {
-        displayText = specialDisplayNames[keyName] || keyName;
+        displayText = specialDisplayNames[rawKeyValue] || rawKeyValue;
       }
     }
     // Ansonsten aus dem Layout-Array holen (für Buchstaben)
@@ -289,34 +335,57 @@ function renderBindsKeyboardGrid() {
       mainKeysRows[pos.rowIdx]
     ) {
       if (mainKeysRows[pos.rowIdx][pos.colIdx]) {
-        keyName = mainKeysRows[pos.rowIdx][pos.colIdx];
-        if (keyName.length === 1 && keyName.match(/[A-Za-zА-Яа-яЁё]/)) {
-          displayText = keyName.toUpperCase();
+        rawKeyValue = mainKeysRows[pos.rowIdx][pos.colIdx];
+        
+        // Bestimme die Anzeige basierend auf dem Layout
+        if (currentLayout === "RU") {
+          // Bei russischem Layout: rawKeyValue ist der englische Buchstabe (z.B. "o")
+          // Wir müssen den kyrillischen Buchstaben für die Anzeige finden
+          const lowerKey = rawKeyValue.toLowerCase();
+          if (enToRuDisplayMap[lowerKey]) {
+            displayText = enToRuDisplayMap[lowerKey];
+          } else {
+            displayText = rawKeyValue;
+          }
         } else {
-          displayText = specialDisplayNames[keyName] || keyName;
+          // Bei DE/US: Zeige den Wert aus dem Layout an
+          if (rawKeyValue.length === 1 && rawKeyValue.match(/[A-Za-z]/)) {
+            displayText = rawKeyValue.toUpperCase();
+          } else {
+            displayText = specialDisplayNames[rawKeyValue] || rawKeyValue;
+          }
         }
       } else {
-        keyName = "?";
+        rawKeyValue = "?";
         displayText = "?";
       }
     } else {
-      keyName = "?";
+      rawKeyValue = "?";
       displayText = "?";
     }
 
+    // Für Bindings: Bei russischem Layout den englischen Buchstaben verwenden, sonst den rawKeyValue
+    let bindingKey = rawKeyValue;
+    if (currentLayout === "RU" && !isSpecialKey && rawKeyValue !== "?" && rawKeyValue.length === 1) {
+      // Bei russischem Layout: rawKeyValue ist bereits der englische Buchstabe (z.B. "o")
+      // Also direkt verwenden
+      bindingKey = rawKeyValue.toLowerCase();
+    } else if (!isSpecialKey && rawKeyValue !== "?") {
+      bindingKey = rawKeyValue.toLowerCase();
+    }
+    
     // Prüfe ob die Taste gesperrt ist
-    const isLocked =
-      lockedKeys.includes(keyName) ||
-      lockedKeys.includes(keyName.toLowerCase()) ||
-      keyName === "Print Screen" ||
-      keyName === "Scroll Lock" ||
-      keyName === "Pause Break" ||
-      keyName === "Num Lock";
+    const isLocked = lockedKeys.includes(bindingKey.toLowerCase()) ||
+      lockedKeys.includes(displayText.toLowerCase()) ||
+      bindingKey === "Print Screen" ||
+      bindingKey === "Scroll Lock" ||
+      bindingKey === "Pause Break" ||
+      bindingKey === "Num Lock";
 
-    // Bestimme die Bind-Klasse (KORREKT: mit keyName, nicht key.cmd)
+    // Bestimme die Bind-Klasse
     let bindClass = "";
-    if (!isLocked && keyName !== "?") {
-      const bindingInfo = getBindingInfo(keyName);
+    if (!isLocked && bindingKey !== "?") {
+      const bindingInfo = getBindingInfo(bindingKey);
       if (bindingInfo.type === "buy") bindClass = "app__key--bound-buy";
       if (bindingInfo.type === "script") bindClass = "app__key--bound-script";
       if (bindingInfo.type === "say") bindClass = "app__key--bound-say";
@@ -325,7 +394,7 @@ function renderBindsKeyboardGrid() {
 
     btn.className = `app__key ${bindClass} ${isLocked ? "app__key--locked" : ""} ${pos.small ? "app__key--small" : ""}`.trim();
 
-    if (selectedBindKey === keyName && !isLocked && keyName !== "?") {
+    if (selectedBindKey === bindingKey && !isLocked && bindingKey !== "?") {
       btn.classList.add("app__key--active");
     }
 
@@ -333,9 +402,9 @@ function renderBindsKeyboardGrid() {
     btn.style.gridColumn = pos.col;
     btn.style.gridRow = pos.row;
 
-    if (!isLocked && keyName !== "?") {
+    if (!isLocked && bindingKey !== "?") {
       btn.onclick = () => {
-        selectedBindKey = keyName;
+        selectedBindKey = bindingKey;
         renderBindsKeyboardGrid();
         renderBindsMouseGrid();
         updateBindsInputFields();
@@ -365,7 +434,7 @@ function renderBindsMouseGrid() {
     if (bindingInfo.type === "buy") btn.classList.add("mouse-key--bound-buy");
     if (bindingInfo.type === "script") btn.classList.add("mouse-key--bound-script");
     if (bindingInfo.type === "say") btn.classList.add("mouse-key--bound-say");
-    if (bindingInfo.type === "default") btn.classList.add("mouse-key--bound-default"); // DAS FEHLTE
+    if (bindingInfo.type === "default") btn.classList.add("mouse-key--bound-default");
 
     if (selectedBindKey === key.cmd) {
       btn.classList.add("mouse-key--active");
@@ -742,11 +811,34 @@ function renderBindsSavedList() {
 
   let allBinds = [];
 
+  // Hilfsfunktion: Konvertiert einen Tastennamen für die Anzeige basierend auf dem Layout
+  function getDisplayKeyName(key, layout) {
+    if (layout !== "RU") return key;
+    
+    // Mapping: Englischer Buchstabe -> Kyrillische Anzeige
+    const enToRuDisplayMap = {
+      'q': 'Й', 'w': 'Ц', 'e': 'У', 'r': 'К', 't': 'Е', 'y': 'Н', 'u': 'Г', 'i': 'Ш', 'o': 'Щ', 'p': 'З',
+      '[': 'Х', ']': 'Ъ', '\\': '\\',
+      'a': 'Ф', 's': 'Ы', 'd': 'В', 'f': 'А', 'g': 'П', 'h': 'Р', 'j': 'О', 'k': 'Л', 'l': 'Д', ';': 'Ж', "'": 'Э',
+      'z': 'Я', 'x': 'Ч', 'c': 'С', 'v': 'М', 'b': 'И', 'n': 'Т', 'm': 'Ь', ',': 'Б', '.': 'Ю', '/': '/',
+      '`': 'Ё', '1': '1', '2': '2', '3': '3', '4': '4', '5': '5', '6': '6', '7': '7', '8': '8', '9': '9', '0': '0',
+      '-': '-', '=': '=', '~': '~'
+    };
+    
+    // Sonderzeichen (Großbuchstaben, die keine Buchstaben sind)
+    const upperKey = key.toUpperCase();
+    if (enToRuDisplayMap[upperKey]) return enToRuDisplayMap[upperKey];
+    if (enToRuDisplayMap[key]) return enToRuDisplayMap[key];
+    
+    return key;
+  }
+
   // Sammle alle benutzerdefinierten Buy-Bindings
   if (window.buyBindings) {
     for (let [k, cmd] of Object.entries(window.buyBindings)) {
       allBinds.push({
         key: k,
+        displayKey: getDisplayKeyName(k, currentLayout),
         type: "buy",
         cmd: cmd,
         isCustom: true
@@ -759,6 +851,7 @@ function renderBindsSavedList() {
     for (let [k, cmd] of Object.entries(window.sayBindings)) {
       allBinds.push({
         key: k,
+        displayKey: getDisplayKeyName(k, currentLayout),
         type: "say",
         cmd: cmd,
         isCustom: true
@@ -772,6 +865,7 @@ function renderBindsSavedList() {
       let firstLine = val.split("\n")[0].replace("//", "").trim();
       allBinds.push({
         key: k,
+        displayKey: getDisplayKeyName(k, currentLayout),
         type: "script",
         cmd: firstLine.substring(0, 50),
         fullCmd: val,
@@ -781,13 +875,13 @@ function renderBindsSavedList() {
   }
 
   // Sammle alle CS2 Standard-Bindings (DEFAULT)
-  // Aber nur, wenn sie NICHT durch benutzerdefinierte Bindings überschrieben wurden
   if (window.cs2DefaultBinds) {
     for (let [k, cmd] of Object.entries(window.cs2DefaultBinds)) {
       const alreadyBound = allBinds.some(b => b.key === k && b.isCustom === true);
       if (!alreadyBound) {
         allBinds.push({
           key: k,
+          displayKey: getDisplayKeyName(k, currentLayout),
           type: "default",
           cmd: cmd,
           isCustom: false
@@ -818,14 +912,17 @@ function renderBindsSavedList() {
       `<span style="float: right; cursor: pointer; color: #ff6666; margin-left: 0.5rem;" onclick="window.removeBindingFromList('${bind.key}', '${bind.type}')">[x]</span>` : 
       `<span style="float: right; margin-left: 0.5rem; opacity: 0.5;" title="Standard-Bindung (kann durch eigenen Bind überschrieben werden)">[Standard]</span>`;
     
+    // Zeige den displayKey an (kyrillisch bei RU-Layout), aber speichere den echten key für die Funktion
     e.innerHTML = `
-      <span class="bind-key" style="color: ${typeColor};">${typeIcon} bind "${bind.key}"</span> 
+      <span class="bind-key" style="color: ${typeColor};">${typeIcon} bind "${bind.displayKey}"</span> 
       → <span class="bind-command">"${bind.cmd.substring(0, 80)}${bind.cmd.length > 80 ? "..." : ""}"</span>
       ${deleteButton}
     `;
     
-    // Tooltip für Default-Bindings
-    if (!bind.isCustom && window.getCs2DefaultDescription) {
+    // Tooltip zeigt den echten Tastennamen an
+    if (bind.displayKey !== bind.key) {
+      e.title = `Echte Taste: "${bind.key}" (wird in CS2 verwendet)`;
+    } else if (!bind.isCustom && window.getCs2DefaultDescription) {
       e.title = window.getCs2DefaultDescription(bind.key);
     }
 

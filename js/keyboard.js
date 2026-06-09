@@ -7,25 +7,15 @@ const layoutConfig = {
   DE: {
     rows: deKeysRows,
     displayName: "DE Layout",
-    buttonText: "⌨️ DE Layout",
-    buttonTitle: "Zu US Layout wechseln",
   },
   US: {
     rows: usKeysRows,
     displayName: "US Layout",
-    buttonText: "🇺🇸 US Layout",
-    buttonTitle: "Zu RU Layout wechseln",
-  },
-  RU: {
-    rows: ruKeysRows,
-    displayName: "RU Layout (ЙЦУКЕН)",
-    buttonText: "🇷🇺 RU Layout",
-    buttonTitle: "Zu DE Layout wechseln",
   },
 };
 
 // Layout-Reihenfolge für Toggle
-const layoutOrder = ["DE", "US", "RU"];
+const layoutOrder = ["DE", "US"];
 
 function initKeyboardLayouts() {
   if (typeof deKeysRows !== "undefined") {
@@ -41,9 +31,12 @@ function getAllKeys() {
 
 // ZENTRALE FUNKTION: Prüft, welche Bindung eine Taste hat (inkl. Default)
 function getBindingInfo(key) {
-  const hasBuy = window.buyBindings && window.buyBindings[key];
-  const hasScript = window.scriptBindings && window.scriptBindings[key];
-  const hasSay = window.sayBindings && window.sayBindings[key];
+  // Normalisiere den Key für den Vergleich
+  let normalizedKey = key.toLowerCase();
+  
+  const hasBuy = window.buyBindings && (window.buyBindings[key] || window.buyBindings[normalizedKey]);
+  const hasScript = window.scriptBindings && (window.scriptBindings[key] || window.scriptBindings[normalizedKey]);
+  const hasSay = window.sayBindings && (window.sayBindings[key] || window.sayBindings[normalizedKey]);
   const hasDefault = window.isCs2DefaultBind ? window.isCs2DefaultBind(key) : false;
 
   // Priorität: Benutzerdefinierte Bindings überschreiben Default
@@ -68,23 +61,23 @@ function isKeyBound(key) {
 
 function removeSpecificBinding(key, bindType) {
   let changed = false;
+  let normalizedKey = key.toLowerCase();
 
-  if (bindType === "buy" && window.buyBindings && window.buyBindings[key]) {
+  if (bindType === "buy" && window.buyBindings && (window.buyBindings[key] || window.buyBindings[normalizedKey])) {
     delete window.buyBindings[key];
+    delete window.buyBindings[normalizedKey];
     if (window.saveBuy) window.saveBuy();
     changed = true;
   }
-  if (
-    bindType === "script" &&
-    window.scriptBindings &&
-    window.scriptBindings[key]
-  ) {
+  if (bindType === "script" && window.scriptBindings && (window.scriptBindings[key] || window.scriptBindings[normalizedKey])) {
     delete window.scriptBindings[key];
+    delete window.scriptBindings[normalizedKey];
     if (window.saveScriptBindings) window.saveScriptBindings();
     changed = true;
   }
-  if (bindType === "say" && window.sayBindings && window.sayBindings[key]) {
+  if (bindType === "say" && window.sayBindings && (window.sayBindings[key] || window.sayBindings[normalizedKey])) {
     delete window.sayBindings[key];
+    delete window.sayBindings[normalizedKey];
     if (window.saveSayBindings) window.saveSayBindings();
     changed = true;
   }
@@ -110,20 +103,18 @@ function prepareKeyForNewBind(key, newBindType, confirmMessage) {
   return true;
 }
 
-// Get next layout in cycle
+// Get next layout in cycle (nur DE und US)
 function getNextLayout() {
   const currentIndex = layoutOrder.indexOf(currentLayout);
   const nextIndex = (currentIndex + 1) % layoutOrder.length;
   return layoutOrder[nextIndex];
 }
 
-// Layout Toggle Funktion - durchläuft DE → US → RU → DE
+// Layout Toggle Funktion - durchläuft DE → US → DE
 function toggleKeyboardLayout() {
-  // Prüfe ob die Layout-Daten verfügbar sind
   if (
     typeof deKeysRows === "undefined" ||
-    typeof usKeysRows === "undefined" ||
-    typeof ruKeysRows === "undefined"
+    typeof usKeysRows === "undefined"
   ) {
     console.warn("Layout-Daten nicht verfügbar");
     return;
@@ -132,34 +123,23 @@ function toggleKeyboardLayout() {
   const nextLayout = getNextLayout();
   console.log("Wechsle von", currentLayout, "zu", nextLayout);
 
-  // Lade das entsprechende Layout
   if (nextLayout === "DE") {
     mainKeysRows = JSON.parse(JSON.stringify(deKeysRows));
     currentLayout = "DE";
   } else if (nextLayout === "US") {
     mainKeysRows = JSON.parse(JSON.stringify(usKeysRows));
     currentLayout = "US";
-  } else if (nextLayout === "RU") {
-    mainKeysRows = JSON.parse(JSON.stringify(ruKeysRows));
-    currentLayout = "RU";
   }
 
   console.log("Layout gewechselt zu:", currentLayout);
-  console.log("Erste Zeile neue Tasten:", mainKeysRows[0]);
 
-  // Buttons aktualisieren
   updateLayoutButtons();
 }
 
 // Set specific layout directly
 function setKeyboardLayout(layout) {
-  if (layout !== "DE" && layout !== "US" && layout !== "RU") return;
-  if (
-    typeof deKeysRows === "undefined" ||
-    typeof usKeysRows === "undefined" ||
-    typeof ruKeysRows === "undefined"
-  )
-    return;
+  if (layout !== "DE" && layout !== "US") return;
+  if (typeof deKeysRows === "undefined" || typeof usKeysRows === "undefined") return;
 
   if (layout === "DE") {
     mainKeysRows = JSON.parse(JSON.stringify(deKeysRows));
@@ -167,9 +147,6 @@ function setKeyboardLayout(layout) {
   } else if (layout === "US") {
     mainKeysRows = JSON.parse(JSON.stringify(usKeysRows));
     currentLayout = "US";
-  } else if (layout === "RU") {
-    mainKeysRows = JSON.parse(JSON.stringify(ruKeysRows));
-    currentLayout = "RU";
   }
 
   if (window.renderBindsKeyboardGrid) window.renderBindsKeyboardGrid();
@@ -180,19 +157,13 @@ function setKeyboardLayout(layout) {
 // Hilfsfunktion zum Aktualisieren der Layout-Buttons
 function updateLayoutButtons() {
   const toggleButtons = document.querySelectorAll(".layout-toggle-btn");
-  const config = layoutConfig[currentLayout];
-  const nextLayout = getNextLayout();
-  const nextConfig = layoutConfig[nextLayout];
-
+  
   toggleButtons.forEach((btn) => {
     if (currentLayout === "DE") {
       btn.innerHTML = "⌨️ DE Layout → 🇺🇸";
       btn.title = "Zu US Layout wechseln";
     } else if (currentLayout === "US") {
-      btn.innerHTML = "🇺🇸 US Layout → 🇷🇺";
-      btn.title = "Zu RU Layout wechseln";
-    } else if (currentLayout === "RU") {
-      btn.innerHTML = "🇷🇺 RU Layout → ⌨️";
+      btn.innerHTML = "🇺🇸 US Layout → ⌨️";
       btn.title = "Zu DE Layout wechseln";
     }
   });
@@ -203,10 +174,8 @@ function getNumpadDisplayName(key) {
   if (typeof numpadDisplayNames !== "undefined" && numpadDisplayNames[key]) {
     return numpadDisplayNames[key];
   }
-  // Fallback: extrahiere die Zahl aus KP_X
   const match = key.match(/KP_(\d+)/);
   if (match) return match[1];
-  // Sonderfälle
   if (key === "KP_PLUS") return "+";
   if (key === "KP_MINUS") return "-";
   if (key === "KP_SLASH") return "/";

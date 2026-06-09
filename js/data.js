@@ -1056,139 +1056,59 @@ const categories = {
   ],
 };
 
-// ======================== TASTATUR LAYOUT ========================
 // ======================== TASTATUR LAYOUTS ========================
+// Deutsche Tastatur (DE) - mit korrekten Bezeichnungen
 const deKeysRows = [
   [
-    "ESC",
-    "F1",
-    "F2",
-    "F3",
-    "F4",
-    "F5",
-    "F6",
-    "F7",
-    "F8",
-    "F9",
-    "F10",
-    "F11",
-    "F12",
+    "ESC", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12"
   ],
   [
-    "^",
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-    "0",
-    "ß",
-    "´",
-    "BACKSPACE",
+    "`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "BACKSPACE"
   ],
-  ["TAB", "Q", "W", "E", "R", "T", "Z", "U", "I", "O", "P", "Ü", "+", "#"],
-  ["CAPS", "A", "S", "D", "F", "G", "H", "J", "K", "L", "Ö", "Ä", "ENTER"],
-  ["LSHIFT", "<", "Y", "X", "C", "V", "B", "N", "M", ",", ".", "-", "RSHIFT"],
-  ["LCTRL", "LALT", "SPACE", "RALT", "RCTRL", "LEFT", "DOWN", "UP", "RIGHT"],
+  [
+    "TAB", "q", "w", "e", "r", "t", "z", "u", "i", "o", "p", "[", "]", "\\"
+  ],
+  [
+    "CAPS", "a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'", "ENTER"
+  ],
+  [
+    "LSHIFT", "y", "x", "c", "v", "b", "n", "m", ",", ".", "/", "RSHIFT"
+  ],
+  [
+    "LCTRL", "LALT", "SPACE", "RALT", "RCTRL", "LEFT", "DOWN", "UP", "RIGHT"
+  ]
 ];
 
+// US Tastatur (US) - mit korrekten Bezeichnungen
 const usKeysRows = [
   [
-    "ESC",
-    "F1",
-    "F2",
-    "F3",
-    "F4",
-    "F5",
-    "F6",
-    "F7",
-    "F8",
-    "F9",
-    "F10",
-    "F11",
-    "F12",
+    "ESC", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12"
   ],
   [
-    "~",
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-    "0",
-    "-",
-    "=",
-    "BACKSPACE",
-  ],
-  ["TAB", "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "[", "]", "\\"],
-  ["CAPS", "A", "S", "D", "F", "G", "H", "J", "K", "L", ";", "'", "ENTER"],
-  ["LSHIFT", "Z", "X", "C", "V", "B", "N", "M", ",", ".", "/", "RSHIFT"],
-  ["LCTRL", "LALT", "SPACE", "RALT", "RCTRL", "LEFT", "DOWN", "UP", "RIGHT"],
-];
-
-// ======================== RUSSISCHES LAYOUT (ЙЦУКЕН) ========================
-const ruKeysRows = [
-  [
-    "ESC",
-    "F1",
-    "F2",
-    "F3",
-    "F4",
-    "F5",
-    "F6",
-    "F7",
-    "F8",
-    "F9",
-    "F10",
-    "F11",
-    "F12",
+    "~", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "BACKSPACE"
   ],
   [
-    "Ё",
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-    "0",
-    "-",
-    "=",
-    "BACKSPACE",
+    "TAB", "q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]", "\\"
   ],
-  ["TAB", "Й", "Ц", "У", "К", "Е", "Н", "Г", "Ш", "Щ", "З", "Х", "Ъ", "\\"],
-  ["CAPS", "Ф", "Ы", "В", "А", "П", "Р", "О", "Л", "Д", "Ж", "Э", "ENTER"],
-  ["LSHIFT", "Я", "Ч", "С", "М", "И", "Т", "Ь", "Б", "Ю", ".", "RSHIFT"],
-  ["LCTRL", "LALT", "SPACE", "RALT", "RCTRL", "LEFT", "DOWN", "UP", "RIGHT"],
+  [
+    "CAPS", "a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'", "ENTER"
+  ],
+  [
+    "LSHIFT", "z", "x", "c", "v", "b", "n", "m", ",", ".", "/", "RSHIFT"
+  ],
+  [
+    "LCTRL", "LALT", "SPACE", "RALT", "RCTRL", "LEFT", "DOWN", "UP", "RIGHT"
+  ]
 ];
 
 const numpadKeys = [
-  "KP_7",
-  "KP_8",
-  "KP_9",
-  "KP_4",
-  "KP_5",
-  "KP_6",
-  "KP_1",
-  "KP_2",
-  "KP_3",
-  "KP_0",
-  "KP_DEL",
-  "KP_PLUS",
+  "KP_7", "KP_8", "KP_9",
+  "KP_4", "KP_5", "KP_6",
+  "KP_1", "KP_2", "KP_3",
+  "KP_0", "KP_DEL", "KP_PLUS"
 ];
 
-// NumPad Anzeigenamen (für bessere Lesbarkeit)
+// NumPad Anzeigenamen
 const numpadDisplayNames = {
   KP_0: "0",
   KP_1: "1",
@@ -1205,7 +1125,7 @@ const numpadDisplayNames = {
   KP_MINUS: "-",
   KP_SLASH: "/",
   KP_STAR: "*",
-  KP_ENTER: "Enter",
+  KP_ENTER: "Enter"
 };
 
 // ======================== CONFIG KATEGORIEN ========================
