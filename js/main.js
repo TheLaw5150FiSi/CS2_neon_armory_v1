@@ -62,6 +62,9 @@ function init() {
   // Binds Tab initialisieren (enthält bereits Buy, Say, Script)
   if (typeof initBindsTab === "function") initBindsTab();
 
+  // Live-Berechnung für Buy-Bindings initialisieren
+  if (typeof initBuyLiveListener === "function") initBuyLiveListener();
+
   // Event-Listener für Config Tab
   const clearAllConfigsBtn = document.getElementById("clearAllConfigsBtn");
   if (clearAllConfigsBtn)
@@ -110,7 +113,7 @@ function init() {
   // Export initial aktualisieren
   if (typeof refreshFullExport === "function") refreshFullExport();
 
-    // Custom Config laden
+  // Custom Config laden
   if (typeof loadCustomConfig === "function") loadCustomConfig();
 
   // Event-Listener für Custom Config speichern

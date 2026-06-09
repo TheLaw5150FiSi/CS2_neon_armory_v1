@@ -989,75 +989,74 @@ const scriptTemplatesList = [
   },
 ];
 
-// ======================== WAFFENKATEGORIEN ========================
+
+// ======================== WAFFENKATEGORIEN MIT PREISEN & SEITEN ========================
+// ======================== WAFFENKATEGORIEN MIT PREISEN & SEITEN ========================
 const categories = {
   Pistole: [
-    "Glock-18",
-    "USP-S",
-    "P250",
-    "Five-SeveN",
-    "Tec-9",
-    "Desert Eagle",
-    "Dual Berettas",
-    "CZ75-Auto",
-  ].map((n) => ({
-    name: n,
-    cmd: `buy ${n.toLowerCase().replace(/ /g, "").replace(/-/g, "")}`,
-    maxCount: 1,
-  })),
+    { name: "Glock-18", cmd: "buy glock18", maxCount: 1, price: 200, side: "t", category: "Pistole" },      // T-ONLY!
+    { name: "USP-S", cmd: "buy usps", maxCount: 1, price: 200, side: "ct", category: "Pistole" },          // CT-ONLY!
+    { name: "P2000", cmd: "buy hkp2000", maxCount: 1, price: 200, side: "ct", category: "Pistole" },       // CT-ONLY!
+    { name: "P250", cmd: "buy p250", maxCount: 1, price: 300, side: "both", category: "Pistole" },
+    { name: "Five-SeveN", cmd: "buy fiveseven", maxCount: 1, price: 500, side: "ct", category: "Pistole" },
+    { name: "Tec-9", cmd: "buy tec9", maxCount: 1, price: 500, side: "t", category: "Pistole" },           // T-ONLY!
+    { name: "Desert Eagle", cmd: "buy deagle", maxCount: 1, price: 700, side: "both", category: "Pistole" },
+    { name: "Dual Berettas", cmd: "buy dualberettas", maxCount: 1, price: 400, side: "both", category: "Pistole" },
+    { name: "CZ75-Auto", cmd: "buy cz75a", maxCount: 1, price: 500, side: "both", category: "Pistole" },
+    { name: "R8 Revolver", cmd: "buy revolver", maxCount: 1, price: 600, side: "both", category: "Pistole" }
+  ],
   "MP / SMG": [
-    "MP9",
-    "MAC-10",
-    "MP7",
-    "MP5-SD",
-    "UMP-45",
-    "P90",
-    "PP-Bizon",
-  ].map((n) => ({
-    name: n,
-    cmd: `buy ${n.toLowerCase().replace(/ /g, "").replace(/-/g, "")}`,
-    maxCount: 1,
-  })),
-  Rifle: ["AK-47", "M4A4", "M4A1-S", "FAMAS", "Galil AR", "SG 553", "AUG"].map(
-    (n) => ({
-      name: n,
-      cmd: `buy ${n.toLowerCase().replace(/ /g, "").replace(/-/g, "")}`,
-      maxCount: 1,
-    }),
-  ),
-  Sniper: ["AWP", "SSG 08", "SCAR-20", "G3SG1"].map((n) => ({
-    name: n,
-    cmd: `buy ${n.toLowerCase().replace(/ /g, "").replace("-", "")}`,
-    maxCount: 1,
-  })),
-  Pumpgun: ["Nova", "XM1014", "MAG-7", "Sawed-Off"].map((n) => ({
-    name: n,
-    cmd: `buy ${n.toLowerCase().replace(/ /g, "").replace(/-/g, "")}`,
-    maxCount: 1,
-  })),
-  "Schwere Waffen": ["M249", "Negev"].map((n) => ({
-    name: n,
-    cmd: `buy ${n.toLowerCase()}`,
-    maxCount: 1,
-  })),
+    { name: "MP9", cmd: "buy mp9", maxCount: 1, price: 1250, side: "ct", category: "MP / SMG" },
+    { name: "MAC-10", cmd: "buy mac10", maxCount: 1, price: 1050, side: "t", category: "MP / SMG" },
+    { name: "MP7", cmd: "buy mp7", maxCount: 1, price: 1500, side: "both", category: "MP / SMG" },
+    { name: "MP5-SD", cmd: "buy mp5sd", maxCount: 1, price: 1500, side: "both", category: "MP / SMG" },
+    { name: "UMP-45", cmd: "buy ump45", maxCount: 1, price: 1200, side: "both", category: "MP / SMG" },
+    { name: "P90", cmd: "buy p90", maxCount: 1, price: 2350, side: "both", category: "MP / SMG" },
+    { name: "PP-Bizon", cmd: "buy bizon", maxCount: 1, price: 1400, side: "both", category: "MP / SMG" }
+  ],
+  Rifle: [
+    { name: "AK-47", cmd: "buy ak47", maxCount: 1, price: 2700, side: "t", category: "Rifle" },
+    { name: "M4A4", cmd: "buy m4a4", maxCount: 1, price: 3100, side: "ct", category: "Rifle" },
+    { name: "M4A1-S", cmd: "buy m4a1", maxCount: 1, price: 2900, side: "ct", category: "Rifle" },
+    { name: "FAMAS", cmd: "buy famas", maxCount: 1, price: 2050, side: "ct", category: "Rifle" },
+    { name: "Galil AR", cmd: "buy galilar", maxCount: 1, price: 1800, side: "t", category: "Rifle" },
+    { name: "SG 553", cmd: "buy sg553", maxCount: 1, price: 3000, side: "both", category: "Rifle" },
+    { name: "AUG", cmd: "buy aug", maxCount: 1, price: 3300, side: "both", category: "Rifle" }
+  ],
+  Sniper: [
+    { name: "AWP", cmd: "buy awp", maxCount: 1, price: 4750, side: "both", category: "Sniper" },
+    { name: "SSG 08", cmd: "buy ssg08", maxCount: 1, price: 1700, side: "both", category: "Sniper" },
+    { name: "SCAR-20", cmd: "buy scar20", maxCount: 1, price: 5000, side: "ct", category: "Sniper" },
+    { name: "G3SG1", cmd: "buy g3sg1", maxCount: 1, price: 5000, side: "t", category: "Sniper" }
+  ],
+  Pumpgun: [
+    { name: "Nova", cmd: "buy nova", maxCount: 1, price: 1050, side: "both", category: "Pumpgun" },
+    { name: "XM1014", cmd: "buy xm1014", maxCount: 1, price: 2000, side: "both", category: "Pumpgun" },
+    { name: "MAG-7", cmd: "buy mag7", maxCount: 1, price: 1300, side: "ct", category: "Pumpgun" },
+    { name: "Sawed-Off", cmd: "buy sawedoff", maxCount: 1, price: 1100, side: "t", category: "Pumpgun" }
+  ],
+  "Schwere Waffen": [
+    { name: "M249", cmd: "buy m249", maxCount: 1, price: 5200, side: "both", category: "Schwere Waffen" },
+    { name: "Negev", cmd: "buy negev", maxCount: 1, price: 1700, side: "both", category: "Schwere Waffen" }
+  ],
   Rüstung: [
-    { name: "Kevlar+Helm", cmd: "buy vesthelm", maxCount: 1 },
-    { name: "Kevlar", cmd: "buy vest", maxCount: 1 },
-    { name: "Defuser", cmd: "buy defuser", maxCount: 1 },
-    { name: "🔫 Taser", cmd: "buy taser", maxCount: 1 },
+    { name: "Kevlar+Helm", cmd: "buy vesthelm", maxCount: 1, price: 1000, side: "both", category: "Rüstung" },
+    { name: "Kevlar", cmd: "buy vest", maxCount: 1, price: 650, side: "both", category: "Rüstung" },
+    { name: "Defuser", cmd: "buy defuser", maxCount: 1, price: 400, side: "ct", category: "Rüstung" },
+    { name: "🔫 Taser", cmd: "buy taser", maxCount: 1, price: 200, side: "both", category: "Rüstung" }
   ],
   Granaten: [
-    { name: "HE Grenade", cmd: "buy hegrenade", maxCount: 1 },
-    { name: "Flashbang", cmd: "buy flashbang", maxCount: 2 },
-    { name: "Smoke", cmd: "buy smokegrenade", maxCount: 1 },
-    { name: "Molotov", cmd: "buy molotov", maxCount: 1 },
-    { name: "Incendiary", cmd: "buy incgrenade", maxCount: 1 },
-    { name: "Decoy", cmd: "buy decoy", maxCount: 1 },
-  ],
+    { name: "HE Grenade", cmd: "buy hegrenade", maxCount: 1, price: 300, side: "both", category: "Granaten" },
+    { name: "Flashbang", cmd: "buy flashbang", maxCount: 2, price: 200, side: "both", category: "Granaten" },
+    { name: "Smoke", cmd: "buy smokegrenade", maxCount: 1, price: 300, side: "both", category: "Granaten" },
+    { name: "Molotov", cmd: "buy molotov", maxCount: 1, price: 400, side: "t", category: "Granaten" },
+    { name: "Incendiary", cmd: "buy incgrenade", maxCount: 1, price: 600, side: "ct", category: "Granaten" },
+    { name: "Decoy", cmd: "buy decoy", maxCount: 1, price: 50, side: "both", category: "Granaten" }
+  ]
 };
 
-// ======================== TASTATUR LAYOUT ========================
 // ======================== TASTATUR LAYOUTS ========================
+// Deutsche Tastatur (DE) - mit korrekten Bezeichnungen
 const deKeysRows = [
   [
     "ESC",
@@ -1075,7 +1074,7 @@ const deKeysRows = [
     "F12",
   ],
   [
-    "^",
+    "`",
     "1",
     "2",
     "3",
@@ -1086,16 +1085,17 @@ const deKeysRows = [
     "8",
     "9",
     "0",
-    "ß",
-    "´",
+    "-",
+    "=",
     "BACKSPACE",
   ],
-  ["TAB", "Q", "W", "E", "R", "T", "Z", "U", "I", "O", "P", "Ü", "+", "#"],
-  ["CAPS", "A", "S", "D", "F", "G", "H", "J", "K", "L", "Ö", "Ä", "ENTER"],
-  ["LSHIFT", "<", "Y", "X", "C", "V", "B", "N", "M", ",", ".", "-", "RSHIFT"],
+  ["TAB", "q", "w", "e", "r", "t", "z", "u", "i", "o", "p", "[", "]", "\\"],
+  ["CAPS", "a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'", "ENTER"],
+  ["LSHIFT", "y", "x", "c", "v", "b", "n", "m", ",", ".", "/", "RSHIFT"],
   ["LCTRL", "LALT", "SPACE", "RALT", "RCTRL", "LEFT", "DOWN", "UP", "RIGHT"],
 ];
 
+// US Tastatur (US) - mit korrekten Bezeichnungen
 const usKeysRows = [
   [
     "ESC",
@@ -1128,48 +1128,9 @@ const usKeysRows = [
     "=",
     "BACKSPACE",
   ],
-  ["TAB", "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "[", "]", "\\"],
-  ["CAPS", "A", "S", "D", "F", "G", "H", "J", "K", "L", ";", "'", "ENTER"],
-  ["LSHIFT", "Z", "X", "C", "V", "B", "N", "M", ",", ".", "/", "RSHIFT"],
-  ["LCTRL", "LALT", "SPACE", "RALT", "RCTRL", "LEFT", "DOWN", "UP", "RIGHT"],
-];
-
-// ======================== RUSSISCHES LAYOUT (ЙЦУКЕН) ========================
-const ruKeysRows = [
-  [
-    "ESC",
-    "F1",
-    "F2",
-    "F3",
-    "F4",
-    "F5",
-    "F6",
-    "F7",
-    "F8",
-    "F9",
-    "F10",
-    "F11",
-    "F12",
-  ],
-  [
-    "Ё",
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-    "0",
-    "-",
-    "=",
-    "BACKSPACE",
-  ],
-  ["TAB", "Й", "Ц", "У", "К", "Е", "Н", "Г", "Ш", "Щ", "З", "Х", "Ъ", "\\"],
-  ["CAPS", "Ф", "Ы", "В", "А", "П", "Р", "О", "Л", "Д", "Ж", "Э", "ENTER"],
-  ["LSHIFT", "Я", "Ч", "С", "М", "И", "Т", "Ь", "Б", "Ю", ".", "RSHIFT"],
+  ["TAB", "q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]", "\\"],
+  ["CAPS", "a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'", "ENTER"],
+  ["LSHIFT", "z", "x", "c", "v", "b", "n", "m", ",", ".", "/", "RSHIFT"],
   ["LCTRL", "LALT", "SPACE", "RALT", "RCTRL", "LEFT", "DOWN", "UP", "RIGHT"],
 ];
 
@@ -1188,7 +1149,7 @@ const numpadKeys = [
   "KP_PLUS",
 ];
 
-// NumPad Anzeigenamen (für bessere Lesbarkeit)
+// NumPad Anzeigenamen
 const numpadDisplayNames = {
   KP_0: "0",
   KP_1: "1",

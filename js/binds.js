@@ -3,23 +3,100 @@ let selectedBindKey = null;
 let currentBindType = "buy";
 let showMouseArea = false;
 
-// Gesperrte Tasten (können nicht gebindet werden)
+// Mapping für russisches Layout
+const ruToEnKeyMap = {
+  Й: "q",
+  Ц: "w",
+  У: "e",
+  К: "r",
+  Е: "t",
+  Н: "y",
+  Г: "u",
+  Ш: "i",
+  Щ: "o",
+  З: "p",
+  Х: "[",
+  Ъ: "]",
+  "\\": "\\",
+  Ф: "a",
+  Ы: "s",
+  В: "d",
+  А: "f",
+  П: "g",
+  Р: "h",
+  О: "j",
+  Л: "k",
+  Д: "l",
+  Ж: ";",
+  Э: "'",
+  Я: "z",
+  Ч: "x",
+  С: "c",
+  М: "v",
+  И: "b",
+  Т: "n",
+  Ь: "m",
+  Б: ",",
+  Ю: ".",
+  "/": "/",
+  Ё: "`",
+  1: "1",
+  2: "2",
+  3: "3",
+  4: "4",
+  5: "5",
+  6: "6",
+  7: "7",
+  8: "8",
+  9: "9",
+  0: "0",
+  "-": "-",
+  "=": "=",
+  "~": "~",
+  "!": "1",
+  "@": "2",
+  "#": "3",
+  $: "4",
+  "%": "5",
+  "^": "6",
+  "&": "7",
+  "*": "8",
+  "(": "9",
+  ")": "0",
+  _: "-",
+  "+": "=",
+  "{": "[",
+  "}": "]",
+  "|": "\\",
+  ":": ";",
+  '"': "'",
+  "<": ",",
+  ">": ".",
+  "?": "/",
+  " ": " ",
+};
+
+// Gesperrte Tasten
 const lockedKeys = [
   "esc",
+  "escape",
   "win",
+  "lwin",
+  "rwin",
   "alt gr",
+  "ralt",
   "menu",
-  "Print Screen",
-  "Scroll Lock",
-  "Pause Break",
-  "Num Lock",
+  "print screen",
   "prtsc",
+  "scroll lock",
   "srclk",
+  "pause break",
   "pause",
+  "num lock",
   "numlock",
 ];
 
-// Maus-Tasten für Bindings
+// Maus-Tasten
 const mouseKeys = [
   { id: "mouse1", display: "Left Click", cmd: "mouse1" },
   { id: "mouse2", display: "Right Click", cmd: "mouse2" },
@@ -31,7 +108,6 @@ const mouseKeys = [
 ];
 
 function initBindsTab() {
-  // Stelle sicher, dass mainKeysRows initialisiert ist
   if (typeof mainKeysRows === "undefined" || mainKeysRows.length === 0) {
     if (typeof deKeysRows !== "undefined") {
       mainKeysRows = JSON.parse(JSON.stringify(deKeysRows));
@@ -39,14 +115,11 @@ function initBindsTab() {
     }
   }
 
-  // Lade die CS2 Standard-Bindings (damit die Datenbank verfügbar ist)
   if (typeof cs2DefaultBinds !== "undefined" && !window.cs2DefaultBindsLoaded) {
-    // Datenbank ist bereits durch defaultbinds.js geladen
     window.cs2DefaultBindsLoaded = true;
     console.log(
       "✅ CS2 Standard-Bindings geladen:",
       Object.keys(cs2DefaultBinds).length,
-      "Tasten",
     );
   }
 
@@ -58,31 +131,61 @@ function initBindsTab() {
   attachBindsEventListeners();
   attachMouseToggleListener();
   initLayoutDropdown();
+
+  // Live-Berechnung für Buy Input initialisieren
+  initBuyLiveListener();
 }
 
-// Neue Funktion für den Layout-Toggle-Button
+// Live-Berechnung initialisieren
+function initBuyLiveListener() {
+  const buyInput = document.getElementById("bindsBuyCommandInput");
+  if (buyInput) {
+    console.log("✅ Live-Listener für Buy-Input registriert");
+    buyInput.removeEventListener("input", handleBuyInputChange);
+    buyInput.addEventListener("input", handleBuyInputChange);
+    setTimeout(() => handleBuyInputChange(), 100);
+  } else {
+    console.warn("⚠️ bindsBuyCommandInput nicht gefunden!");
+  }
+}
+
+// Handler für Input-Änderungen
+function handleBuyInputChange() {
+  const input = document.getElementById("bindsBuyCommandInput");
+  if (!input) return;
+
+  const cmdString = input.value;
+  console.log("🔄 Live-Berechnung für:", cmdString);
+
+  if (typeof window.updateLiveAnalysis === "function") {
+    window.updateLiveAnalysis();
+  } else if (typeof updateLiveAnalysis === "function") {
+    updateLiveAnalysis();
+  } else {
+    console.warn("⚠️ updateLiveAnalysis Funktion nicht gefunden!");
+  }
+}
+
+function getKeyCommandName(displayKey, layout) {
+  if (layout === "RU") {
+    if (ruToEnKeyMap[displayKey]) return ruToEnKeyMap[displayKey];
+    const upperKey = displayKey.toUpperCase();
+    if (ruToEnKeyMap[upperKey]) return ruToEnKeyMap[upperKey];
+  }
+  return displayKey.toLowerCase();
+}
+
 function initLayoutDropdown() {
   const dropdown = document.getElementById("keyboardLayoutSelect");
   if (!dropdown) return;
-
-  // Setze den aktuellen Wert im Dropdown
   dropdown.value = currentLayout;
-
-  // Event-Listener für Änderungen
   dropdown.addEventListener("change", (e) => {
     const newLayout = e.target.value;
-    if (typeof setKeyboardLayout === "function") {
-      setKeyboardLayout(newLayout);
-    }
-    // Tastatur neu rendern
+    if (typeof setKeyboardLayout === "function") setKeyboardLayout(newLayout);
     renderBindsKeyboardGrid();
     renderBindsMouseGrid();
     console.log("Layout gewechselt zu:", newLayout);
   });
-}
-
-function renderBindsKeyboard() {
-  renderBindsKeyboardGrid();
 }
 
 function renderBindsKeyboardGrid() {
@@ -90,9 +193,58 @@ function renderBindsKeyboardGrid() {
   if (!container) return;
   container.innerHTML = "";
 
-  // Definiere die Grid-Positionen mit korrekten Indizes für jedes Layout
+  const enToRuDisplayMap = {
+    q: "Й",
+    w: "Ц",
+    e: "У",
+    r: "К",
+    t: "Е",
+    y: "Н",
+    u: "Г",
+    i: "Ш",
+    o: "Щ",
+    p: "З",
+    "[": "Х",
+    "]": "Ъ",
+    "\\": "\\",
+    a: "Ф",
+    s: "Ы",
+    d: "В",
+    f: "А",
+    g: "П",
+    h: "Р",
+    j: "О",
+    k: "Л",
+    l: "Д",
+    ";": "Ж",
+    "'": "Э",
+    z: "Я",
+    x: "Ч",
+    c: "С",
+    v: "М",
+    b: "И",
+    n: "Т",
+    m: "Ь",
+    ",": "Б",
+    ".": "Ю",
+    "/": "/",
+    "`": "Ё",
+    1: "1",
+    2: "2",
+    3: "3",
+    4: "4",
+    5: "5",
+    6: "6",
+    7: "7",
+    8: "8",
+    9: "9",
+    0: "0",
+    "-": "-",
+    "=": "=",
+    "~": "~",
+  };
+
   const keyPositions = [
-    // Zeile 1: Esc, F1–F12, Print Screen, Scroll Lock, Pause Break
     { col: "1 / 3", row: "1 / 3", small: false, keyName: "ESC" },
     { col: "4 / 6", row: "1 / 3", small: false, keyName: "F1" },
     { col: "6 / 8", row: "1 / 3", small: false, keyName: "F2" },
@@ -109,8 +261,6 @@ function renderBindsKeyboardGrid() {
     { col: "31 / 33", row: "1 / 3", small: true, keyName: "Print Screen" },
     { col: "33 / 35", row: "1 / 3", small: true, keyName: "Scroll Lock" },
     { col: "35 / 37", row: "1 / 3", small: true, keyName: "Pause Break" },
-
-    // Zeile 2: Ziffernreihe
     { col: "1 / 3", row: "4 / 6", small: false, rowIdx: 1, colIdx: 0 },
     { col: "3 / 5", row: "4 / 6", small: false, rowIdx: 1, colIdx: 1 },
     { col: "5 / 7", row: "4 / 6", small: false, rowIdx: 1, colIdx: 2 },
@@ -132,8 +282,6 @@ function renderBindsKeyboardGrid() {
     { col: "40 / 42", row: "4 / 6", small: false, keyName: "KP_SLASH" },
     { col: "42 / 44", row: "4 / 6", small: false, keyName: "KP_STAR" },
     { col: "44 / 46", row: "4 / 6", small: false, keyName: "KP_MINUS" },
-
-    // Zeile 3: Tab + Buchstabenreihe 1
     { col: "1 / 4", row: "6 / 8", small: false, keyName: "TAB" },
     { col: "4 / 6", row: "6 / 8", small: false, rowIdx: 2, colIdx: 1 },
     { col: "6 / 8", row: "6 / 8", small: false, rowIdx: 2, colIdx: 2 },
@@ -155,8 +303,6 @@ function renderBindsKeyboardGrid() {
     { col: "40 / 42", row: "6 / 8", small: false, keyName: "KP_8" },
     { col: "42 / 44", row: "6 / 8", small: false, keyName: "KP_9" },
     { col: "44 / 46", row: "6 / 10", small: false, keyName: "KP_PLUS" },
-
-    // Zeile 4: Caps + Buchstabenreihe 2
     { col: "1 / 5", row: "8 / 10", small: false, keyName: "CAPS" },
     { col: "5 / 7", row: "8 / 10", small: false, rowIdx: 3, colIdx: 1 },
     { col: "7 / 9", row: "8 / 10", small: false, rowIdx: 3, colIdx: 2 },
@@ -173,8 +319,6 @@ function renderBindsKeyboardGrid() {
     { col: "38 / 40", row: "8 / 10", small: false, keyName: "KP_4" },
     { col: "40 / 42", row: "8 / 10", small: false, keyName: "KP_5" },
     { col: "42 / 44", row: "8 / 10", small: false, keyName: "KP_6" },
-
-    // Zeile 5: Shift + Buchstabenreihe 3
     { col: "1 / 6", row: "10 / 12", small: false, keyName: "LSHIFT" },
     { col: "6 / 8", row: "10 / 12", small: false, rowIdx: 4, colIdx: 1 },
     { col: "8 / 10", row: "10 / 12", small: false, rowIdx: 4, colIdx: 2 },
@@ -192,8 +336,6 @@ function renderBindsKeyboardGrid() {
     { col: "40 / 42", row: "10 / 12", small: false, keyName: "KP_2" },
     { col: "42 / 44", row: "10 / 12", small: false, keyName: "KP_3" },
     { col: "44 / 46", row: "10 / 14", small: true, keyName: "KP_ENTER" },
-
-    // Zeile 6: Strg, Win, Alt, Space, etc.
     { col: "1 / 4", row: "12 / 14", small: false, keyName: "LCTRL" },
     { col: "4 / 6", row: "12 / 14", small: false, keyName: "win" },
     { col: "6 / 9", row: "12 / 14", small: false, keyName: "LALT" },
@@ -206,10 +348,9 @@ function renderBindsKeyboardGrid() {
     { col: "33 / 35", row: "12 / 14", small: false, keyName: "DOWN" },
     { col: "35 / 37", row: "12 / 14", small: false, keyName: "RIGHT" },
     { col: "38 / 42", row: "12 / 14", small: false, keyName: "KP_0" },
-    { col: "42 / 44", row: "12 / 14", small: false, keyName: "KP_DEL" }
+    { col: "42 / 44", row: "12 / 14", small: false, keyName: "KP_DEL" },
   ];
 
-  // Definiere welche Sonderzeichen wie dargestellt werden
   const specialDisplayNames = {
     SPACE: "␣",
     LSHIFT: "Shift",
@@ -238,7 +379,6 @@ function renderBindsKeyboardGrid() {
     "page down": "PgDn",
     delete: "Del",
     end: "End",
-    home: "Home",
     "Num Lock": "Num",
     KP_SLASH: "/",
     KP_STAR: "*",
@@ -258,74 +398,84 @@ function renderBindsKeyboardGrid() {
     KP_9: "9",
   };
 
-  // Für jede Position hole die Taste aus dem aktuellen Layout
   keyPositions.forEach((pos) => {
     const btn = document.createElement("button");
-
-    let keyName = "";
+    let rawKeyValue = "";
     let displayText = "";
+    let isSpecialKey = false;
 
-    // Wenn direkter keyName angegeben ist (für F-Tasten, NumPad, etc.)
     if (pos.keyName) {
-      keyName = pos.keyName;
-      if (keyName.match(/^F\d+$/)) {
-        displayText = keyName.toUpperCase();
-      } else if (
-        keyName === "Print Screen" ||
-        keyName === "Scroll Lock" ||
-        keyName === "Pause Break" ||
-        keyName === "Num Lock"
-      ) {
-        displayText = specialDisplayNames[keyName] || keyName;
+      rawKeyValue = pos.keyName;
+      isSpecialKey = true;
+      if (rawKeyValue.match(/^F\d+$/)) {
+        displayText = rawKeyValue.toUpperCase();
       } else {
-        displayText = specialDisplayNames[keyName] || keyName;
+        displayText = specialDisplayNames[rawKeyValue] || rawKeyValue;
       }
-    }
-    // Ansonsten aus dem Layout-Array holen (für Buchstaben)
-    else if (
+    } else if (
       pos.rowIdx !== undefined &&
       pos.colIdx !== undefined &&
       mainKeysRows &&
       mainKeysRows[pos.rowIdx]
     ) {
       if (mainKeysRows[pos.rowIdx][pos.colIdx]) {
-        keyName = mainKeysRows[pos.rowIdx][pos.colIdx];
-        if (keyName.length === 1 && keyName.match(/[A-Za-zА-Яа-яЁё]/)) {
-          displayText = keyName.toUpperCase();
+        rawKeyValue = mainKeysRows[pos.rowIdx][pos.colIdx];
+        if (currentLayout === "RU") {
+          const lowerKey = rawKeyValue.toLowerCase();
+          if (enToRuDisplayMap[lowerKey]) {
+            displayText = enToRuDisplayMap[lowerKey];
+          } else {
+            displayText = rawKeyValue;
+          }
         } else {
-          displayText = specialDisplayNames[keyName] || keyName;
+          if (rawKeyValue.length === 1 && rawKeyValue.match(/[A-Za-z]/)) {
+            displayText = rawKeyValue.toUpperCase();
+          } else {
+            displayText = specialDisplayNames[rawKeyValue] || rawKeyValue;
+          }
         }
       } else {
-        keyName = "?";
+        rawKeyValue = "?";
         displayText = "?";
       }
     } else {
-      keyName = "?";
+      rawKeyValue = "?";
       displayText = "?";
     }
 
-    // Prüfe ob die Taste gesperrt ist
-    const isLocked =
-      lockedKeys.includes(keyName) ||
-      lockedKeys.includes(keyName.toLowerCase()) ||
-      keyName === "Print Screen" ||
-      keyName === "Scroll Lock" ||
-      keyName === "Pause Break" ||
-      keyName === "Num Lock";
+    let bindingKey = rawKeyValue;
+    if (
+      currentLayout === "RU" &&
+      !isSpecialKey &&
+      rawKeyValue !== "?" &&
+      rawKeyValue.length === 1
+    ) {
+      bindingKey = rawKeyValue.toLowerCase();
+    } else if (!isSpecialKey && rawKeyValue !== "?") {
+      bindingKey = rawKeyValue.toLowerCase();
+    }
 
-    // Bestimme die Bind-Klasse (KORREKT: mit keyName, nicht key.cmd)
+    const isLocked =
+      lockedKeys.includes(bindingKey.toLowerCase()) ||
+      lockedKeys.includes(displayText.toLowerCase()) ||
+      bindingKey === "Print Screen" ||
+      bindingKey === "Scroll Lock" ||
+      bindingKey === "Pause Break" ||
+      bindingKey === "Num Lock";
+
     let bindClass = "";
-    if (!isLocked && keyName !== "?") {
-      const bindingInfo = getBindingInfo(keyName);
+    if (!isLocked && bindingKey !== "?") {
+      const bindingInfo = getBindingInfo(bindingKey);
       if (bindingInfo.type === "buy") bindClass = "app__key--bound-buy";
       if (bindingInfo.type === "script") bindClass = "app__key--bound-script";
       if (bindingInfo.type === "say") bindClass = "app__key--bound-say";
       if (bindingInfo.type === "default") bindClass = "app__key--bound-default";
     }
 
-    btn.className = `app__key ${bindClass} ${isLocked ? "app__key--locked" : ""} ${pos.small ? "app__key--small" : ""}`.trim();
+    btn.className =
+      `app__key ${bindClass} ${isLocked ? "app__key--locked" : ""} ${pos.small ? "app__key--small" : ""}`.trim();
 
-    if (selectedBindKey === keyName && !isLocked && keyName !== "?") {
+    if (selectedBindKey === bindingKey && !isLocked && bindingKey !== "?") {
       btn.classList.add("app__key--active");
     }
 
@@ -333,19 +483,26 @@ function renderBindsKeyboardGrid() {
     btn.style.gridColumn = pos.col;
     btn.style.gridRow = pos.row;
 
-    if (!isLocked && keyName !== "?") {
+    if (!isLocked && bindingKey !== "?") {
       btn.onclick = () => {
-        selectedBindKey = keyName;
+        selectedBindKey = bindingKey;
+        // WICHTIG: Synchronisiere auch selectedBuyKey für das Buyscript
+        if (typeof window.selectedBuyKey !== "undefined") {
+          window.selectedBuyKey = bindingKey;
+        }
+        // Auch die globale Variable setzen
+        window.currentSelectedKey = bindingKey;
         renderBindsKeyboardGrid();
         renderBindsMouseGrid();
         updateBindsInputFields();
       };
     } else {
       btn.onclick = () => {
-        alert(`⚠️ Die Taste "${displayText}" kann nicht gebindet werden, da sie systemrelevant ist.`);
+        alert(
+          `⚠️ Die Taste "${displayText}" kann nicht gebindet werden, da sie systemrelevant ist.`,
+        );
       };
     }
-
     container.appendChild(btn);
   });
 }
@@ -354,34 +511,33 @@ function renderBindsMouseGrid() {
   const container = document.getElementById("bindsMouseGrid");
   if (!container) return;
   container.innerHTML = "";
-
   const gridCols = [1, 6, 11, 17, 22, 27, 32];
 
   mouseKeys.forEach((key, idx) => {
     const btn = document.createElement("button");
     btn.className = "mouse-key";
-
     const bindingInfo = getBindingInfo(key.cmd);
     if (bindingInfo.type === "buy") btn.classList.add("mouse-key--bound-buy");
-    if (bindingInfo.type === "script") btn.classList.add("mouse-key--bound-script");
+    if (bindingInfo.type === "script")
+      btn.classList.add("mouse-key--bound-script");
     if (bindingInfo.type === "say") btn.classList.add("mouse-key--bound-say");
-    if (bindingInfo.type === "default") btn.classList.add("mouse-key--bound-default"); // DAS FEHLTE
-
-    if (selectedBindKey === key.cmd) {
-      btn.classList.add("mouse-key--active");
-    }
-
+    if (bindingInfo.type === "default")
+      btn.classList.add("mouse-key--bound-default");
+    if (selectedBindKey === key.cmd) btn.classList.add("mouse-key--active");
     btn.textContent = key.display;
     btn.style.gridColumn = `${gridCols[idx]} / ${gridCols[idx] + 4}`;
     btn.style.gridRow = "1 / 3";
-
     btn.onclick = () => {
       selectedBindKey = key.cmd;
+      // WICHTIG: Synchronisiere auch selectedBuyKey für das Buyscript
+      if (typeof window.selectedBuyKey !== "undefined") {
+        window.selectedBuyKey = key.cmd;
+      }
+      window.currentSelectedKey = key.cmd;
       renderBindsKeyboardGrid();
       renderBindsMouseGrid();
       updateBindsInputFields();
     };
-
     container.appendChild(btn);
   });
 }
@@ -389,7 +545,6 @@ function renderBindsMouseGrid() {
 function attachMouseToggleListener() {
   const toggleBtn = document.getElementById("toggleMouseArea");
   const mouseWrapper = document.getElementById("mouseWrapper");
-
   if (toggleBtn && mouseWrapper) {
     toggleBtn.addEventListener("click", () => {
       if (mouseWrapper.style.display === "none") {
@@ -406,38 +561,53 @@ function attachMouseToggleListener() {
 function updateBindsInputFields() {
   if (!selectedBindKey) return;
 
-  // Buy Input
+  // Synchronisiere selectedBuyKey für das Buyscript
+  if (typeof window.selectedBuyKey !== "undefined") {
+    window.selectedBuyKey = selectedBindKey;
+  }
+  window.currentSelectedKey = selectedBindKey;
+
   const buyInput = document.getElementById("bindsBuyCommandInput");
   if (buyInput) {
-    // Zuerst benutzerdefinierten Bind prüfen, dann Default
     if (window.buyBindings && window.buyBindings[selectedBindKey]) {
       buyInput.value = window.buyBindings[selectedBindKey];
-    } else if (window.cs2DefaultBinds && window.cs2DefaultBinds[selectedBindKey]) {
+    } else if (
+      window.cs2DefaultBinds &&
+      window.cs2DefaultBinds[selectedBindKey]
+    ) {
       buyInput.value = window.cs2DefaultBinds[selectedBindKey];
     } else {
       buyInput.value = "";
     }
+    if (typeof window.updateLiveAnalysis === "function") {
+      setTimeout(() => window.updateLiveAnalysis(), 50);
+    }
   }
-
-  // Say Input
   const sayInput = document.getElementById("bindsSayCommandInput");
   if (sayInput && window.sayBindings) {
     let val = window.sayBindings[selectedBindKey] || "";
-    if (!val && window.cs2DefaultBinds && window.cs2DefaultBinds[selectedBindKey] && 
-        (window.cs2DefaultBinds[selectedBindKey].startsWith("say") || window.cs2DefaultBinds[selectedBindKey].startsWith("say_team"))) {
+    if (
+      !val &&
+      window.cs2DefaultBinds &&
+      window.cs2DefaultBinds[selectedBindKey] &&
+      (window.cs2DefaultBinds[selectedBindKey].startsWith("say") ||
+        window.cs2DefaultBinds[selectedBindKey].startsWith("say_team"))
+    ) {
       val = window.cs2DefaultBinds[selectedBindKey];
     }
     sayInput.value = val.replace(/^(say_team|say) /, "");
     if (val.startsWith("say_team")) {
-      const teamRadio = document.querySelector('input[name="bindsSayType"][value="say_team"]');
+      const teamRadio = document.querySelector(
+        'input[name="bindsSayType"][value="say_team"]',
+      );
       if (teamRadio) teamRadio.checked = true;
     } else if (val.startsWith("say")) {
-      const allRadio = document.querySelector('input[name="bindsSayType"][value="say"]');
+      const allRadio = document.querySelector(
+        'input[name="bindsSayType"][value="say"]',
+      );
       if (allRadio) allRadio.checked = true;
     }
   }
-
-  // Script Input
   const scriptNameInput = document.getElementById("bindsScriptNameInput");
   const scriptArea = document.getElementById("bindsScriptCommandsArea");
   if (scriptNameInput && scriptArea && window.scriptBindings) {
@@ -453,7 +623,6 @@ function renderBindsBuyCategories() {
   let catDiv = document.getElementById("bindsCategoryList");
   if (!catDiv) return;
   catDiv.innerHTML = "";
-
   if (typeof categories === "undefined") return;
 
   Object.keys(categories).forEach((c) => {
@@ -483,8 +652,8 @@ function renderBindsBuyItems() {
   let grid = document.getElementById("bindsItemsGrid");
   if (!grid) return;
   grid.innerHTML = "";
-
   if (typeof categories === "undefined") return;
+
   let currentCat =
     typeof window.currentBuyCategory !== "undefined"
       ? window.currentBuyCategory
@@ -494,7 +663,20 @@ function renderBindsBuyItems() {
   categories[currentCat].forEach((it) => {
     let div = document.createElement("div");
     div.className = "weapon-item";
-    div.innerHTML = `<span>${it.name}</span><span class="add-icon">+</span>`;
+
+    let sideBadge = "";
+    if (it.side === "ct")
+      sideBadge =
+        '<span style="font-size: 0.6rem; background: #3399ff; padding: 0.1rem 0.4rem; border-radius: 0.5rem; margin-left: 0.3rem;">CT</span>';
+    else if (it.side === "t")
+      sideBadge =
+        '<span style="font-size: 0.6rem; background: #ffaa33; padding: 0.1rem 0.4rem; border-radius: 0.5rem; margin-left: 0.3rem;">T</span>';
+    else
+      sideBadge =
+        '<span style="font-size: 0.6rem; background: #888; padding: 0.1rem 0.4rem; border-radius: 0.5rem; margin-left: 0.3rem;">CT/T</span>';
+
+    div.innerHTML = `<span>${it.name} <span style="color: #ffaa33;">$${it.price}</span>${sideBadge}</span><span class="add-icon">+</span>`;
+
     div.onclick = () => {
       if (!selectedBindKey) {
         alert("Bitte wähle zuerst eine Taste aus!");
@@ -512,6 +694,9 @@ function renderBindsBuyItems() {
       }
       let n = cur ? cur + "; " + it.cmd : it.cmd;
       document.getElementById("bindsBuyCommandInput").value = n;
+      if (typeof window.updateLiveAnalysis === "function") {
+        window.updateLiveAnalysis();
+      }
     };
     grid.appendChild(div);
   });
@@ -554,6 +739,9 @@ function bindsSaveBuy() {
   renderBindsMouseGrid();
   renderBindsSavedList();
   if (window.refreshFullExport) window.refreshFullExport();
+  if (typeof window.updateLiveAnalysis === "function") {
+    window.updateLiveAnalysis();
+  }
 }
 
 function bindsSaveSay() {
@@ -662,7 +850,6 @@ function bindsSaveScript() {
   if (window.refreshFullExport) window.refreshFullExport();
 }
 
-// Ersetze die bindsUnbindCurrent Funktion:
 function bindsUnbindCurrent() {
   if (!selectedBindKey) {
     alert("Bitte wähle zuerst eine Taste aus!");
@@ -703,6 +890,8 @@ function bindsUnbindCurrent() {
     renderBindsMouseGrid();
     renderBindsSavedList();
     if (window.refreshFullExport) window.refreshFullExport();
+    if (typeof window.updateLiveAnalysis === "function")
+      window.updateLiveAnalysis();
   } else {
     alert(`Keine ${currentBindType}-Bindung für diese Taste`);
   }
@@ -731,6 +920,8 @@ function bindsResetAll() {
     renderBindsMouseGrid();
     renderBindsSavedList();
     if (window.refreshFullExport) window.refreshFullExport();
+    if (typeof window.updateLiveAnalysis === "function")
+      window.updateLiveAnalysis();
     alert("✅ Alle Bindings gelöscht.");
   }
 }
@@ -739,130 +930,189 @@ function renderBindsSavedList() {
   let cont = document.getElementById("bindsSavedList");
   if (!cont) return;
   cont.innerHTML = "";
-
   let allBinds = [];
 
-  // Sammle alle benutzerdefinierten Buy-Bindings
+  function getDisplayKeyName(key, layout) {
+    if (layout !== "RU") return key;
+    const enToRuDisplayMap = {
+      q: "Й",
+      w: "Ц",
+      e: "У",
+      r: "К",
+      t: "Е",
+      y: "Н",
+      u: "Г",
+      i: "Ш",
+      o: "Щ",
+      p: "З",
+      "[": "Х",
+      "]": "Ъ",
+      "\\": "\\",
+      a: "Ф",
+      s: "Ы",
+      d: "В",
+      f: "А",
+      g: "П",
+      h: "Р",
+      j: "О",
+      k: "Л",
+      l: "Д",
+      ";": "Ж",
+      "'": "Э",
+      z: "Я",
+      x: "Ч",
+      c: "С",
+      v: "М",
+      b: "И",
+      n: "Т",
+      m: "Ь",
+      ",": "Б",
+      ".": "Ю",
+      "/": "/",
+      "`": "Ё",
+      1: "1",
+      2: "2",
+      3: "3",
+      4: "4",
+      5: "5",
+      6: "6",
+      7: "7",
+      8: "8",
+      9: "9",
+      0: "0",
+      "-": "-",
+      "=": "=",
+      "~": "~",
+    };
+    const upperKey = key.toUpperCase();
+    if (enToRuDisplayMap[upperKey]) return enToRuDisplayMap[upperKey];
+    if (enToRuDisplayMap[key]) return enToRuDisplayMap[key];
+    return key;
+  }
+
   if (window.buyBindings) {
     for (let [k, cmd] of Object.entries(window.buyBindings)) {
       allBinds.push({
         key: k,
+        displayKey: getDisplayKeyName(k, currentLayout),
         type: "buy",
         cmd: cmd,
-        isCustom: true
+        isCustom: true,
       });
     }
   }
-
-  // Sammle alle benutzerdefinierten Say-Bindings
   if (window.sayBindings) {
     for (let [k, cmd] of Object.entries(window.sayBindings)) {
       allBinds.push({
         key: k,
+        displayKey: getDisplayKeyName(k, currentLayout),
         type: "say",
         cmd: cmd,
-        isCustom: true
+        isCustom: true,
       });
     }
   }
-
-  // Sammle alle benutzerdefinierten Script-Bindings
   if (window.scriptBindings) {
     for (let [k, val] of Object.entries(window.scriptBindings)) {
       let firstLine = val.split("\n")[0].replace("//", "").trim();
       allBinds.push({
         key: k,
+        displayKey: getDisplayKeyName(k, currentLayout),
         type: "script",
         cmd: firstLine.substring(0, 50),
         fullCmd: val,
-        isCustom: true
+        isCustom: true,
       });
     }
   }
-
-  // Sammle alle CS2 Standard-Bindings (DEFAULT)
-  // Aber nur, wenn sie NICHT durch benutzerdefinierte Bindings überschrieben wurden
   if (window.cs2DefaultBinds) {
     for (let [k, cmd] of Object.entries(window.cs2DefaultBinds)) {
-      const alreadyBound = allBinds.some(b => b.key === k && b.isCustom === true);
+      const alreadyBound = allBinds.some(
+        (b) => b.key === k && b.isCustom === true,
+      );
       if (!alreadyBound) {
         allBinds.push({
           key: k,
+          displayKey: getDisplayKeyName(k, currentLayout),
           type: "default",
           cmd: cmd,
-          isCustom: false
+          isCustom: false,
         });
       }
     }
   }
 
-  // Sortiere nach Taste (alphabetisch)
   allBinds.sort((a, b) => a.key.localeCompare(b.key));
 
-  // Wenn keine Bindings vorhanden
   if (allBinds.length === 0) {
-    cont.innerHTML = '<div class="empty-message">✨ Keine Bindings vorhanden. Klicke auf eine Taste, um ein Binding zu erstellen!</div>';
+    cont.innerHTML =
+      '<div class="empty-message">✨ Keine Bindings vorhanden. Klicke auf eine Taste, um ein Binding zu erstellen!</div>';
     return;
   }
 
-  // Zeige alle Bindings an
   allBinds.forEach((bind) => {
     let e = document.createElement("div");
     e.className = "bind-entry";
-    
-    let typeIcon = bind.type === "buy" ? "🛒" : bind.type === "say" ? "💬" : bind.type === "script" ? "🎮" : "⭐";
-    let typeColor = bind.type === "buy" ? "#ff3333" : bind.type === "say" ? "#44cc44" : bind.type === "script" ? "#2288dd" : "#cc9900";
-    
-    // Nur bei benutzerdefinierten Bindings Lösch-Button anzeigen
-    const deleteButton = bind.isCustom ? 
-      `<span style="float: right; cursor: pointer; color: #ff6666; margin-left: 0.5rem;" onclick="window.removeBindingFromList('${bind.key}', '${bind.type}')">[x]</span>` : 
-      `<span style="float: right; margin-left: 0.5rem; opacity: 0.5;" title="Standard-Bindung (kann durch eigenen Bind überschrieben werden)">[Standard]</span>`;
-    
-    e.innerHTML = `
-      <span class="bind-key" style="color: ${typeColor};">${typeIcon} bind "${bind.key}"</span> 
-      → <span class="bind-command">"${bind.cmd.substring(0, 80)}${bind.cmd.length > 80 ? "..." : ""}"</span>
-      ${deleteButton}
-    `;
-    
-    // Tooltip für Default-Bindings
-    if (!bind.isCustom && window.getCs2DefaultDescription) {
+    let typeIcon =
+      bind.type === "buy"
+        ? "🛒"
+        : bind.type === "say"
+          ? "💬"
+          : bind.type === "script"
+            ? "🎮"
+            : "⭐";
+    let typeColor =
+      bind.type === "buy"
+        ? "#ff3333"
+        : bind.type === "say"
+          ? "#44cc44"
+          : bind.type === "script"
+            ? "#2288dd"
+            : "#cc9900";
+    const deleteButton = bind.isCustom
+      ? `<span style="float: right; cursor: pointer; color: #ff6666; margin-left: 0.5rem;" onclick="window.removeBindingFromList('${bind.key}', '${bind.type}')">[x]</span>`
+      : `<span style="float: right; margin-left: 0.5rem; opacity: 0.5;" title="Standard-Bindung (kann durch eigenen Bind überschrieben werden)">[Standard]</span>`;
+    e.innerHTML = `<span class="bind-key" style="color: ${typeColor};">${typeIcon} bind "${bind.displayKey}"</span> → <span class="bind-command">"${bind.cmd.substring(0, 80)}${bind.cmd.length > 80 ? "..." : ""}"</span> ${deleteButton}`;
+    if (bind.displayKey !== bind.key)
+      e.title = `Echte Taste: "${bind.key}" (wird in CS2 verwendet)`;
+    else if (!bind.isCustom && window.getCs2DefaultDescription)
       e.title = window.getCs2DefaultDescription(bind.key);
-    }
-
     e.onclick = (event) => {
-      if (event.target.tagName === "SPAN" && (event.target.textContent === "[x]" || event.target.textContent === "[Standard]")) return;
-      
+      if (
+        event.target.tagName === "SPAN" &&
+        (event.target.textContent === "[x]" ||
+          event.target.textContent === "[Standard]")
+      )
+        return;
       selectedBindKey = bind.key;
-      
-      // Bestimme den Typ für die Anzeige
-      if (bind.type === "default") {
-        currentBindType = "buy";
-      } else {
-        currentBindType = bind.type;
+      // Synchronisiere auch selectedBuyKey
+      if (typeof window.selectedBuyKey !== "undefined") {
+        window.selectedBuyKey = bind.key;
       }
-      
-      // Aktiviere den entsprechenden Tab
-      document.querySelectorAll("#bindTypeSelector .main-cat-btn").forEach((btn) => {
-        btn.classList.remove("active-main");
-        let targetType = bind.type === "default" ? "buy" : bind.type;
-        if (btn.dataset.bindType === targetType) btn.classList.add("active-main");
-      });
-      
-      // Aktiviere das richtige Area
-      document.querySelectorAll(".bind-type-area").forEach((area) => area.classList.remove("active"));
+      window.currentSelectedKey = bind.key;
+      if (bind.type === "default") currentBindType = "buy";
+      else currentBindType = bind.type;
+      document
+        .querySelectorAll("#bindTypeSelector .main-cat-btn")
+        .forEach((btn) => {
+          btn.classList.remove("active-main");
+          let targetType = bind.type === "default" ? "buy" : bind.type;
+          if (btn.dataset.bindType === targetType)
+            btn.classList.add("active-main");
+        });
+      document
+        .querySelectorAll(".bind-type-area")
+        .forEach((area) => area.classList.remove("active"));
       let areaId = `binds${bind.type === "buy" ? "Buy" : bind.type === "say" ? "Say" : bind.type === "script" ? "Script" : "Buy"}Area`;
       document.getElementById(areaId).classList.add("active");
-      
       renderBindsKeyboardGrid();
       renderBindsMouseGrid();
       updateBindsInputFields();
     };
-    
     cont.appendChild(e);
   });
 }
 
-// Globale Funktoin zum Entfernen eines Bindings aus der Liste
 window.removeBindingFromList = function (key, type) {
   if (confirm(`Binding für Taste "${key}" (${type}) wirklich entfernen?`)) {
     removeSpecificBinding(key, type);
@@ -871,6 +1121,8 @@ window.removeBindingFromList = function (key, type) {
     renderBindsSavedList();
     updateBindsInputFields();
     if (window.refreshFullExport) window.refreshFullExport();
+    if (typeof window.updateLiveAnalysis === "function")
+      window.updateLiveAnalysis();
   }
 };
 
@@ -878,14 +1130,11 @@ function renderBindsTemplates() {
   let cont = document.getElementById("bindsTemplateScripts");
   if (!cont) return;
   cont.innerHTML = "";
-
   if (typeof scriptTemplatesList === "undefined") return;
 
   scriptTemplatesList.forEach((t) => {
     let card = document.createElement("div");
     card.className = "script-template-card";
-
-    // Icon basierend auf Skript-Typ
     let icon = "🎮";
     if (t.name.includes("NetGraph")) icon = "📊";
     if (t.name.includes("Nade")) icon = "💣";
@@ -893,22 +1142,7 @@ function renderBindsTemplates() {
     if (t.name.includes("Bomb")) icon = "💣";
     if (t.name.includes("Crosshair")) icon = "🎯";
     if (t.name.includes("Demo")) icon = "🎬";
-
-    card.innerHTML = `
-            <div class="script-template-name">
-                <span>${icon}</span> ${t.name}
-            </div>
-            <div class="script-template-desc">
-                📝 ${t.desc}
-            </div>
-            <div class="script-template-longdesc">
-                ${t.longDesc ? t.longDesc.substring(0, 150) + (t.longDesc.length > 150 ? "..." : "") : t.desc}
-            </div>
-            <div class="script-badge">
-                ⚡ Klicken zum Übernehmen
-            </div>
-        `;
-
+    card.innerHTML = `<div class="script-template-name"><span>${icon}</span> ${t.name}</div><div class="script-template-desc">📝 ${t.desc}</div><div class="script-template-longdesc">${t.longDesc ? t.longDesc.substring(0, 150) + (t.longDesc.length > 150 ? "..." : "") : t.desc}</div><div class="script-badge">⚡ Klicken zum Übernehmen</div>`;
     card.onclick = () => {
       if (!selectedBindKey) {
         alert("⚠️ Bitte zuerst eine Taste auswählen!");
@@ -916,7 +1150,6 @@ function renderBindsTemplates() {
       }
       applyBindsScriptTemplate(t.content, t.name);
     };
-
     cont.appendChild(card);
   });
 }
@@ -944,7 +1177,6 @@ function applyBindsScriptTemplate(scriptContent, scriptName) {
 
   let cleanContent = scriptContent.replace(/bind\s+"[^"]*"\s+[^\n]*\n?/g, "");
   cleanContent = cleanContent.trim();
-
   const lines = cleanContent.split("\n");
   const filteredLines = lines.filter((line) => {
     return (
@@ -956,11 +1188,9 @@ function applyBindsScriptTemplate(scriptContent, scriptName) {
     );
   });
   cleanContent = filteredLines.join("\n");
-
   let aliasName = "";
   const aliasMatch = cleanContent.match(/alias\s+(\+\w+|\w+)/);
   if (aliasMatch) aliasName = aliasMatch[1];
-
   let finalContent = `// ${scriptName}\n${cleanContent}`;
   if (aliasName) {
     finalContent += `\nbind "${selectedBindKey}" "${aliasName}"`;
@@ -977,16 +1207,12 @@ function applyBindsScriptTemplate(scriptContent, scriptName) {
     window.scriptBindings[selectedBindKey] = finalContent;
     if (window.saveScriptBindings) window.saveScriptBindings();
   }
-
   alert(
     `✅ Skript "${scriptName}" wurde auf Taste "${selectedBindKey}" gespeichert!`,
   );
-
-  // Korrigierte Aufrufe
   renderBindsKeyboardGrid();
   renderBindsMouseGrid();
   renderBindsSavedList();
-
   document.getElementById("bindsScriptCommandsArea").value = cleanContent;
   document.getElementById("bindsScriptNameInput").value = scriptName;
 }
@@ -1016,26 +1242,19 @@ function attachBindsEventListeners() {
     .forEach((btn) => {
       btn.addEventListener("click", () => setBindType(btn.dataset.bindType));
     });
-
   const saveBuyBtn = document.getElementById("bindsSaveBuyBtn");
   if (saveBuyBtn) saveBuyBtn.addEventListener("click", bindsSaveBuy);
-
   const unbindBuyBtn = document.getElementById("bindsUnbindBuyBtn");
   if (unbindBuyBtn) unbindBuyBtn.addEventListener("click", bindsUnbindCurrent);
-
   const saveSayBtn = document.getElementById("bindsSaveSayBtn");
   if (saveSayBtn) saveSayBtn.addEventListener("click", bindsSaveSay);
-
   const unbindSayBtn = document.getElementById("bindsUnbindSayBtn");
   if (unbindSayBtn) unbindSayBtn.addEventListener("click", bindsUnbindCurrent);
-
   const saveScriptBtn = document.getElementById("bindsSaveScriptBtn");
   if (saveScriptBtn) saveScriptBtn.addEventListener("click", bindsSaveScript);
-
   const unbindScriptBtn = document.getElementById("bindsUnbindScriptBtn");
   if (unbindScriptBtn)
     unbindScriptBtn.addEventListener("click", bindsUnbindCurrent);
-
   const resetAllBtn = document.getElementById("bindsResetAllBtn");
   if (resetAllBtn) resetAllBtn.addEventListener("click", bindsResetAll);
 
@@ -1048,3 +1267,4 @@ function attachBindsEventListeners() {
 window.initBindsTab = initBindsTab;
 window.renderBindsKeyboard = renderBindsKeyboard;
 window.renderBindsSavedList = renderBindsSavedList;
+window.initBuyLiveListener = initBuyLiveListener;

@@ -123,7 +123,6 @@
         <select id="keyboardLayoutSelect" style="background: var(--input-bg); border: 1px solid var(--accent); border-radius: 1.5rem; padding: 0.3rem 0.8rem; color: var(--text-color); font-size: 0.8rem; cursor: pointer;">
           <option value="DE">🇩🇪 Deutsch (DE)</option>
           <option value="US">🇺🇸 Englisch (US)</option>
-          <option value="RU">🇷🇺 Russisch (RU)</option>
         </select>
       </div>
     </div>
@@ -172,52 +171,110 @@
             </button>
           </div>
 
-          <!-- BUY BIND CARD -->
-          <div id="bindsBuyArea" class="bind-type-area active">
-            <div class="category-row" id="bindsCategoryList"></div>
-            <div class="items-grid" id="bindsItemsGrid"></div>
-            <textarea
-              id="bindsBuyCommandInput"
-              rows="2"
-              placeholder="buy awp; buy vesthelm; ..."
-            ></textarea>
-            <button class="glow" id="bindsSaveBuyBtn">
-              💾 Buy-Bindung speichern
-            </button>
-            <button class="glow" id="bindsUnbindBuyBtn">
-              🔓 Bindung entfernen
-            </button>
-          </div>
+<!-- BUY BIND CARD -->
+<div id="bindsBuyArea" class="bind-type-area active">
+  <div class="category-row" id="bindsCategoryList"></div>
+  <div class="items-grid" id="bindsItemsGrid"></div>
+  <textarea id="bindsBuyCommandInput" rows="2" placeholder="buy awp; buy vesthelm; ..."></textarea>
+  
+  <!-- LIVE ERROR CONTAINER -->
+  <div id="liveErrorContainer" style="display: none;"></div>
+  
+  <!-- PREIS-ANZEIGE FÜR T & CT -->
+  <div id="totalPriceDisplay" style="background: rgba(0,0,0,0.3); border-radius: 1rem; padding: 0.8rem; margin: 0.8rem 0; text-align: center;">
+    <div style="display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;">
+      <div style="text-align: center; padding: 0.5rem 1rem; background: rgba(0,0,0,0.3); border-radius: 1rem; border-left: 3px solid #3399ff;">
+        <div style="font-size: 0.7rem; color: var(--accent-light);">🔵 CT-Side</div>
+        <div style="font-size: 1.5rem; font-weight: bold; color: #3399ff;">$0</div>
+        <div style="font-size: 0.6rem; margin-top: 0.2rem;">Keine Primär</div>
+      </div>
+      <div style="text-align: center; padding: 0.5rem 1rem; background: rgba(0,0,0,0.3); border-radius: 1rem; border-left: 3px solid #ffaa33;">
+        <div style="font-size: 0.7rem; color: var(--accent-light);">🟠 T-Side</div>
+        <div style="font-size: 1.5rem; font-weight: bold; color: #ffaa33;">$0</div>
+        <div style="font-size: 0.6rem; margin-top: 0.2rem;">Keine Primär</div>
+      </div>
+    </div>
+    <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 0.5rem; font-size: 0.65rem;">
+      <span style="color: #3399ff;">🔫 CT-Pistole: Keine</span>
+      <span style="color: #ffaa33;">🔫 T-Pistole: Keine</span>
+    </div>
+  </div>
+  
+  <button class="glow" id="bindsSaveBuyBtn">💾 Buy-Bindung speichern</button>
+  <button class="glow" id="bindsUnbindBuyBtn">🔓 Bindung entfernen</button>
+</div>
 
-          <!-- SAY BIND CARD -->
-          <div id="bindsSayArea" class="bind-type-area">
-            <div class="say-type-selector">
-              <label
-                ><input
-                  type="radio"
-                  name="bindsSayType"
-                  value="say_team"
-                  checked
-                />
-                💬 Team (say_team)</label
-              >
-              <label
-                ><input type="radio" name="bindsSayType" value="say" /> 🌍 Alle
-                (say)</label
-              >
-            </div>
-            <input
-              type="text"
-              id="bindsSayCommandInput"
-              placeholder="Hallo zusammen!"
-            />
-            <button class="glow" id="bindsSaveSayBtn">
-              💾 Say-Bindung speichern
-            </button>
-            <button class="glow" id="bindsUnbindSayBtn">
-              🔓 Bindung entfernen
-            </button>
-          </div>
+<!-- SAY BIND CARD -->
+<div id="bindsSayArea" class="bind-type-area">
+  <!-- Beschreibung mit drei Spalten nebeneinander -->
+  <div style="background: rgba(0,0,0,0.2); border-radius: 0.8rem; padding: 0.8rem; margin-bottom: 1rem;">
+    
+    <!-- Titel -->
+    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.8rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem;">
+      <i class="fas fa-comment-dots" style="color: #44cc44;"></i>
+      <strong style="color: #44cc44;">💬 Was sind Say-Binds?</strong>
+      <span style="font-size: 0.7rem; color: var(--accent-light); margin-left: auto;">Mit Say-Binds kannst du vordefinierte Nachrichten oder Server-Befehle per Tastendruck senden.</span>
+    </div>
+    
+    <!-- DREI SPALTEN NEBENEINANDER -->
+    <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+      
+      <!-- Spalte 1: Competitive / Matchmaking -->
+      <div style="flex: 1; min-width: 180px; background: rgba(255,170,51,0.08); border-radius: 0.6rem; padding: 0.5rem;">
+        <div style="color: #ffaa33; font-weight: bold; margin-bottom: 0.4rem;">🎮 Competitive / Matchmaking</div>
+        <div style="font-size: 0.7rem; line-height: 1.6;">
+          • "Rush B", "Eco Round", "Full Buy"<br>
+          • "gg", "gl hf", "nice shot", "ns"<br>
+          • "A split", "B fake", "Default"
+        </div>
+      </div>
+      
+      <!-- Spalte 2: Surf / Bhop / KZ / Community Server -->
+      <div style="flex: 1; min-width: 180px; background: rgba(68,204,68,0.08); border-radius: 0.6rem; padding: 0.5rem;">
+        <div style="color: #44cc44; font-weight: bold; margin-bottom: 0.4rem;">🏄‍♂️ Surf / Bhop / KZ / Community Server</div>
+        <div style="font-size: 0.7rem; line-height: 1.6;">
+          • <code>!r</code> oder <code>/r</code> - Neustart / Respawn<br>
+          • <code>!cp</code> oder <code>/cp</code> - Checkpoint setzen<br>
+          • <code>!tp</code> oder <code>/tp</code> - Zum Checkpoint teleportieren<br>
+          • <code>!noclip</code> oder <code>/noclip</code> - Flugmodus (falls erlaubt)
+        </div>
+      </div>
+      
+      <!-- Spalte 3: Sonstige -->
+      <div style="flex: 1; min-width: 150px; background: rgba(255,102,102,0.08); border-radius: 0.6rem; padding: 0.5rem;">
+        <div style="color: #ff6666; font-weight: bold; margin-bottom: 0.4rem;">🎨 Sonstige</div>
+        <div style="font-size: 0.7rem; line-height: 1.6;">
+          • <code>!knife</code> oder <code>/knife</code> - Messer-Menü<br>
+          • <code>!glove</code> oder <code>/glove</code> - Handschuh-Menü
+        </div>
+      </div>
+    </div>
+    
+    <!-- Tipp und Unterschied (untere Leiste) -->
+    <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; margin-top: 0.8rem; padding-top: 0.5rem; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.65rem; color: var(--accent-light);">
+      <div><i class="fas fa-info-circle"></i> <strong>Tipp:</strong> Die meisten Community-Server verwenden <code>!</code> oder <code>/</code> für Befehle. Teste vorher, welches Prefix auf deinem Server funktioniert!<br></div>
+      <div><i class="fas fa-exchange-alt"></i> <strong>Unterschied:</strong> "say_team" = Nur Team sichtbar | "say" = Alle Spieler sehen es</div>
+    </div>
+  </div>
+  
+  <!-- Say-Type Auswahl -->
+  <div class="say-type-selector">
+    <label><input type="radio" name="bindsSayType" value="say_team" checked /> 💬 Team (say_team)</label>
+    <label><input type="radio" name="bindsSayType" value="say" /> 🌍 Alle (say)</label>
+  </div>
+  
+  <!-- Input Feld -->
+  <input type="text" id="bindsSayCommandInput" placeholder="!r" />
+  
+  <!-- Kleine Hilfe -->
+  <div style="font-size: 0.65rem; color: var(--accent-light); margin: 0.3rem 0 0.5rem 0;">
+    💡 Beispiele: <code>!r</code> (Reset), <code>!cp</code> (Checkpoint), <code>!tp</code> (Teleport), <code>!top</code> (Bestenliste), <code>gl hf</code> (Chat)
+  </div>
+  
+  <!-- Buttons -->
+  <button class="glow" id="bindsSaveSayBtn">💾 Say-Bindung speichern</button>
+  <button class="glow" id="bindsUnbindSayBtn">🔓 Bindung entfernen</button>
+</div>
 
           <!-- SKRIPT CARD -->
           <div id="bindsScriptArea" class="bind-type-area">
@@ -1141,7 +1198,8 @@
               • System Analyzer<br>
               • Ping-Radar<br>
               • Startoptionen-Generator<br>
-              • Autoexec-Export
+              • Autoexec-Export<br>
+              • Buyscript Preise hinzufügen + Berechnung für den Gesamtpreis einer Taste<br>
             </div>
           </div>
           
@@ -1154,7 +1212,9 @@
               • Workshop-Favoriten verwalten<br>
               • Account-Erstellung (evtl. mit Steam)<br>
               • Utility-Workshop<br>
-          
+              • Mehrsprachigkeit (Englisch, Spanisch, etc.)<br>
+              • Community-Features (z.B. Teilen von Skripten)<br>
+                        
             </div>
           </div>
         </div>
