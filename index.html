@@ -172,59 +172,60 @@
           </div>
 
           <!-- BUY BIND CARD -->
-          <div id="bindsBuyArea" class="bind-type-area active">
-            <div class="category-row" id="bindsCategoryList"></div>
-            <div class="items-grid" id="bindsItemsGrid"></div>
-            <textarea
-              id="bindsBuyCommandInput"
-              rows="2"
-              placeholder="buy awp; buy vesthelm; ..."
-            ></textarea>
-            <button class="glow" id="bindsSaveBuyBtn">
-              💾 Buy-Bindung speichern
-            </button>
-            <button class="glow" id="bindsUnbindBuyBtn">
-              🔓 Bindung entfernen
-            </button>
-          </div>
+<div id="bindsBuyArea" class="bind-type-area active">
+  <!-- Status-Anzeige für ausgewählte Taste -->
+  <div id="selectedKeyStatus" style="background: #ff4444; color: white; padding: 0.3rem 0.8rem; border-radius: 1rem; margin-bottom: 0.8rem; display: inline-block; font-size: 0.8rem;">
+    ⚡ Keine Taste ausgewählt - Klicke auf eine Taste auf der Tastatur
+  </div>
+  <div class="category-row" id="categoryList"></div>
+  <div class="items-grid" id="itemsGrid"></div>
+  <textarea id="buyCommandInput" rows="2" placeholder="buy awp; buy vesthelm; ..."></textarea>
+  
+  <!-- Buttons -->
+  <button class="glow" id="saveBuyBtn">💾 Buy-Bindung speichern</button>
+  <button class="glow" id="unbindBuyBtn">🔓 Bindung entfernen</button>
+  
+  <!-- Preisanzeige UNTER dem Textfeld und Buttons -->
+  <div id="buyPriceDisplay" style="background: rgba(0,0,0,0.3); border-radius: 1rem; padding: 0.8rem; margin-top: 1rem; text-align: center;">
+    <div style="display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;">
+      <div style="text-align: center; flex: 1; min-width: 200px; background: rgba(0,0,0,0.2); border-radius: 1rem; padding: 0.8rem;">
+        <span style="color: #ffaa44; font-size: 1.1rem;">TERRORIST</span><br>
+        <span style="font-size: 1.8rem; font-weight: bold; color: #ffaa44;">$0</span>
+        <div style="margin-top: 0.5rem; font-size: 0.7rem; text-align: left; border-top: 1px solid rgba(255,170,68,0.3); padding-top: 0.5rem;">
+          <span style="opacity: 0.5;">(keine Ausrüstung)</span>
+        </div>
+      </div>
+      <div style="text-align: center; flex: 1; min-width: 200px; background: rgba(0,0,0,0.2); border-radius: 1rem; padding: 0.8rem;">
+        <span style="color: #44aaff; font-size: 1.1rem;">COUNTER-TERRORIST</span><br>
+        <span style="font-size: 1.8rem; font-weight: bold; color: #44aaff;">$0</span>
+        <div style="margin-top: 0.5rem; font-size: 0.7rem; text-align: left; border-top: 1px solid rgba(68,170,255,0.3); padding-top: 0.5rem;">
+          <span style="opacity: 0.5;">(keine Ausrüstung)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-          <!-- SAY BIND CARD -->
-          <div id="bindsSayArea" class="bind-type-area">
-            <div class="say-type-selector">
-              <label
-                ><input
-                  type="radio"
-                  name="bindsSayType"
-                  value="say_team"
-                  checked
-                />
-                💬 Team (say_team)</label
-              >
-              <label
-                ><input type="radio" name="bindsSayType" value="say" /> 🌍 Alle
-                (say)</label
-              >
-            </div>
-            <input
-              type="text"
-              id="bindsSayCommandInput"
-              placeholder="Hallo zusammen!"
-            />
-            <button class="glow" id="bindsSaveSayBtn">
-              💾 Say-Bindung speichern
-            </button>
-            <button class="glow" id="bindsUnbindSayBtn">
-              🔓 Bindung entfernen
-            </button>
-          </div>
+<!-- SAY BIND CARD -->
+<div id="bindsSayArea" class="bind-type-area">
+  <div id="selectedKeyStatusSay" style="background: #ff4444; color: white; padding: 0.3rem 0.8rem; border-radius: 1rem; margin-bottom: 0.8rem; display: inline-block; font-size: 0.8rem;">
+    ⚡ Keine Taste ausgewählt - Klicke auf eine Taste auf der Tastatur
+  </div>
+  <div class="say-type-selector">
+    <label><input type="radio" name="bindsSayType" value="say_team" checked> 💬 Team (say_team)</label>
+    <label><input type="radio" name="bindsSayType" value="say"> 🌍 Alle (say)</label>
+  </div>
+  <input type="text" id="bindsSayCommandInput" placeholder="Hallo zusammen!" />
+  <button class="glow" id="bindsSaveSayBtn">💾 Say-Bindung speichern</button>
+  <button class="glow" id="bindsUnbindSayBtn">🔓 Bindung entfernen</button>
+</div>
 
           <!-- SKRIPT CARD -->
           <div id="bindsScriptArea" class="bind-type-area">
-            <input
-              type="text"
-              id="bindsScriptNameInput"
-              placeholder="Skriptname"
-            />
+  <div id="selectedKeyStatusScript" style="background: #ff4444; color: white; padding: 0.3rem 0.8rem; border-radius: 1rem; margin-bottom: 0.8rem; display: inline-block; font-size: 0.8rem;">
+    ⚡ Keine Taste ausgewählt - Klicke auf eine Taste auf der Tastatur
+  </div>
+  <input type="text" id="bindsScriptNameInput" placeholder="Skriptname" />
             <textarea
               id="bindsScriptCommandsArea"
               rows="4"

@@ -44,7 +44,7 @@ function init() {
     window.initKeyboardLayouts();
   }
 
-  // Daten füllen
+ // Daten füllen
   if (typeof fillCategories === "function") fillCategories();
   if (typeof initTheme === "function") initTheme();
 
@@ -61,6 +61,9 @@ function init() {
 
   // Binds Tab initialisieren (enthält bereits Buy, Say, Script)
   if (typeof initBindsTab === "function") initBindsTab();
+  
+  // NEU: Buy Tab separat initialisieren
+  if (typeof initBuyTab === "function") initBuyTab();
 
   // Event-Listener für Config Tab
   const clearAllConfigsBtn = document.getElementById("clearAllConfigsBtn");

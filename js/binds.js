@@ -2,6 +2,7 @@
 let selectedBindKey = null;
 let currentBindType = "buy";
 let showMouseArea = false;
+window.selectedBindKey = null;
 
 // Mapping für russisches Layout: Angezeigter kyrillischer Buchstabe -> CS2-Befehl (englischer Buchstabe)
 const ruToEnKeyMap = {
@@ -39,6 +40,10 @@ const mouseKeys = [
 ];
 
 function initBindsTab() {
+  // Initialisiere globale Variable für die ausgewählte Taste
+  window.selectedBindKey = null;
+  selectedBindKey = null;
+  
   // Stelle sicher, dass mainKeysRows initialisiert ist
   if (typeof mainKeysRows === "undefined" || mainKeysRows.length === 0) {
     if (typeof deKeysRows !== "undefined") {
@@ -58,14 +63,27 @@ function initBindsTab() {
     );
   }
 
+  // Rendere alle Komponenten
   renderBindsKeyboardGrid();
   renderBindsMouseGrid();
   renderBindsBuyCategories();
   renderBindsSavedList();
   renderBindsTemplates();
+  
+  // Event-Listener und andere Initialisierungen
   attachBindsEventListeners();
   attachMouseToggleListener();
   initLayoutDropdown();
+  
+  // Setze initiale Status-Anzeige
+  const statusDiv = document.getElementById("selectedKeyStatus");
+  if (statusDiv) {
+    statusDiv.innerHTML = "⚡ Keine Taste ausgewählt - Klicke auf eine Taste auf der Tastatur";
+    statusDiv.style.background = "#ff4444";
+    statusDiv.style.color = "white";
+  }
+  
+  console.log("✅ Binds Tab initialisiert, window.selectedBindKey =", window.selectedBindKey);
 }
 
 // Hilfsfunktion: Konvertiert einen angezeigten Tastennamen (z.B. kyrillisch) in den CS2-Befehl
@@ -276,11 +294,11 @@ function renderBindsKeyboardGrid() {
     "Print Screen": "PrtSc",
     "Scroll Lock": "Scrlk",
     "Pause Break": "Pause",
-    Insert: "Ins",        // ← Ins statt Insert
+    Insert: "Ins",
     Home: "Home",
-    "Page Up": "PgUp",    // ← PgUp
-    "page down": "PgDn",  // ← PgDn
-    delete: "Del",        // ← Del
+    "Page Up": "PgUp",
+    "page down": "PgDn",
+    delete: "Del",
     end: "End",
     "Num Lock": "Num",
     KP_SLASH: "/",
@@ -299,7 +317,7 @@ function renderBindsKeyboardGrid() {
     KP_7: "7",
     KP_8: "8",
     KP_9: "9",
-};
+  };
 
   // Für jede Position hole die Taste aus dem aktuellen Layout
   keyPositions.forEach((pos) => {
@@ -404,10 +422,36 @@ function renderBindsKeyboardGrid() {
 
     if (!isLocked && bindingKey !== "?") {
       btn.onclick = () => {
+        console.log("Taste geklickt:", bindingKey);
         selectedBindKey = bindingKey;
+        window.selectedBindKey = bindingKey; // Global setzen
+        
+        // Tastatur neu rendern um aktive Taste zu markieren
         renderBindsKeyboardGrid();
         renderBindsMouseGrid();
         updateBindsInputFields();
+        
+        // Aktualisiere auch die Status-Anzeigen in den Tabs
+        const statusDivBuy = document.getElementById("selectedKeyStatus");
+        if (statusDivBuy) {
+          statusDivBuy.innerHTML = `✅ Ausgewählte Taste: "${bindingKey}" - Wähle jetzt deine Items aus oder gib einen Befehl ein`;
+          statusDivBuy.style.background = "var(--accent)";
+          statusDivBuy.style.color = "#0a0a0f";
+        }
+        
+        const statusDivSay = document.getElementById("selectedKeyStatusSay");
+        if (statusDivSay) {
+          statusDivSay.innerHTML = `✅ Ausgewählte Taste: "${bindingKey}" - Gib eine Nachricht ein`;
+          statusDivSay.style.background = "var(--accent)";
+          statusDivSay.style.color = "#0a0a0f";
+        }
+        
+        const statusDivScript = document.getElementById("selectedKeyStatusScript");
+        if (statusDivScript) {
+          statusDivScript.innerHTML = `✅ Ausgewählte Taste: "${bindingKey}" - Erstelle oder wähle ein Skript`;
+          statusDivScript.style.background = "var(--accent)";
+          statusDivScript.style.color = "#0a0a0f";
+        }
       };
     } else {
       btn.onclick = () => {
@@ -473,7 +517,22 @@ function attachMouseToggleListener() {
 }
 
 function updateBindsInputFields() {
-  if (!selectedBindKey) return;
+  const statusDiv = document.getElementById("selectedKeyStatus");
+  
+  if (!selectedBindKey) {
+    if (statusDiv) {
+      statusDiv.innerHTML = "⚡ Keine Taste ausgewählt - Klicke auf eine Taste auf der Tastatur";
+      statusDiv.style.background = "#ff4444";
+      statusDiv.style.color = "white";
+    }
+    return;
+  }
+  
+  if (statusDiv) {
+    statusDiv.innerHTML = `✅ Ausgewählte Taste: "${selectedBindKey}" - Wähle jetzt deine Items aus oder gib einen Befehl ein`;
+    statusDiv.style.background = "var(--accent)";
+    statusDiv.style.color = "#0a0a0f";
+  }
 
   // Buy Input
   const buyInput = document.getElementById("bindsBuyCommandInput");
@@ -563,20 +622,48 @@ function renderBindsBuyItems() {
   categories[currentCat].forEach((it) => {
     let div = document.createElement("div");
     div.className = "weapon-item";
-    div.innerHTML = `<span>${it.name}</span><span class="add-icon">+</span>`;
+    div.dataset.cmd = it.cmd;
+    div.dataset.category = currentCat;
+    
+    // Side-Badge mit Farben (wie bei buyscript.js)
+    let sideBadge = "";
+    if (it.side === "t") {
+      sideBadge = '<span class="side-badge side-t">T-ONLY</span>';
+    } else if (it.side === "ct") {
+      sideBadge = '<span class="side-badge side-ct">CT-ONLY</span>';
+    } else {
+      sideBadge = '<span class="side-badge side-both">BOTH</span>';
+    }
+    
+    div.innerHTML = `
+      <div style="display: flex; flex-direction: column; align-items: flex-start;">
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          ${sideBadge}
+          <span>${it.name}</span>
+        </div>
+        <span style="color: #ffaa44; font-size: 0.7rem;">💰 $${it.price}</span>
+      </div>
+      <span class="add-icon">+</span>
+    `;
+    
     div.onclick = () => {
+      // Verwende selectedBindKey direkt, wie bei Say und Script
       if (!selectedBindKey) {
         alert("Bitte wähle zuerst eine Taste aus!");
         return;
       }
       let cur = document.getElementById("bindsBuyCommandInput").value;
-      let cnt = (
-        cur.match(
-          new RegExp(it.cmd.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi"),
-        ) || []
-      ).length;
-      if (cnt >= it.maxCount) {
-        alert(`Maximal ${it.maxCount} mal erlaubt`);
+      let cnt = (cur.match(new RegExp(it.cmd.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi")) || []).length;
+      
+      let effectiveMax = it.maxCount;
+      if (it.cmd === "buy flashbang") {
+        effectiveMax = 2;
+      } else if (it.cmd.includes("grenade") || it.cmd === "decoy") {
+        effectiveMax = 1;
+      }
+      
+      if (cnt >= effectiveMax) {
+        alert(`Maximal ${effectiveMax} ${effectiveMax === 2 ? 'Flashbangs' : 'mal'} erlaubt`);
         return;
       }
       let n = cur ? cur + "; " + it.cmd : it.cmd;
@@ -587,38 +674,36 @@ function renderBindsBuyItems() {
 }
 
 function bindsSaveBuy() {
-  if (!selectedBindKey) {
-    alert("Bitte wähle zuerst eine Taste aus!");
+  let currentKey = window.selectedBindKey;
+  
+  console.log("bindsSaveBuy - window.selectedBindKey:", currentKey);
+  
+  if (!currentKey) {
+    alert("❌ Bitte wähle zuerst eine Taste auf der Tastatur aus!");
     return;
   }
+  
   let val = document.getElementById("bindsBuyCommandInput").value.trim();
   if (!val) {
-    alert("Bitte gib einen Buy-Befehl ein!");
+    alert("❌ Bitte gib einen Buy-Befehl ein!");
     return;
   }
 
-  const existingType = window.getExistingBindingType
-    ? window.getExistingBindingType(selectedBindKey)
-    : "none";
+  const existingType = window.getExistingBindingType(currentKey);
 
   if (existingType !== "none" && existingType !== "buy") {
     let typeName = existingType === "script" ? "ein Skript" : "einen Say-Bind";
-    if (
-      !confirm(
-        `Taste "${selectedBindKey}" wird bereits für ${typeName} verwendet.\n\nÜberschreiben? Der vorherige Bind wird gelöscht.`,
-      )
-    ) {
+    if (!confirm(`Taste "${currentKey}" wird bereits für ${typeName} verwendet. Überschreiben?`)) {
       return;
     }
-    if (window.removeSpecificBinding)
-      window.removeSpecificBinding(selectedBindKey, existingType);
+    if (window.removeSpecificBinding) window.removeSpecificBinding(currentKey, existingType);
   }
 
   if (window.buyBindings) {
-    window.buyBindings[selectedBindKey] = val;
+    window.buyBindings[currentKey] = val;
     if (window.saveBuy) window.saveBuy();
   }
-  alert(`✅ Buy-Bindung für Taste "${selectedBindKey}" gespeichert!`);
+  alert(`✅ Buy-Bindung für Taste "${currentKey}" gespeichert!`);
   renderBindsKeyboardGrid();
   renderBindsMouseGrid();
   renderBindsSavedList();
@@ -626,31 +711,36 @@ function bindsSaveBuy() {
 }
 
 function bindsSaveSay() {
-  if (!selectedBindKey) {
-    alert("Bitte wähle zuerst eine Taste aus!");
+  let currentKey = selectedBindKey || window.selectedBindKey;
+  
+  console.log("bindsSaveSay aufgerufen, currentKey:", currentKey);
+  
+  if (!currentKey) {
+    alert("❌ Bitte wähle zuerst eine Taste aus, indem du auf eine Taste in der Tastatur klickst!");
     return;
   }
+  
   let msgText = document.getElementById("bindsSayCommandInput").value.trim();
   if (!msgText) {
-    alert("Bitte gib eine Nachricht ein!");
+    alert("❌ Bitte gib eine Nachricht ein!");
     return;
   }
 
   const existingType = window.getExistingBindingType
-    ? window.getExistingBindingType(selectedBindKey)
+    ? window.getExistingBindingType(currentKey)
     : "none";
 
   if (existingType !== "none" && existingType !== "say") {
     let typeName = existingType === "script" ? "ein Skript" : "einen Buy-Bind";
     if (
       !confirm(
-        `Taste "${selectedBindKey}" wird bereits für ${typeName} verwendet.\n\nÜberschreiben? Der vorherige Bind wird gelöscht.`,
+        `Taste "${currentKey}" wird bereits für ${typeName} verwendet.\n\nÜberschreiben? Der vorherige Bind wird gelöscht.`,
       )
     ) {
       return;
     }
     if (window.removeSpecificBinding)
-      window.removeSpecificBinding(selectedBindKey, existingType);
+      window.removeSpecificBinding(currentKey, existingType);
   }
 
   const sayType = document.querySelector(
@@ -659,10 +749,10 @@ function bindsSaveSay() {
   const fullCommand = `${sayType} ${msgText}`;
 
   if (window.sayBindings) {
-    window.sayBindings[selectedBindKey] = fullCommand;
+    window.sayBindings[currentKey] = fullCommand;
     if (window.saveSayBindings) window.saveSayBindings();
   }
-  alert(`✅ Say-Bindung für Taste "${selectedBindKey}" gespeichert!`);
+  alert(`✅ Say-Bindung für Taste "${currentKey}" gespeichert!`);
   renderBindsKeyboardGrid();
   renderBindsMouseGrid();
   renderBindsSavedList();
@@ -670,33 +760,38 @@ function bindsSaveSay() {
 }
 
 function bindsSaveScript() {
-  if (!selectedBindKey) {
-    alert("Bitte wähle zuerst eine Taste aus!");
+  let currentKey = selectedBindKey || window.selectedBindKey;
+  
+  console.log("bindsSaveScript aufgerufen, currentKey:", currentKey);
+  
+  if (!currentKey) {
+    alert("❌ Bitte wähle zuerst eine Taste aus, indem du auf eine Taste in der Tastatur klickst!");
     return;
   }
+  
   let userAliases = document
     .getElementById("bindsScriptCommandsArea")
     .value.trim();
   if (!userAliases) {
-    alert("Bitte gib Skript-Inhalt ein!");
+    alert("❌ Bitte gib Skript-Inhalt ein!");
     return;
   }
 
   const existingType = window.getExistingBindingType
-    ? window.getExistingBindingType(selectedBindKey)
+    ? window.getExistingBindingType(currentKey)
     : "none";
 
   if (existingType !== "none" && existingType !== "script") {
     let typeName = existingType === "buy" ? "einen Buy-Bind" : "einen Say-Bind";
     if (
       !confirm(
-        `Taste "${selectedBindKey}" wird bereits für ${typeName} verwendet.\n\nÜberschreiben? Der vorherige Bind wird gelöscht.`,
+        `Taste "${currentKey}" wird bereits für ${typeName} verwendet.\n\nÜberschreiben? Der vorherige Bind wird gelöscht.`,
       )
     ) {
       return;
     }
     if (window.removeSpecificBinding)
-      window.removeSpecificBinding(selectedBindKey, existingType);
+      window.removeSpecificBinding(currentKey, existingType);
   }
 
   let scriptName =
@@ -710,31 +805,34 @@ function bindsSaveScript() {
 
   let finalContent = `// ${scriptName}\n${cleanAliases}`;
   if (aliasName) {
-    finalContent += `\nbind "${selectedBindKey}" "${aliasName}"`;
+    finalContent += `\nbind "${currentKey}" "${aliasName}"`;
   } else {
     const firstLine = cleanAliases.split("\n")[0];
     if (firstLine && firstLine.includes("alias")) {
       const fallbackMatch = firstLine.match(/alias\s+(\+\w+|\w+)/);
       if (fallbackMatch)
-        finalContent += `\nbind "${selectedBindKey}" "${fallbackMatch[1]}"`;
+        finalContent += `\nbind "${currentKey}" "${fallbackMatch[1]}"`;
     }
   }
 
   if (window.scriptBindings) {
-    window.scriptBindings[selectedBindKey] = finalContent;
+    window.scriptBindings[currentKey] = finalContent;
     if (window.saveScriptBindings) window.saveScriptBindings();
   }
-  alert(`✅ Skript für Taste "${selectedBindKey}" gespeichert!`);
+  alert(`✅ Skript für Taste "${currentKey}" gespeichert!`);
   renderBindsKeyboardGrid();
   renderBindsMouseGrid();
   renderBindsSavedList();
   if (window.refreshFullExport) window.refreshFullExport();
 }
 
-// Ersetze die bindsUnbindCurrent Funktion:
 function bindsUnbindCurrent() {
-  if (!selectedBindKey) {
-    alert("Bitte wähle zuerst eine Taste aus!");
+  let currentKey = selectedBindKey || window.selectedBindKey;
+  
+  console.log("bindsUnbindCurrent aufgerufen, currentKey:", currentKey);
+  
+  if (!currentKey) {
+    alert("❌ Bitte wähle zuerst eine Taste aus, indem du auf eine Taste in der Tastatur klickst!");
     return;
   }
 
@@ -742,31 +840,31 @@ function bindsUnbindCurrent() {
   if (
     currentBindType === "buy" &&
     window.buyBindings &&
-    window.buyBindings[selectedBindKey]
+    window.buyBindings[currentKey]
   ) {
-    delete window.buyBindings[selectedBindKey];
+    delete window.buyBindings[currentKey];
     if (window.saveBuy) window.saveBuy();
     removed = true;
   } else if (
     currentBindType === "say" &&
     window.sayBindings &&
-    window.sayBindings[selectedBindKey]
+    window.sayBindings[currentKey]
   ) {
-    delete window.sayBindings[selectedBindKey];
+    delete window.sayBindings[currentKey];
     if (window.saveSayBindings) window.saveSayBindings();
     removed = true;
   } else if (
     currentBindType === "script" &&
     window.scriptBindings &&
-    window.scriptBindings[selectedBindKey]
+    window.scriptBindings[currentKey]
   ) {
-    delete window.scriptBindings[selectedBindKey];
+    delete window.scriptBindings[currentKey];
     if (window.saveScriptBindings) window.saveScriptBindings();
     removed = true;
   }
 
   if (removed) {
-    alert(`Binding für ${selectedBindKey} (${currentBindType}) entfernt`);
+    alert(`Binding für ${currentKey} (${currentBindType}) entfernt`);
     updateBindsInputFields();
     renderBindsKeyboardGrid();
     renderBindsMouseGrid();
@@ -1105,36 +1203,80 @@ function setBindType(type) {
     )
     .classList.add("active");
   updateBindsInputFields();
+  
+  // Status-Anzeigen zurücksetzen wenn keine Taste ausgewählt
+  const currentKey = selectedBindKey || window.selectedBindKey;
+  if (!currentKey) {
+    const statusDiv = document.getElementById("selectedKeyStatus");
+    if (statusDiv) {
+      statusDiv.innerHTML = "⚡ Keine Taste ausgewählt - Klicke auf eine Taste auf der Tastatur";
+      statusDiv.style.background = "#ff4444";
+      statusDiv.style.color = "white";
+    }
+  }
 }
 
 function attachBindsEventListeners() {
+  // Bind Type Selector
   document
     .querySelectorAll("#bindTypeSelector .main-cat-btn")
     .forEach((btn) => {
-      btn.addEventListener("click", () => setBindType(btn.dataset.bindType));
+      btn.removeEventListener("click", setBindTypeHandler);
+      btn.addEventListener("click", setBindTypeHandler);
     });
 
+  function setBindTypeHandler(e) {
+    setBindType(e.currentTarget.dataset.bindType);
+  }
+
+  // Save Buy Button
   const saveBuyBtn = document.getElementById("bindsSaveBuyBtn");
-  if (saveBuyBtn) saveBuyBtn.addEventListener("click", bindsSaveBuy);
+  if (saveBuyBtn) {
+    saveBuyBtn.removeEventListener("click", bindsSaveBuy);
+    saveBuyBtn.addEventListener("click", bindsSaveBuy);
+  }
 
+  // Unbind Buy Button
   const unbindBuyBtn = document.getElementById("bindsUnbindBuyBtn");
-  if (unbindBuyBtn) unbindBuyBtn.addEventListener("click", bindsUnbindCurrent);
+  if (unbindBuyBtn) {
+    unbindBuyBtn.removeEventListener("click", bindsUnbindCurrent);
+    unbindBuyBtn.addEventListener("click", bindsUnbindCurrent);
+  }
 
+  // Save Say Button
   const saveSayBtn = document.getElementById("bindsSaveSayBtn");
-  if (saveSayBtn) saveSayBtn.addEventListener("click", bindsSaveSay);
+  if (saveSayBtn) {
+    saveSayBtn.removeEventListener("click", bindsSaveSay);
+    saveSayBtn.addEventListener("click", bindsSaveSay);
+  }
 
+  // Unbind Say Button
   const unbindSayBtn = document.getElementById("bindsUnbindSayBtn");
-  if (unbindSayBtn) unbindSayBtn.addEventListener("click", bindsUnbindCurrent);
+  if (unbindSayBtn) {
+    unbindSayBtn.removeEventListener("click", bindsUnbindCurrent);
+    unbindSayBtn.addEventListener("click", bindsUnbindCurrent);
+  }
 
+  // Save Script Button
   const saveScriptBtn = document.getElementById("bindsSaveScriptBtn");
-  if (saveScriptBtn) saveScriptBtn.addEventListener("click", bindsSaveScript);
+  if (saveScriptBtn) {
+    saveScriptBtn.removeEventListener("click", bindsSaveScript);
+    saveScriptBtn.addEventListener("click", bindsSaveScript);
+  }
 
+  // Unbind Script Button
   const unbindScriptBtn = document.getElementById("bindsUnbindScriptBtn");
-  if (unbindScriptBtn)
+  if (unbindScriptBtn) {
+    unbindScriptBtn.removeEventListener("click", bindsUnbindCurrent);
     unbindScriptBtn.addEventListener("click", bindsUnbindCurrent);
+  }
 
+  // Reset All Button
   const resetAllBtn = document.getElementById("bindsResetAllBtn");
-  if (resetAllBtn) resetAllBtn.addEventListener("click", bindsResetAll);
+  if (resetAllBtn) {
+    resetAllBtn.removeEventListener("click", bindsResetAll);
+    resetAllBtn.addEventListener("click", bindsResetAll);
+  }
 
   window.setBuyCategory = function (cat) {
     window.currentBuyCategory = cat;
