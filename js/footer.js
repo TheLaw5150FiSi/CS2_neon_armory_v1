@@ -280,7 +280,7 @@
                 <div style="text-align: center;">
                     <i class="fas fa-check-circle" style="font-size: 3rem; color: #22c55e; margin-bottom: 1rem;"></i>
                     <p><strong>Du hast die aktuelle Version!</strong></p>
-                    <p>Version v1.0.1.1 (Juni 2026)</p>
+                    <p>Version v1.0.2.1 (Juni 2026)</p>
                     <p style="font-size: 0.8rem; opacity: 0.7;">Keine neuen Updates verfügbar.</p>
                     <hr style="border-color: var(--border-color); margin: 1rem 0;">
                     <p style="font-size: 0.75rem;">Besuche GitHub für die neueste Version:<br>
