@@ -58,6 +58,7 @@ function init() {
   // Analyzer und Ping Test
   if (typeof initAnalyzer === "function") initAnalyzer();
   if (typeof initPingTest === "function") initPingTest();
+  if (typeof initCrosshairGenerator === "function") initCrosshairGenerator();
 
   // Binds Tab initialisieren (enthält bereits Buy, Say, Script)
   if (typeof initBindsTab === "function") initBindsTab();

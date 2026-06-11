@@ -12,6 +12,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
     <link rel="stylesheet" href="css/stylesheet.css" />
+    <link rel="stylesheet" href="css/footer.css">
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="img/favicon.png" />
   </head>
@@ -99,15 +100,14 @@
 </div>
 
       <div class="tabs">
-        <button class="tab-btn active" data-tab="bindsTab">🔗 BINDS</button>
-        <button class="tab-btn" data-tab="configTab">⚙️ SETTINGS</button>
-        <button class="tab-btn" data-tab="analyzerTab">
-          📊 SYSTEM ANALYZER
-        </button>
-        <button class="tab-btn" data-tab="pingTab">📡 PING RADAR</button>
-        <button class="tab-btn" data-tab="startTab">🚀 START OPTIONEN</button>
-        <button class="tab-btn" data-tab="exportTab">📦 EXPORT</button>
-        <button class="tab-btn" data-tab="aboutTab">👤 ABOUT ME</button>
+        <button class="tab-btn active" data-tab="bindsTab">BINDS</button>
+        <button class="tab-btn" data-tab="configTab">SETTINGS</button>
+        <button class="tab-btn" data-tab="startTab">START OPTIONEN</button>
+        <button class="tab-btn" data-tab="crosshairTab">CROSSHAIR GENERATOR</button>
+        <button class="tab-btn" data-tab="analyzerTab">SYSTEM ANALYZER</button>
+        <button class="tab-btn" data-tab="pingTab">PING RADAR</button>
+        <button class="tab-btn" data-tab="exportTab">EXPORT</button>
+        <button class="tab-btn" data-tab="aboutTab">ABOUT ME</button>
       </div>
 
 <!-- BINDS TAB -->
@@ -755,6 +755,28 @@
         </div>
       </div>
 
+      <!-- CROSSHAIR GENERATOR TAB -->
+<div id="crosshairTab" class="tab-content">
+  <div class="card">
+    <h2>🎯 CROSSHAIR GENERATOR</h2>
+    <div class="info-hint">🎨 Gestalte dein perfektes Fadenkreuz – Live-Vorschau & fertige CS2-Befehle zum Kopieren</div>
+    
+    <div id="crosshairPreviewContainer">
+      <canvas id="crosshairCanvas" width="800" height="200" style="max-width:100%; height:auto; aspect-ratio:800/200; background: #05080e; border-radius: 16px;"></canvas>
+    </div>
+
+    <div id="crosshairControls">
+      <!-- Wird von JS befüllt -->
+    </div>
+
+    <div class="config-footer" style="margin-top: 1.5rem;">
+      <h3>📋 CS2 Konfigurations-Befehle</h3>
+      <textarea id="crosshairConfigText" rows="5" readonly></textarea>
+      <button id="copyCrosshairBtn" class="glow">📎 Befehle kopieren</button>
+    </div>
+  </div>
+</div>
+
             <!-- EXPORT TAB -->
       <div id="exportTab" class="tab-content">
         <div class="card">
@@ -1141,7 +1163,8 @@
               • System Analyzer<br>
               • Ping-Radar<br>
               • Startoptionen-Generator<br>
-              • Autoexec-Export
+              • Autoexec-Export<br>
+              • Buyscript Preise hinterlegt + Berechnung des Gesamtpreises pro Binding-Taste<br>
             </div>
           </div>
           
@@ -1154,7 +1177,6 @@
               • Workshop-Favoriten verwalten<br>
               • Account-Erstellung (evtl. mit Steam)<br>
               • Utility-Workshop<br>
-              • Buyscript Preise hinzufügen + Berechnung für den Gesamtpreis einer Taste<br>
               • Mehrsprachigkeit (Englisch, Spanisch, etc.)<br>
               • Community-Features (z.B. Teilen von Skripten)<br>
                         
@@ -1163,14 +1185,14 @@
         </div>
 
         <p style="margin-bottom: 0.8rem; line-height: 1.5">
-          Entwickelt wurde CS2 Neon Studio von Michael "TheLaw5150" M., einem leidenschaftlichen CS2-Spieler und Entwickler, der die Defizite bestehender Config-Tools selbst erlebt hat. Viele alte Programme wurden nicht mehr gepflegt, waren optisch veraltet oder unterstützten die neuen Mechaniken von CS2 (wie die geänderte Konsolenlogik oder das neue Kaufmenü) nur unzureichend.
+          Entwickelt wurde CS2 Neon Armory von Michael "TheLaw5150" M., einem leidenschaftlichen CS2-Spieler und Entwickler, der die Defizite bestehender Config-Tools selbst erlebt hat. Viele alte Programme wurden nicht mehr gepflegt, waren optisch veraltet oder unterstützten die neuen Mechaniken von CS2 (wie die geänderte Konsolenlogik oder das neue Kaufmenü) nur unzureichend.
         </p>
         <p style="margin-bottom: 0.8rem; line-height: 1.5">
-          Aus Frustration und dem Drang, etwas Besseres zu schaffen, entstand Neon Studio – mit dem Anspruch auf Benutzerfreundlichkeit, Stabilität und ein modernes Design. Das Projekt wird mit viel Herzblut weiterentwickelt, regelmäßig an CS2-Updates angepasst und richtet sich an Anfänger wie Profis, die ihre Spielerfahrung optimieren möchten, ohne sich in technischen Details zu verlieren.
+          Aus Frustration und dem Drang, etwas Besseres zu schaffen, entstand Neon Armory – mit dem Anspruch auf Benutzerfreundlichkeit, Stabilität und ein modernes Design. Das Projekt wird mit viel Herzblut weiterentwickelt, regelmäßig an CS2-Updates angepasst und richtet sich an Anfänger wie Profis, die ihre Spielerfahrung optimieren möchten, ohne sich in technischen Details zu verlieren.
         </p>
         
         <div style="background: var(--accent); border-radius: 0.8rem; padding: 0.6rem 1rem; margin: 1rem 0; color: #0a0a0f; font-size: 0.85rem;">
-          <strong>👉 Für wen ist CS2 Neon Studio geeignet?</strong><br>
+          <strong>👉 Für wen ist CS2 Neon Armory geeignet?</strong><br>
           • Casual-Spieler, die schnell ihre Lieblingswaffen auf Tasten legen wollen<br>
           • Ambitionierte Ranked-Spieler, die ihre Configs sauber organisieren<br>
           • Team-Captains und Trainer, die einheitliche Setups für mehrere Spieler bereitstellen<br>
@@ -1185,6 +1207,125 @@
       </div>
     </div>
 
+    <!-- ======================== FOOTER ======================== -->
+<footer class="app-footer">
+  <div class="footer-grid">
+    
+    <!-- Spalte 1: Rechtliches -->
+    <div class="footer-col">
+      <h4>📜 Rechtliches</h4>
+      <ul class="footer-links">
+        <li><a href="#" id="openImpressum">📄 Impressum</a></li>
+        <li><a href="#" id="openDatenschutz">🔒 Datenschutzerklärung</a></li>
+        <li><a href="#" id="openNutzungsbedingungen">⚖️ Nutzungsbedingungen</a></li>
+        <li><span class="copyright">© 2025-2026 Michael M. (TheLaw5150)</span></li>
+      </ul>
+    </div>
+    
+    <!-- Spalte 2: Support & Spenden -->
+    <div class="footer-col">
+      <h4>💝 Support</h4>
+      <button id="footerDonationBtn" class="footer-donation-btn">
+        💖 Spenden / Donation
+      </button>
+      <div class="support-links">
+        <a href="#" id="footerDiscordLink">
+          <i class="fab fa-discord"></i> Discord Support
+        </a>
+        <a href="#" id="footerGitHubLink">
+          <i class="fab fa-github"></i> GitHub Projekt
+        </a>
+      </div>
+      <div class="support-note">
+        ⭐ Wenn dir das Tool gefällt, unterstütze die Weiterentwicklung!
+      </div>
+    </div>
+    
+    <!-- Spalte 3: Version & Updates -->
+    <div class="footer-col">
+      <h4>🔄 Version & Updates</h4>
+      <div class="version-badge">v1.0.1.1</div>
+      <div class="build-date">Build: Juni 2026</div>
+      <button id="checkForUpdatesBtn" class="update-check-btn">
+        <i class="fas fa-sync-alt"></i> Nach Updates suchen
+      </button>
+      <a href="#" id="showChangelogLink" class="changelog-link">
+        📝 Changelog anzeigen
+      </a>
+    </div>
+    
+    <!-- Spalte 4: Quick Links (Navigation) -->
+    <div class="footer-col">
+      <h4>🔗 Quick Links</h4>
+      <ul class="footer-links">
+        <li><a href="#" onclick="scrollToTab('bindsTab')">⌨️ Binds erstellen</a></li>
+        <li><a href="#" onclick="scrollToTab('configTab')">⚙️ Configs verwalten</a></li>
+        <li><a href="#" onclick="scrollToTab('crosshairTab')">🎯 Crosshair Generator</a></li>
+        <li><a href="#" onclick="scrollToTab('analyzerTab')">📊 System Analyzer</a></li>
+        <li><a href="#" onclick="scrollToTab('pingTab')">📡 Ping Radar</a></li>
+        <li><a href="#" onclick="scrollToTab('exportTab')">📦 Export & Backup</a></li>
+        <li><a href="#" onclick="scrollToTab('startTab')">🚀 Start Optionen</a></li>
+        <li><a href="#" onclick="scrollToTab('aboutTab')">👤 About Me</a></li>
+      </ul>
+    </div>
+    
+    <!-- Spalte 5: KONTAKTFORMULAR -->
+    <div class="footer-col contact-col">
+      <h4>📧 Kontakt</h4>
+      <form id="footerContactForm" class="contact-form">
+        <div class="form-group">
+          <input type="text" id="contactName" placeholder="Dein Name" required>
+        </div>
+        <div class="form-group">
+          <input type="email" id="contactEmail" placeholder="Deine E-Mail" required>
+        </div>
+        <div class="form-group">
+          <select id="contactSubject" required>
+            <option value="" disabled selected>Betreff wählen</option>
+            <option value="bug">🐛 Bug melden</option>
+            <option value="feature">💡 Feature-Wunsch</option>
+            <option value="question">❓ Frage</option>
+            <option value="support">🆘 Support-Anfrage</option>
+            <option value="other">📝 Sonstiges</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <textarea id="contactMessage" rows="3" placeholder="Deine Nachricht..." required></textarea>
+        </div>
+        <div class="form-group checkbox-group">
+          <label>
+            <input type="checkbox" id="contactCopyToSelf" checked>
+            <span>Kopie an meine E-Mail senden</span>
+          </label>
+        </div>
+        <button type="submit" class="contact-submit-btn">
+          <i class="fas fa-paper-plane"></i> Nachricht senden
+        </button>
+        <div id="contactFormStatus" class="contact-form-status"></div>
+      </form>
+    </div>
+    
+  </div>
+  
+  <!-- Footer Bottom Bar -->
+  <div class="footer-bottom">
+    <div class="disclaimer">
+      <i class="fas fa-info-circle"></i>
+      CS2 Neon Studio ist ein Fan-Projekt und nicht offiziell mit Valve verbunden.
+      Counter-Strike 2 ist eine Marke von Valve Corporation.
+    </div>
+    <div class="status-bar">
+      <span class="status-dot online"></span>
+      <span>Tool Online</span>
+      <span class="status-separator">|</span>
+      <span>💾 Storage: <span id="footerStorageUsed">0</span> KB</span>
+      <span class="status-separator">|</span>
+      <span>⚡ Letzter Export: <span id="lastExportTime">-</span></span>
+    </div>
+  </div>
+</footer>
+
+    <script src="js/footer.js"></script>
     <script src="js/data.js"></script>
     <script src="js/defaultbinds.js"></script>
     <script src="js/theme.js"></script>
@@ -1197,6 +1338,7 @@
     <script src="js/export.js"></script>
     <script src="js/analyzer.js"></script>
     <script src="js/pingtest.js"></script>
+    <script src="js/crosshair.js"></script>
     <script src="js/binds.js"></script>
     <script src="js/donation.js"></script>
     <script src="js/main.js"></script>

@@ -989,52 +989,53 @@ const scriptTemplatesList = [
   },
 ];
 
-// ======================== WAFFENKATEGORIEN ========================
+// ======================== WAFFENKATEGORIEN MIT AMMO-INFOS ========================
 const categories = {
   Pistole: [
-    { name: "Glock-18", cmd: "buy glock", maxCount: 1, price: 200, side: "t" },
-    { name: "USP-S", cmd: "buy usp", maxCount: 1, price: 200, side: "ct" },
-    { name: "P2000", cmd: "buy p2000", maxCount: 1, price: 200, side: "ct" },
-    { name: "P250", cmd: "buy p250", maxCount: 1, price: 300, side: "both" },
-    { name: "Five-SeveN", cmd: "buy fiveseven", maxCount: 1, price: 500, side: "ct" },
-    { name: "Tec-9", cmd: "buy tec9", maxCount: 1, price: 500, side: "t" },
-    { name: "Desert Eagle", cmd: "buy deagle", maxCount: 1, price: 700, side: "both" },
-    { name: "Dual Berettas", cmd: "buy dualberettas", maxCount: 1, price: 400, side: "both" },
-    { name: "CZ75-Auto", cmd: "buy cz75a", maxCount: 1, price: 500, side: "both" }
+    { name: "Glock-18", cmd: "buy glock", maxCount: 1, price: 200, side: "t", magazine: 20, total: 80 },
+    { name: "USP-S", cmd: "buy usp", maxCount: 1, price: 200, side: "ct", magazine: 12, total: 36 },
+    { name: "P2000", cmd: "buy p2000", maxCount: 1, price: 200, side: "ct", magazine: 13, total: 65 },
+    { name: "P250", cmd: "buy p250", maxCount: 1, price: 300, side: "both", magazine: 13, total: 52 },
+    { name: "Five-SeveN", cmd: "buy fiveseven", maxCount: 1, price: 500, side: "ct", magazine: 20, total: 60 },
+    { name: "Tec-9", cmd: "buy tec9", maxCount: 1, price: 500, side: "t", magazine: 18, total: 72 },
+    { name: "Desert Eagle", cmd: "buy deagle", maxCount: 1, price: 700, side: "both", magazine: 7, total: 28 },
+    { name: "Dual Berettas", cmd: "buy dualberettas", maxCount: 1, price: 400, side: "both", magazine: 30, total: 90 },
+    { name: "CZ75-Auto", cmd: "buy cz75a", maxCount: 1, price: 500, side: "both", magazine: 12, total: 36 },
+    { name: "R8 Revolver", cmd: "buy revolver", maxCount: 1, price: 600, side: "both", magazine: 8, total: 24 }
   ],
   "MP / SMG": [
-    { name: "MP9", cmd: "buy mp9", maxCount: 1, price: 1250, side: "ct" },
-    { name: "MAC-10", cmd: "buy mac10", maxCount: 1, price: 1050, side: "t" },
-    { name: "MP7", cmd: "buy mp7", maxCount: 1, price: 1500, side: "both" },
-    { name: "MP5-SD", cmd: "buy mp5sd", maxCount: 1, price: 1500, side: "both" },
-    { name: "UMP-45", cmd: "buy ump", maxCount: 1, price: 1200, side: "both" },
-    { name: "P90", cmd: "buy p90", maxCount: 1, price: 2350, side: "both" },
-    { name: "PP-Bizon", cmd: "buy bizon", maxCount: 1, price: 1400, side: "both" }
+    { name: "MP9", cmd: "buy mp9", maxCount: 1, price: 1250, side: "ct", magazine: 30, total: 90 },
+    { name: "MAC-10", cmd: "buy mac10", maxCount: 1, price: 1050, side: "t", magazine: 30, total: 120 },
+    { name: "MP7", cmd: "buy mp7", maxCount: 1, price: 1500, side: "both", magazine: 30, total: 120 },
+    { name: "MP5-SD", cmd: "buy mp5sd", maxCount: 1, price: 1500, side: "both", magazine: 30, total: 120 },
+    { name: "UMP-45", cmd: "buy ump", maxCount: 1, price: 1200, side: "both", magazine: 25, total: 100 },
+    { name: "P90", cmd: "buy p90", maxCount: 1, price: 2350, side: "both", magazine: 50, total: 200 },
+    { name: "PP-Bizon", cmd: "buy bizon", maxCount: 1, price: 1400, side: "both", magazine: 64, total: 192 }
   ],
   Rifle: [
-    { name: "AK-47", cmd: "buy ak47", maxCount: 1, price: 2700, side: "t" },
-    { name: "M4A4", cmd: "buy m4a4", maxCount: 1, price: 3100, side: "ct" },
-    { name: "M4A1-S", cmd: "buy m4a1", maxCount: 1, price: 3100, side: "ct" },
-    { name: "FAMAS", cmd: "buy famas", maxCount: 1, price: 2050, side: "ct" },
-    { name: "Galil AR", cmd: "buy galilar", maxCount: 1, price: 1800, side: "t" },
-    { name: "SG 553", cmd: "buy sg553", maxCount: 1, price: 3000, side: "t" },
-    { name: "AUG", cmd: "buy aug", maxCount: 1, price: 3300, side: "ct" }
+    { name: "AK-47", cmd: "buy ak47", maxCount: 1, price: 2700, side: "t", magazine: 30, total: 120 },
+    { name: "M4A4", cmd: "buy m4a4", maxCount: 1, price: 3100, side: "ct", magazine: 30, total: 150 },
+    { name: "M4A1-S", cmd: "buy m4a1", maxCount: 1, price: 3100, side: "ct", magazine: 25, total: 85 },
+    { name: "FAMAS", cmd: "buy famas", maxCount: 1, price: 2050, side: "ct", magazine: 25, total: 125 },
+    { name: "Galil AR", cmd: "buy galilar", maxCount: 1, price: 1800, side: "t", magazine: 35, total: 175 },
+    { name: "SG 553", cmd: "buy sg553", maxCount: 1, price: 3000, side: "t", magazine: 30, total: 120 },
+    { name: "AUG", cmd: "buy aug", maxCount: 1, price: 3300, side: "ct", magazine: 30, total: 120 }
   ],
   Sniper: [
-    { name: "AWP", cmd: "buy awp", maxCount: 1, price: 4750, side: "both" },
-    { name: "SSG 08", cmd: "buy ssg08", maxCount: 1, price: 1700, side: "both" },
-    { name: "SCAR-20", cmd: "buy scar20", maxCount: 1, price: 5000, side: "ct" },
-    { name: "G3SG1", cmd: "buy g3sg1", maxCount: 1, price: 5000, side: "t" }
+    { name: "AWP", cmd: "buy awp", maxCount: 1, price: 4750, side: "both", magazine: 5, total: 15 },
+    { name: "SSG 08", cmd: "buy ssg08", maxCount: 1, price: 1700, side: "both", magazine: 10, total: 30 },
+    { name: "SCAR-20", cmd: "buy scar20", maxCount: 1, price: 5000, side: "ct", magazine: 20, total: 60 },
+    { name: "G3SG1", cmd: "buy g3sg1", maxCount: 1, price: 5000, side: "t", magazine: 20, total: 60 }
   ],
   Pumpgun: [
-    { name: "Nova", cmd: "buy nova", maxCount: 1, price: 1050, side: "both" },
-    { name: "XM1014", cmd: "buy xm1014", maxCount: 1, price: 2000, side: "both" },
-    { name: "MAG-7", cmd: "buy mag7", maxCount: 1, price: 1300, side: "ct" },
-    { name: "Sawed-Off", cmd: "buy sawedoff", maxCount: 1, price: 1100, side: "t" }
+    { name: "Nova", cmd: "buy nova", maxCount: 1, price: 1050, side: "both", magazine: 8, total: 40 },
+    { name: "XM1014", cmd: "buy xm1014", maxCount: 1, price: 2000, side: "both", magazine: 7, total: 32 },
+    { name: "MAG-7", cmd: "buy mag7", maxCount: 1, price: 1300, side: "ct", magazine: 5, total: 20 },
+    { name: "Sawed-Off", cmd: "buy sawedoff", maxCount: 1, price: 1100, side: "t", magazine: 7, total: 32 }
   ],
   "Schwere Waffen": [
-    { name: "M249", cmd: "buy m249", maxCount: 1, price: 5200, side: "both" },
-    { name: "Negev", cmd: "buy negev", maxCount: 1, price: 1700, side: "both" }
+    { name: "M249", cmd: "buy m249", maxCount: 1, price: 5200, side: "both", magazine: 100, total: 300 },
+    { name: "Negev", cmd: "buy negev", maxCount: 1, price: 1700, side: "both", magazine: 100, total: 400 }
   ],
   Rüstung: [
     { name: "Kevlar+Helm", cmd: "buy vesthelm", maxCount: 1, price: 1000, side: "both" },

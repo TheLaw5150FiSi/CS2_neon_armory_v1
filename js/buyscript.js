@@ -501,6 +501,15 @@ function renderBuyItems() {
       flashHint = '<span class="flash-hint">(max 2)</span>';
     }
     
+    // AMMO-INFO (nur für Waffen mit magazine/total)
+    let ammoInfo = "";
+    if (it.magazine && it.total) {
+      ammoInfo = `<div class="weapon-ammo">🔫 ${it.magazine}/${it.total} Schuss</div>`;
+    } else if (it.magazine && !it.total) {
+      // Für Shotguns ohne Gesamtangabe
+      ammoInfo = `<div class="weapon-ammo">📦 ${it.magazine} Schuss (Magazin)</div>`;
+    }
+    
     // Waffen-Info
     const weaponInfo = getWeaponInfo(it.name, it.price, it.side);
     
@@ -514,6 +523,7 @@ function renderBuyItems() {
           <span class="weapon-name">${it.name}${flashHint}</span>
         </div>
         <div class="weapon-price">💰 ${it.price}$</div>
+        ${ammoInfo}
         <div class="weapon-description">${weaponInfo}</div>
       </div>
       <button class="weapon-action-btn">${isItemSelected(it) ? '✓ Ausgewählt' : '+ Hinzufügen'}</button>
@@ -522,7 +532,7 @@ function renderBuyItems() {
     grid.appendChild(div);
   });
   
-  // Event-Handler für alle Items
+  // Event-Handler für alle Items (bleibt gleich)
   const allItems = document.querySelectorAll("#itemsGrid .weapon-item");
   allItems.forEach(div => {
     const cmd = div.dataset.cmd;
@@ -568,7 +578,6 @@ function renderBuyItems() {
 }
 
 // Funktion zur Konvertierung von Waffennamen in Bild-Dateinamen
-// Funktion zur Konvertierung von Waffennamen in Bild-Dateinamen
 function getWeaponImageName(weaponName) {
   const imageMapping = {
     // ======================== PISTOLEN ========================
@@ -581,6 +590,7 @@ function getWeaponImageName(weaponName) {
     "Desert Eagle": "deagle.webp",
     "Dual Berettas": "dual_beretta.webp",
     "CZ75-Auto": "cz.webp",
+    "R8 Revolver": "revolver.webp",
     
     // ======================== SMGs ========================
     "MP9": "mp9.webp",
@@ -620,7 +630,7 @@ function getWeaponImageName(weaponName) {
     "Kevlar+Helm": "kevlar_helmet.png",
     "Kevlar": "kevlar_vest.png",
     "Defuser": "defuser.png",
-    "Taser": "zeus_x22.png",
+    "Taser": "zeus_x27.png",
     
     // ======================== GRENADES ========================
     "HE Grenade": "high_explosive.png",
@@ -638,49 +648,49 @@ function getWeaponImageName(weaponName) {
 function getWeaponInfo(weaponName, price, side) {
   const weaponInfos = {
     // Pistolen
-    "Glock-18": "Standard-Terroristen-Pistole. Ausgezeichnete Genauigkeit beim ersten Schuss, moderate Feuerrate. 20 Schuss Magazin.",
-    "USP-S": "Standard-CT-Pistole mit Schalldämpfer. Extrem präzise, hohe Penetration. 12/24 Schuss.",
-    "P2000": "Alternative CT-Startpistole. Gute Balance zwischen Genauigkeit und Feuerrate. 13/52 Schuss.",
-    "P250": "Günstige Upgrade-Pistole für beide Seiten. Hohe Penetration, gut gegen Rüstung. 13/26 Schuss.",
-    "Five-SeveN": "CT-Pistole mit 20 Schuss Magazin. Hohe Feuerrate, gute Genauigkeit. Ideal für Eco-Rounds.",
-    "Tec-9": "T-Pistole mit 24 Schuss Magazin. Hohe Mobilität, gut für Run-and-Gun. Perfekt für Eco-Rushes.",
-    "Desert Eagle": "High-Risk-High-Reward Pistole. Ein Schuss Kopf = Tod, auch mit Helm. 7/35 Schuss.",
-    "Dual Berettas": "Zwei Pistolen mit 30 Schuss Magazin. Hohe Feuerrate, aber geringe Genauigkeit. 30/120 Schuss.",
-    "CZ75-Auto": "Automatische Pistole. Hohe Feuerrate, kleines Magazin (12/12). Gut für Nahkämpfe.",
+    "Glock-18": "Standard-Terroristen-Pistole. Ausgezeichnete Genauigkeit beim ersten Schuss, moderate Feuerrate.",
+    "USP-S": "Standard-CT-Pistole mit Schalldämpfer. Extrem präzise, hohe Penetration.",
+    "P2000": "Alternative CT-Startpistole. Gute Balance zwischen Genauigkeit und Feuerrate.",
+    "P250": "Günstige Upgrade-Pistole für beide Seiten. Hohe Penetration, gut gegen Rüstung.",
+    "Five-SeveN": "CT-Pistole. Hohe Feuerrate, gute Genauigkeit. Ideal für Eco-Rounds.",
+    "Tec-9": "T-Pistole. Hohe Mobilität, gut für Run-and-Gun. Perfekt für Eco-Rushes.",
+    "Desert Eagle": "High-Risk-High-Reward Pistole. Ein Schuss Kopf = Tod, auch mit Helm.",
+    "Dual Berettas": "Zwei Pistolen mit 30 Schuss Magazin. Hohe Feuerrate, aber geringe Genauigkeit.",
+    "CZ75-Auto": "Automatische Pistole. Hohe Feuerrate, kleines Magazin. Gut für Nahkämpfe.",
     
     // SMGs
-    "MP9": "CT-SMG. Hohe Feuerrate, gute Mobilität. 30 Schuss Magazin. Ideal für Anti-Eco.",
-    "MAC-10": "T-SMG. Sehr hohe Feuerrate, gute Bewegungswerte. 30 Schuss. Perfekt für Rushes.",
-    "MP7": "Ausgewogene SMG. Gute Genauigkeit, moderate Feuerrate. 30 Schuss. Für beide Seiten.",
-    "MP5-SD": "SMG mit integriertem Schalldämpfer. Sehr leise, gute Kontrolle. 30 Schuss.",
-    "UMP-45": "Budget-SMG mit hohem Schaden. 25 Schuss. Gut gegen ungerüstete Gegner.",
-    "P90": "High-Capacity SMG. 50 Schuss Magazin, hohe Feuerrate. Ideal für Spray-and-Pray.",
-    "PP-Bizon": "64 Schuss Magazin. Niedriger Schaden, aber riesiges Magazin. Gut für Suppression.",
+    "MP9": "CT-SMG. Hohe Feuerrate, gute Mobilität. Ideal für Anti-Eco.",
+    "MAC-10": "T-SMG. Sehr hohe Feuerrate, gute Bewegungswerte. Perfekt für Rushes.",
+    "MP7": "Ausgewogene SMG. Gute Genauigkeit, moderate Feuerrate. Für beide Seiten.",
+    "MP5-SD": "SMG mit integriertem Schalldämpfer. Sehr leise, gute Kontrolle.",
+    "UMP-45": "Budget-SMG mit hohem Schaden. Gut gegen ungerüstete Gegner.",
+    "P90": "High-Capacity SMG., hohe Feuerrate. Ideal für Spray-and-Pray.",
+    "PP-Bizon": "Niedriger Schaden, aber riesiges Magazin. Gut für Suppression.",
     
     // Rifles
-    "AK-47": "T-Standardgewehr. Hoher Schaden, 30 Schuss. Ein Kopfschuss = Tod. Beste Rifle für T-Seite.",
-    "M4A4": "CT-Standardgewehr. 30 Schuss, gute Feuerrate. Ausgewogene Performance.",
-    "M4A1-S": "CT-Gewehr mit Schalldämpfer. 25 Schuss, hohe Genauigkeit. Geringeres Spraymuster.",
-    "FAMAS": "Budget-CT-Gewehr. 25 Schuss, 3-Round-Burst-Modus. Gut für Eco/Force-Buys.",
-    "Galil AR": "Budget-T-Gewehr. 35 Schuss Magazin. Solide Alternative zur AK bei wenig Geld.",
-    "SG 553": "T-Gewehr mit Scope. Hohe Genauigkeit, 30 Schuss. Gute Alternative zur AK.",
-    "AUG": "CT-Gewehr mit Scope. Hohe Genauigkeit, 30 Schuss. Ausgezeichnet für lange Distanzen.",
+    "AK-47": "T-Standardgewehr. Hoher Schaden. Ein Kopfschuss = Tod. Beste Rifle für T-Seite.",
+    "M4A4": "CT-Standardgewehr. gute Feuerrate. Ausgewogene Performance.",
+    "M4A1-S": "CT-Gewehr mit Schalldämpfer.Hohe Genauigkeit. Geringeres Spraymuster.",
+    "FAMAS": "Budget-CT-Gewehr. 3-Round-Burst-Modus. Gut für Eco/Force-Buys.",
+    "Galil AR": "Budget-T-Gewehr. Solide Alternative zur AK bei wenig Geld.",
+    "SG 553": "T-Gewehr mit Scope. Hohe Genauigkeit. Gute Alternative zur AK.",
+    "AUG": "CT-Gewehr mit Scope. Hohe Genauigkeit. Ausgezeichnet für lange Distanzen.",
     
     // Snipers
-    "AWP": "Einschussgewehr. Ein Treffer in Brust/Bein = Tod. 5/30 Schuss. Beste Sniper in CS2.",
-    "SSG 08": "Budget-Sniper (Scout). Hohe Mobilität, 10 Schuss. Zwei Körpertreffer zum Kill.",
-    "SCAR-20": "CT-Autosniper. Halbautomatisch, 20 Schuss. Hoher Schaden, aber teuer.",
-    "G3SG1": "T-Autosniper. Halbautomatisch, 20 Schuss. Ähnlich wie SCAR-20 für T-Seite.",
+    "AWP": "Einschussgewehr. Ein Treffer in Brust/Bein = Tod. Beste Sniper in CS2.",
+    "SSG 08": "Budget-Sniper (Scout). Hohe Mobilität. Zwei Körpertreffer zum Kill.",
+    "SCAR-20": "CT-Autosniper. Halbautomatisch. Hoher Schaden, aber teuer.",
+    "G3SG1": "T-Autosniper. Halbautomatisch. Ähnlich wie SCAR-20 für T-Seite.",
     
     // Shotguns
     "Nova": "Budget-Shotgun. 8 Schuss, hoher Nahkampfschaden. Gut für Nahbereichs-Eco-Rounds.",
-    "XM1014": "Halbautomatische Shotgun. 7 Schuss, hohe Feuerrate. Gut für Nahkämpfe.",
-    "MAG-7": "CT-Shotgun. 5 Schuss, extrem hoher Schaden auf kurze Distanz. 1 Schuss Kill.",
-    "Sawed-Off": "T-Shotgun. 8 Schuss, hoher Schaden. Perfekt für enge Räume/Ecken.",
+    "XM1014": "Halbautomatische Shotgun. Hohe Feuerrate. Gut für Nahkämpfe.",
+    "MAG-7": "CT-Shotgun. Extrem hoher Schaden auf kurze Distanz. 1 Schuss Kill.",
+    "Sawed-Off": "T-Shotgun. Hoher Schaden. Perfekt für enge Räume/Ecken.",
     
     // Heavy
-    "M249": "Schweres MG. 100 Schuss Magazin, hoher Schaden. Sehr teuer, ungenau.",
-    "Negev": "Suppression-MG. 150 Schuss, wird mit der Zeit genauer. Perfekt für Spam.",
+    "M249": "Schweres MG. Hoher Schaden. Sehr teuer, ungenau.",
+    "Negev": "Suppression-MG. Wird mit der Zeit genauer. Perfekt für Spam.",
     
     // Equipment
     "Kevlar+Helm": "Komplette Rüstung. Reduziert Schaden an Körper und Kopf. Unverzichtbar.",
