@@ -1,5 +1,5 @@
 // ======================== FOOTER MODULE ========================
-// CS2 Neon Studio - Footer Komponente
+// CS2 Neon Armory - Footer Komponente
 // Version: 1.0.1.1 | Datum: Juni 2026
 
 (function () {
@@ -149,7 +149,7 @@
                 <p>Michael M. (TheLaw5150) - Kontakt siehe Impressum</p>
                 
                 <h4>2. Keine Datenerhebung durch das Tool</h4>
-                <p>CS2 Neon Studio speichert folgende Daten <strong>AUSSCHLIESSLICH LOKAL</strong> in deinem Browser (localStorage):</p>
+                <p>CS2 Neon Armory speichert folgende Daten <strong>AUSSCHLIESSLICH LOKAL</strong> in deinem Browser (localStorage):</p>
                 <ul>
                     <li>Buy-Bindings</li>
                     <li>Say-Bindings</li>
@@ -186,7 +186,7 @@
                 <h3 style="color: var(--accent); margin-bottom: 1rem;">⚖️ Nutzungsbedingungen</h3>
                 
                 <h4>1. Kostenlose Nutzung</h4>
-                <p>CS2 Neon Studio ist ein kostenloses Tool. Die Nutzung erfolgt auf eigene Gefahr.</p>
+                <p>CS2 Neon Armory ist ein kostenloses Tool. Die Nutzung erfolgt auf eigene Gefahr.</p>
                 
                 <h4>2. Haftungsausschluss</h4>
                 <p>Der Entwickler übernimmt keine Haftung für Schäden, die durch die Nutzung des Tools entstehen.</p>
@@ -284,7 +284,7 @@
                     <p style="font-size: 0.8rem; opacity: 0.7;">Keine neuen Updates verfügbar.</p>
                     <hr style="border-color: var(--border-color); margin: 1rem 0;">
                     <p style="font-size: 0.75rem;">Besuche GitHub für die neueste Version:<br>
-                    <a href="https://github.com/TheLaw5150FiSi/cs2-neon-studio" target="_blank" style="color: var(--accent);">github.com/TheLaw5150FiSi/cs2-neon-studio</a></p>
+                    <a href="https://github.com/TheLaw5150FiSi/CS2_neon_armory_v1" target="_blank" style="color: var(--accent);">github.com/TheLaw5150FiSi/CS2_neon_armory_v1</a></p>
                 </div>
             `,
       );
@@ -362,7 +362,7 @@ Datum: ${new Date().toLocaleString()}
         const userMailBody = `
 Hallo ${name},
 
-vielen Dank für deine Nachricht an CS2 Neon Studio!
+vielen Dank für deine Nachricht an CS2 Neon Armory!
 
 Deine Nachricht:
 "${message}"
@@ -540,7 +540,7 @@ Michael (TheLaw5150)
       githubLink.addEventListener("click", (e) => {
         e.preventDefault();
         window.open(
-          "https://github.com/TheLaw5150FiSi/cs2-neon-studio",
+          "https://github.com/TheLaw5150FiSi/CS2_neon_armory_v1",
           "_blank",
         );
       });
