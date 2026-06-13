@@ -16,6 +16,7 @@ function initDropdownTabs() {
   // Wiki / DATENBANK Dropdown
   const wikiBtn = document.getElementById("wikiDropdownBtn");
   const wikiDropdown = document.getElementById("wikiDropdownContent");
+  
 
   // Alle Dropdowns
   const dropdowns = [
@@ -193,15 +194,12 @@ if (typeof initWeaponsDB === "function") initWeaponsDB();
   // Binds Tab initialisieren
   if (typeof initBindsTab === "function") initBindsTab();
 
-<<<<<<< HEAD
-  // Live-Berechnung für Buy-Bindings initialisieren
-  if (typeof initBuyLiveListener === "function") initBuyLiveListener();
-=======
   // Buy Tab initialisieren
   if (typeof initBuyTab === "function") initBuyTab();
 
+  if (typeof initMapHub === "function") initMapHub();
+
   
->>>>>>> 38331c4ea550edcc13a34938b3a1f1ebfe97acf8
 
   // Event-Listener für Config Tab
   const clearAllConfigsBtn = document.getElementById("clearAllConfigsBtn");

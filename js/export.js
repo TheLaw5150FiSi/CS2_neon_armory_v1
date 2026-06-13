@@ -12,10 +12,7 @@ function generateFullExport() {
   out += "// ==========================================\n\n";
 
   // ========== 1. DEFAULT BINDS (CS2 Standard) ==========
-  if (
-    window.cs2DefaultBinds &&
-    Object.keys(window.cs2DefaultBinds).length > 0
-  ) {
+  if (window.cs2DefaultBinds && Object.keys(window.cs2DefaultBinds).length > 0) {
     out += "// ========== ⭐ DEFAULT BINDS (CS2 Standard) ==========\n";
     out += "// Diese Tasten sind standardmäßig in CS2 belegt\n";
     out += "// Werden von benutzerdefinierten Bindings überschrieben\n";
@@ -80,10 +77,7 @@ function generateFullExport() {
   }
 
   // ========== 5. CONFIG BEFEHLE ==========
-  if (
-    typeof globalConfigCommands !== "undefined" &&
-    globalConfigCommands.length > 0
-  ) {
+  if (typeof globalConfigCommands !== "undefined" && globalConfigCommands.length > 0) {
     out += "// ========== ⚙️ CONFIG BEFEHLE ==========\n";
     for (let cmd of globalConfigCommands) {
       out += `${cmd}\n`;

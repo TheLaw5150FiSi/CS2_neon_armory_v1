@@ -215,46 +215,57 @@
   // ======================== CHANGELOG ========================
 
   function showChangelog() {
-    const modalContent = `
-            <div style="max-width: 550px;">
-                <h3 style="color: var(--accent); margin-bottom: 1rem;">📝 Changelog v1.0.1.1</h3>
-                
-                <h4>🆕 Neue Features (Juni 2026):</h4>
-                <ul>
-                    <li>Buy-Binds mit Preisanzeige und Gegenüberstellung T/CT</li>
-                    <li>Verbesserte Grid-Tastatur mit allen Tasten (DE/US Layout)</li>
-                    <li>Crosshair Generator mit Live-Vorschau</li>
-                    <li>System Analyzer mit CPU/GPU-Datenbank</li>
-                    <li>Ping Radar mit Verlauf und Tabellenansicht</li>
-                    <li>Startoptionen-Generator mit Hardware-Erkennung</li>
-                    <li>Theme-Dropdown mit 5 Farbvarianten</li>
-                    <li>Footer mit Kontaktformular und Rechtlichem</li>
-                </ul>
-                
-                <h4>🐛 Behobene Fehler:</h4>
-                <ul>
-                    <li>Layout-Wechsel zwischen DE/US funktioniert korrekt</li>
-                    <li>NumPad-Tasten werden richtig angezeigt</li>
-                    <li>Script-Bindings mit Aliasen funktionieren</li>
-                    <li>Flashbang-Zyklus (0 → 1 → 2 → 0) implementiert</li>
-                    <li>Storage-Info wird korrekt angezeigt</li>
-                </ul>
-                
-                <h4>📅 Geplante Features (Roadmap):</h4>
-                <ul>
-                    <li>Quick Buy Presets (1-Tasten-Kits)</li>
-                    <li>Config-Backup Funktion mit Mehrfach-Speicherung</li>
-                    <li>Workshop-Map Links und Sammlung</li>
-                    <li>Practice Mode Shortcuts</li>
-                    <li>JSON Import/Export für alle Daten</li>
-                </ul>
-                
-                <hr style="border-color: var(--border-color); margin: 1rem 0;">
-                <p><small>Letztes Update: Juni 2026 | Nächste Version: v1.1.0 geplant für Juli 2026</small></p>
-            </div>
-        `;
-    showModalDialog("Changelog", modalContent);
-  }
+  const modalContent = `
+    <div style="max-width: 550px;">
+      <h3 style="color: var(--accent); margin-bottom: 1rem;">📝 Changelog v1.0.2.1</h3>
+      
+      <h4>🆕 Neue Features (Juni 2026):</h4>
+      <ul>
+        <li>🗺️ <strong>KARTEN HUB</strong> – Zentraler Map-Guide mit Callouts, Utility, Off-Angles, Strategien & Boosts</li>
+        <li>🎯 <strong>Crosshair Generator</strong> – Live-Vorschau mit Map-Hintergründen & Pfeil-Navigation</li>
+        <li>📊 <strong>System Analyzer</strong> – Performance-Score basierend auf CPU, GPU & RAM</li>
+        <li>📡 <strong>Ping Radar</strong> – Latenz-Test für alle CS2-Server-Regionen mit Verlauf</li>
+        <li>🚀 <strong>Startoptionen-Generator</strong> – Hardware-Erkennung für optimale CS2-Startoptionen</li>
+        <li>🛒 <strong>BuyScript</strong> – T/CT Gegenüberstellung mit Preisen & Flashbang-Zyklus (0 → 1 → 2 → 0)</li>
+        <li>⌨️ <strong>Grid-Tastatur</strong> – Originalgetreues Layout mit DE/US Umschaltung</li>
+        <li>🎨 <strong>Theme-Dropdown</strong> – 5 Farbvarianten (Pink, Rot, Gelb, Grün, Blau)</li>
+        <li>📦 <strong>All-in-One Export</strong> – autoexec.cfg mit allen Bindings, Configs & Crosshair</li>
+        <li>🔫 <strong>Waffenübersicht</strong> – Detaillierte Statistiken & Vergleichsfunktion</li>
+        <li>💰 <strong>Economy Guide</strong> – Umfassender Guide mit Rechner & Pro-Tipps</li>
+        <li>📧 <strong>Kontaktformular</strong> – Direkter Kontakt im Footer</li>
+      </ul>
+      
+      <h4>🐛 Behobene Fehler:</h4>
+      <ul>
+        <li>Layout-Wechsel zwischen DE/US funktioniert korrekt</li>
+        <li>NumPad-Tasten werden richtig angezeigt</li>
+        <li>Script-Bindings mit Aliasen funktionieren zuverlässig</li>
+        <li>Doppelte Config-Befehle im Export behoben</li>
+        <li>Crosshair-Vorschau mit Map-Hintergründen läuft stabil</li>
+        <li>Storage-Info wird korrekt berechnet</li>
+      </ul>
+      
+      <h4>📅 Geplante Features (Roadmap):</h4>
+      <ul>
+        <li>🎨 <strong>Skin Datenbank</strong> – Vollständige Skins-Datenbank mit Preisen & Inspect-Links</li>
+        <li>📰 <strong>CS2 News Feed</strong> – Aktuelle Updates & Patch-Notes</li>
+        <li>⚙️ <strong>Pro Player Setups</strong> – Settings & Configs der Profis</li>
+        <li>🤝 <strong>Community-Features</strong> – Skripte teilen & bewerten</li>
+        <li>🔄 <strong>Config-Backup</strong> – Mehrfach-Speicherung & Wiederherstellung</li>
+        <li>🌍 <strong>Mehrsprachigkeit</strong> – Englisch, Spanisch, Französisch</li>
+        <li>🧠 <strong>CS2 Taktik-Tool</strong> – Smokes, Lineups & Utility-Workshop</li>
+        <li>📊 <strong>Integrierter Server Browser</strong></li>
+        <li>🔐 <strong>Account-System</strong> – Optional mit Steam-Login</li>
+        <li>🎮 <strong>Practice Mode Shortcuts</strong> – Für Trainings-Sessions</li>
+      </ul>
+      
+      <hr style="border-color: var(--border-color); margin: 1rem 0;">
+      <p><small>📅 Letztes Update: Juni 2026 | 🚀 Nächste Version: v1.1.0 geplant für Juli 2026</small></p>
+      <p><small>💡 <strong>Tipp:</strong> Du kannst über "Startoptionen" und "Crosshair Generator" deine Config direkt personalisieren!</small></p>
+    </div>
+  `;
+  showModalDialog("Changelog", modalContent);
+}
 
   // ======================== UPDATE CHECK ========================
 

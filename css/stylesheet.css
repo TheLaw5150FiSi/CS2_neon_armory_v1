@@ -1206,46 +1206,6 @@ button.glow:hover {
   font-weight: bold;
 }
 
-.history-average {
-  background: rgba(var(--accent-rgb, 255, 68, 204), 0.15);
-  border-left: 3px solid var(--accent);
-  margin-top: 0.3rem;
-}
-
-.history-average .history-time {
-  color: var(--accent);
-  font-weight: bold;
-}
-
-.ping-result {
-  background: var(--btn-bg);
-  border-radius: 0.8rem;
-  margin-bottom: 0.5rem;
-  transition: 0.1s;
-}
-
-.ping-excellent {
-  border-left: 4px solid #00ff66;
-  background: rgba(0, 255, 102, 0.05);
-}
-.ping-good {
-  border-left: 4px solid #aaff66;
-  background: rgba(170, 255, 102, 0.05);
-}
-.ping-ok {
-  border-left: 4px solid #ffaa66;
-  background: rgba(255, 170, 102, 0.05);
-}
-.ping-bad {
-  border-left: 4px solid #ff6666;
-  background: rgba(255, 102, 102, 0.05);
-}
-.ping-timeout {
-  border-left: 4px solid #666666;
-  background: rgba(102, 102, 102, 0.05);
-  opacity: 0.7;
-}
-
 /* Tabellen-Styling */
 #pingHistory table {
   font-family: monospace;
@@ -1264,7 +1224,6 @@ button.glow:hover {
   background: rgba(255, 255, 255, 0.05);
 }
 
-/* Tabelle scrollbar auf kleinen Bildschirmen */
 @media (max-width: 768px) {
   #pingHistory {
     font-size: 0.7rem;
@@ -1450,12 +1409,13 @@ button.glow:hover {
   background: radial-gradient(circle at 35% 25%, #2d323e, #1b1f29);
   border: none;
   border-radius: 8px;
-  box-shadow: 0 2px 0 #0a0c10, inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 2px 0 #0a0c10,
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
   color: #eef2ff;
   font-family: "Segoe UI", "Roboto", monospace;
   font-weight: 600;
   font-size: 10px;
-  /* text-transform: lowercase;  <- DIESE ZEILE LÖSCHEN ODER AUSKOMMENTIEREN */
   cursor: pointer;
   transition: all 0.05s linear;
   display: flex;
@@ -1499,6 +1459,19 @@ button.glow:hover {
   box-shadow: 0 2px 0 #003300;
   color: white;
   text-shadow: 0 0 2px rgba(255, 255, 255, 0.5);
+}
+
+.app__key--bound-default {
+  background: radial-gradient(circle at 35% 25%, #cc9900, #997700);
+  box-shadow: 0 2px 0 #664400;
+  color: white;
+  text-shadow: 0 0 2px rgba(255, 255, 255, 0.5);
+}
+
+.app__key--bound-default:hover {
+  box-shadow:
+    0 0 12px #ffcc33,
+    0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 /* Gesperrte Tasten (ESC, Win) */
@@ -1571,6 +1544,18 @@ button.glow:hover {
   background: radial-gradient(circle at 35% 25%, #2a882a, #0a550a);
 }
 
+.mouse-key--bound-default {
+  background: radial-gradient(circle at 35% 25%, #cc9900, #997700);
+  box-shadow: 0 2px 0 #664400;
+  color: white;
+}
+
+.mouse-key--bound-default:hover {
+  box-shadow:
+    0 0 12px #ffcc33,
+    0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
 /* Toggle-Button */
 #toggleMouseArea {
   margin-top: 1rem;
@@ -1602,25 +1587,31 @@ button.glow:hover {
 
 /* ======================== HOVER EFFEKT ======================== */
 
-/* Hover-Effekt für alle Tasten */
-.app__key:hover {
+.app__key:hover,
+.mouse-key:hover {
   transform: translateY(-2px) scale(1.05);
   filter: brightness(1.2);
   transition: all 0.1s ease;
   z-index: 10;
+  box-shadow:
+    0 0 12px var(--accent-glow),
+    0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-.app__key:active {
+.app__key:active,
+.mouse-key:active {
   transform: translateY(1px) scale(0.98);
 }
 
 /* Gebundene Tasten Hover */
 .app__key--bound-buy:hover,
 .app__key--bound-script:hover,
-.app__key--bound-say:hover {
+.app__key--bound-say:hover,
+.mouse-key--bound-buy:hover,
+.mouse-key--bound-script:hover,
+.mouse-key--bound-say:hover {
   transform: translateY(-2px) scale(1.05);
   filter: brightness(1.15);
-  transition: all 0.1s ease;
 }
 
 /* Gesperrte Tasten - kein Hover-Effekt */
@@ -1634,143 +1625,26 @@ button.glow:hover {
   cursor: not-allowed;
 }
 
-/* Maus-Tasten Hover-Effekt */
-.mouse-key:hover {
-  transform: translateY(-2px) scale(1.05);
-  filter: brightness(1.2);
-  transition: all 0.1s ease;
-}
-
-.mouse-key:active {
-  transform: translateY(1px) scale(0.98);
-}
-
-/* Gebundene Maus-Tasten Hover */
-.mouse-key--bound-buy:hover,
-.mouse-key--bound-script:hover,
-.mouse-key--bound-say:hover {
-  transform: translateY(-2px) scale(1.05);
-  filter: brightness(1.15);
-}
-
-/* Leuchtender Glow beim Hover für alle Tasten */
-.app__key:hover,
-.mouse-key:hover {
-  box-shadow:
-    0 0 12px var(--accent-glow),
-    0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
 /* Spezifische Hover-Farben für gebundene Tasten */
-.app__key--bound-buy:hover {
-  box-shadow:
-    0 0 12px #ff0000,
-    0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-.app__key--bound-script:hover {
-  box-shadow:
-    0 0 12px #2288dd,
-    0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-.app__key--bound-say:hover {
-  box-shadow:
-    0 0 12px #44cc44,
-    0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-/* Maus-Tasten Hover Glow */
+.app__key--bound-buy:hover,
 .mouse-key--bound-buy:hover {
   box-shadow:
     0 0 12px #ff0000,
     0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
+.app__key--bound-script:hover,
 .mouse-key--bound-script:hover {
   box-shadow:
     0 0 12px #2288dd,
     0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
+.app__key--bound-say:hover,
 .mouse-key--bound-say:hover {
   box-shadow:
     0 0 12px #44cc44,
     0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-/* STANDARD CS2 BINDS - GELB */
-.key.bound-default,
-.numpad-key.bound-default {
-  background: #cc9900;
-  border-color: #ffcc33;
-  box-shadow: 0 0 4px #ffcc33;
-}
-
-body.theme-pink .key.bound-default,
-body.theme-pink .numpad-key.bound-default {
-  background: #cc9900;
-  border-color: #ffcc33;
-  box-shadow: 0 0 4px #ffcc33;
-}
-
-body.theme-red .key.bound-default,
-body.theme-red .numpad-key.bound-default {
-  background: #cc9900;
-  border-color: #ffcc33;
-  box-shadow: 0 0 4px #ffcc33;
-}
-
-body.theme-yellow .key.bound-default,
-body.theme-yellow .numpad-key.bound-default {
-  background: #997700;
-  border-color: #ffcc33;
-  box-shadow: 0 0 4px #ffaa00;
-}
-
-body.theme-green .key.bound-default,
-body.theme-green .numpad-key.bound-default {
-  background: #998800;
-  border-color: #ddbb33;
-  box-shadow: 0 0 4px #ddbb33;
-}
-
-body.theme-blue .key.bound-default,
-body.theme-blue .numpad-key.bound-default {
-  background: #998800;
-  border-color: #ddbb33;
-  box-shadow: 0 0 4px #ddbb33;
-}
-
-/* Hover für Default-Tasten */
-.key.bound-default:hover,
-.numpad-key.bound-default:hover {
-  filter: brightness(1.15);
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 0 12px #ffcc33, 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-/* Standard CS2 Binds - Gelb für Grid-Tastatur */
-.app__key--bound-default {
-  background: radial-gradient(circle at 35% 25%, #cc9900, #997700);
-  box-shadow: 0 2px 0 #664400;
-  color: white;
-  text-shadow: 0 0 2px rgba(255, 255, 255, 0.5);
-}
-
-.app__key--bound-default:hover {
-  box-shadow: 0 0 12px #ffcc33, 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-/* Standard CS2 Binds für Maus-Tasten - Gelb */
-.mouse-key--bound-default {
-  background: radial-gradient(circle at 35% 25%, #cc9900, #997700);
-  box-shadow: 0 2px 0 #664400;
-  color: white;
-}
-
-.mouse-key--bound-default:hover {
-  box-shadow: 0 0 12px #ffcc33, 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 /* ======================== THEME DROPDOWN ======================== */
@@ -1995,12 +1869,6 @@ body.theme-blue .numpad-key.bound-default {
   border-top: 1px solid var(--border-color);
   color: var(--accent-light);
 }
-<<<<<<< HEAD
-@keyframes fadeOut {
-  0% { opacity: 1; transform: translateX(0); }
-  70% { opacity: 1; transform: translateX(0); }
-  100% { opacity: 0; transform: translateX(20px); }
-=======
 
 /* ======================== WAFFEN-ITEMS MIT BILDERN ======================== */
 
@@ -2230,42 +2098,20 @@ body.theme-blue .numpad-key.bound-default {
   #itemsGrid {
     grid-template-columns: 1fr;
   }
-  
+
   .weapon-item {
     flex-wrap: wrap;
   }
-  
+
   .weapon-image {
     width: 60px;
     height: 45px;
   }
-  
+
   .weapon-action-btn {
     margin-top: 0.3rem;
     width: 100%;
   }
-}
-
-/* Waffenbild */
-.weapon-image {
-  width: 80px;
-  height: 60px;
-  flex-shrink: 0;
-  background: rgba(0, 0, 0, 0.4);
-  border-radius: 0.6rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  padding: 0.3rem;
-}
-
-.weapon-image img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
-  transition: transform 0.2s ease;
 }
 
 /* Speziell für Equipment-Icons (kleiner machen) */
@@ -2288,26 +2134,173 @@ body.theme-blue .numpad-key.bound-default {
 /* Ausgewählte Taste hervorheben */
 .app__key--active,
 .key.active-key {
-  background: radial-gradient(circle at 35% 25%, var(--accent), var(--accent-dark));
-  box-shadow: 0 0 0 2px white, 0 0 0 4px var(--accent);
+  background: radial-gradient(
+    circle at 35% 25%,
+    var(--accent),
+    var(--accent-dark)
+  );
+  box-shadow:
+    0 0 0 2px white,
+    0 0 0 4px var(--accent);
   color: white;
   transform: scale(1.02);
 }
 
 /* ======================== CROSSHAIR GENERATOR STYLES ======================== */
-#crosshairPreviewContainer {
-  background: #0a0e17;
-  border-radius: 28px;
-  padding: 20px;
-  margin-bottom: 24px;
+
+/* Vorschau-Bereich */
+.crosshair-preview-area {
+  background: var(--btn-bg);
+  border-radius: 1.2rem;
   border: 1px solid var(--border-color);
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+
+.preview-header {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0.5rem 1rem;
+  font-size: 0.7rem;
+  font-weight: bold;
+  color: var(--accent-light);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ZENTRIERTES Layout - Pfeile NEBEN dem Canvas */
+.preview-container-centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 1.5rem;
+}
+
+.preview-canvas-wrapper {
+  position: relative;
+  flex-shrink: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 #crosshairCanvas {
   display: block;
-  margin: 0 auto;
+  width: 800px;
+  height: 200px;
   cursor: crosshair;
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.08), 0 10px 20px -8px black;
+}
+
+/* Badge unten rechts im Canvas */
+.preview-badge {
+  position: absolute;
+  bottom: 8px;
+  right: 12px;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  padding: 0.2rem 0.8rem;
+  border-radius: 2rem;
+  font-size: 0.7rem;
+  font-family: monospace;
+  display: flex;
+  gap: 0.5rem;
+  color: #ccc;
+  font-weight: bold;
+}
+
+.preview-badge span:first-child {
+  color: var(--accent-light);
+}
+
+.preview-badge .separator {
+  color: #666;
+}
+
+/* Pfeil-Buttons */
+.preview-arrow {
+  background: linear-gradient(135deg, var(--accent-dark), var(--accent));
+  border: none;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.4rem;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.preview-arrow:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 12px var(--accent-glow);
+}
+
+.preview-arrow:active {
+  transform: scale(0.95);
+}
+
+/* Responsive */
+@media (max-width: 1000px) {
+  #crosshairCanvas {
+    width: 100%;
+    height: auto;
+  }
+  
+  .preview-arrow {
+    width: 44px;
+    height: 44px;
+    font-size: 1.2rem;
+  }
+  
+  .preview-container-centered {
+    gap: 1rem;
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .preview-container-centered {
+    gap: 0.8rem;
+    padding: 0.8rem;
+  }
+  
+  .preview-arrow {
+    width: 38px;
+    height: 38px;
+    font-size: 1rem;
+  }
+  
+  .preview-badge {
+    bottom: 4px;
+    right: 6px;
+    padding: 0.15rem 0.6rem;
+    font-size: 0.6rem;
+  }
+}
+
+@media (max-width: 550px) {
+  .preview-container-centered {
+    flex-direction: column;
+  }
+  
+  .preview-arrow {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+/* ======================== DREI PANELS ======================== */
+.crosshair-controls-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
 }
 
 .crosshair-panel {
@@ -2315,120 +2308,75 @@ body.theme-blue .numpad-key.bound-default {
   border-radius: 1.2rem;
   border: 1px solid var(--border-color);
   overflow: hidden;
-  margin-bottom: 1rem;
 }
 
 .crosshair-panel-header {
   background: rgba(0, 0, 0, 0.3);
-  padding: 0.8rem 1.2rem;
+  padding: 0.7rem 1rem;
   font-weight: bold;
   border-bottom: 1px solid var(--border-color);
   color: var(--accent-light);
+  font-size: 0.85rem;
 }
 
 .crosshair-panel-body {
-  padding: 1rem;
+  padding: 0.8rem;
 }
 
+/* Slider */
 .crosshair-slider-group {
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
 }
 
 .crosshair-slider-group label {
   display: flex;
   justify-content: space-between;
-  font-size: 0.8rem;
-  margin-bottom: 0.4rem;
-  color: var(--text-color);
+  font-size: 0.75rem;
+  margin-bottom: 0.3rem;
 }
 
 .crosshair-value-badge {
   background: rgba(0, 0, 0, 0.4);
-  padding: 0.15rem 0.6rem;
+  padding: 0.1rem 0.5rem;
   border-radius: 1rem;
   font-family: monospace;
-  font-size: 0.75rem;
-  color: var(--accent-light);
+  font-size: 0.7rem;
 }
 
-/* Einheitliche Slider für ALLE */
 .crosshair-slider-group input[type="range"] {
   width: 100%;
   height: 4px;
   -webkit-appearance: none;
   background: rgba(255, 255, 255, 0.2);
   border-radius: 10px;
-  outline: none;
 }
 
 .crosshair-slider-group input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   background: var(--accent);
   border-radius: 50%;
   cursor: pointer;
-  border: none;
-  box-shadow: 0 0 5px var(--accent-glow);
-  transition: 0.1s;
 }
 
-.crosshair-slider-group input[type="range"]::-webkit-slider-thumb:hover {
-  transform: scale(1.2);
-}
-
-/* Firefox Support */
-.crosshair-slider-group input[type="range"]::-moz-range-thumb {
-  width: 16px;
-  height: 16px;
-  background: var(--accent);
-  border-radius: 50%;
-  cursor: pointer;
-  border: none;
-}
-
-/* Farbe-Slider spezifisch (gleicher Stil wie alle anderen) */
-.crosshair-color-channel input[type="range"] {
-  width: 100%;
-  height: 4px;
-  -webkit-appearance: none;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 10px;
-  outline: none;
-}
-
-.crosshair-color-channel input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 16px;
-  height: 16px;
-  background: var(--accent);
-  border-radius: 50%;
-  cursor: pointer;
-  border: none;
-  box-shadow: 0 0 5px var(--accent-glow);
-}
-
+/* Checkboxes */
 .crosshair-checkbox-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 0.6rem;
   margin-top: 0.5rem;
 }
 
 .crosshair-checkbox-item {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
   cursor: pointer;
   background: rgba(0, 0, 0, 0.2);
-  padding: 0.3rem 0.8rem;
+  padding: 0.2rem 0.6rem;
   border-radius: 2rem;
-  font-size: 0.8rem;
-  transition: 0.1s;
-}
-
-.crosshair-checkbox-item:hover {
-  background: rgba(0, 0, 0, 0.4);
+  font-size: 0.7rem;
 }
 
 .crosshair-checkbox-item input {
@@ -2436,10 +2384,10 @@ body.theme-blue .numpad-key.bound-default {
   cursor: pointer;
 }
 
+/* Farben */
 .crosshair-color-row {
   display: flex;
-  gap: 1rem;
-  margin-top: 0.5rem;
+  gap: 0.8rem;
 }
 
 .crosshair-color-channel {
@@ -2447,56 +2395,84 @@ body.theme-blue .numpad-key.bound-default {
 }
 
 .crosshair-color-channel span {
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   opacity: 0.8;
   display: block;
-  margin-bottom: 0.2rem;
   text-align: center;
+  margin-bottom: 0.2rem;
 }
 
-.crosshair-controls-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1rem;
-}
-
-/* Dropdown im Crosshair-Generator - einheitlicher Stil */
-.crosshair-panel select {
-  background: var(--input-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 2rem;
-  padding: 0.5rem 1rem;
-  color: var(--text-color);
-  font-size: 0.85rem;
-  cursor: pointer;
+.crosshair-color-channel input[type="range"] {
   width: 100%;
-  transition: 0.1s;
+  height: 4px;
+  -webkit-appearance: none;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
 }
 
-.crosshair-panel select:hover {
-  border-color: var(--accent);
-  background: var(--accent-dark);
-}
-
-.crosshair-panel select:focus {
-  outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 5px var(--accent-glow);
-}
-
-/* Dropdown Optionen */
-.crosshair-panel select option {
-  background: var(--btn-bg);
-  color: var(--text-color);
+.crosshair-color-channel input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  background: var(--accent);
+  border-radius: 50%;
+  cursor: pointer;
 }
 
 .crosshair-info-note {
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   background: rgba(0, 0, 0, 0.2);
   border-radius: 2rem;
-  padding: 0.4rem 0.8rem;
+  padding: 0.3rem 0.6rem;
   margin-top: 0.5rem;
   text-align: center;
+}
+
+/* Crosshair Style Dropdown */
+.crosshair-style-select {
+  background: var(--input-bg);
+  border: 1px solid var(--accent);
+  border-radius: 2rem;
+  padding: 0.6rem 1rem;
+  color: var(--text-color);
+  font-size: 0.85rem;
+  font-family: inherit;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.2s ease;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23ff44cc' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 14px;
+}
+
+.crosshair-style-select:hover {
+  background-color: var(--accent-dark);
+  border-color: var(--accent-light);
+}
+
+.crosshair-style-select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 8px var(--accent-glow);
+}
+
+.crosshair-style-select option {
+  background: var(--btn-bg);
+  color: var(--text-color);
+  padding: 0.5rem;
+}
+
+/* Config Befehle Bereich */
+.config-footer {
+  margin-top: 1.5rem;
+}
+
+.config-footer h3 {
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
   color: var(--accent-light);
 }
 
@@ -2504,20 +2480,23 @@ body.theme-blue .numpad-key.bound-default {
   background: #03060c;
   color: #c6ffb0;
   font-family: 'Fira Code', monospace;
-  font-size: 12px;
+  font-size: 11px;
   border-color: var(--accent);
+  width: 100%;
+  border-radius: 1rem;
+  padding: 0.8rem;
+  resize: vertical;
 }
 
 #copyCrosshairBtn {
   margin-top: 0.5rem;
 }
 
-/* Status-Anzeige */
+/* Status und Buttons */
 #crosshairExportStatus {
   transition: all 0.2s ease;
 }
 
-/* Buttons im Crosshair-Generator */
 #applyCrosshairBtn, #removeCrosshairBtn {
   transition: all 0.2s ease;
 }
@@ -2525,36 +2504,6 @@ body.theme-blue .numpad-key.bound-default {
 #applyCrosshairBtn:hover, #removeCrosshairBtn:hover {
   transform: translateY(-2px);
   filter: brightness(1.05);
-}
-
-/* Dropdown für Tastaturlayout - einheitlicher Stil */
-#keyboardLayoutSelect {
-  background: var(--input-bg);
-  border: 1px solid var(--accent);
-  border-radius: 2rem;
-  padding: 0.3rem 0.8rem;
-  color: var(--text-color);
-  font-size: 0.8rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-family: inherit;
-}
-
-#keyboardLayoutSelect:hover {
-  background: var(--accent-dark);
-  border-color: var(--accent-light);
-}
-
-#keyboardLayoutSelect:focus {
-  outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 5px var(--accent-glow);
-}
-
-/* Optionen im Dropdown */
-#keyboardLayoutSelect option {
-  background: var(--btn-bg);
-  color: var(--text-color);
 }
 
 /* ======================== WAFFEN AMMO INFO ======================== */
@@ -2604,7 +2553,6 @@ body.theme-blue .numpad-key.bound-default {
   color: #0a0a0f;
 }
 
-/* Aktiver Zustand für die Dropdown-Buttons */
 .tab-dropdown-btn.active-dropdown {
   background: var(--accent);
   border-color: var(--accent-glow);
@@ -2612,7 +2560,6 @@ body.theme-blue .numpad-key.bound-default {
   color: #0a0a0f;
 }
 
-/* Dropdown-Inhalt */
 .tab-dropdown-content {
   display: none;
   position: absolute;
@@ -2633,7 +2580,6 @@ body.theme-blue .numpad-key.bound-default {
   animation: fade 0.2s ease;
 }
 
-/* Dropdown-Einträge */
 .dropdown-tab-btn {
   display: block;
   width: 100%;
@@ -2659,7 +2605,6 @@ body.theme-blue .numpad-key.bound-default {
   font-weight: bold;
 }
 
-/* Aktive Tab-Anzeige (zeigt an welcher Tab gerade offen ist) */
 .active-tab-indicator {
   display: inline-block;
   margin-left: 0.5rem;
@@ -2667,22 +2612,21 @@ body.theme-blue .numpad-key.bound-default {
   color: var(--accent-light);
 }
 
-/* Responsive: Bei kleinen Bildschirmen Dropdowns untereinander */
 @media (max-width: 768px) {
   .tabs {
     flex-direction: column;
     gap: 0.5rem;
   }
-  
+
   .tab-dropdown {
     width: 100%;
   }
-  
+
   .tab-dropdown-btn {
     width: 100%;
     justify-content: space-between;
   }
-  
+
   .tab-dropdown-content {
     position: static;
     margin-top: 0.3rem;
@@ -2690,7 +2634,6 @@ body.theme-blue .numpad-key.bound-default {
   }
 }
 
-/* Style für noch nicht verfügbare Tabs */
 .dropdown-tab-btn[disabled] {
   opacity: 0.5;
   cursor: not-allowed;
@@ -2704,8 +2647,6 @@ body.theme-blue .numpad-key.bound-default {
 }
 
 /* ======================== FOOTER STYLES ======================== */
-/* CS2 Neon Armory - Footer Komponente */
-/* Version: 1.0.1.1 | Datum: Juni 2026 */
 
 .app-footer {
   margin-top: 3rem;
@@ -2725,7 +2666,6 @@ body.theme-blue .numpad-key.bound-default {
   margin: 0 auto;
 }
 
-/* ======================== FOOTER SPALTEN ======================== */
 .footer-col {
   animation: footerFadeIn 0.5s ease;
 }
@@ -2750,7 +2690,6 @@ body.theme-blue .numpad-key.bound-default {
   letter-spacing: 0.5px;
 }
 
-/* ======================== LINKS ======================== */
 .footer-links {
   list-style: none;
   padding: 0;
@@ -2783,7 +2722,6 @@ body.theme-blue .numpad-key.bound-default {
   margin-top: 0.5rem;
 }
 
-/* ======================== SUPPORT BEREICH ======================== */
 .footer-donation-btn {
   background: linear-gradient(135deg, #ff3366, #ff44cc);
   border: none;
@@ -2834,7 +2772,6 @@ body.theme-blue .numpad-key.bound-default {
   margin-top: 0.5rem;
 }
 
-/* ======================== VERSION BEREICH ======================== */
 .version-badge {
   display: inline-block;
   background: var(--accent);
@@ -2896,7 +2833,7 @@ body.theme-blue .numpad-key.bound-default {
   color: var(--accent);
 }
 
-/* ======================== KONTAKTFORMULAR ======================== */
+/* Kontaktformular */
 .contact-col {
   min-width: 280px;
 }
@@ -2999,7 +2936,7 @@ body.theme-blue .numpad-key.bound-default {
   color: #f87171;
 }
 
-/* ======================== FOOTER BOTTOM ======================== */
+/* Footer Bottom */
 .footer-bottom {
   margin-top: 2rem;
   padding-top: 1rem;
@@ -3049,7 +2986,7 @@ body.theme-blue .numpad-key.bound-default {
   opacity: 0.5;
 }
 
-/* ======================== MODAL STYLES ======================== */
+/* Modal Styles */
 .footer-modal {
   display: none;
   position: fixed;
@@ -3067,6 +3004,15 @@ body.theme-blue .numpad-key.bound-default {
 .footer-modal.show {
   display: flex;
   animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .footer-modal-content {
@@ -3136,52 +3082,31 @@ body.theme-blue .numpad-key.bound-default {
   margin-bottom: 0.3rem;
 }
 
-/* ======================== ANIMATIONEN ======================== */
-@keyframes modalSlideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-/* ======================== RESPONSIVE ======================== */
+/* Responsive */
 @media (max-width: 768px) {
   .app-footer {
     padding: 1.5rem 1rem 0.8rem;
   }
-  
+
   .footer-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
-  
+
   .footer-bottom {
     flex-direction: column;
     text-align: center;
   }
-  
+
   .disclaimer {
     text-align: center;
     justify-content: center;
   }
-  
+
   .status-bar {
     justify-content: center;
   }
-  
+
   .contact-col {
     min-width: auto;
   }
@@ -3192,15 +3117,16 @@ body.theme-blue .numpad-key.bound-default {
     padding: 1rem;
     font-size: 0.85rem;
   }
-  
+
   .footer-modal-header {
     padding: 0.8rem 1rem;
   }
-  
+
   .footer-modal-title {
     font-size: 1rem;
   }
 }
+
 /* ======================== WAFFENÜBERSICHT DATENBANK ======================== */
 .weapons-db-grid {
   display: grid;
@@ -3221,144 +3147,9 @@ body.theme-blue .numpad-key.bound-default {
 .weapon-db-card:hover {
   transform: translateY(-3px);
   border-color: var(--accent);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
-.weapon-db-header {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  margin-bottom: 0.8rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.weapon-db-icon {
-  font-size: 1.8rem;
-  width: 45px;
-  text-align: center;
-}
-
-.weapon-db-name {
-  font-size: 1.1rem;
-  font-weight: bold;
-  flex: 1;
-}
-
-.weapon-db-price {
-  font-family: monospace;
-  font-weight: bold;
-  color: #ffaa44;
-}
-
-.weapon-db-stats {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.5rem;
-  font-size: 0.75rem;
-}
-
-.weapon-db-stat {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.2rem 0;
-  border-bottom: 1px dotted rgba(255,255,255,0.1);
-}
-
-.weapon-db-stat-label {
-  opacity: 0.7;
-}
-
-.weapon-db-stat-value {
-  font-family: monospace;
-  font-weight: bold;
-  color: var(--accent-light);
-}
-
-.weapon-db-damage {
-  margin-top: 0.5rem;
-  padding: 0.5rem;
-  background: rgba(0,0,0,0.2);
-  border-radius: 0.6rem;
-}
-
-.weapon-db-damage-title {
-  font-size: 0.7rem;
-  opacity: 0.7;
-  margin-bottom: 0.3rem;
-}
-
-.weapon-db-damage-values {
-  display: flex;
-  gap: 1rem;
-  font-size: 0.7rem;
-}
-
-.weapon-db-damage-head {
-  color: #ff6666;
-}
-
-.weapon-db-damage-body {
-  color: #ffaa66;
-}
-
-.weapon-db-damage-leg {
-  color: #66ff66;
-}
-
-.weapon-filter-btn {
-  background: var(--btn-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 2rem;
-  padding: 0.4rem 1rem;
-  font-size: 0.8rem;
-  cursor: pointer;
-  color: var(--text-color);
-  transition: all 0.2s;
-}
-
-.weapon-filter-btn:hover,
-.weapon-filter-btn.active-filter {
-  background: var(--accent);
-  color: #0a0a0f;
-  border-color: var(--accent);
-}
-
-@media (max-width: 700px) {
-  .weapons-db-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* Vergleichs-Button */
-.weapon-compare-btn {
-  background: var(--accent-dark);
-  border: none;
-  border-radius: 1.5rem;
-  padding: 0.3rem 0.8rem;
-  font-size: 0.7rem;
-  font-weight: bold;
-  color: white;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.weapon-compare-btn:hover {
-  background: var(--accent);
-  transform: scale(1.02);
-}
-
-#compareContainer table th,
-#compareContainer table td {
-  text-align: center;
-}
-
-#compareContainer table td:first-child {
-  text-align: left;
-}
-
-/* Waffenbild in der Karte */
 .weapon-db-header {
   display: flex;
   gap: 1rem;
@@ -3370,7 +3161,7 @@ body.theme-blue .numpad-key.bound-default {
 .weapon-db-image {
   width: 70px;
   height: 55px;
-  background: rgba(0,0,0,0.3);
+  background: rgba(0, 0, 0, 0.3);
   border-radius: 0.6rem;
   display: flex;
   align-items: center;
@@ -3405,23 +3196,79 @@ body.theme-blue .numpad-key.bound-default {
   margin-top: 0.2rem;
 }
 
-/* Vergleichs-Bilder */
-.weapon-compare-image {
-  width: 120px;
-  height: 90px;
-  background: rgba(0,0,0,0.3);
-  border-radius: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto;
-  padding: 0.5rem;
+.weapon-db-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+  font-size: 0.75rem;
 }
 
-.weapon-compare-image img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
+.weapon-db-stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.2rem 0;
+  border-bottom: 1px dotted rgba(255, 255, 255, 0.1);
+}
+
+.weapon-db-damage {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 0.6rem;
+}
+
+.weapon-db-damage-title {
+  font-size: 0.7rem;
+  opacity: 0.7;
+  margin-bottom: 0.3rem;
+}
+
+.weapon-db-damage-values {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.7rem;
+}
+
+.weapon-filter-btn {
+  background: var(--btn-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 2rem;
+  padding: 0.4rem 1rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  color: var(--text-color);
+  transition: all 0.2s;
+}
+
+.weapon-filter-btn:hover,
+.weapon-filter-btn.active-filter {
+  background: var(--accent);
+  color: #0a0a0f;
+  border-color: var(--accent);
+}
+
+@media (max-width: 700px) {
+  .weapons-db-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.weapon-compare-btn {
+  background: var(--accent-dark);
+  border: none;
+  border-radius: 1.5rem;
+  padding: 0.3rem 0.8rem;
+  font-size: 0.7rem;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.weapon-compare-btn:hover {
+  background: var(--accent);
+  transform: scale(1.02);
 }
 
 /* ======================== ECONOMY GUIDE STYLES ======================== */
@@ -3489,7 +3336,6 @@ body.theme-blue .numpad-key.bound-default {
   color: var(--accent-light);
 }
 
-/* Strategie-Karten */
 .strategy-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -3540,7 +3386,7 @@ body.theme-blue .numpad-key.bound-default {
 }
 
 .strategy-tip {
-  background: rgba(0,0,0,0.2);
+  background: rgba(0, 0, 0, 0.2);
   border-radius: 0.5rem;
   padding: 0.4rem;
   margin-top: 0.5rem;
@@ -3548,7 +3394,6 @@ body.theme-blue .numpad-key.bound-default {
   color: var(--accent-light);
 }
 
-/* Rechner */
 .calc-group {
   margin-bottom: 1rem;
 }
@@ -3578,7 +3423,7 @@ body.theme-blue .numpad-key.bound-default {
 }
 
 .recommendation {
-  background: rgba(0,0,0,0.2);
+  background: rgba(0, 0, 0, 0.2);
   border-radius: 0.8rem;
   padding: 0.8rem;
   margin-top: 0.5rem;
@@ -3588,7 +3433,6 @@ body.theme-blue .numpad-key.bound-default {
   color: var(--accent-light);
 }
 
-/* Tipp-Karten */
 .tip-card {
   background: var(--btn-bg);
   border-radius: 1rem;
@@ -3624,9 +3468,568 @@ body.theme-blue .numpad-key.bound-default {
   .strategy-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .economy-card-body table td {
     font-size: 0.75rem;
   }
->>>>>>> 38331c4ea550edcc13a34938b3a1f1ebfe97acf8
+}
+
+/* ======================== KARTEN HUB STYLES ======================== */
+
+.maphub-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.maphub-header h3 {
+  font-size: 1.3rem;
+  color: var(--accent-light);
+  margin-bottom: 0.5rem;
+}
+
+.maphub-header p {
+  opacity: 0.7;
+  font-size: 0.85rem;
+}
+
+/* Map-Grid */
+.maphub-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.maphub-map-card {
+  background: var(--btn-bg);
+  border-radius: 1.2rem;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid var(--border-color);
+}
+
+.maphub-map-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--accent);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.maphub-map-image {
+  position: relative;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+}
+
+.maphub-map-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.maphub-map-card:hover .maphub-map-image img {
+  transform: scale(1.05);
+}
+
+.maphub-map-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  padding: 1rem;
+}
+
+.maphub-map-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+
+/* Kategorien-Bereich */
+.maphub-categories-header {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.maphub-selected-map {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  background: rgba(0,0,0,0.2);
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+.maphub-selected-thumb {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 0.8rem;
+  border: 1px solid var(--accent);
+}
+
+.maphub-selected-info h3 {
+  font-size: 1.2rem;
+  color: var(--accent-light);
+}
+
+.maphub-selected-info p {
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
+.maphub-categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.maphub-category-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--btn-bg);
+  border-radius: 1rem;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid var(--border-color);
+}
+
+.maphub-category-card:hover {
+  transform: translateX(5px);
+  border-color: var(--accent);
+}
+
+.maphub-category-card.active {
+  border-color: var(--accent);
+  background: rgba(255,68,204,0.1);
+}
+
+.maphub-category-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.maphub-category-info {
+  flex: 1;
+}
+
+.maphub-category-info h4 {
+  font-size: 0.9rem;
+  margin-bottom: 0.2rem;
+}
+
+.maphub-category-info p {
+  font-size: 0.7rem;
+  opacity: 0.7;
+}
+
+.maphub-category-arrow {
+  font-size: 0.8rem;
+  opacity: 0.5;
+}
+
+.maphub-category-card:hover .maphub-category-arrow {
+  opacity: 1;
+  transform: translateX(3px);
+  transition: all 0.2s ease;
+}
+
+/* Content Bereich */
+.maphub-content-header {
+  margin-top: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.maphub-content-title {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.maphub-content-title i {
+  font-size: 1.5rem;
+}
+
+.maphub-content-title h3 {
+  font-size: 1.2rem;
+}
+
+.maphub-map-badge {
+  background: var(--accent-dark);
+  padding: 0.2rem 0.6rem;
+  border-radius: 2rem;
+  font-size: 0.7rem;
+  color: white;
+}
+
+.maphub-content-desc {
+  font-size: 0.8rem;
+  opacity: 0.7;
+  margin-left: 2.1rem;
+}
+
+/* Callouts */
+.maphub-callouts-container {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.maphub-callouts-map {
+  background: rgba(0,0,0,0.2);
+  border-radius: 1rem;
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.maphub-image-placeholder {
+  text-align: center;
+  padding: 2rem;
+}
+
+.maphub-image-placeholder i {
+  font-size: 3rem;
+  color: var(--accent-light);
+  margin-bottom: 1rem;
+}
+
+.maphub-callouts-list h4 {
+  font-size: 0.9rem;
+  margin-bottom: 0.8rem;
+}
+
+.maphub-callouts-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+}
+
+.maphub-callout-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  padding: 0.3rem 0.5rem;
+  background: rgba(0,0,0,0.2);
+  border-radius: 0.5rem;
+}
+
+.maphub-callout-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+}
+
+/* Utility Spots */
+.maphub-utility-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.utility-tab {
+  background: var(--btn-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 2rem;
+  padding: 0.4rem 1rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.utility-tab:hover,
+.utility-tab.active {
+  background: var(--accent);
+  color: #0a0a0f;
+}
+
+.maphub-utility-items {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.maphub-utility-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(0,0,0,0.2);
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+.maphub-utility-image {
+  width: 60px;
+  height: 60px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.maphub-utility-info {
+  flex: 1;
+}
+
+.maphub-utility-info h4 {
+  font-size: 0.9rem;
+  margin-bottom: 0.2rem;
+}
+
+.maphub-utility-info p {
+  font-size: 0.7rem;
+  opacity: 0.7;
+}
+
+.utility-tags {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.3rem;
+}
+
+.tag {
+  font-size: 0.6rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 1rem;
+  background: rgba(255,255,255,0.1);
+}
+
+.maphub-utility-btn {
+  background: var(--accent-dark);
+  border: none;
+  border-radius: 2rem;
+  padding: 0.3rem 0.8rem;
+  font-size: 0.7rem;
+  cursor: pointer;
+}
+
+/* Off-Angles, Boosts, Retakes, Contact, Lineups */
+.maphub-offangles-grid,
+.maphub-boosts-grid,
+.maphub-retakes-grid,
+.maphub-contact-grid,
+.maphub-lineups-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.maphub-offangle-card,
+.maphub-boost-card,
+.maphub-retake-card,
+.maphub-contact-card,
+.maphub-lineup-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(0,0,0,0.2);
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+.maphub-offangle-icon,
+.maphub-boost-icon,
+.maphub-retake-icon,
+.maphub-contact-icon,
+.maphub-lineup-icon {
+  width: 50px;
+  height: 50px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+}
+
+.maphub-offangle-info,
+.maphub-boost-info,
+.maphub-retake-info,
+.maphub-contact-info,
+.maphub-lineup-info {
+  flex: 1;
+}
+
+.maphub-offangle-info h4,
+.maphub-boost-info h4,
+.maphub-retake-info h4,
+.maphub-contact-info h4,
+.maphub-lineup-info h4 {
+  font-size: 0.9rem;
+  margin-bottom: 0.2rem;
+}
+
+.maphub-offangle-info p,
+.maphub-boost-info p,
+.maphub-retake-info p,
+.maphub-contact-info p,
+.maphub-lineup-info p {
+  font-size: 0.7rem;
+  opacity: 0.7;
+}
+
+.difficulty {
+  font-size: 0.6rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 1rem;
+  display: inline-block;
+  margin-top: 0.3rem;
+}
+
+.difficulty.easy {
+  background: rgba(34,197,94,0.2);
+  color: #4ade80;
+}
+
+.difficulty.medium {
+  background: rgba(245,158,11,0.2);
+  color: #fbbf24;
+}
+
+.difficulty.hard {
+  background: rgba(239,68,68,0.2);
+  color: #f87171;
+}
+
+.maphub-offangle-btn,
+.maphub-boost-btn,
+.maphub-retake-btn,
+.maphub-contact-btn,
+.maphub-lineup-btn {
+  background: var(--accent-dark);
+  border: none;
+  border-radius: 2rem;
+  padding: 0.3rem 0.8rem;
+  font-size: 0.7rem;
+  cursor: pointer;
+}
+
+/* Strat Tabs */
+.maphub-strats-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.strat-tab {
+  background: var(--btn-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 2rem;
+  padding: 0.4rem 1rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.strat-tab:hover,
+.strat-tab.active {
+  background: var(--accent);
+  color: #0a0a0f;
+}
+
+.maphub-strat-card {
+  display: flex;
+  gap: 1rem;
+  background: rgba(0,0,0,0.2);
+  border-radius: 1rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.maphub-strat-icon {
+  font-size: 2rem;
+}
+
+.maphub-strat-info {
+  flex: 1;
+}
+
+.maphub-strat-info h4 {
+  font-size: 0.9rem;
+  margin-bottom: 0.3rem;
+}
+
+.strat-phases {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.strat-phases span {
+  font-size: 0.7rem;
+  background: rgba(0,0,0,0.3);
+  padding: 0.2rem 0.5rem;
+  border-radius: 1rem;
+}
+
+/* Boost Tags */
+.boost-tags {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.3rem;
+  flex-wrap: wrap;
+}
+
+.boost-type {
+  font-size: 0.6rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 1rem;
+  background: rgba(68,170,255,0.2);
+  color: #77bbff;
+}
+
+.retake-site,
+.contact-spots,
+.lineup-time {
+  font-size: 0.6rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 1rem;
+  background: rgba(0,0,0,0.3);
+  display: inline-block;
+  margin-top: 0.3rem;
+}
+
+/* Responsive */
+@media (max-width: 800px) {
+  .maphub-callouts-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .maphub-categories-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .maphub-utility-item {
+    flex-wrap: wrap;
+  }
+  
+  .maphub-offangle-card,
+  .maphub-boost-card,
+  .maphub-retake-card,
+  .maphub-contact-card,
+  .maphub-lineup-card {
+    flex-wrap: wrap;
+  }
 }
