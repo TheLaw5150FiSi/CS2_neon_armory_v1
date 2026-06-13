@@ -91,7 +91,21 @@ function generateFullExport() {
     out += "\n";
   }
 
-  // ========== 6. BENUTZERDEFINIERTE CONFIG (EIGENE CFG) ==========
+  // ========== 6. CROSSHAIR BEFEHLE ==========
+if (typeof window.isCrosshairAppliedToExport === "function" && window.isCrosshairAppliedToExport()) {
+    if (typeof window.getCrosshairCommands === "function") {
+        const crosshairCommands = window.getCrosshairCommands();
+        if (crosshairCommands && crosshairCommands.length > 0) {
+            out += "// ========== 🎯 CROSSHAIR KONFIGURATION ==========\n";
+            for (let cmd of crosshairCommands) {
+                out += `${cmd}\n`;
+            }
+            out += "\n";
+        }
+    }
+}
+
+  // ========== 7. BENUTZERDEFINIERTE CONFIG (EIGENE CFG) ==========
   if (customConfigContent && customConfigContent.trim()) {
     out += "// ========== 📝 EIGENE CONFIG ==========\n";
     out += "// Hier wurde dein eigener Config-Code eingefügt\n";
@@ -100,7 +114,7 @@ function generateFullExport() {
     out += "\n";
   }
 
-  // ========== 7. START OPTIONEN ==========
+  // ========== 8. START OPTIONEN ==========
   if (typeof getSelectedStartOptionsString === "function") {
     const startOpts = getSelectedStartOptionsString();
     if (startOpts && startOpts !== "(Keine)") {

@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>CS2 Crosshair Generator | Pro Settings</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0e17;
+            font-family: 'Segoe UI', 'Inter', system-ui, sans-serif;
+            color: #eef2ff;
+            padding: 24px 20px;
+        }
+
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Live Vorschau Karte */
+        .preview-card {
+            background: #11161f;
+            border-radius: 32px;
+            overflow: hidden;
+            margin-bottom: 24px;
+            box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .canvas-area {
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            background: #05080e;
+        }
+
+        canvas {
+            display: block;
+            border-radius: 16px;
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.08), 0 10px 20px -8px black;
+            width: 100%;
+            height: auto;
+            cursor: crosshair;
+        }
+
+        /* DREI HAUPT-KÄSTEN */
+        .control-panels {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            margin-bottom: 28px;
+        }
+
+        .panel {
+            background: #151c26;
+            border-radius: 28px;
+            backdrop-filter: blur(2px);
+            border: 1px solid #2a3342;
+            overflow: hidden;
+        }
+
+        .panel-header {
+            background: #1f2a36;
+            padding: 14px 20px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: 0.3px;
+            border-bottom: 1px solid #2f3c4b;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #d9e6ff;
+        }
+
+        .panel-body {
+            padding: 20px 22px;
+        }
+
+        .slider-group {
+            margin-bottom: 18px;
+        }
+
+        .slider-group label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #b9c7e0;
+        }
+
+        .value-badge {
+            background: #010a14;
+            padding: 2px 10px;
+            border-radius: 40px;
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: #f5b042;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 4px;
+            -webkit-appearance: none;
+            background: #2e3a48;
+            border-radius: 10px;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            background: #f5b642;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 5px #ffb347;
+            border: none;
+        }
+
+        input[type="range"]:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .color-triplet {
+            display: flex;
+            gap: 18px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        .color-channel {
+            flex: 1;
+        }
+
+        .color-channel span {
+            font-size: 0.7rem;
+            opacity: 0.8;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .alpha-row {
+            margin-top: 18px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .alpha-row .slider-group {
+            flex: 2;
+            margin-bottom: 0;
+        }
+
+        .checkbox-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 18px;
+            align-items: center;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            background: #0f1620;
+            padding: 6px 14px;
+            border-radius: 40px;
+            transition: 0.05s linear;
+        }
+
+        .checkbox-item input {
+            width: 18px;
+            height: 18px;
+            accent-color: #3c7eff;
+            cursor: pointer;
+        }
+
+        select {
+            background: #0e141f;
+            border: 1px solid #364153;
+            color: white;
+            padding: 10px 14px;
+            border-radius: 24px;
+            width: 100%;
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-top: 4px;
+        }
+
+        .config-footer {
+            background: #0d1119;
+            border-radius: 28px;
+            padding: 20px 26px;
+            border: 1px solid #273140;
+            margin-top: 12px;
+        }
+
+        .config-footer h3 {
+            margin: 0 0 14px 0;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        textarea {
+            width: 100%;
+            background: #03060c;
+            color: #c6ffb0;
+            font-family: 'Fira Code', monospace;
+            font-size: 13px;
+            padding: 16px;
+            border-radius: 24px;
+            border: 1px solid #3e5a4b;
+            resize: vertical;
+            white-space: pre;
+        }
+
+        button {
+            background: #2c3f5e;
+            border: none;
+            color: white;
+            padding: 8px 22px;
+            border-radius: 40px;
+            font-weight: bold;
+            margin-top: 16px;
+            cursor: pointer;
+            transition: all 0.1s;
+        }
+
+        button:hover {
+            background: #3e6090;
+            transform: scale(0.98);
+        }
+
+        .info-note {
+            font-size: 11px;
+            margin-top: 12px;
+            background: #0e121c;
+            border-radius: 30px;
+            padding: 8px 12px;
+            color: #9aaec5;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="main-container">
+    <!-- Live Vorschau -->
+    <div class="preview-card">
+        <div class="canvas-area">
+            <canvas id="crosshairCanvas" width="800" height="200" style="max-width:100%; height:auto; aspect-ratio:800/200"></canvas>
+        </div>
+    </div>
+
+    <!-- Drei Kästen -->
+    <div class="control-panels">
+        <!-- KASTEN 1: Stil & Sonderfunktionen -->
+        <div class="panel">
+            <div class="panel-header">🎯 Stil & Sonderfunktionen</div>
+            <div class="panel-body">
+                <div class="slider-group">
+                    <label>🧩 Crosshairstyle</label>
+                    <select id="crosshairStyle">
+                        <option value="0">Classic</option>
+                        <option value="1">Legacy</option>
+                        <option value="2" selected>Classic Static</option>
+                    </select>
+                </div>
+                <div class="checkbox-row">
+                    <label class="checkbox-item"><input type="checkbox" id="dotCheckbox" checked> 🔘 Mittelpunkt</label>
+                    <label class="checkbox-item"><input type="checkbox" id="outlineCheckbox" checked> 🧱 Umrandung aktiv</label>
+                    <label class="checkbox-item"><input type="checkbox" id="tStyleCheckbox"> ✂️ T-Stil</label>
+                </div>
+                <div class="info-note">T-Stil = kein oberer Strich (nur links/rechts/unten)</div>
+            </div>
+        </div>
+
+        <!-- KASTEN 2: Abmessungen & Kontur -->
+        <div class="panel">
+            <div class="panel-header">📐 Abmessungen & Kontur</div>
+            <div class="panel-body">
+                <div class="slider-group">
+                    <label>📏 Länge (size) <span class="value-badge" id="lengthVal">3.5</span></label>
+                    <input type="range" id="lengthSlider" min="0" max="10" step="0.1" value="3.5">
+                </div>
+                <div class="slider-group">
+                    <label>✏️ Dicke (thickness) <span class="value-badge" id="thickVal">0.5</span></label>
+                    <input type="range" id="thickSlider" min="0" max="3" step="0.1" value="0.5">
+                </div>
+                <div class="slider-group">
+                    <label>🔲 Lücke (gap) <span class="value-badge" id="gapVal">2.0</span></label>
+                    <input type="range" id="gapSlider" min="-5" max="5" step="0.1" value="2">
+                </div>
+                <div class="slider-group">
+                    <label>⚫ Umrandungsdicke <span class="value-badge" id="outlineVal">1.0</span></label>
+                    <input type="range" id="outlineSlider" min="0" max="3" step="0.1" value="1">
+                </div>
+            </div>
+        </div>
+
+        <!-- KASTEN 3: Farbe & Transparenz -->
+        <div class="panel">
+            <div class="panel-header">🎨 Farbe & Transparenz</div>
+            <div class="panel-body">
+                <div class="color-triplet">
+                    <div class="color-channel"><span>🔴 ROT</span><input type="range" id="redSlider" min="0" max="255" value="0" step="1"></div>
+                    <div class="color-channel"><span>🟢 GRÜN</span><input type="range" id="greenSlider" min="0" max="255" value="255" step="1"></div>
+                    <div class="color-channel"><span>🔵 BLAU</span><input type="range" id="blueSlider" min="0" max="255" value="0" step="1"></div>
+                </div>
+                <div class="alpha-row">
+                    <div class="slider-group" style="flex:2">
+                        <label>🌀 Alpha <span class="value-badge" id="alphaVal">192</span></label>
+                        <input type="range" id="alphaSlider" min="0" max="255" value="192" step="1">
+                    </div>
+                    <label class="checkbox-item"><input type="checkbox" id="alphaActiveCheckbox" checked> Alpha aktiv</label>
+                </div>
+                <div class="info-note" style="margin-top:12px">
+                    Aktuelle Farbe: <span id="currentColorPreview" style="font-weight:bold; color:#ffaa66;">rgb(0,255,0)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Config Ausgabe -->
+    <div class="config-footer">
+        <h3>📋 CS2 Konfigurations-Befehle</h3>
+        <textarea id="configTextArea" rows="5" readonly></textarea>
+        <button id="copyBtn">📎 Befehle kopieren</button>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const canvas = document.getElementById('crosshairCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = 800;
+        canvas.height = 200;
+        
+        // DOM Elements
+        const styleSelect = document.getElementById('crosshairStyle');
+        const dotCheckbox = document.getElementById('dotCheckbox');
+        const tStyleCheckbox = document.getElementById('tStyleCheckbox');
+        const outlineCheckbox = document.getElementById('outlineCheckbox');
+        const lengthSlider = document.getElementById('lengthSlider');
+        const thickSlider = document.getElementById('thickSlider');
+        const gapSlider = document.getElementById('gapSlider');
+        const outlineSlider = document.getElementById('outlineSlider');
+        const redSlider = document.getElementById('redSlider');
+        const greenSlider = document.getElementById('greenSlider');
+        const blueSlider = document.getElementById('blueSlider');
+        const alphaSlider = document.getElementById('alphaSlider');
+        const alphaActiveCheckbox = document.getElementById('alphaActiveCheckbox');
+        
+        // Value displays
+        const lengthVal = document.getElementById('lengthVal');
+        const thickVal = document.getElementById('thickVal');
+        const gapVal = document.getElementById('gapVal');
+        const outlineVal = document.getElementById('outlineVal');
+        const alphaVal = document.getElementById('alphaVal');
+        const currentColorPreview = document.getElementById('currentColorPreview');
+        
+        // State
+        let state = {
+            style: 2,
+            dot: true,
+            tStyle: false,
+            outlineActive: true,
+            length: 3.5,
+            thickness: 0.5,
+            gap: 2.0,
+            outlineThickness: 1.0,
+            r: 0,
+            g: 255,
+            b: 0,
+            alpha: 192,
+            alphaActive: true
+        };
+        
+        function updateState() {
+            state.style = parseInt(styleSelect.value);
+            state.dot = dotCheckbox.checked;
+            state.tStyle = tStyleCheckbox.checked;
+            state.outlineActive = outlineCheckbox.checked;
+            state.length = parseFloat(lengthSlider.value);
+            state.thickness = parseFloat(thickSlider.value);
+            state.gap = parseFloat(gapSlider.value);
+            state.outlineThickness = parseFloat(outlineSlider.value);
+            state.r = parseInt(redSlider.value);
+            state.g = parseInt(greenSlider.value);
+            state.b = parseInt(blueSlider.value);
+            state.alpha = parseInt(alphaSlider.value);
+            state.alphaActive = alphaActiveCheckbox.checked;
+            
+            lengthVal.innerText = state.length.toFixed(1);
+            thickVal.innerText = state.thickness.toFixed(1);
+            gapVal.innerText = state.gap.toFixed(1);
+            outlineVal.innerText = state.outlineThickness.toFixed(1);
+            alphaVal.innerText = state.alpha;
+            currentColorPreview.innerText = `rgb(${state.r}, ${state.g}, ${state.b})`;
+            currentColorPreview.style.color = `rgb(${state.r}, ${state.g}, ${state.b})`;
+            
+            // Alpha Slider deaktivieren wenn nötig
+            alphaSlider.disabled = !state.alphaActive;
+        }
+        
+        // Hintergrund zeichnen
+        function drawBackground(ctx, w, h) {
+            const grad = ctx.createLinearGradient(0, 0, 0, h);
+            grad.addColorStop(0, "#1e2e3a");
+            grad.addColorStop(1, "#111822");
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, w, h);
+            
+            ctx.strokeStyle = "#2a3a4822";
+            ctx.lineWidth = 0.5;
+            for (let i = 0; i < w; i += 40) {
+                ctx.beginPath();
+                ctx.moveTo(i, 0);
+                ctx.lineTo(i, h);
+                ctx.stroke();
+            }
+            for (let i = 0; i < h; i += 40) {
+                ctx.beginPath();
+                ctx.moveTo(0, i);
+                ctx.lineTo(w, i);
+                ctx.stroke();
+            }
+        }
+        
+        // Ultra helle Farben (verdoppeln)
+        function ultraBrighten(value) {
+            return Math.min(255, value * 2);
+        }
+        
+        // ============================================================
+        // PERFEKTE CROSSHAIR ZEICHNUNG
+        // - Korrekte Skalierung von Length, Thickness, Gap
+        // - Ultra-helle Farben
+        // - Vollständige Umrandung (50% reduziert)
+        // - Alpha auf alles angewendet
+        // ============================================================
+        function drawCrosshair(ctx, cx, cy) {
+            const { length, gap, thickness, outlineThickness, r, g, b, alpha, dot, tStyle, outlineActive, alphaActive } = state;
+            
+            // Ultra helle Farben
+            let brightR = ultraBrighten(r);
+            let brightG = ultraBrighten(g);
+            let brightB = ultraBrighten(b);
+            
+            const finalAlpha = alphaActive ? alpha : 255;
+            const mainColor = `rgba(${brightR}, ${brightG}, ${brightB}, ${finalAlpha / 255})`;
+            const outlineColor = "rgba(0, 0, 0, 255)";
+            
+            // Pixel-Skalierung
+            const pixelLength = Math.max(4, length * 3.75);
+            const pixelThickness = Math.max(1, Math.round(thickness * 2.0));
+            const pixelGapOffset = gap * 4;
+            
+            // Umrandung (50% reduziert: Faktor 0.9 statt 1.8)
+            const pixelOutline = (outlineActive && outlineThickness > 0) ? Math.max(0.5, outlineThickness * 0.9) : 0;
+            
+            const halfThick = pixelThickness / 2;
+            
+            // Arme definieren
+            let arms = [
+                { dirX: 0, dirY: -1, name: "top" },
+                { dirX: 0, dirY: 1, name: "bottom" },
+                { dirX: -1, dirY: 0, name: "left" },
+                { dirX: 1, dirY: 0, name: "right" }
+            ];
+            
+            if (tStyle) {
+                arms = arms.filter(arm => arm.name !== "top");
+            }
+            
+            // Arme mit Umrandung zeichnen
+            for (const arm of arms) {
+                let rectX, rectY, rectW, rectH;
+                
+                if (arm.dirX !== 0) {
+                    // Horizontaler Arm
+                    const isRight = (arm.dirX === 1);
+                    const startX = cx + (isRight ? pixelGapOffset : -pixelGapOffset - pixelLength);
+                    rectX = startX;
+                    rectY = cy - halfThick;
+                    rectW = pixelLength;
+                    rectH = pixelThickness;
+                } else {
+                    // Vertikaler Arm
+                    const isDown = (arm.dirY === 1);
+                    const startY = cy + (isDown ? pixelGapOffset : -pixelGapOffset - pixelLength);
+                    rectX = cx - halfThick;
+                    rectY = startY;
+                    rectW = pixelThickness;
+                    rectH = pixelLength;
+                }
+                
+                // Umrandung
+                if (pixelOutline > 0) {
+                    ctx.fillStyle = outlineColor;
+                    ctx.fillRect(
+                        rectX - pixelOutline,
+                        rectY - pixelOutline,
+                        rectW + (pixelOutline * 2),
+                        rectH + (pixelOutline * 2)
+                    );
+                }
+                
+                // Hauptfarbe
+                ctx.fillStyle = mainColor;
+                ctx.fillRect(rectX, rectY, rectW, rectH);
+            }
+            
+            // Center Dot
+            if (dot) {
+                const dotSize = Math.max(4, pixelThickness * 1.5);
+                const dotRadius = dotSize / 2;
+                
+                if (pixelOutline > 0) {
+                    ctx.beginPath();
+                    ctx.arc(cx, cy, dotRadius + pixelOutline, 0, Math.PI * 2);
+                    ctx.fillStyle = outlineColor;
+                    ctx.fill();
+                }
+                
+                ctx.beginPath();
+                ctx.arc(cx, cy, dotRadius, 0, Math.PI * 2);
+                ctx.fillStyle = mainColor;
+                ctx.fill();
+            }
+        }
+        
+        function render() {
+            const w = canvas.width;
+            const h = canvas.height;
+            if (!ctx) return;
+            
+            drawBackground(ctx, w, h);
+            drawCrosshair(ctx, w / 2, h / 2);
+        }
+        
+        // Config generieren
+        function generateConfig() {
+            const s = state;
+            const lines = [];
+            lines.push(`cl_crosshairstyle ${s.style}`);
+            lines.push(`cl_crosshairsize ${s.length.toFixed(1)}`);
+            lines.push(`cl_crosshairthickness ${s.thickness.toFixed(2)}`);
+            lines.push(`cl_crosshairgap ${s.gap.toFixed(2)}`);
+            lines.push(`cl_crosshair_drawoutline ${s.outlineActive ? "1" : "0"}`);
+            if (s.outlineActive && s.outlineThickness > 0) {
+                lines.push(`cl_crosshair_outlinethickness ${s.outlineThickness.toFixed(2)}`);
+            }
+            lines.push(`cl_crosshaircolor_r ${s.r}`);
+            lines.push(`cl_crosshaircolor_g ${s.g}`);
+            lines.push(`cl_crosshaircolor_b ${s.b}`);
+            lines.push(`cl_crosshairalpha ${s.alpha}`);
+            lines.push(`cl_crosshairusealpha ${s.alphaActive ? "1" : "0"}`);
+            lines.push(`cl_crosshairdot ${s.dot ? "1" : "0"}`);
+            lines.push(`cl_crosshair_t ${s.tStyle ? "1" : "0"}`);
+            return lines.join("\n");
+        }
+        
+        function updateConfigText() {
+            document.getElementById('configTextArea').value = generateConfig();
+        }
+        
+        function refresh() {
+            updateState();
+            render();
+            updateConfigText();
+        }
+        
+        // Event Listeners
+        const allInputs = [
+            styleSelect, dotCheckbox, tStyleCheckbox, outlineCheckbox,
+            lengthSlider, thickSlider, gapSlider, outlineSlider,
+            redSlider, greenSlider, blueSlider, alphaSlider, alphaActiveCheckbox
+        ];
+        
+        allInputs.forEach(input => {
+            input.addEventListener('input', refresh);
+            input.addEventListener('change', refresh);
+        });
+        
+        // Copy Button
+        document.getElementById('copyBtn').addEventListener('click', () => {
+            const textarea = document.getElementById('configTextArea');
+            textarea.select();
+            document.execCommand('copy');
+            const btn = document.getElementById('copyBtn');
+            const originalText = btn.innerText;
+            btn.innerText = "✅ Kopiert!";
+            setTimeout(() => { btn.innerText = originalText; }, 1800);
+        });
+        
+        refresh();
+        window.addEventListener('resize', () => render());
+    })();
+</script>
+</body>
+</html>

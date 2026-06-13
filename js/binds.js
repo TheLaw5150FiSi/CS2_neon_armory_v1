@@ -2,6 +2,19 @@
 let selectedBindKey = null;
 let currentBindType = "buy";
 let showMouseArea = false;
+window.selectedBindKey = null;
+
+// Mapping für russisches Layout: Angezeigter kyrillischer Buchstabe -> CS2-Befehl (englischer Buchstabe)
+const ruToEnKeyMap = {
+    'Й': 'q', 'Ц': 'w', 'У': 'e', 'К': 'r', 'Е': 't', 'Н': 'y', 'Г': 'u', 'Ш': 'i', 'Щ': 'o', 'З': 'p',
+    'Х': '[', 'Ъ': ']', '\\': '\\',
+    'Ф': 'a', 'Ы': 's', 'В': 'd', 'А': 'f', 'П': 'g', 'Р': 'h', 'О': 'j', 'Л': 'k', 'Д': 'l', 'Ж': ';', 'Э': "'",
+    'Я': 'z', 'Ч': 'x', 'С': 'c', 'М': 'v', 'И': 'b', 'Т': 'n', 'Ь': 'm', 'Б': ',', 'Ю': '.', '/': '/',
+    'Ё': '`', '1': '1', '2': '2', '3': '3', '4': '4', '5': '5', '6': '6', '7': '7', '8': '8', '9': '9', '0': '0',
+    '-': '-', '=': '=', '~': '~', '!': '1', '@': '2', '#': '3', '$': '4', '%': '5', '^': '6', '&': '7',
+    '*': '8', '(': '9', ')': '0', '_': '-', '+': '=', '{': '[', '}': ']', '|': '\\', ':': ';', '"': "'",
+    '<': ',', '>': '.', '?': '/', ' ':' '
+};
 
 // Mapping für russisches Layout
 const ruToEnKeyMap = {
@@ -78,6 +91,7 @@ const ruToEnKeyMap = {
 
 // Gesperrte Tasten
 const lockedKeys = [
+<<<<<<< HEAD
   "esc",
   "escape",
   "win",
@@ -94,6 +108,16 @@ const lockedKeys = [
   "pause",
   "num lock",
   "numlock",
+=======
+  "esc", "escape",
+  "win", "lwin", "rwin",
+  "alt gr", "ralt",
+  "menu",
+  "print screen", "prtsc",
+  "scroll lock", "srclk",
+  "pause break", "pause",
+  "num lock", "numlock",
+>>>>>>> 38331c4ea550edcc13a34938b3a1f1ebfe97acf8
 ];
 
 // Maus-Tasten
@@ -108,6 +132,14 @@ const mouseKeys = [
 ];
 
 function initBindsTab() {
+<<<<<<< HEAD
+=======
+  // Initialisiere globale Variable für die ausgewählte Taste
+  window.selectedBindKey = null;
+  selectedBindKey = null;
+  
+  // Stelle sicher, dass mainKeysRows initialisiert ist
+>>>>>>> 38331c4ea550edcc13a34938b3a1f1ebfe97acf8
   if (typeof mainKeysRows === "undefined" || mainKeysRows.length === 0) {
     if (typeof deKeysRows !== "undefined") {
       mainKeysRows = JSON.parse(JSON.stringify(deKeysRows));
@@ -123,14 +155,18 @@ function initBindsTab() {
     );
   }
 
+  // Rendere alle Komponenten
   renderBindsKeyboardGrid();
   renderBindsMouseGrid();
   renderBindsBuyCategories();
   renderBindsSavedList();
   renderBindsTemplates();
+  
+  // Event-Listener und andere Initialisierungen
   attachBindsEventListeners();
   attachMouseToggleListener();
   initLayoutDropdown();
+<<<<<<< HEAD
 
   // Live-Berechnung für Buy Input initialisieren
   initBuyLiveListener();
@@ -173,6 +209,45 @@ function getKeyCommandName(displayKey, layout) {
     if (ruToEnKeyMap[upperKey]) return ruToEnKeyMap[upperKey];
   }
   return displayKey.toLowerCase();
+=======
+  
+  // Setze initiale Status-Anzeige
+  const statusDiv = document.getElementById("selectedKeyStatus");
+  if (statusDiv) {
+    statusDiv.innerHTML = "⚡ Keine Taste ausgewählt - Klicke auf eine Taste auf der Tastatur";
+    statusDiv.style.background = "#ff4444";
+    statusDiv.style.color = "white";
+  }
+  
+  console.log("✅ Binds Tab initialisiert, window.selectedBindKey =", window.selectedBindKey);
+}
+
+// Hilfsfunktion: Konvertiert einen angezeigten Tastennamen (z.B. kyrillisch) in den CS2-Befehl
+function getKeyCommandName(displayKey, layout) {
+  if (layout === "RU") {
+    // Bei russischem Layout: Kyrillischen Buchstaben in englischen Befehl umwandeln
+    if (ruToEnKeyMap[displayKey]) {
+      return ruToEnKeyMap[displayKey];
+    }
+    // Großbuchstaben-Version prüfen
+    const upperKey = displayKey.toUpperCase();
+    if (ruToEnKeyMap[upperKey]) {
+      return ruToEnKeyMap[upperKey];
+    }
+  }
+  // Bei DE/US oder wenn keine Umwandlung nötig: Kleinschreibung zurückgeben
+  return displayKey.toLowerCase();
+}
+
+// Hilfsfunktion: Holt den tatsächlichen Befehl für eine Taste (für Bindings)
+function getKeyCommandForBinding(displayKey, layout, actualKeyFromRow = null) {
+  if (layout === "RU" && actualKeyFromRow) {
+    // Bei russischem Layout verwende den tatsächlichen Wert aus dem Layout-Array
+    // (das sind bereits die englischen Entsprechungen, weil ruKeysRows englische Zeichen hat)
+    return actualKeyFromRow.toLowerCase();
+  }
+  return getKeyCommandName(displayKey, layout);
+>>>>>>> 38331c4ea550edcc13a34938b3a1f1ebfe97acf8
 }
 
 function initLayoutDropdown() {
@@ -181,7 +256,13 @@ function initLayoutDropdown() {
   dropdown.value = currentLayout;
   dropdown.addEventListener("change", (e) => {
     const newLayout = e.target.value;
+<<<<<<< HEAD
     if (typeof setKeyboardLayout === "function") setKeyboardLayout(newLayout);
+=======
+    if (typeof setKeyboardLayout === "function") {
+      setKeyboardLayout(newLayout);
+    }
+>>>>>>> 38331c4ea550edcc13a34938b3a1f1ebfe97acf8
     renderBindsKeyboardGrid();
     renderBindsMouseGrid();
     console.log("Layout gewechselt zu:", newLayout);
@@ -193,6 +274,7 @@ function renderBindsKeyboardGrid() {
   if (!container) return;
   container.innerHTML = "";
 
+<<<<<<< HEAD
   const enToRuDisplayMap = {
     q: "Й",
     w: "Ц",
@@ -244,6 +326,19 @@ function renderBindsKeyboardGrid() {
     "~": "~",
   };
 
+=======
+  // Mapping: Englischer Buchstabe -> Kyrillische Anzeige für russisches Layout
+  const enToRuDisplayMap = {
+    'q': 'Й', 'w': 'Ц', 'e': 'У', 'r': 'К', 't': 'Е', 'y': 'Н', 'u': 'Г', 'i': 'Ш', 'o': 'Щ', 'p': 'З',
+    '[': 'Х', ']': 'Ъ', '\\': '\\',
+    'a': 'Ф', 's': 'Ы', 'd': 'В', 'f': 'А', 'g': 'П', 'h': 'Р', 'j': 'О', 'k': 'Л', 'l': 'Д', ';': 'Ж', "'": 'Э',
+    'z': 'Я', 'x': 'Ч', 'c': 'С', 'v': 'М', 'b': 'И', 'n': 'Т', 'm': 'Ь', ',': 'Б', '.': 'Ю', '/': '/',
+    '`': 'Ё', '1': '1', '2': '2', '3': '3', '4': '4', '5': '5', '6': '6', '7': '7', '8': '8', '9': '9', '0': '0',
+    '-': '-', '=': '=', '~': '~'
+  };
+
+  // Definiere die Grid-Positionen mit korrekten Indizes für jedes Layout
+>>>>>>> 38331c4ea550edcc13a34938b3a1f1ebfe97acf8
   const keyPositions = [
     { col: "1 / 3", row: "1 / 3", small: false, keyName: "ESC" },
     { col: "4 / 6", row: "1 / 3", small: false, keyName: "F1" },
@@ -400,15 +495,35 @@ function renderBindsKeyboardGrid() {
 
   keyPositions.forEach((pos) => {
     const btn = document.createElement("button");
+<<<<<<< HEAD
     let rawKeyValue = "";
     let displayText = "";
     let isSpecialKey = false;
+=======
+
+    let rawKeyValue = "";      // Der Wert aus dem Layout (für CS2-Bindings, z.B. "o")
+    let displayText = "";      // Was auf der Taste steht (z.B. "Щ" bei russischem Layout)
+    let isSpecialKey = false;  // Ob es eine Sondertaste ist (Shift, Ctrl, etc.)
+>>>>>>> 38331c4ea550edcc13a34938b3a1f1ebfe97acf8
 
     if (pos.keyName) {
       rawKeyValue = pos.keyName;
       isSpecialKey = true;
+<<<<<<< HEAD
       if (rawKeyValue.match(/^F\d+$/)) {
         displayText = rawKeyValue.toUpperCase();
+=======
+      
+      if (rawKeyValue.match(/^F\d+$/)) {
+        displayText = rawKeyValue.toUpperCase();
+      } else if (
+        rawKeyValue === "Print Screen" ||
+        rawKeyValue === "Scroll Lock" ||
+        rawKeyValue === "Pause Break" ||
+        rawKeyValue === "Num Lock"
+      ) {
+        displayText = specialDisplayNames[rawKeyValue] || rawKeyValue;
+>>>>>>> 38331c4ea550edcc13a34938b3a1f1ebfe97acf8
       } else {
         displayText = specialDisplayNames[rawKeyValue] || rawKeyValue;
       }
@@ -420,7 +535,15 @@ function renderBindsKeyboardGrid() {
     ) {
       if (mainKeysRows[pos.rowIdx][pos.colIdx]) {
         rawKeyValue = mainKeysRows[pos.rowIdx][pos.colIdx];
+<<<<<<< HEAD
         if (currentLayout === "RU") {
+=======
+        
+        // Bestimme die Anzeige basierend auf dem Layout
+        if (currentLayout === "RU") {
+          // Bei russischem Layout: rawKeyValue ist der englische Buchstabe (z.B. "o")
+          // Wir müssen den kyrillischen Buchstaben für die Anzeige finden
+>>>>>>> 38331c4ea550edcc13a34938b3a1f1ebfe97acf8
           const lowerKey = rawKeyValue.toLowerCase();
           if (enToRuDisplayMap[lowerKey]) {
             displayText = enToRuDisplayMap[lowerKey];
@@ -428,6 +551,10 @@ function renderBindsKeyboardGrid() {
             displayText = rawKeyValue;
           }
         } else {
+<<<<<<< HEAD
+=======
+          // Bei DE/US: Zeige den Wert aus dem Layout an
+>>>>>>> 38331c4ea550edcc13a34938b3a1f1ebfe97acf8
           if (rawKeyValue.length === 1 && rawKeyValue.match(/[A-Za-z]/)) {
             displayText = rawKeyValue.toUpperCase();
           } else {
@@ -443,6 +570,7 @@ function renderBindsKeyboardGrid() {
       displayText = "?";
     }
 
+<<<<<<< HEAD
     let bindingKey = rawKeyValue;
     if (
       currentLayout === "RU" &&
@@ -450,19 +578,36 @@ function renderBindsKeyboardGrid() {
       rawKeyValue !== "?" &&
       rawKeyValue.length === 1
     ) {
+=======
+    // Für Bindings: Bei russischem Layout den englischen Buchstaben verwenden, sonst den rawKeyValue
+    let bindingKey = rawKeyValue;
+    if (currentLayout === "RU" && !isSpecialKey && rawKeyValue !== "?" && rawKeyValue.length === 1) {
+      // Bei russischem Layout: rawKeyValue ist bereits der englische Buchstabe (z.B. "o")
+      // Also direkt verwenden
+>>>>>>> 38331c4ea550edcc13a34938b3a1f1ebfe97acf8
       bindingKey = rawKeyValue.toLowerCase();
     } else if (!isSpecialKey && rawKeyValue !== "?") {
       bindingKey = rawKeyValue.toLowerCase();
     }
+<<<<<<< HEAD
 
     const isLocked =
       lockedKeys.includes(bindingKey.toLowerCase()) ||
+=======
+    
+    // Prüfe ob die Taste gesperrt ist
+    const isLocked = lockedKeys.includes(bindingKey.toLowerCase()) ||
+>>>>>>> 38331c4ea550edcc13a34938b3a1f1ebfe97acf8
       lockedKeys.includes(displayText.toLowerCase()) ||
       bindingKey === "Print Screen" ||
       bindingKey === "Scroll Lock" ||
       bindingKey === "Pause Break" ||
       bindingKey === "Num Lock";
 
+<<<<<<< HEAD
+=======
+    // Bestimme die Bind-Klasse
+>>>>>>> 38331c4ea550edcc13a34938b3a1f1ebfe97acf8
     let bindClass = "";
     if (!isLocked && bindingKey !== "?") {
       const bindingInfo = getBindingInfo(bindingKey);
@@ -485,6 +630,7 @@ function renderBindsKeyboardGrid() {
 
     if (!isLocked && bindingKey !== "?") {
       btn.onclick = () => {
+<<<<<<< HEAD
         selectedBindKey = bindingKey;
         // WICHTIG: Synchronisiere auch selectedBuyKey für das Buyscript
         if (typeof window.selectedBuyKey !== "undefined") {
@@ -492,9 +638,38 @@ function renderBindsKeyboardGrid() {
         }
         // Auch die globale Variable setzen
         window.currentSelectedKey = bindingKey;
+=======
+        console.log("Taste geklickt:", bindingKey);
+        selectedBindKey = bindingKey;
+        window.selectedBindKey = bindingKey; // Global setzen
+        
+        // Tastatur neu rendern um aktive Taste zu markieren
+>>>>>>> 38331c4ea550edcc13a34938b3a1f1ebfe97acf8
         renderBindsKeyboardGrid();
         renderBindsMouseGrid();
         updateBindsInputFields();
+        
+        // Aktualisiere auch die Status-Anzeigen in den Tabs
+        const statusDivBuy = document.getElementById("selectedKeyStatus");
+        if (statusDivBuy) {
+          statusDivBuy.innerHTML = `✅ Ausgewählte Taste: "${bindingKey}" - Wähle jetzt deine Items aus oder gib einen Befehl ein`;
+          statusDivBuy.style.background = "var(--accent)";
+          statusDivBuy.style.color = "#0a0a0f";
+        }
+        
+        const statusDivSay = document.getElementById("selectedKeyStatusSay");
+        if (statusDivSay) {
+          statusDivSay.innerHTML = `✅ Ausgewählte Taste: "${bindingKey}" - Gib eine Nachricht ein`;
+          statusDivSay.style.background = "var(--accent)";
+          statusDivSay.style.color = "#0a0a0f";
+        }
+        
+        const statusDivScript = document.getElementById("selectedKeyStatusScript");
+        if (statusDivScript) {
+          statusDivScript.innerHTML = `✅ Ausgewählte Taste: "${bindingKey}" - Erstelle oder wähle ein Skript`;
+          statusDivScript.style.background = "var(--accent)";
+          statusDivScript.style.color = "#0a0a0f";
+        }
       };
     } else {
       btn.onclick = () => {
@@ -521,9 +696,18 @@ function renderBindsMouseGrid() {
     if (bindingInfo.type === "script")
       btn.classList.add("mouse-key--bound-script");
     if (bindingInfo.type === "say") btn.classList.add("mouse-key--bound-say");
+<<<<<<< HEAD
     if (bindingInfo.type === "default")
       btn.classList.add("mouse-key--bound-default");
     if (selectedBindKey === key.cmd) btn.classList.add("mouse-key--active");
+=======
+    if (bindingInfo.type === "default") btn.classList.add("mouse-key--bound-default");
+
+    if (selectedBindKey === key.cmd) {
+      btn.classList.add("mouse-key--active");
+    }
+
+>>>>>>> 38331c4ea550edcc13a34938b3a1f1ebfe97acf8
     btn.textContent = key.display;
     btn.style.gridColumn = `${gridCols[idx]} / ${gridCols[idx] + 4}`;
     btn.style.gridRow = "1 / 3";
@@ -559,7 +743,22 @@ function attachMouseToggleListener() {
 }
 
 function updateBindsInputFields() {
-  if (!selectedBindKey) return;
+  const statusDiv = document.getElementById("selectedKeyStatus");
+  
+  if (!selectedBindKey) {
+    if (statusDiv) {
+      statusDiv.innerHTML = "⚡ Keine Taste ausgewählt - Klicke auf eine Taste auf der Tastatur";
+      statusDiv.style.background = "#ff4444";
+      statusDiv.style.color = "white";
+    }
+    return;
+  }
+  
+  if (statusDiv) {
+    statusDiv.innerHTML = `✅ Ausgewählte Taste: "${selectedBindKey}" - Wähle jetzt deine Items aus oder gib einen Befehl ein`;
+    statusDiv.style.background = "var(--accent)";
+    statusDiv.style.color = "#0a0a0f";
+  }
 
   // Synchronisiere selectedBuyKey für das Buyscript
   if (typeof window.selectedBuyKey !== "undefined") {
@@ -663,6 +862,7 @@ function renderBindsBuyItems() {
   categories[currentCat].forEach((it) => {
     let div = document.createElement("div");
     div.className = "weapon-item";
+<<<<<<< HEAD
 
     let sideBadge = "";
     if (it.side === "ct")
@@ -677,19 +877,50 @@ function renderBindsBuyItems() {
 
     div.innerHTML = `<span>${it.name} <span style="color: #ffaa33;">$${it.price}</span>${sideBadge}</span><span class="add-icon">+</span>`;
 
+=======
+    div.dataset.cmd = it.cmd;
+    div.dataset.category = currentCat;
+    
+    // Side-Badge mit Farben (wie bei buyscript.js)
+    let sideBadge = "";
+    if (it.side === "t") {
+      sideBadge = '<span class="side-badge side-t">T-ONLY</span>';
+    } else if (it.side === "ct") {
+      sideBadge = '<span class="side-badge side-ct">CT-ONLY</span>';
+    } else {
+      sideBadge = '<span class="side-badge side-both">BOTH</span>';
+    }
+    
+    div.innerHTML = `
+      <div style="display: flex; flex-direction: column; align-items: flex-start;">
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          ${sideBadge}
+          <span>${it.name}</span>
+        </div>
+        <span style="color: #ffaa44; font-size: 0.7rem;">💰 $${it.price}</span>
+      </div>
+      <span class="add-icon">+</span>
+    `;
+    
+>>>>>>> 38331c4ea550edcc13a34938b3a1f1ebfe97acf8
     div.onclick = () => {
+      // Verwende selectedBindKey direkt, wie bei Say und Script
       if (!selectedBindKey) {
         alert("Bitte wähle zuerst eine Taste aus!");
         return;
       }
       let cur = document.getElementById("bindsBuyCommandInput").value;
-      let cnt = (
-        cur.match(
-          new RegExp(it.cmd.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi"),
-        ) || []
-      ).length;
-      if (cnt >= it.maxCount) {
-        alert(`Maximal ${it.maxCount} mal erlaubt`);
+      let cnt = (cur.match(new RegExp(it.cmd.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi")) || []).length;
+      
+      let effectiveMax = it.maxCount;
+      if (it.cmd === "buy flashbang") {
+        effectiveMax = 2;
+      } else if (it.cmd.includes("grenade") || it.cmd === "decoy") {
+        effectiveMax = 1;
+      }
+      
+      if (cnt >= effectiveMax) {
+        alert(`Maximal ${effectiveMax} ${effectiveMax === 2 ? 'Flashbangs' : 'mal'} erlaubt`);
         return;
       }
       let n = cur ? cur + "; " + it.cmd : it.cmd;
@@ -703,38 +934,36 @@ function renderBindsBuyItems() {
 }
 
 function bindsSaveBuy() {
-  if (!selectedBindKey) {
-    alert("Bitte wähle zuerst eine Taste aus!");
+  let currentKey = window.selectedBindKey;
+  
+  console.log("bindsSaveBuy - window.selectedBindKey:", currentKey);
+  
+  if (!currentKey) {
+    alert("❌ Bitte wähle zuerst eine Taste auf der Tastatur aus!");
     return;
   }
+  
   let val = document.getElementById("bindsBuyCommandInput").value.trim();
   if (!val) {
-    alert("Bitte gib einen Buy-Befehl ein!");
+    alert("❌ Bitte gib einen Buy-Befehl ein!");
     return;
   }
 
-  const existingType = window.getExistingBindingType
-    ? window.getExistingBindingType(selectedBindKey)
-    : "none";
+  const existingType = window.getExistingBindingType(currentKey);
 
   if (existingType !== "none" && existingType !== "buy") {
     let typeName = existingType === "script" ? "ein Skript" : "einen Say-Bind";
-    if (
-      !confirm(
-        `Taste "${selectedBindKey}" wird bereits für ${typeName} verwendet.\n\nÜberschreiben? Der vorherige Bind wird gelöscht.`,
-      )
-    ) {
+    if (!confirm(`Taste "${currentKey}" wird bereits für ${typeName} verwendet. Überschreiben?`)) {
       return;
     }
-    if (window.removeSpecificBinding)
-      window.removeSpecificBinding(selectedBindKey, existingType);
+    if (window.removeSpecificBinding) window.removeSpecificBinding(currentKey, existingType);
   }
 
   if (window.buyBindings) {
-    window.buyBindings[selectedBindKey] = val;
+    window.buyBindings[currentKey] = val;
     if (window.saveBuy) window.saveBuy();
   }
-  alert(`✅ Buy-Bindung für Taste "${selectedBindKey}" gespeichert!`);
+  alert(`✅ Buy-Bindung für Taste "${currentKey}" gespeichert!`);
   renderBindsKeyboardGrid();
   renderBindsMouseGrid();
   renderBindsSavedList();
@@ -745,31 +974,36 @@ function bindsSaveBuy() {
 }
 
 function bindsSaveSay() {
-  if (!selectedBindKey) {
-    alert("Bitte wähle zuerst eine Taste aus!");
+  let currentKey = selectedBindKey || window.selectedBindKey;
+  
+  console.log("bindsSaveSay aufgerufen, currentKey:", currentKey);
+  
+  if (!currentKey) {
+    alert("❌ Bitte wähle zuerst eine Taste aus, indem du auf eine Taste in der Tastatur klickst!");
     return;
   }
+  
   let msgText = document.getElementById("bindsSayCommandInput").value.trim();
   if (!msgText) {
-    alert("Bitte gib eine Nachricht ein!");
+    alert("❌ Bitte gib eine Nachricht ein!");
     return;
   }
 
   const existingType = window.getExistingBindingType
-    ? window.getExistingBindingType(selectedBindKey)
+    ? window.getExistingBindingType(currentKey)
     : "none";
 
   if (existingType !== "none" && existingType !== "say") {
     let typeName = existingType === "script" ? "ein Skript" : "einen Buy-Bind";
     if (
       !confirm(
-        `Taste "${selectedBindKey}" wird bereits für ${typeName} verwendet.\n\nÜberschreiben? Der vorherige Bind wird gelöscht.`,
+        `Taste "${currentKey}" wird bereits für ${typeName} verwendet.\n\nÜberschreiben? Der vorherige Bind wird gelöscht.`,
       )
     ) {
       return;
     }
     if (window.removeSpecificBinding)
-      window.removeSpecificBinding(selectedBindKey, existingType);
+      window.removeSpecificBinding(currentKey, existingType);
   }
 
   const sayType = document.querySelector(
@@ -778,10 +1012,10 @@ function bindsSaveSay() {
   const fullCommand = `${sayType} ${msgText}`;
 
   if (window.sayBindings) {
-    window.sayBindings[selectedBindKey] = fullCommand;
+    window.sayBindings[currentKey] = fullCommand;
     if (window.saveSayBindings) window.saveSayBindings();
   }
-  alert(`✅ Say-Bindung für Taste "${selectedBindKey}" gespeichert!`);
+  alert(`✅ Say-Bindung für Taste "${currentKey}" gespeichert!`);
   renderBindsKeyboardGrid();
   renderBindsMouseGrid();
   renderBindsSavedList();
@@ -789,33 +1023,38 @@ function bindsSaveSay() {
 }
 
 function bindsSaveScript() {
-  if (!selectedBindKey) {
-    alert("Bitte wähle zuerst eine Taste aus!");
+  let currentKey = selectedBindKey || window.selectedBindKey;
+  
+  console.log("bindsSaveScript aufgerufen, currentKey:", currentKey);
+  
+  if (!currentKey) {
+    alert("❌ Bitte wähle zuerst eine Taste aus, indem du auf eine Taste in der Tastatur klickst!");
     return;
   }
+  
   let userAliases = document
     .getElementById("bindsScriptCommandsArea")
     .value.trim();
   if (!userAliases) {
-    alert("Bitte gib Skript-Inhalt ein!");
+    alert("❌ Bitte gib Skript-Inhalt ein!");
     return;
   }
 
   const existingType = window.getExistingBindingType
-    ? window.getExistingBindingType(selectedBindKey)
+    ? window.getExistingBindingType(currentKey)
     : "none";
 
   if (existingType !== "none" && existingType !== "script") {
     let typeName = existingType === "buy" ? "einen Buy-Bind" : "einen Say-Bind";
     if (
       !confirm(
-        `Taste "${selectedBindKey}" wird bereits für ${typeName} verwendet.\n\nÜberschreiben? Der vorherige Bind wird gelöscht.`,
+        `Taste "${currentKey}" wird bereits für ${typeName} verwendet.\n\nÜberschreiben? Der vorherige Bind wird gelöscht.`,
       )
     ) {
       return;
     }
     if (window.removeSpecificBinding)
-      window.removeSpecificBinding(selectedBindKey, existingType);
+      window.removeSpecificBinding(currentKey, existingType);
   }
 
   let scriptName =
@@ -829,21 +1068,21 @@ function bindsSaveScript() {
 
   let finalContent = `// ${scriptName}\n${cleanAliases}`;
   if (aliasName) {
-    finalContent += `\nbind "${selectedBindKey}" "${aliasName}"`;
+    finalContent += `\nbind "${currentKey}" "${aliasName}"`;
   } else {
     const firstLine = cleanAliases.split("\n")[0];
     if (firstLine && firstLine.includes("alias")) {
       const fallbackMatch = firstLine.match(/alias\s+(\+\w+|\w+)/);
       if (fallbackMatch)
-        finalContent += `\nbind "${selectedBindKey}" "${fallbackMatch[1]}"`;
+        finalContent += `\nbind "${currentKey}" "${fallbackMatch[1]}"`;
     }
   }
 
   if (window.scriptBindings) {
-    window.scriptBindings[selectedBindKey] = finalContent;
+    window.scriptBindings[currentKey] = finalContent;
     if (window.saveScriptBindings) window.saveScriptBindings();
   }
-  alert(`✅ Skript für Taste "${selectedBindKey}" gespeichert!`);
+  alert(`✅ Skript für Taste "${currentKey}" gespeichert!`);
   renderBindsKeyboardGrid();
   renderBindsMouseGrid();
   renderBindsSavedList();
@@ -851,8 +1090,12 @@ function bindsSaveScript() {
 }
 
 function bindsUnbindCurrent() {
-  if (!selectedBindKey) {
-    alert("Bitte wähle zuerst eine Taste aus!");
+  let currentKey = selectedBindKey || window.selectedBindKey;
+  
+  console.log("bindsUnbindCurrent aufgerufen, currentKey:", currentKey);
+  
+  if (!currentKey) {
+    alert("❌ Bitte wähle zuerst eine Taste aus, indem du auf eine Taste in der Tastatur klickst!");
     return;
   }
 
@@ -860,31 +1103,31 @@ function bindsUnbindCurrent() {
   if (
     currentBindType === "buy" &&
     window.buyBindings &&
-    window.buyBindings[selectedBindKey]
+    window.buyBindings[currentKey]
   ) {
-    delete window.buyBindings[selectedBindKey];
+    delete window.buyBindings[currentKey];
     if (window.saveBuy) window.saveBuy();
     removed = true;
   } else if (
     currentBindType === "say" &&
     window.sayBindings &&
-    window.sayBindings[selectedBindKey]
+    window.sayBindings[currentKey]
   ) {
-    delete window.sayBindings[selectedBindKey];
+    delete window.sayBindings[currentKey];
     if (window.saveSayBindings) window.saveSayBindings();
     removed = true;
   } else if (
     currentBindType === "script" &&
     window.scriptBindings &&
-    window.scriptBindings[selectedBindKey]
+    window.scriptBindings[currentKey]
   ) {
-    delete window.scriptBindings[selectedBindKey];
+    delete window.scriptBindings[currentKey];
     if (window.saveScriptBindings) window.saveScriptBindings();
     removed = true;
   }
 
   if (removed) {
-    alert(`Binding für ${selectedBindKey} (${currentBindType}) entfernt`);
+    alert(`Binding für ${currentKey} (${currentBindType}) entfernt`);
     updateBindsInputFields();
     renderBindsKeyboardGrid();
     renderBindsMouseGrid();
@@ -932,6 +1175,7 @@ function renderBindsSavedList() {
   cont.innerHTML = "";
   let allBinds = [];
 
+<<<<<<< HEAD
   function getDisplayKeyName(key, layout) {
     if (layout !== "RU") return key;
     const enToRuDisplayMap = {
@@ -990,6 +1234,31 @@ function renderBindsSavedList() {
     return key;
   }
 
+=======
+  // Hilfsfunktion: Konvertiert einen Tastennamen für die Anzeige basierend auf dem Layout
+  function getDisplayKeyName(key, layout) {
+    if (layout !== "RU") return key;
+    
+    // Mapping: Englischer Buchstabe -> Kyrillische Anzeige
+    const enToRuDisplayMap = {
+      'q': 'Й', 'w': 'Ц', 'e': 'У', 'r': 'К', 't': 'Е', 'y': 'Н', 'u': 'Г', 'i': 'Ш', 'o': 'Щ', 'p': 'З',
+      '[': 'Х', ']': 'Ъ', '\\': '\\',
+      'a': 'Ф', 's': 'Ы', 'd': 'В', 'f': 'А', 'g': 'П', 'h': 'Р', 'j': 'О', 'k': 'Л', 'l': 'Д', ';': 'Ж', "'": 'Э',
+      'z': 'Я', 'x': 'Ч', 'c': 'С', 'v': 'М', 'b': 'И', 'n': 'Т', 'm': 'Ь', ',': 'Б', '.': 'Ю', '/': '/',
+      '`': 'Ё', '1': '1', '2': '2', '3': '3', '4': '4', '5': '5', '6': '6', '7': '7', '8': '8', '9': '9', '0': '0',
+      '-': '-', '=': '=', '~': '~'
+    };
+    
+    // Sonderzeichen (Großbuchstaben, die keine Buchstaben sind)
+    const upperKey = key.toUpperCase();
+    if (enToRuDisplayMap[upperKey]) return enToRuDisplayMap[upperKey];
+    if (enToRuDisplayMap[key]) return enToRuDisplayMap[key];
+    
+    return key;
+  }
+
+  // Sammle alle benutzerdefinierten Buy-Bindings
+>>>>>>> 38331c4ea550edcc13a34938b3a1f1ebfe97acf8
   if (window.buyBindings) {
     for (let [k, cmd] of Object.entries(window.buyBindings)) {
       allBinds.push({
@@ -1025,6 +1294,11 @@ function renderBindsSavedList() {
       });
     }
   }
+<<<<<<< HEAD
+=======
+
+  // Sammle alle CS2 Standard-Bindings (DEFAULT)
+>>>>>>> 38331c4ea550edcc13a34938b3a1f1ebfe97acf8
   if (window.cs2DefaultBinds) {
     for (let [k, cmd] of Object.entries(window.cs2DefaultBinds)) {
       const alreadyBound = allBinds.some(
@@ -1053,6 +1327,7 @@ function renderBindsSavedList() {
   allBinds.forEach((bind) => {
     let e = document.createElement("div");
     e.className = "bind-entry";
+<<<<<<< HEAD
     let typeIcon =
       bind.type === "buy"
         ? "🛒"
@@ -1076,6 +1351,28 @@ function renderBindsSavedList() {
     if (bind.displayKey !== bind.key)
       e.title = `Echte Taste: "${bind.key}" (wird in CS2 verwendet)`;
     else if (!bind.isCustom && window.getCs2DefaultDescription)
+=======
+    
+    let typeIcon = bind.type === "buy" ? "🛒" : bind.type === "say" ? "💬" : bind.type === "script" ? "🎮" : "⭐";
+    let typeColor = bind.type === "buy" ? "#ff3333" : bind.type === "say" ? "#44cc44" : bind.type === "script" ? "#2288dd" : "#cc9900";
+    
+    // Nur bei benutzerdefinierten Bindings Lösch-Button anzeigen
+    const deleteButton = bind.isCustom ? 
+      `<span style="float: right; cursor: pointer; color: #ff6666; margin-left: 0.5rem;" onclick="window.removeBindingFromList('${bind.key}', '${bind.type}')">[x]</span>` : 
+      `<span style="float: right; margin-left: 0.5rem; opacity: 0.5;" title="Standard-Bindung (kann durch eigenen Bind überschrieben werden)">[Standard]</span>`;
+    
+    // Zeige den displayKey an (kyrillisch bei RU-Layout), aber speichere den echten key für die Funktion
+    e.innerHTML = `
+      <span class="bind-key" style="color: ${typeColor};">${typeIcon} bind "${bind.displayKey}"</span> 
+      → <span class="bind-command">"${bind.cmd.substring(0, 80)}${bind.cmd.length > 80 ? "..." : ""}"</span>
+      ${deleteButton}
+    `;
+    
+    // Tooltip zeigt den echten Tastennamen an
+    if (bind.displayKey !== bind.key) {
+      e.title = `Echte Taste: "${bind.key}" (wird in CS2 verwendet)`;
+    } else if (!bind.isCustom && window.getCs2DefaultDescription) {
+>>>>>>> 38331c4ea550edcc13a34938b3a1f1ebfe97acf8
       e.title = window.getCs2DefaultDescription(bind.key);
     e.onclick = (event) => {
       if (
@@ -1234,14 +1531,28 @@ function setBindType(type) {
     )
     .classList.add("active");
   updateBindsInputFields();
+  
+  // Status-Anzeigen zurücksetzen wenn keine Taste ausgewählt
+  const currentKey = selectedBindKey || window.selectedBindKey;
+  if (!currentKey) {
+    const statusDiv = document.getElementById("selectedKeyStatus");
+    if (statusDiv) {
+      statusDiv.innerHTML = "⚡ Keine Taste ausgewählt - Klicke auf eine Taste auf der Tastatur";
+      statusDiv.style.background = "#ff4444";
+      statusDiv.style.color = "white";
+    }
+  }
 }
 
 function attachBindsEventListeners() {
+  // Bind Type Selector
   document
     .querySelectorAll("#bindTypeSelector .main-cat-btn")
     .forEach((btn) => {
-      btn.addEventListener("click", () => setBindType(btn.dataset.bindType));
+      btn.removeEventListener("click", setBindTypeHandler);
+      btn.addEventListener("click", setBindTypeHandler);
     });
+<<<<<<< HEAD
   const saveBuyBtn = document.getElementById("bindsSaveBuyBtn");
   if (saveBuyBtn) saveBuyBtn.addEventListener("click", bindsSaveBuy);
   const unbindBuyBtn = document.getElementById("bindsUnbindBuyBtn");
@@ -1252,11 +1563,64 @@ function attachBindsEventListeners() {
   if (unbindSayBtn) unbindSayBtn.addEventListener("click", bindsUnbindCurrent);
   const saveScriptBtn = document.getElementById("bindsSaveScriptBtn");
   if (saveScriptBtn) saveScriptBtn.addEventListener("click", bindsSaveScript);
+=======
+
+  function setBindTypeHandler(e) {
+    setBindType(e.currentTarget.dataset.bindType);
+  }
+
+  // Save Buy Button
+  const saveBuyBtn = document.getElementById("bindsSaveBuyBtn");
+  if (saveBuyBtn) {
+    saveBuyBtn.removeEventListener("click", bindsSaveBuy);
+    saveBuyBtn.addEventListener("click", bindsSaveBuy);
+  }
+
+  // Unbind Buy Button
+  const unbindBuyBtn = document.getElementById("bindsUnbindBuyBtn");
+  if (unbindBuyBtn) {
+    unbindBuyBtn.removeEventListener("click", bindsUnbindCurrent);
+    unbindBuyBtn.addEventListener("click", bindsUnbindCurrent);
+  }
+
+  // Save Say Button
+  const saveSayBtn = document.getElementById("bindsSaveSayBtn");
+  if (saveSayBtn) {
+    saveSayBtn.removeEventListener("click", bindsSaveSay);
+    saveSayBtn.addEventListener("click", bindsSaveSay);
+  }
+
+  // Unbind Say Button
+  const unbindSayBtn = document.getElementById("bindsUnbindSayBtn");
+  if (unbindSayBtn) {
+    unbindSayBtn.removeEventListener("click", bindsUnbindCurrent);
+    unbindSayBtn.addEventListener("click", bindsUnbindCurrent);
+  }
+
+  // Save Script Button
+  const saveScriptBtn = document.getElementById("bindsSaveScriptBtn");
+  if (saveScriptBtn) {
+    saveScriptBtn.removeEventListener("click", bindsSaveScript);
+    saveScriptBtn.addEventListener("click", bindsSaveScript);
+  }
+
+  // Unbind Script Button
+>>>>>>> 38331c4ea550edcc13a34938b3a1f1ebfe97acf8
   const unbindScriptBtn = document.getElementById("bindsUnbindScriptBtn");
-  if (unbindScriptBtn)
+  if (unbindScriptBtn) {
+    unbindScriptBtn.removeEventListener("click", bindsUnbindCurrent);
     unbindScriptBtn.addEventListener("click", bindsUnbindCurrent);
+<<<<<<< HEAD
+=======
+  }
+
+  // Reset All Button
+>>>>>>> 38331c4ea550edcc13a34938b3a1f1ebfe97acf8
   const resetAllBtn = document.getElementById("bindsResetAllBtn");
-  if (resetAllBtn) resetAllBtn.addEventListener("click", bindsResetAll);
+  if (resetAllBtn) {
+    resetAllBtn.removeEventListener("click", bindsResetAll);
+    resetAllBtn.addEventListener("click", bindsResetAll);
+  }
 
   window.setBuyCategory = function (cat) {
     window.currentBuyCategory = cat;

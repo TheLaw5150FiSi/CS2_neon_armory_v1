@@ -33,6 +33,7 @@ function getAllKeys() {
 function getBindingInfo(key) {
   // Normalisiere den Key für den Vergleich
   let normalizedKey = key.toLowerCase();
+<<<<<<< HEAD
 
   const hasBuy =
     window.buyBindings &&
@@ -46,6 +47,13 @@ function getBindingInfo(key) {
   const hasDefault = window.isCs2DefaultBind
     ? window.isCs2DefaultBind(key)
     : false;
+=======
+  
+  const hasBuy = window.buyBindings && (window.buyBindings[key] || window.buyBindings[normalizedKey]);
+  const hasScript = window.scriptBindings && (window.scriptBindings[key] || window.scriptBindings[normalizedKey]);
+  const hasSay = window.sayBindings && (window.sayBindings[key] || window.sayBindings[normalizedKey]);
+  const hasDefault = window.isCs2DefaultBind ? window.isCs2DefaultBind(key) : false;
+>>>>>>> 38331c4ea550edcc13a34938b3a1f1ebfe97acf8
 
   // Priorität: Benutzerdefinierte Bindings überschreiben Default
   if (hasBuy) return { type: "buy", class: "bound-buy" };
@@ -71,31 +79,43 @@ function removeSpecificBinding(key, bindType) {
   let changed = false;
   let normalizedKey = key.toLowerCase();
 
+<<<<<<< HEAD
   if (
     bindType === "buy" &&
     window.buyBindings &&
     (window.buyBindings[key] || window.buyBindings[normalizedKey])
   ) {
+=======
+  if (bindType === "buy" && window.buyBindings && (window.buyBindings[key] || window.buyBindings[normalizedKey])) {
+>>>>>>> 38331c4ea550edcc13a34938b3a1f1ebfe97acf8
     delete window.buyBindings[key];
     delete window.buyBindings[normalizedKey];
     if (window.saveBuy) window.saveBuy();
     changed = true;
   }
+<<<<<<< HEAD
   if (
     bindType === "script" &&
     window.scriptBindings &&
     (window.scriptBindings[key] || window.scriptBindings[normalizedKey])
   ) {
+=======
+  if (bindType === "script" && window.scriptBindings && (window.scriptBindings[key] || window.scriptBindings[normalizedKey])) {
+>>>>>>> 38331c4ea550edcc13a34938b3a1f1ebfe97acf8
     delete window.scriptBindings[key];
     delete window.scriptBindings[normalizedKey];
     if (window.saveScriptBindings) window.saveScriptBindings();
     changed = true;
   }
+<<<<<<< HEAD
   if (
     bindType === "say" &&
     window.sayBindings &&
     (window.sayBindings[key] || window.sayBindings[normalizedKey])
   ) {
+=======
+  if (bindType === "say" && window.sayBindings && (window.sayBindings[key] || window.sayBindings[normalizedKey])) {
+>>>>>>> 38331c4ea550edcc13a34938b3a1f1ebfe97acf8
     delete window.sayBindings[key];
     delete window.sayBindings[normalizedKey];
     if (window.saveSayBindings) window.saveSayBindings();
@@ -132,7 +152,14 @@ function getNextLayout() {
 
 // Layout Toggle Funktion - durchläuft DE → US → DE
 function toggleKeyboardLayout() {
+<<<<<<< HEAD
   if (typeof deKeysRows === "undefined" || typeof usKeysRows === "undefined") {
+=======
+  if (
+    typeof deKeysRows === "undefined" ||
+    typeof usKeysRows === "undefined"
+  ) {
+>>>>>>> 38331c4ea550edcc13a34938b3a1f1ebfe97acf8
     console.warn("Layout-Daten nicht verfügbar");
     return;
   }
@@ -156,8 +183,12 @@ function toggleKeyboardLayout() {
 // Set specific layout directly
 function setKeyboardLayout(layout) {
   if (layout !== "DE" && layout !== "US") return;
+<<<<<<< HEAD
   if (typeof deKeysRows === "undefined" || typeof usKeysRows === "undefined")
     return;
+=======
+  if (typeof deKeysRows === "undefined" || typeof usKeysRows === "undefined") return;
+>>>>>>> 38331c4ea550edcc13a34938b3a1f1ebfe97acf8
 
   if (layout === "DE") {
     mainKeysRows = JSON.parse(JSON.stringify(deKeysRows));
@@ -175,7 +206,11 @@ function setKeyboardLayout(layout) {
 // Hilfsfunktion zum Aktualisieren der Layout-Buttons
 function updateLayoutButtons() {
   const toggleButtons = document.querySelectorAll(".layout-toggle-btn");
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> 38331c4ea550edcc13a34938b3a1f1ebfe97acf8
   toggleButtons.forEach((btn) => {
     if (currentLayout === "DE") {
       btn.innerHTML = "⌨️ DE Layout → 🇺🇸";

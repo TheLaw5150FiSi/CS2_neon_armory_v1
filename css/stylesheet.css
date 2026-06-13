@@ -1995,8 +1995,1638 @@ body.theme-blue .numpad-key.bound-default {
   border-top: 1px solid var(--border-color);
   color: var(--accent-light);
 }
+<<<<<<< HEAD
 @keyframes fadeOut {
   0% { opacity: 1; transform: translateX(0); }
   70% { opacity: 1; transform: translateX(0); }
   100% { opacity: 0; transform: translateX(20px); }
+=======
+
+/* ======================== WAFFEN-ITEMS MIT BILDERN ======================== */
+
+#itemsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 0.8rem;
+  max-height: 550px;
+  overflow-y: auto;
+  padding: 0.8rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+}
+
+.weapon-item {
+  background: var(--btn-bg);
+  border-radius: 1rem;
+  border: 1px solid var(--border-color);
+  padding: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+}
+
+.weapon-item:hover {
+  background: var(--accent);
+  transform: translateY(-2px);
+  border-color: var(--accent-glow);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.weapon-item:hover .weapon-name,
+.weapon-item:hover .weapon-price,
+.weapon-item:hover .weapon-description {
+  color: #0a0a0f;
+}
+
+.weapon-item:hover .side-badge {
+  filter: brightness(0.95);
+}
+
+/* Waffenbild */
+.weapon-image {
+  width: 80px;
+  height: 60px;
+  flex-shrink: 0;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 0.3rem;
+}
+
+.weapon-image img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  transition: transform 0.2s ease;
+}
+
+.weapon-item:hover .weapon-image img {
+  transform: scale(1.05);
+}
+
+/* Waffeninfo */
+.weapon-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 0;
+}
+
+.weapon-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.weapon-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-color);
+  font-family: monospace;
+}
+
+.weapon-price {
+  font-size: 0.7rem;
+  color: #ffaa44;
+  font-family: monospace;
+  font-weight: 600;
+}
+
+.weapon-description {
+  font-size: 0.65rem;
+  opacity: 0.8;
+  line-height: 1.3;
+  color: var(--text-color);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Side-Badges */
+.side-badge {
+  display: inline-block;
+  padding: 0.15rem 0.45rem;
+  border-radius: 1rem;
+  font-size: 0.55rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  font-family: monospace;
+}
+
+.side-t {
+  background: linear-gradient(135deg, #ffaa44, #ff8800);
+  color: #1a1a1a;
+  box-shadow: 0 1px 3px rgba(255, 170, 68, 0.3);
+}
+
+.side-ct {
+  background: linear-gradient(135deg, #44aaff, #2288dd);
+  color: #ffffff;
+  box-shadow: 0 1px 3px rgba(68, 170, 255, 0.3);
+}
+
+.side-both {
+  background: linear-gradient(135deg, #6b7280, #4b5563);
+  color: #ffffff;
+  box-shadow: 0 1px 3px rgba(107, 114, 128, 0.3);
+}
+
+/* Flashbang Hint */
+.flash-hint {
+  font-size: 0.5rem;
+  color: #ffaa44;
+  margin-left: 0.25rem;
+  opacity: 0.8;
+}
+
+/* Action Button */
+.weapon-action-btn {
+  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+  border: none;
+  border-radius: 1.5rem;
+  padding: 0.35rem 0.7rem;
+  font-size: 0.65rem;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.weapon-action-btn:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 8px var(--accent);
+}
+
+/* Ausgewählter Zustand */
+.weapon-item.selected {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  border-color: #16a34a;
+}
+
+.weapon-item.selected .weapon-name,
+.weapon-item.selected .weapon-price,
+.weapon-item.selected .weapon-description {
+  color: #0a0a0f;
+}
+
+.weapon-item.selected .weapon-action-btn {
+  background: linear-gradient(135deg, #0a0a0f, #1a1a1a);
+  color: #22c55e;
+}
+
+.weapon-item.selected .weapon-action-btn:hover {
+  box-shadow: 0 0 8px #0a0a0f;
+}
+
+.weapon-item.selected .side-t {
+  background: linear-gradient(135deg, #ffffff, #ffeecc);
+  color: #ff8800;
+}
+
+.weapon-item.selected .side-ct {
+  background: linear-gradient(135deg, #ffffff, #cceeff);
+  color: #2288dd;
+}
+
+.weapon-item.selected .side-both {
+  background: linear-gradient(135deg, #ffffff, #e5e5e5);
+  color: #4b5563;
+}
+
+/* Scrollbar */
+#itemsGrid::-webkit-scrollbar {
+  width: 6px;
+}
+
+#itemsGrid::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+#itemsGrid::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 3px;
+}
+
+#itemsGrid::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-light);
+}
+
+/* Responsive Anpassungen */
+@media (max-width: 768px) {
+  #itemsGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .weapon-item {
+    flex-wrap: wrap;
+  }
+  
+  .weapon-image {
+    width: 60px;
+    height: 45px;
+  }
+  
+  .weapon-action-btn {
+    margin-top: 0.3rem;
+    width: 100%;
+  }
+}
+
+/* Waffenbild */
+.weapon-image {
+  width: 80px;
+  height: 60px;
+  flex-shrink: 0;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 0.3rem;
+}
+
+.weapon-image img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  transition: transform 0.2s ease;
+}
+
+/* Speziell für Equipment-Icons (kleiner machen) */
+.weapon-item[data-cmd*="vest"] .weapon-image img,
+.weapon-item[data-cmd*="defuser"] .weapon-image img,
+.weapon-item[data-cmd*="taser"] .weapon-image img {
+  transform: scale(0.8);
+}
+
+.weapon-item:hover .weapon-image img {
+  transform: scale(1.05);
+}
+
+.weapon-item[data-cmd*="vest"]:hover .weapon-image img,
+.weapon-item[data-cmd*="defuser"]:hover .weapon-image img,
+.weapon-item[data-cmd*="taser"]:hover .weapon-image img {
+  transform: scale(0.85);
+}
+
+/* Ausgewählte Taste hervorheben */
+.app__key--active,
+.key.active-key {
+  background: radial-gradient(circle at 35% 25%, var(--accent), var(--accent-dark));
+  box-shadow: 0 0 0 2px white, 0 0 0 4px var(--accent);
+  color: white;
+  transform: scale(1.02);
+}
+
+/* ======================== CROSSHAIR GENERATOR STYLES ======================== */
+#crosshairPreviewContainer {
+  background: #0a0e17;
+  border-radius: 28px;
+  padding: 20px;
+  margin-bottom: 24px;
+  border: 1px solid var(--border-color);
+}
+
+#crosshairCanvas {
+  display: block;
+  margin: 0 auto;
+  cursor: crosshair;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.08), 0 10px 20px -8px black;
+}
+
+.crosshair-panel {
+  background: var(--btn-bg);
+  border-radius: 1.2rem;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.crosshair-panel-header {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0.8rem 1.2rem;
+  font-weight: bold;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--accent-light);
+}
+
+.crosshair-panel-body {
+  padding: 1rem;
+}
+
+.crosshair-slider-group {
+  margin-bottom: 1rem;
+}
+
+.crosshair-slider-group label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  margin-bottom: 0.4rem;
+  color: var(--text-color);
+}
+
+.crosshair-value-badge {
+  background: rgba(0, 0, 0, 0.4);
+  padding: 0.15rem 0.6rem;
+  border-radius: 1rem;
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: var(--accent-light);
+}
+
+/* Einheitliche Slider für ALLE */
+.crosshair-slider-group input[type="range"] {
+  width: 100%;
+  height: 4px;
+  -webkit-appearance: none;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  outline: none;
+}
+
+.crosshair-slider-group input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  background: var(--accent);
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 0 5px var(--accent-glow);
+  transition: 0.1s;
+}
+
+.crosshair-slider-group input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+/* Firefox Support */
+.crosshair-slider-group input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: var(--accent);
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+}
+
+/* Farbe-Slider spezifisch (gleicher Stil wie alle anderen) */
+.crosshair-color-channel input[type="range"] {
+  width: 100%;
+  height: 4px;
+  -webkit-appearance: none;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  outline: none;
+}
+
+.crosshair-color-channel input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  background: var(--accent);
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 0 5px var(--accent-glow);
+}
+
+.crosshair-checkbox-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.crosshair-checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 0.3rem 0.8rem;
+  border-radius: 2rem;
+  font-size: 0.8rem;
+  transition: 0.1s;
+}
+
+.crosshair-checkbox-item:hover {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.crosshair-checkbox-item input {
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.crosshair-color-row {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.crosshair-color-channel {
+  flex: 1;
+}
+
+.crosshair-color-channel span {
+  font-size: 0.7rem;
+  opacity: 0.8;
+  display: block;
+  margin-bottom: 0.2rem;
+  text-align: center;
+}
+
+.crosshair-controls-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+/* Dropdown im Crosshair-Generator - einheitlicher Stil */
+.crosshair-panel select {
+  background: var(--input-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 2rem;
+  padding: 0.5rem 1rem;
+  color: var(--text-color);
+  font-size: 0.85rem;
+  cursor: pointer;
+  width: 100%;
+  transition: 0.1s;
+}
+
+.crosshair-panel select:hover {
+  border-color: var(--accent);
+  background: var(--accent-dark);
+}
+
+.crosshair-panel select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 5px var(--accent-glow);
+}
+
+/* Dropdown Optionen */
+.crosshair-panel select option {
+  background: var(--btn-bg);
+  color: var(--text-color);
+}
+
+.crosshair-info-note {
+  font-size: 0.7rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 2rem;
+  padding: 0.4rem 0.8rem;
+  margin-top: 0.5rem;
+  text-align: center;
+  color: var(--accent-light);
+}
+
+#crosshairConfigText {
+  background: #03060c;
+  color: #c6ffb0;
+  font-family: 'Fira Code', monospace;
+  font-size: 12px;
+  border-color: var(--accent);
+}
+
+#copyCrosshairBtn {
+  margin-top: 0.5rem;
+}
+
+/* Status-Anzeige */
+#crosshairExportStatus {
+  transition: all 0.2s ease;
+}
+
+/* Buttons im Crosshair-Generator */
+#applyCrosshairBtn, #removeCrosshairBtn {
+  transition: all 0.2s ease;
+}
+
+#applyCrosshairBtn:hover, #removeCrosshairBtn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+}
+
+/* Dropdown für Tastaturlayout - einheitlicher Stil */
+#keyboardLayoutSelect {
+  background: var(--input-bg);
+  border: 1px solid var(--accent);
+  border-radius: 2rem;
+  padding: 0.3rem 0.8rem;
+  color: var(--text-color);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+#keyboardLayoutSelect:hover {
+  background: var(--accent-dark);
+  border-color: var(--accent-light);
+}
+
+#keyboardLayoutSelect:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 5px var(--accent-glow);
+}
+
+/* Optionen im Dropdown */
+#keyboardLayoutSelect option {
+  background: var(--btn-bg);
+  color: var(--text-color);
+}
+
+/* ======================== WAFFEN AMMO INFO ======================== */
+.weapon-ammo {
+  font-size: 0.65rem;
+  color: #88ccff;
+  font-family: monospace;
+  margin-top: 0.15rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.weapon-item:hover .weapon-ammo {
+  color: #0a0a0f;
+}
+
+.weapon-item.selected .weapon-ammo {
+  color: #0a0a0f;
+}
+
+/* ======================== TAB DROPDOWN MENÜ ======================== */
+
+.tab-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.tab-dropdown-btn {
+  background: var(--tab-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 2rem;
+  padding: 0.6rem 1.8rem;
+  font-weight: bold;
+  font-size: 1rem;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tab-dropdown-btn:hover {
+  background: var(--accent);
+  border-color: var(--accent-glow);
+  color: #0a0a0f;
+}
+
+/* Aktiver Zustand für die Dropdown-Buttons */
+.tab-dropdown-btn.active-dropdown {
+  background: var(--accent);
+  border-color: var(--accent-glow);
+  box-shadow: 0 0 10px var(--accent-glow);
+  color: #0a0a0f;
+}
+
+/* Dropdown-Inhalt */
+.tab-dropdown-content {
+  display: none;
+  position: absolute;
+  top: 110%;
+  left: 0;
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-color);
+  border-radius: 1rem;
+  min-width: 200px;
+  z-index: 1000;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.tab-dropdown-content.show {
+  display: block;
+  animation: fade 0.2s ease;
+}
+
+/* Dropdown-Einträge */
+.dropdown-tab-btn {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1.2rem;
+  background: transparent;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  color: var(--text-color);
+  font-size: 0.9rem;
+  transition: 0.1s;
+  font-family: inherit;
+}
+
+.dropdown-tab-btn:hover {
+  background: var(--accent);
+  color: #0a0a0f;
+}
+
+.dropdown-tab-btn.active {
+  background: var(--accent);
+  color: #0a0a0f;
+  font-weight: bold;
+}
+
+/* Aktive Tab-Anzeige (zeigt an welcher Tab gerade offen ist) */
+.active-tab-indicator {
+  display: inline-block;
+  margin-left: 0.5rem;
+  font-size: 0.7rem;
+  color: var(--accent-light);
+}
+
+/* Responsive: Bei kleinen Bildschirmen Dropdowns untereinander */
+@media (max-width: 768px) {
+  .tabs {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .tab-dropdown {
+    width: 100%;
+  }
+  
+  .tab-dropdown-btn {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .tab-dropdown-content {
+    position: static;
+    margin-top: 0.3rem;
+    width: 100%;
+  }
+}
+
+/* Style für noch nicht verfügbare Tabs */
+.dropdown-tab-btn[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.dropdown-tab-btn[disabled]:hover {
+  background: transparent;
+  color: var(--text-color);
+  transform: none;
+  box-shadow: none;
+}
+
+/* ======================== FOOTER STYLES ======================== */
+/* CS2 Neon Armory - Footer Komponente */
+/* Version: 1.0.1.1 | Datum: Juni 2026 */
+
+.app-footer {
+  margin-top: 3rem;
+  padding: 2rem 1.5rem 1rem;
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid var(--border-color);
+  border-radius: 2rem 2rem 0 0;
+  transition: all 0.3s ease;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+/* ======================== FOOTER SPALTEN ======================== */
+.footer-col {
+  animation: footerFadeIn 0.5s ease;
+}
+
+@keyframes footerFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.footer-col h4 {
+  color: var(--accent-light);
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  border-left: 3px solid var(--accent);
+  padding-left: 0.5rem;
+  letter-spacing: 0.5px;
+}
+
+/* ======================== LINKS ======================== */
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 0.5rem;
+}
+
+.footer-links a {
+  color: var(--text-color);
+  text-decoration: none;
+  font-size: 0.85rem;
+  opacity: 0.8;
+  transition: all 0.2s ease;
+  display: inline-block;
+}
+
+.footer-links a:hover {
+  opacity: 1;
+  color: var(--accent);
+  transform: translateX(3px);
+}
+
+.copyright {
+  font-size: 0.75rem;
+  opacity: 0.6;
+  display: block;
+  margin-top: 0.5rem;
+}
+
+/* ======================== SUPPORT BEREICH ======================== */
+.footer-donation-btn {
+  background: linear-gradient(135deg, #ff3366, #ff44cc);
+  border: none;
+  border-radius: 2rem;
+  padding: 0.6rem 1.2rem;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  transition: all 0.2s ease;
+  width: 100%;
+  font-size: 0.9rem;
+}
+
+.footer-donation-btn:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 12px rgba(255, 51, 102, 0.5);
+}
+
+.support-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 0.8rem;
+}
+
+.support-links a {
+  color: var(--text-color);
+  text-decoration: none;
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0.8;
+  transition: all 0.2s ease;
+}
+
+.support-links a:hover {
+  opacity: 1;
+  color: var(--accent);
+  transform: translateX(3px);
+}
+
+.support-note {
+  font-size: 0.7rem;
+  opacity: 0.6;
+  font-style: italic;
+  margin-top: 0.5rem;
+}
+
+/* ======================== VERSION BEREICH ======================== */
+.version-badge {
+  display: inline-block;
+  background: var(--accent);
+  color: #0a0a0f;
+  padding: 0.2rem 0.8rem;
+  border-radius: 1rem;
+  font-size: 0.85rem;
+  font-weight: bold;
+  margin-bottom: 0.3rem;
+}
+
+.build-date {
+  font-size: 0.7rem;
+  opacity: 0.7;
+  display: block;
+  margin-bottom: 0.8rem;
+}
+
+.update-check-btn {
+  background: var(--btn-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 2rem;
+  padding: 0.5rem 0.8rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  color: var(--text-color);
+  transition: all 0.2s ease;
+  margin-bottom: 0.5rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.update-check-btn:hover {
+  background: var(--accent);
+  color: #0a0a0f;
+  border-color: var(--accent);
+}
+
+.update-check-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.changelog-link {
+  font-size: 0.75rem;
+  color: var(--accent-light);
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-block;
+  margin-top: 0.3rem;
+  transition: all 0.2s ease;
+}
+
+.changelog-link:hover {
+  text-decoration: underline;
+  color: var(--accent);
+}
+
+/* ======================== KONTAKTFORMULAR ======================== */
+.contact-col {
+  min-width: 280px;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.form-group {
+  width: 100%;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  background: var(--input-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 0.8rem;
+  color: var(--text-color);
+  font-size: 0.85rem;
+  font-family: inherit;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 5px var(--accent-glow);
+}
+
+.form-group textarea {
+  resize: vertical;
+  font-family: inherit;
+}
+
+.checkbox-group {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-size: 0.75rem;
+}
+
+.checkbox-group input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.contact-submit-btn {
+  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+  border: none;
+  border-radius: 2rem;
+  padding: 0.6rem 1rem;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.contact-submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  filter: brightness(1.05);
+}
+
+.contact-form-status {
+  font-size: 0.7rem;
+  padding: 0.3rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.contact-form-status.success {
+  background: rgba(34, 197, 94, 0.2);
+  color: #4ade80;
+}
+
+.contact-form-status.error {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+}
+
+/* ======================== FOOTER BOTTOM ======================== */
+.footer-bottom {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.7rem;
+  opacity: 0.7;
+}
+
+.disclaimer {
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.status-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.status-dot.online {
+  background: #22c55e;
+  box-shadow: 0 0 5px #22c55e;
+}
+
+.status-dot.warning {
+  background: #f59e0b;
+  box-shadow: 0 0 5px #f59e0b;
+}
+
+.status-separator {
+  opacity: 0.5;
+}
+
+/* ======================== MODAL STYLES ======================== */
+.footer-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 10000;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer-modal.show {
+  display: flex;
+  animation: fadeIn 0.2s ease;
+}
+
+.footer-modal-content {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 1.8rem;
+  max-width: 90%;
+  max-height: 85vh;
+  overflow: auto;
+  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.5);
+  animation: modalSlideIn 0.3s ease;
+}
+
+.footer-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 1.8rem 1.8rem 0 0;
+  position: sticky;
+  top: 0;
+  backdrop-filter: blur(4px);
+}
+
+.footer-modal-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--accent-light);
+}
+
+.footer-modal-close {
+  font-size: 1.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  line-height: 1;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.footer-modal-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--accent);
+}
+
+.footer-modal-body {
+  padding: 1.5rem;
+  line-height: 1.5;
+}
+
+.footer-modal-body h4 {
+  color: var(--accent-light);
+  margin: 1rem 0 0.5rem 0;
+}
+
+.footer-modal-body ul {
+  margin-left: 1.5rem;
+  padding-left: 0;
+}
+
+.footer-modal-body li {
+  margin-bottom: 0.3rem;
+}
+
+/* ======================== ANIMATIONEN ======================== */
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ======================== RESPONSIVE ======================== */
+@media (max-width: 768px) {
+  .app-footer {
+    padding: 1.5rem 1rem 0.8rem;
+  }
+  
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .disclaimer {
+    text-align: center;
+    justify-content: center;
+  }
+  
+  .status-bar {
+    justify-content: center;
+  }
+  
+  .contact-col {
+    min-width: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-modal-body {
+    padding: 1rem;
+    font-size: 0.85rem;
+  }
+  
+  .footer-modal-header {
+    padding: 0.8rem 1rem;
+  }
+  
+  .footer-modal-title {
+    font-size: 1rem;
+  }
+}
+/* ======================== WAFFENÜBERSICHT DATENBANK ======================== */
+.weapons-db-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.weapon-db-card {
+  background: var(--btn-bg);
+  border-radius: 1rem;
+  border: 1px solid var(--border-color);
+  padding: 1rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.weapon-db-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.weapon-db-header {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.weapon-db-icon {
+  font-size: 1.8rem;
+  width: 45px;
+  text-align: center;
+}
+
+.weapon-db-name {
+  font-size: 1.1rem;
+  font-weight: bold;
+  flex: 1;
+}
+
+.weapon-db-price {
+  font-family: monospace;
+  font-weight: bold;
+  color: #ffaa44;
+}
+
+.weapon-db-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+  font-size: 0.75rem;
+}
+
+.weapon-db-stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.2rem 0;
+  border-bottom: 1px dotted rgba(255,255,255,0.1);
+}
+
+.weapon-db-stat-label {
+  opacity: 0.7;
+}
+
+.weapon-db-stat-value {
+  font-family: monospace;
+  font-weight: bold;
+  color: var(--accent-light);
+}
+
+.weapon-db-damage {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background: rgba(0,0,0,0.2);
+  border-radius: 0.6rem;
+}
+
+.weapon-db-damage-title {
+  font-size: 0.7rem;
+  opacity: 0.7;
+  margin-bottom: 0.3rem;
+}
+
+.weapon-db-damage-values {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.7rem;
+}
+
+.weapon-db-damage-head {
+  color: #ff6666;
+}
+
+.weapon-db-damage-body {
+  color: #ffaa66;
+}
+
+.weapon-db-damage-leg {
+  color: #66ff66;
+}
+
+.weapon-filter-btn {
+  background: var(--btn-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 2rem;
+  padding: 0.4rem 1rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  color: var(--text-color);
+  transition: all 0.2s;
+}
+
+.weapon-filter-btn:hover,
+.weapon-filter-btn.active-filter {
+  background: var(--accent);
+  color: #0a0a0f;
+  border-color: var(--accent);
+}
+
+@media (max-width: 700px) {
+  .weapons-db-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Vergleichs-Button */
+.weapon-compare-btn {
+  background: var(--accent-dark);
+  border: none;
+  border-radius: 1.5rem;
+  padding: 0.3rem 0.8rem;
+  font-size: 0.7rem;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.weapon-compare-btn:hover {
+  background: var(--accent);
+  transform: scale(1.02);
+}
+
+#compareContainer table th,
+#compareContainer table td {
+  text-align: center;
+}
+
+#compareContainer table td:first-child {
+  text-align: left;
+}
+
+/* Waffenbild in der Karte */
+.weapon-db-header {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.weapon-db-image {
+  width: 70px;
+  height: 55px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 0.3rem;
+}
+
+.weapon-db-image img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.weapon-db-info {
+  flex: 1;
+}
+
+.weapon-db-name {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.weapon-db-type {
+  font-size: 0.7rem;
+  opacity: 0.7;
+}
+
+.weapon-db-price {
+  font-size: 0.8rem;
+  color: #ffaa44;
+  margin-top: 0.2rem;
+}
+
+/* Vergleichs-Bilder */
+.weapon-compare-image {
+  width: 120px;
+  height: 90px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 0.5rem;
+}
+
+.weapon-compare-image img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* ======================== ECONOMY GUIDE STYLES ======================== */
+
+.economy-section {
+  display: none;
+  margin-top: 1.5rem;
+}
+
+.economy-section.active-section {
+  display: block;
+  animation: fade 0.3s ease;
+}
+
+.economy-nav-btn {
+  background: var(--btn-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 2rem;
+  padding: 0.5rem 1.2rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  color: var(--text-color);
+  transition: all 0.2s;
+}
+
+.economy-nav-btn:hover,
+.economy-nav-btn.active-nav {
+  background: var(--accent);
+  color: #0a0a0f;
+  border-color: var(--accent);
+}
+
+.economy-card {
+  background: var(--btn-bg);
+  border-radius: 1rem;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+}
+
+.economy-card-header {
+  background: linear-gradient(135deg, var(--accent-dark), var(--accent));
+  padding: 0.6rem 1rem;
+  font-weight: bold;
+  color: white;
+}
+
+.economy-card-body {
+  padding: 1rem;
+}
+
+.economy-card-body table {
+  width: 100%;
+  font-size: 0.85rem;
+}
+
+.economy-card-body table td {
+  padding: 0.3rem 0;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-accent {
+  color: var(--accent-light);
+}
+
+/* Strategie-Karten */
+.strategy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.strategy-card {
+  background: var(--btn-bg);
+  border-radius: 1rem;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+}
+
+.strategy-header {
+  padding: 0.6rem 1rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.strategy-header.eco {
+  background: #22c55e;
+  color: #0a0a0f;
+}
+
+.strategy-header.force {
+  background: #eab308;
+  color: #0a0a0f;
+}
+
+.strategy-header.full {
+  background: #ef4444;
+  color: white;
+}
+
+.strategy-header.save {
+  background: #6b7280;
+  color: white;
+}
+
+.strategy-body {
+  padding: 1rem;
+}
+
+.strategy-body p {
+  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.strategy-tip {
+  background: rgba(0,0,0,0.2);
+  border-radius: 0.5rem;
+  padding: 0.4rem;
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--accent-light);
+}
+
+/* Rechner */
+.calc-group {
+  margin-bottom: 1rem;
+}
+
+.calc-group label {
+  display: block;
+  font-size: 0.8rem;
+  margin-bottom: 0.3rem;
+  color: var(--accent-light);
+}
+
+.calc-input,
+.calc-select {
+  width: 100%;
+  padding: 0.5rem;
+  background: var(--input-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 0.6rem;
+  color: var(--text-color);
+  font-size: 0.9rem;
+}
+
+.calc-input:focus,
+.calc-select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.recommendation {
+  background: rgba(0,0,0,0.2);
+  border-radius: 0.8rem;
+  padding: 0.8rem;
+  margin-top: 0.5rem;
+}
+
+.recommendation strong {
+  color: var(--accent-light);
+}
+
+/* Tipp-Karten */
+.tip-card {
+  background: var(--btn-bg);
+  border-radius: 1rem;
+  border: 1px solid var(--border-color);
+  padding: 1rem;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  transition: all 0.2s;
+}
+
+.tip-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+}
+
+.tip-icon {
+  font-size: 1.8rem;
+}
+
+.tip-content h4 {
+  margin: 0 0 0.3rem 0;
+  color: var(--accent-light);
+}
+
+.tip-content p {
+  font-size: 0.8rem;
+  line-height: 1.4;
+  margin: 0;
+}
+
+@media (max-width: 700px) {
+  .strategy-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .economy-card-body table td {
+    font-size: 0.75rem;
+  }
+>>>>>>> 38331c4ea550edcc13a34938b3a1f1ebfe97acf8
 }

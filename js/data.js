@@ -989,6 +989,7 @@ const scriptTemplatesList = [
   },
 ];
 
+<<<<<<< HEAD
 
 // ======================== WAFFENKATEGORIEN MIT PREISEN & SEITEN ========================
 // ======================== WAFFENKATEGORIEN MIT PREISEN & SEITEN ========================
@@ -1052,28 +1053,87 @@ const categories = {
     { name: "Molotov", cmd: "buy molotov", maxCount: 1, price: 400, side: "t", category: "Granaten" },
     { name: "Incendiary", cmd: "buy incgrenade", maxCount: 1, price: 600, side: "ct", category: "Granaten" },
     { name: "Decoy", cmd: "buy decoy", maxCount: 1, price: 50, side: "both", category: "Granaten" }
+=======
+// ======================== WAFFENKATEGORIEN MIT AMMO-INFOS ========================
+const categories = {
+  Pistole: [
+    { name: "Glock-18", cmd: "buy glock", maxCount: 1, price: 200, side: "t", magazine: 20, total: 80 },
+    { name: "USP-S", cmd: "buy usp", maxCount: 1, price: 200, side: "ct", magazine: 12, total: 36 },
+    { name: "P2000", cmd: "buy p2000", maxCount: 1, price: 200, side: "ct", magazine: 13, total: 65 },
+    { name: "P250", cmd: "buy p250", maxCount: 1, price: 300, side: "both", magazine: 13, total: 52 },
+    { name: "Five-SeveN", cmd: "buy fiveseven", maxCount: 1, price: 500, side: "ct", magazine: 20, total: 60 },
+    { name: "Tec-9", cmd: "buy tec9", maxCount: 1, price: 500, side: "t", magazine: 18, total: 72 },
+    { name: "Desert Eagle", cmd: "buy deagle", maxCount: 1, price: 700, side: "both", magazine: 7, total: 28 },
+    { name: "Dual Berettas", cmd: "buy dualberettas", maxCount: 1, price: 400, side: "both", magazine: 30, total: 90 },
+    { name: "CZ75-Auto", cmd: "buy cz75a", maxCount: 1, price: 500, side: "both", magazine: 12, total: 36 },
+    { name: "R8 Revolver", cmd: "buy revolver", maxCount: 1, price: 600, side: "both", magazine: 8, total: 24 }
+  ],
+  "MP / SMG": [
+    { name: "MP9", cmd: "buy mp9", maxCount: 1, price: 1250, side: "ct", magazine: 30, total: 90 },
+    { name: "MAC-10", cmd: "buy mac10", maxCount: 1, price: 1050, side: "t", magazine: 30, total: 120 },
+    { name: "MP7", cmd: "buy mp7", maxCount: 1, price: 1500, side: "both", magazine: 30, total: 120 },
+    { name: "MP5-SD", cmd: "buy mp5sd", maxCount: 1, price: 1500, side: "both", magazine: 30, total: 120 },
+    { name: "UMP-45", cmd: "buy ump", maxCount: 1, price: 1200, side: "both", magazine: 25, total: 100 },
+    { name: "P90", cmd: "buy p90", maxCount: 1, price: 2350, side: "both", magazine: 50, total: 200 },
+    { name: "PP-Bizon", cmd: "buy bizon", maxCount: 1, price: 1400, side: "both", magazine: 64, total: 192 }
+  ],
+  Rifle: [
+    { name: "AK-47", cmd: "buy ak47", maxCount: 1, price: 2700, side: "t", magazine: 30, total: 120 },
+    { name: "M4A4", cmd: "buy m4a4", maxCount: 1, price: 3100, side: "ct", magazine: 30, total: 150 },
+    { name: "M4A1-S", cmd: "buy m4a1", maxCount: 1, price: 3100, side: "ct", magazine: 25, total: 85 },
+    { name: "FAMAS", cmd: "buy famas", maxCount: 1, price: 2050, side: "ct", magazine: 25, total: 125 },
+    { name: "Galil AR", cmd: "buy galilar", maxCount: 1, price: 1800, side: "t", magazine: 35, total: 175 },
+    { name: "SG 553", cmd: "buy sg553", maxCount: 1, price: 3000, side: "t", magazine: 30, total: 120 },
+    { name: "AUG", cmd: "buy aug", maxCount: 1, price: 3300, side: "ct", magazine: 30, total: 120 }
+  ],
+  Sniper: [
+    { name: "AWP", cmd: "buy awp", maxCount: 1, price: 4750, side: "both", magazine: 5, total: 15 },
+    { name: "SSG 08", cmd: "buy ssg08", maxCount: 1, price: 1700, side: "both", magazine: 10, total: 30 },
+    { name: "SCAR-20", cmd: "buy scar20", maxCount: 1, price: 5000, side: "ct", magazine: 20, total: 60 },
+    { name: "G3SG1", cmd: "buy g3sg1", maxCount: 1, price: 5000, side: "t", magazine: 20, total: 60 }
+  ],
+  Pumpgun: [
+    { name: "Nova", cmd: "buy nova", maxCount: 1, price: 1050, side: "both", magazine: 8, total: 40 },
+    { name: "XM1014", cmd: "buy xm1014", maxCount: 1, price: 2000, side: "both", magazine: 7, total: 32 },
+    { name: "MAG-7", cmd: "buy mag7", maxCount: 1, price: 1300, side: "ct", magazine: 5, total: 20 },
+    { name: "Sawed-Off", cmd: "buy sawedoff", maxCount: 1, price: 1100, side: "t", magazine: 7, total: 32 }
+  ],
+  "Schwere Waffen": [
+    { name: "M249", cmd: "buy m249", maxCount: 1, price: 5200, side: "both", magazine: 100, total: 300 },
+    { name: "Negev", cmd: "buy negev", maxCount: 1, price: 1700, side: "both", magazine: 100, total: 400 }
+  ],
+  Rüstung: [
+    { name: "Kevlar+Helm", cmd: "buy vesthelm", maxCount: 1, price: 1000, side: "both" },
+    { name: "Kevlar", cmd: "buy vest", maxCount: 1, price: 650, side: "both" },
+    { name: "Defuser", cmd: "buy defuser", maxCount: 1, price: 400, side: "ct" },
+    { name: "Taser", cmd: "buy taser", maxCount: 1, price: 200, side: "both" }
+  ],
+  Granaten: [
+    { name: "HE Grenade", cmd: "buy hegrenade", maxCount: 1, price: 300, side: "both" },
+    { name: "Flashbang", cmd: "buy flashbang", maxCount: 2, price: 200, side: "both" },
+    { name: "Smoke", cmd: "buy smokegrenade", maxCount: 1, price: 300, side: "both" },
+    { name: "Molotov", cmd: "buy molotov", maxCount: 1, price: 400, side: "t" },
+    { name: "Incendiary", cmd: "buy incgrenade", maxCount: 1, price: 600, side: "ct" },
+    { name: "Decoy", cmd: "buy decoy", maxCount: 1, price: 50, side: "both" }
+>>>>>>> 38331c4ea550edcc13a34938b3a1f1ebfe97acf8
   ]
 };
 
 // ======================== TASTATUR LAYOUTS ========================
 // Deutsche Tastatur (DE) - mit korrekten Bezeichnungen
+<<<<<<< HEAD
+=======
+// Deutsche Tastatur (DE) - VOLLSTÄNDIG
+// Deutsche Tastatur (DE) - MIT NAVIGATIONSBLOCK (für die große Tastatur)
+>>>>>>> 38331c4ea550edcc13a34938b3a1f1ebfe97acf8
 const deKeysRows = [
+  // Zeile 1: ESC + F-Tasten
   [
-    "ESC",
-    "F1",
-    "F2",
-    "F3",
-    "F4",
-    "F5",
-    "F6",
-    "F7",
-    "F8",
-    "F9",
-    "F10",
-    "F11",
-    "F12",
+    "ESC", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12"
   ],
+  // Zeile 2: Zahlen + Sonderzeichen (DE)
   [
+<<<<<<< HEAD
     "`",
     "1",
     "2",
@@ -1093,26 +1153,40 @@ const deKeysRows = [
   ["CAPS", "a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'", "ENTER"],
   ["LSHIFT", "y", "x", "c", "v", "b", "n", "m", ",", ".", "/", "RSHIFT"],
   ["LCTRL", "LALT", "SPACE", "RALT", "RCTRL", "LEFT", "DOWN", "UP", "RIGHT"],
+=======
+    "^", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "ß", "´", "BACKSPACE",
+    "Insert", "Home", "PgUp", "NumLk", "/", "*", "-"
+  ],
+  // Zeile 3: QWERTZ + Umlaute
+  [
+    "TAB", "q", "w", "e", "r", "t", "z", "u", "i", "o", "p", "ü", "+", "#",
+    "Delete", "End", "PgDn", "7", "8", "9", "+"
+  ],
+  // Zeile 4: ASDF + Umlaute
+  [
+    "CAPS", "a", "s", "d", "f", "g", "h", "j", "k", "l", "ö", "ä", "ENTER",
+    "4", "5", "6"
+  ],
+  // Zeile 5: YXCV + Sonderzeichen
+  [
+    "LSHIFT", "y", "x", "c", "v", "b", "n", "m", ",", ".", "-", "RSHIFT",
+    "UP", "1", "2", "3", "ENTER"
+  ],
+  // Zeile 6: Steuerung + Leertaste + Pfeiltasten
+  [
+    "LCTRL", "LALT", "SPACE", "RALT", "RCTRL", "LEFT", "DOWN", "RIGHT",
+    "0", "."
+  ]
+>>>>>>> 38331c4ea550edcc13a34938b3a1f1ebfe97acf8
 ];
 
 // US Tastatur (US) - mit korrekten Bezeichnungen
 const usKeysRows = [
   [
-    "ESC",
-    "F1",
-    "F2",
-    "F3",
-    "F4",
-    "F5",
-    "F6",
-    "F7",
-    "F8",
-    "F9",
-    "F10",
-    "F11",
-    "F12",
+    "ESC", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12"
   ],
   [
+<<<<<<< HEAD
     "~",
     "1",
     "2",
@@ -1132,21 +1206,29 @@ const usKeysRows = [
   ["CAPS", "a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'", "ENTER"],
   ["LSHIFT", "z", "x", "c", "v", "b", "n", "m", ",", ".", "/", "RSHIFT"],
   ["LCTRL", "LALT", "SPACE", "RALT", "RCTRL", "LEFT", "DOWN", "UP", "RIGHT"],
+=======
+    "~", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "BACKSPACE"
+  ],
+  [
+    "TAB", "q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]", "\\"
+  ],
+  [
+    "CAPS", "a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'", "ENTER"
+  ],
+  [
+    "LSHIFT", "z", "x", "c", "v", "b", "n", "m", ",", ".", "/", "RSHIFT"
+  ],
+  [
+    "LCTRL", "LALT", "SPACE", "RALT", "RCTRL", "LEFT", "DOWN", "UP", "RIGHT"
+  ]
+>>>>>>> 38331c4ea550edcc13a34938b3a1f1ebfe97acf8
 ];
 
 const numpadKeys = [
-  "KP_7",
-  "KP_8",
-  "KP_9",
-  "KP_4",
-  "KP_5",
-  "KP_6",
-  "KP_1",
-  "KP_2",
-  "KP_3",
-  "KP_0",
-  "KP_DEL",
-  "KP_PLUS",
+  "KP_7", "KP_8", "KP_9",
+  "KP_4", "KP_5", "KP_6",
+  "KP_1", "KP_2", "KP_3",
+  "KP_0", "KP_DEL", "KP_PLUS"
 ];
 
 // NumPad Anzeigenamen
@@ -1166,7 +1248,7 @@ const numpadDisplayNames = {
   KP_MINUS: "-",
   KP_SLASH: "/",
   KP_STAR: "*",
-  KP_ENTER: "Enter",
+  KP_ENTER: "Enter"
 };
 
 // ======================== CONFIG KATEGORIEN ========================

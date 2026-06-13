@@ -6,7 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=yes"
     />
-    <title>CS2 Neon Studio</title>
+    <title>CS2 Neon Armory</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
@@ -22,7 +22,6 @@
     <img
       src="img/logo.png"
       alt="CS2 Neon Logo"
-      onerror="this.src = 'https://via.placeholder.com/60x60?text=CS2'"
     />
     <div class="title">
       <h1>CS2 NEON ARMORY</h1>
@@ -56,7 +55,7 @@
   <div class="donation-modal-content">
     <span class="donation-modal-close">&times;</span>
     <h2>💝 Support the Developer</h2>
-    <p style="margin-bottom: 1rem;">Hey! Wenn dir CS2 Neon Studio gefällt und du meine Arbeit unterstützen möchtest, freue ich mich über eine kleine Spende.</p>
+    <p style="margin-bottom: 1rem;">Hey! Wenn dir CS2 Neon Armory gefällt und du meine Arbeit unterstützen möchtest, freue ich mich über eine kleine Spende.</p>
     
     <div style="display: flex; flex-direction: column; gap: 1rem;">
       <!-- PayPal Option -->
@@ -98,22 +97,61 @@
   </div>
 </div>
 
-      <div class="tabs">
-        <button class="tab-btn active" data-tab="bindsTab">🔗 BINDS</button>
-        <button class="tab-btn" data-tab="configTab">⚙️ SETTINGS</button>
-        <button class="tab-btn" data-tab="analyzerTab">
-          📊 SYSTEM ANALYZER
-        </button>
-        <button class="tab-btn" data-tab="pingTab">📡 PING RADAR</button>
-        <button class="tab-btn" data-tab="startTab">🚀 START OPTIONEN</button>
-        <button class="tab-btn" data-tab="exportTab">📦 EXPORT</button>
-        <button class="tab-btn" data-tab="aboutTab">👤 ABOUT ME</button>
-      </div>
+<div class="tabs">
+  <!-- 1. CONFIG & BINDS (bestehend) -->
+  <div class="tab-dropdown">
+    <button class="tab-dropdown-btn" id="configDropdownBtn">
+      CONFIG & BINDS <i class="fas fa-chevron-down"></i>
+    </button>
+    <div class="tab-dropdown-content" id="configDropdownContent">
+      <button class="dropdown-tab-btn" data-tab="bindsTab">BINDS</button>
+      <button class="dropdown-tab-btn" data-tab="configTab">SETTINGS</button>
+      <button class="dropdown-tab-btn" data-tab="startTab">START OPTIONEN</button>
+      <button class="dropdown-tab-btn" data-tab="crosshairTab">CROSSHAIR</button>
+      <button class="dropdown-tab-btn" data-tab="exportTab">EXPORT & BACKUP</button>
+    </div>
+  </div>
+
+  <!-- 2. ANALYSE & NETZWERK (bestehend) -->
+  <div class="tab-dropdown">
+    <button class="tab-dropdown-btn" id="analyzeDropdownBtn">
+      ANALYSE & NETZ <i class="fas fa-chevron-down"></i>
+    </button>
+    <div class="tab-dropdown-content" id="analyzeDropdownContent">
+      <button class="dropdown-tab-btn" data-tab="analyzerTab">SYSTEM ANALYZER</button>
+      <button class="dropdown-tab-btn" data-tab="pingTab">PING RADAR</button>
+    </div>
+  </div>
+
+<!-- 3. DATENBANK -->
+<div class="tab-dropdown">
+  <button class="tab-dropdown-btn" id="wikiDropdownBtn">
+    DATENBANK <i class="fas fa-chevron-down"></i>
+  </button>
+  <div class="tab-dropdown-content" id="wikiDropdownContent">
+    <button class="dropdown-tab-btn" data-tab="skinsDb">Skin Datenbank</button>
+    <button class="dropdown-tab-btn" data-tab="calloutsDb">Callouts & Maps</button>
+    <button class="dropdown-tab-btn" data-tab="utilityDb">Utility Spots</button>
+    <button class="dropdown-tab-btn" data-tab="weaponsDb">Waffenübersicht</button>
+    <button class="dropdown-tab-btn" data-tab="economyDb">Economy Guide</button>
+  </div>
+</div>
+
+  <!-- 4. INFO & COMMUNITY (bestehend) -->
+  <div class="tab-dropdown">
+    <button class="tab-dropdown-btn" id="infoDropdownBtn">
+      INFO & COMMUNITY <i class="fas fa-chevron-down"></i>
+    </button>
+    <div class="tab-dropdown-content" id="infoDropdownContent">
+      <button class="dropdown-tab-btn" data-tab="aboutTab">ABOUT ME</button>
+    </div>
+  </div>
+</div>
 
 <!-- BINDS TAB -->
 <div id="bindsTab" class="tab-content active">
   <div class="card">
-    <h2>⌨️ TASTATUR + NUMPAD</h2>
+    <h2>TASTATUR + NUMPAD</h2>
     
     <!-- Layout-Auswahl direkt über der Tastatur -->
     <div style="display: flex; justify-content: flex-end; align-items: center; gap: 1rem; margin-bottom: 1rem;">
@@ -128,7 +166,7 @@
     </div>
 
     <div class="info-text">
-      🎨 Farben: 🔴 Rot = BuyScript | 🔵 Blau = Skript | 🟢 Grün = Say Bind | 🟡 Gelb = Default Bind
+    🔴 Rot = BuyScript | 🔵 Blau = Skript | 🟢 Grün = Say Bind | 🟡 Gelb = Default Bind
     </div>
 
     <!-- Haupttastatur – originalgetreues Grid -->
@@ -171,6 +209,7 @@
             </button>
           </div>
 
+<<<<<<< HEAD
 <!-- BUY BIND CARD -->
 <div id="bindsBuyArea" class="bind-type-area active">
   <div class="category-row" id="bindsCategoryList"></div>
@@ -202,10 +241,46 @@
   
   <button class="glow" id="bindsSaveBuyBtn">💾 Buy-Bindung speichern</button>
   <button class="glow" id="bindsUnbindBuyBtn">🔓 Bindung entfernen</button>
+=======
+          <!-- BUY BIND CARD -->
+<div id="bindsBuyArea" class="bind-type-area active">
+  <!-- Status-Anzeige für ausgewählte Taste -->
+  <div id="selectedKeyStatus" style="background: #ff4444; color: white; padding: 0.3rem 0.8rem; border-radius: 1rem; margin-bottom: 0.8rem; display: inline-block; font-size: 0.8rem;">
+    ⚡ Keine Taste ausgewählt - Klicke auf eine Taste auf der Tastatur
+  </div>
+  <div class="category-row" id="categoryList"></div>
+  <div class="items-grid" id="itemsGrid"></div>
+  <textarea id="buyCommandInput" rows="2" placeholder="buy awp; buy vesthelm; ..."></textarea>
+  
+  <!-- Buttons -->
+  <button class="glow" id="saveBuyBtn">💾 Buy-Bindung speichern</button>
+  <button class="glow" id="unbindBuyBtn">🔓 Bindung entfernen</button>
+  
+  <!-- Preisanzeige UNTER dem Textfeld und Buttons -->
+  <div id="buyPriceDisplay" style="background: rgba(0,0,0,0.3); border-radius: 1rem; padding: 0.8rem; margin-top: 1rem; text-align: center;">
+    <div style="display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;">
+      <div style="text-align: center; flex: 1; min-width: 200px; background: rgba(0,0,0,0.2); border-radius: 1rem; padding: 0.8rem;">
+        <span style="color: #ffaa44; font-size: 1.1rem;">TERRORIST</span><br>
+        <span style="font-size: 1.8rem; font-weight: bold; color: #ffaa44;">$0</span>
+        <div style="margin-top: 0.5rem; font-size: 0.7rem; text-align: left; border-top: 1px solid rgba(255,170,68,0.3); padding-top: 0.5rem;">
+          <span style="opacity: 0.5;">(keine Ausrüstung)</span>
+        </div>
+      </div>
+      <div style="text-align: center; flex: 1; min-width: 200px; background: rgba(0,0,0,0.2); border-radius: 1rem; padding: 0.8rem;">
+        <span style="color: #44aaff; font-size: 1.1rem;">COUNTER-TERRORIST</span><br>
+        <span style="font-size: 1.8rem; font-weight: bold; color: #44aaff;">$0</span>
+        <div style="margin-top: 0.5rem; font-size: 0.7rem; text-align: left; border-top: 1px solid rgba(68,170,255,0.3); padding-top: 0.5rem;">
+          <span style="opacity: 0.5;">(keine Ausrüstung)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+>>>>>>> 38331c4ea550edcc13a34938b3a1f1ebfe97acf8
 </div>
 
 <!-- SAY BIND CARD -->
 <div id="bindsSayArea" class="bind-type-area">
+<<<<<<< HEAD
   <!-- Beschreibung mit drei Spalten nebeneinander -->
   <div style="background: rgba(0,0,0,0.2); border-radius: 0.8rem; padding: 0.8rem; margin-bottom: 1rem;">
     
@@ -272,17 +347,26 @@
   </div>
   
   <!-- Buttons -->
+=======
+  <div id="selectedKeyStatusSay" style="background: #ff4444; color: white; padding: 0.3rem 0.8rem; border-radius: 1rem; margin-bottom: 0.8rem; display: inline-block; font-size: 0.8rem;">
+    ⚡ Keine Taste ausgewählt - Klicke auf eine Taste auf der Tastatur
+  </div>
+  <div class="say-type-selector">
+    <label><input type="radio" name="bindsSayType" value="say_team" checked> 💬 Team (say_team)</label>
+    <label><input type="radio" name="bindsSayType" value="say"> 🌍 Alle (say)</label>
+  </div>
+  <input type="text" id="bindsSayCommandInput" placeholder="Hallo zusammen!" />
+>>>>>>> 38331c4ea550edcc13a34938b3a1f1ebfe97acf8
   <button class="glow" id="bindsSaveSayBtn">💾 Say-Bindung speichern</button>
   <button class="glow" id="bindsUnbindSayBtn">🔓 Bindung entfernen</button>
 </div>
 
           <!-- SKRIPT CARD -->
           <div id="bindsScriptArea" class="bind-type-area">
-            <input
-              type="text"
-              id="bindsScriptNameInput"
-              placeholder="Skriptname"
-            />
+  <div id="selectedKeyStatusScript" style="background: #ff4444; color: white; padding: 0.3rem 0.8rem; border-radius: 1rem; margin-bottom: 0.8rem; display: inline-block; font-size: 0.8rem;">
+    ⚡ Keine Taste ausgewählt - Klicke auf eine Taste auf der Tastatur
+  </div>
+  <input type="text" id="bindsScriptNameInput" placeholder="Skriptname" />
             <textarea
               id="bindsScriptCommandsArea"
               rows="4"
@@ -812,6 +896,28 @@
         </div>
       </div>
 
+      <!-- CROSSHAIR GENERATOR TAB -->
+<div id="crosshairTab" class="tab-content">
+  <div class="card">
+    <h2>🎯 CROSSHAIR GENERATOR</h2>
+    <div class="info-hint">🎨 Gestalte dein perfektes Fadenkreuz – Live-Vorschau & fertige CS2-Befehle zum Kopieren</div>
+    
+    <div id="crosshairPreviewContainer">
+      <canvas id="crosshairCanvas" width="800" height="200" style="max-width:100%; height:auto; aspect-ratio:800/200; background: #05080e; border-radius: 16px;"></canvas>
+    </div>
+
+    <div id="crosshairControls">
+      <!-- Wird von JS befüllt -->
+    </div>
+
+    <div class="config-footer" style="margin-top: 1.5rem;">
+      <h3>📋 CS2 Konfigurations-Befehle</h3>
+      <textarea id="crosshairConfigText" rows="5" readonly></textarea>
+      <button id="copyCrosshairBtn" class="glow">📎 Befehle kopieren</button>
+    </div>
+  </div>
+</div>
+
             <!-- EXPORT TAB -->
       <div id="exportTab" class="tab-content">
         <div class="card">
@@ -850,6 +956,392 @@
           <button class="glow" id="refreshExportBtn">🔄 Aktualisieren</button>
         </div>
       </div>
+
+      <!-- ======================== DATENBANK - SKIN DATENBANK ======================== -->
+<div id="skinsDb" class="tab-content">
+  <div class="card" style="text-align: center; padding: 3rem 2rem;">
+    <i class="fas fa-paintbrush" style="font-size: 4rem; color: var(--accent); margin-bottom: 1rem;"></i>
+    <h2>🎨 Skin Datenbank</h2>
+    <div class="info-hint" style="display: inline-block; margin: 1rem auto;">
+      🚧 In Entwicklung
+    </div>
+    <p style="margin: 1rem 0; font-size: 1.1rem;">Diese Funktion ist in Arbeit und wird bald verfügbar sein!</p>
+    <p style="opacity: 0.7;">📅 Geplant: Vollständige Skins-Datenbank mit Preisen, Seltenheit und Inspect-Links</p>
+    <div style="margin-top: 2rem;">
+      <button class="glow" onclick="document.querySelector('[data-tab=\'bindsTab\']').click()">
+        🔄 Zurück zum Tool
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== DATENBANK - CALLOUTS & MAPS ======================== -->
+<div id="calloutsDb" class="tab-content">
+  <div class="card" style="text-align: center; padding: 3rem 2rem;">
+    <i class="fas fa-map" style="font-size: 4rem; color: var(--accent); margin-bottom: 1rem;"></i>
+    <h2>🗺️ Callouts & Maps</h2>
+    <div class="info-hint" style="display: inline-block; margin: 1rem auto;">
+      🚧 In Entwicklung
+    </div>
+    <p style="margin: 1rem 0; font-size: 1.1rem;">Interaktive Maps mit allen Callouts und Positionen</p>
+    <p style="opacity: 0.7;">📅 Geplant: Alle Competitive Maps (Mirage, Inferno, Nuke, Ancient, etc.) mit deutschen/englischen Callouts</p>
+    <div style="margin-top: 2rem;">
+      <button class="glow" onclick="document.querySelector('[data-tab=\'bindsTab\']').click()">
+        🔄 Zurück zum Tool
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== DATENBANK - UTILITY SPOTS ======================== -->
+<div id="utilityDb" class="tab-content">
+  <div class="card" style="text-align: center; padding: 3rem 2rem;">
+    <i class="fas fa-grenade" style="font-size: 4rem; color: var(--accent); margin-bottom: 1rem;"></i>
+    <h2>💣 Utility Spots</h2>
+    <div class="info-hint" style="display: inline-block; margin: 1rem auto;">
+      🚧 In Entwicklung
+    </div>
+    <p style="margin: 1rem 0; font-size: 1.1rem;">Smokes, Flashbangs, Molotovs – Die besten Lineups</p>
+    <p style="opacity: 0.7;">📅 Geplant: Video-Tutorials und Positionskarten für Smokes, Molly-Spots und Flash-Lineups</p>
+    <div style="margin-top: 2rem;">
+      <button class="glow" onclick="document.querySelector('[data-tab=\'bindsTab\']').click()">
+        🔄 Zurück zum Tool
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== DATENBANK - WAFFENÜBERSICHT ======================== -->
+<div id="weaponsDb" class="tab-content">
+  <div class="card">
+    <h2>🔫 WAFFENÜBERSICHT - CS2</h2>
+    <div class="info-hint">
+      📊 Alle Waffen mit detaillierten Statistiken – Schaden, Feuerrate, Preis & mehr
+    </div>
+
+<!-- Filterleiste -->
+<div class="weapons-filter-section" style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; align-items: center;">
+  <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+    <button class="weapon-filter-btn active-filter" data-filter="all">🔫 Alle Waffen</button>
+    <button class="weapon-filter-btn" data-filter="Pistole">🔫 Pistolen</button>
+    <button class="weapon-filter-btn" data-filter="SMG">🔫 SMGs</button>
+    <button class="weapon-filter-btn" data-filter="Rifle">🔫 Rifles</button>
+    <button class="weapon-filter-btn" data-filter="Sniper">🔫 Snipers</button>
+    <button class="weapon-filter-btn" data-filter="Shotgun">🔫 Shotguns</button>
+    <button class="weapon-filter-btn" data-filter="Heavy">🔫 Heavy</button>
+  </div>
+  <div style="margin-left: auto;">
+    <input type="text" id="weaponSearchInput" placeholder="🔍 Waffe suchen..." style="padding: 0.5rem 1rem; border-radius: 2rem; background: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-color); width: 200px;">
+  </div>
+</div>
+
+    <!-- Waffen-Grid -->
+    <div id="weaponsGrid" class="weapons-db-grid"></div>
+  </div>
+</div>
+
+<!-- ======================== DATENBANK - ECONOMY GUIDE ======================== -->
+<div id="economyDb" class="tab-content">
+  <div class="card">
+    <h2>💰 ECONOMY GUIDE - CS2 Wirtschaft verstehen</h2>
+    <div class="info-hint">
+      📊 Alles über Geld, Buy-Strategien und optimale Entscheidungen für jede Runde
+    </div>
+
+    <!-- Schnellnavigation -->
+    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; justify-content: center;">
+      <button class="economy-nav-btn" data-section="basics">📖 Grundlagen</button>
+      <button class="economy-nav-btn" data-section="boni">💰 Kill & Loss Boni</button>
+      <button class="economy-nav-btn" data-section="strategies">🎯 Buy-Strategien</button>
+      <button class="economy-nav-btn" data-section="weapons">🔫 Waffen priorisieren</button>
+      <button class="economy-nav-btn" data-section="calculator">🧮 Rechner</button>
+      <button class="economy-nav-btn" data-section="tips">💡 Pro Tipps</button>
+    </div>
+
+    <!-- ======================== 1. GRUNDLAGEN ======================== -->
+    <div id="economy-basics" class="economy-section active-section">
+      <h3>📖 Grundlagen des CS2 Wirtschaftssystems</h3>
+      
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-top: 1rem;">
+        <div class="economy-card">
+          <div class="economy-card-header">💰 Startgeld</div>
+          <div class="economy-card-body">
+            <p>Jeder Spieler startet mit <strong class="text-accent">$800</strong>.</p>
+            <p>🔹 T-Seite: $800<br>🔹 CT-Seite: $800</p>
+          </div>
+        </div>
+        
+        <div class="economy-card">
+          <div class="economy-card-header">🏆 Siegprämie</div>
+          <div class="economy-card-body">
+            <p><strong class="text-accent">$3.250</strong> für den siegreichen Spieler pro Runde</p>
+            <p>➕ Zusätzlich $150 für das Team</p>
+          </div>
+        </div>
+        
+        <div class="economy-card">
+          <div class="economy-card-header">💀 Verlustprämie</div>
+          <div class="economy-card-body">
+            <p>Erhöht sich bei jeder Niederlage:</p>
+            <p>1. Niederlage: $1.400<br>2. Niederlage: $1.900<br>3. Niederlage: $2.400<br>4. Niederlage: $2.900<br>5+ Niederlage: $3.400</p>
+          </div>
+        </div>
+        
+        <div class="economy-card">
+          <div class="economy-card-header">🔪 Kill Bonus</div>
+          <div class="economy-card-body">
+            <p><strong class="text-accent">$300</strong> pro Kill (alle Waffen)</p>
+            <p>💡 AWP-Kill: $300 (kein Bonus)<br>🎯 Knife-Kill: $1.500</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================== 2. KILL & LOSS BONI ======================== -->
+    <div id="economy-boni" class="economy-section">
+      <h3>💰 Kill Boni & Loss Boni im Detail</h3>
+      
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+        <div class="economy-card">
+          <div class="economy-card-header">🔪 Kill Boni nach Waffe</div>
+          <div class="economy-card-body">
+            <table style="width: 100%;">
+              <tr><td>🔫 Standardwaffen</td><td class="text-right">$300</td></tr>
+              <tr><td>🔪 Messer</td><td class="text-right">$1.500</td></tr>
+              <tr><td>💣 Bombenentschärfung (CT)</td><td class="text-right">$300</td></tr>
+              <tr><td>💥 Bombenplant (T)</td><td class="text-right">$300</td></tr>
+            </table>
+          </div>
+        </div>
+        
+        <div class="economy-card">
+          <div class="economy-card-header">📉 Loss Bonus Tabelle</div>
+          <div class="economy-card-body">
+            <table style="width: 100%;">
+              <tr><td>1️⃣ Niederlage</td><td class="text-right">$1.400</td></tr>
+              <tr><td>2️⃣ Niederlagen</td><td class="text-right">$1.900</td></tr>
+              <tr><td>3️⃣ Niederlagen</td><td class="text-right">$2.400</td></tr>
+              <tr><td>4️⃣+ Niederlagen</td><td class="text-right">$2.900 → $3.400</td></tr>
+            </table>
+            <div class="info-text" style="margin-top: 0.5rem;">💡 Verlustbonus steigt nach jedem Sieg wieder auf $1.400</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================== 3. BUY-STRATEGIEN ======================== -->
+    <div id="economy-strategies" class="economy-section">
+      <h3>🎯 Die wichtigsten Buy-Strategien</h3>
+      
+      <div class="strategy-grid">
+        <div class="strategy-card">
+          <div class="strategy-header eco">🟢 PISTOL ECO ROUND</div>
+          <div class="strategy-body">
+            <p><strong>Geld:</strong> $1.000 - $2.000</p>
+            <p><strong>Ziel:</strong> Sparsam sein, nächste Runde voll kaufen</p>
+            <p><strong>Kauf:</strong> Nur Kevlar (wenn nötig), billige Pistole (P250/CZ/Deagle optional)</p>
+            <p><strong>Kein Kauf:</strong> Keine Granaten, keine Primary</p>
+            <div class="strategy-tip">💡 Ziel: Gegner mit guter Waffe töten und aufnehmen!</div>
+          </div>
+        </div>
+        
+        <div class="strategy-card">
+          <div class="strategy-header force">🟡 FORCE BUY</div>
+          <div class="strategy-body">
+            <p><strong>Geld:</strong> $2.000 - $3.500</p>
+            <p><strong>Ziel:</strong> Team hat ungefähr gleich viel Geld, Runde gewinnen</p>
+            <p><strong>Kauf:</strong> Kevlar + Helm, SMGs (MP9/MAC-10), Deagle, Granaten</p>
+            <p><strong>Empfehlung:</strong> Nur wenn Team mitspielt, sonst ECO</p>
+            <div class="strategy-tip">💡 Nach einem Force-Buy ist die nächste Runde meist ECO</div>
+          </div>
+        </div>
+        
+        <div class="strategy-card">
+          <div class="strategy-header full">🔴 FULL BUY</div>
+          <div class="strategy-body">
+            <p><strong>Geld:</strong> $3.500+ (T), $4.000+ (CT)</p>
+            <p><strong>Ziel:</strong> Maximale Ausrüstung, Runde gewinnen</p>
+            <p><strong>Kauf:</strong> Volles Kit (Kevlar+Helm, Rifle, AWP, alle Granaten)</p>
+            <p><strong>Voraussetzung:</strong> Team hat genug Geld</p>
+            <div class="strategy-tip">💡 CT-Seite benötigt meist mehr Geld für M4s ($3.100)</div>
+          </div>
+        </div>
+        
+        <div class="strategy-card">
+          <div class="strategy-header save">⚫ FULL ECO ROUND</div>
+          <div class="strategy-body">
+            <p><strong>Geld:</strong> &lt;$1.000</p>
+            <p><strong>Ziel:</strong> Gar nichts kaufen, nächste Runde voll kaufen</p>
+            <p><strong>Kauf:</strong> Nichts (reine USP/Glock)</p>
+            <p><strong>Taktik:</strong> Gegner überraschen, Waffen aufnehmen</p>
+            <div class="strategy-tip">💡 Wenn Team saved, hilft auch Gegner zu töten und Waffe zu nehmen</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================== 4. WAFFEN PRIORISIEREN ======================== -->
+    <div id="economy-weapons" class="economy-section">
+      <h3>🔫 Waffenpriorisierung nach Geld</h3>
+      
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
+        <div class="economy-card">
+          <div class="economy-card-header">💰 Budget ($1.000 - $2.000)</div>
+          <div class="economy-card-body">
+            <p>1️⃣ Kevlar + Helm ($1.000) – Priorität!<br>
+            2️⃣ P250 ($300) – Gute Penetration<br>
+            3️⃣ Deagle ($700) – Wenn Geld reicht<br>
+            4️⃣ Rauchgranate ($300) – Taktisch wertvoll<br>
+            5️⃣ Flashbangs ($200) – Maximal 2</p>
+          </div>
+        </div>
+        
+        <div class="economy-card">
+          <div class="economy-card-header">⚡ Force Buy ($2.000 - $3.500)</div>
+          <div class="economy-card-body">
+            <p>1️⃣ Kevlar + Helm ($1.000)<br>
+            2️⃣ MP9/MAC-10 ($1.050-1.250) – Beste SMGs<br>
+            3️⃣ Deagle ($700) – Optional für Genauigkeit<br>
+            4️⃣ Granaten – HE + Smoke + Flash<br>
+            5️⃣ Defuser (CT) – Wenn Budget da</p>
+          </div>
+        </div>
+        
+        <div class="economy-card">
+          <div class="economy-card-header">💪 Full Buy ($3.500+)</div>
+          <div class="economy-card-body">
+            <p>T-Seite:<br>
+            1️⃣ AK-47 ($2.700)<br>
+            2️⃣ Kevlar+Helm ($1.000)<br>
+            3️⃣ Alle Granaten ($900)<br>
+            CT-Seite:<br>
+            1️⃣ M4 ($3.100)<br>
+            2️⃣ Kevlar+Helm ($1.000)<br>
+            3️⃣ Defuser ($400)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================== 5. ECONOMY RECHNER ======================== -->
+    <div id="economy-calculator" class="economy-section">
+      <h3>🧮 Economy Rechner</h3>
+      
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+        <div class="economy-card">
+          <div class="economy-card-header">📊 Deine Situation</div>
+          <div class="economy-card-body">
+            <div class="calc-group">
+              <label>Aktuelles Geld:</label>
+              <input type="number" id="calcMoney" value="3000" step="100" class="calc-input">
+            </div>
+            <div class="calc-group">
+              <label>Runden in Folge verloren:</label>
+              <select id="calcLosses" class="calc-select">
+                <option value="0">0 (gerade gewonnen)</option>
+                <option value="1">1 Niederlage</option>
+                <option value="2">2 Niederlagen</option>
+                <option value="3">3 Niederlagen</option>
+                <option value="4">4+ Niederlagen</option>
+              </select>
+            </div>
+            <div class="calc-group">
+              <label>Seite:</label>
+              <select id="calcSide" class="calc-select">
+                <option value="t">🔴 Terrorist (T)</option>
+                <option value="ct">🔵 Counter-Terrorist (CT)</option>
+              </select>
+            </div>
+            <button id="calcRecommendBtn" class="glow" style="width: 100%; margin-top: 1rem;">💰 Empfehlung berechnen</button>
+          </div>
+        </div>
+        
+        <div class="economy-card" id="calcResult">
+          <div class="economy-card-header">💡 Empfehlung</div>
+          <div class="economy-card-body" id="calcResultContent">
+            <p>Klicke auf "Empfehlung berechnen"</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================== 6. PRO TIPPS ======================== -->
+    <div id="economy-tips" class="economy-section">
+      <h3>💡 Pro Tipps für besseres Economy Management</h3>
+      
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem;">
+        <div class="tip-card">
+          <div class="tip-icon">🤝</div>
+          <div class="tip-content">
+            <h4>Team-Abstimmung</h4>
+            <p>Spricht dich mit deinem Team ab! Wenn einer Force-Buy macht und einer saved, ist das ineffizient. Gemeinsam kaufen oder gemeinsam sparen.</p>
+          </div>
+        </div>
+        
+        <div class="tip-card">
+          <div class="tip-icon">📊</div>
+          <div class="tip-content">
+            <h4>Loss Bonus verstehen</h4>
+            <p>Nach 3 Niederlagen ist der Loss Bonus maximal ($2.900-3.400). Das ist der perfekte Zeitpunkt für einen Full Buy – selbst nach Verlusten habt ihr noch Geld.</p>
+          </div>
+        </div>
+        
+        <div class="tip-card">
+          <div class="tip-icon">🎯</div>
+          <div class="tip-content">
+            <h4>Half-Buy vermeiden</h4>
+            <p>Half-Buy (irgendwas zwischen ECO und Full) ist meist schlecht. Entweder richtig sparen oder richtig kaufen – Halbherzigkeit kostet Runden.</p>
+          </div>
+        </div>
+        
+        <div class="tip-card">
+          <div class="tip-icon">💣</div>
+          <div class="tip-content">
+            <h4>Bombenplant als T</h4>
+            <p>Plant die Bombe auch in verlorenen Runden! Jeder Plant gibt $300 zusätzlich – das summiert sich über das Match.</p>
+          </div>
+        </div>
+        
+        <div class="tip-card">
+          <div class="tip-icon">🔫</div>
+          <div class="tip-content">
+            <h4>Waffen aufnehmen</h4>
+            <p>In ECO-Runden: Konzentriere dich darauf, einen Gegner zu töten und seine Waffe aufzunehmen. Eine AK in ECO-Runde ist Gold wert.</p>
+          </div>
+        </div>
+        
+        <div class="tip-card">
+          <div class="tip-icon">🛡️</div>
+          <div class="tip-content">
+            <h4>Kevlar First</h4>
+            <p>Kevlar + Helm ist fast immer die beste Investition – ohne Rüstung verlierst du fast jedes Duell.</p>
+          </div>
+        </div>
+        
+        <div class="tip-card">
+          <div class="tip-icon">📈</div>
+          <div class="tip-content">
+            <h4>Nach Sieg nicht overbuyen</h4>
+            <p>Nach einem Sieg: Kaufe nicht zu viel, falls du die nächste Runde verlierst. Ein guter Mix aus sparen und kaufen ist ideal.</p>
+          </div>
+        </div>
+        
+        <div class="tip-card">
+          <div class="tip-icon">🎮</div>
+          <div class="tip-content">
+            <h4>Deagle als Eco-Waffe</h4>
+            <p>Deagle + Kevlar kostet $1.700. In ECO-Runden eine starke Kombination – ein Headshot killt jeden Gegner.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer des Economy Guides -->
+    <div class="info-box" style="margin-top: 2rem; text-align: center;">
+      💰 Gute Economy = Mehr Runden gewonnen! Nutze diese Strategien, um dein Team zum Sieg zu führen.
+    </div>
+  </div>
+</div>
 
       <!-- ABOUT ME TAB -->
       <div id="aboutTab" class="tab-content">
@@ -1179,6 +1671,7 @@
         </div>
 
         <div class="card">
+<<<<<<< HEAD
 <h4 style="color: var(--accent-light); margin-bottom: 0.8rem">🎮 Über CS2 Neon Studio</h4>
         <p style="margin-bottom: 0.8rem; line-height: 1.5">
           CS2 Neon Studio ist eine umfassende Anwendung, die speziell für Counter-Strike 2 entwickelt wurde, um Spielern eine zentrale, moderne und benutzerfreundliche Plattform zur Verwaltung ihrer Spielkonfigurationen zu bieten. Anstatt sich mit verstreuten Textdateien, komplizierten Konsolenbefehlen und veralteten Tools herumzuschlagen, vereint Neon Studio alle wichtigen Anpassungsmöglichkeiten in einer übersichtlichen Oberfläche.
@@ -1218,30 +1711,194 @@
             </div>
           </div>
         </div>
+=======
+<h4 style="color: var(--accent-light); margin-bottom: 0.8rem">🎮 Über CS2 Neon Armory</h4>
+>>>>>>> 38331c4ea550edcc13a34938b3a1f1ebfe97acf8
 
-        <p style="margin-bottom: 0.8rem; line-height: 1.5">
-          Entwickelt wurde CS2 Neon Studio von Michael "TheLaw5150" M., einem leidenschaftlichen CS2-Spieler und Entwickler, der die Defizite bestehender Config-Tools selbst erlebt hat. Viele alte Programme wurden nicht mehr gepflegt, waren optisch veraltet oder unterstützten die neuen Mechaniken von CS2 (wie die geänderte Konsolenlogik oder das neue Kaufmenü) nur unzureichend.
-        </p>
-        <p style="margin-bottom: 0.8rem; line-height: 1.5">
-          Aus Frustration und dem Drang, etwas Besseres zu schaffen, entstand Neon Studio – mit dem Anspruch auf Benutzerfreundlichkeit, Stabilität und ein modernes Design. Das Projekt wird mit viel Herzblut weiterentwickelt, regelmäßig an CS2-Updates angepasst und richtet sich an Anfänger wie Profis, die ihre Spielerfahrung optimieren möchten, ohne sich in technischen Details zu verlieren.
-        </p>
-        
-        <div style="background: var(--accent); border-radius: 0.8rem; padding: 0.6rem 1rem; margin: 1rem 0; color: #0a0a0f; font-size: 0.85rem;">
-          <strong>👉 Für wen ist CS2 Neon Studio geeignet?</strong><br>
-          • Casual-Spieler, die schnell ihre Lieblingswaffen auf Tasten legen wollen<br>
-          • Ambitionierte Ranked-Spieler, die ihre Configs sauber organisieren<br>
-          • Team-Captains und Trainer, die einheitliche Setups für mehrere Spieler bereitstellen<br>
-          • Content-Creator, die Practice-Skripte für Videos oder Workshops nutzen
-        </div>
+<p style="margin-bottom: 0.8rem; line-height: 1.5">
+  <strong>CS2 Neon Armory</strong> ist deine zentrale All-in-One-Plattform für alles rund um Counter-Strike 2. Hier findest du nicht nur Tools für deine Configs und Binds, sondern wächst Schritt für Schritt zu einem umfassenden Hub heran – mit <strong>Skins-Wiki, Settings-Datenbank, CS2-News und vielem mehr</strong>. Alles an einem Ort, ohne lästige Suche in veralteten Foren oder Dutzenden Tools.
+</p>
 
-        <p style="font-size: 0.85rem; margin-top: 1rem; padding-top: 0.8rem; border-top: 1px solid var(--border-color);">
-          📅 Version 1.0.1.1 · Letztes Update: Juni 2026 · <i class="fas fa-code-branch"></i> Continuous Development<br>
-          <span style="color: var(--accent-light);">👉 Mit ❤️ entwickelt von Michael "TheLaw5150" M. – für die CS2-Community.</span>
-          </p>
-        </div>
+<div style="background: rgba(0,0,0,0.2); border-radius: 1rem; padding: 0.8rem; margin: 1rem 0;">
+  <strong>✅ Erledigt</strong> &nbsp;&nbsp;|&nbsp;&nbsp; <span style="opacity: 0.6;">⏳ To-Do / Geplant (CS2 Hub-Ausbau)</span>
+  <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin: 1rem 0;">
+    
+    <!-- Erledigt Box -->
+    <div style="flex: 1; background: rgba(0,255,0,0.1); border-radius: 1rem; padding: 0.8rem; border-left: 4px solid #00cc44;">
+      <strong style="color: #00ff66;">✅ Erledigt</strong>
+      <div style="margin-top: 0.5rem; font-size: 0.8rem; line-height: 1.6;">
+        • Buy-, Say- & Skript Binds<br>
+        • Config-Befehle verwalten<br>
+        • System Analyzer<br>
+        • Ping-Radar<br>
+        • Startoptionen-Generator<br>
+        • Autoexec-Export<br>
+        • Buyscript-Preise + Gesamtpreis pro Taste
       </div>
     </div>
+    
+    <!-- To-Do Box (aktualisiert auf CS2 Hub Vision) -->
+    <div style="flex: 1; background: rgba(255,165,0,0.1); border-radius: 1rem; padding: 0.8rem; border-left: 4px solid #ffaa33;">
+      <strong style="color: #ffaa66;">⏳ CS2 Hub - Geplant</strong>
+      <div style="margin-top: 0.5rem; font-size: 0.8rem; line-height: 1.6;">
+        • 🎨 <strong>Skins-Wiki</strong> (vollständige Datenbank)<br>
+        • 📰 <strong>CS2 News & Updates Feed</strong><br>
+        • ⚙️ <strong>Pro Player Settings & Setups</strong><br>
+        • 🗺️ Map Overview mit Callouts & Utility-Spots<br>
+        • 🤝 <strong>Community-Features</strong> (Skripte teilen, Ratings)<br>
+        • 🔄 Transfermarkt / Skin-Handel (optional)<br>
+        • 🌍 Mehrsprachigkeit (Englisch, Spanisch, etc.)<br>
+        • 🤖 Discord Bot für Ankündigungen & Support<br>
+        • 🧠 CS2 Taktik-Tool (Smokes, Granaten, Lineups)<br>
+        • 📊 Integrierter Server Browser<br>
+        • 🔐 Account-System (optional mit Steam)<br>
+        • 🛠️ Utility-Workshop & mehr Skript-Templates
+      </div>
+    </div>
+  </div>
+</div>
 
+<p style="margin-bottom: 0.8rem; line-height: 1.5">
+  Entwickelt wurde <strong>CS2 Neon Armory</strong> von <strong>Michael "TheLaw5150" M.</strong>, einem leidenschaftigen CS2-Spieler und Entwickler mit Spezialisierung auf Cyber Security. Die Idee entstand aus dem Frust heraus, dass Informationen zu Skins, optimalen Settings und aktuellen News über Dutzende Seiten, Reddit-Threads und YouTube-Videos verstreut sind – und eine einzige, verlässliche, moderne Anlaufstelle für <strong>alle</strong> CS2-Themen gefehlt hat.
+</p>
+
+<p style="margin-bottom: 0.8rem; line-height: 1.5">
+  Aus diesem Grund entstand <strong>CS2 Neon Armory</strong> – mit dem klaren Ziel, eine <strong>All-in-One-Plattform</strong> zu schaffen: Config-Tools, Skins-Wiki, Pro-Settings, News und Community-Features unter einem Dach. Das Projekt wird mit viel Herzblut weiterentwickelt, regelmäßig an CS2-Updates angepasst und richtet sich an Anfänger wie Profis, die ihre Spielerfahrung optimieren möchten – <strong>ohne Glücksspiel, ohne Werbe-Flut, sondern mit Fokus auf klare Fakten und Benutzerfreundlichkeit.</strong>
+</p>
+
+<div style="background: var(--accent); border-radius: 0.8rem; padding: 0.6rem 1rem; margin: 1rem 0; color: #0a0a0f; font-size: 0.85rem;">
+  <strong>👉 Für wen ist CS2 Neon Armory geeignet?</strong><br>
+  • 🎮 <strong>Casual-Spieler</strong>, die schnell ihre Lieblingswaffen auf Tasten legen wollen<br>
+  • 🏆 <strong>Ranked-Spieler</strong>, die ihre Configs sauber organisieren möchten<br>
+  • 👥 <strong>Team-Captains & Trainer</strong>, die einheitliche Setups bereitstellen<br>
+  • 📹 <strong>Content-Creator</strong>, die Practice-Skripte für Videos nutzen<br>
+  • 📚 <strong>Skins-Enthusiasten</strong>, die eine vollständige Wiki suchen<br>
+  • 📰 <strong>News-Junkies</strong>, die immer auf dem neuesten Stand sein wollen
+</div>
+
+<p style="font-size: 0.85rem; margin-top: 1rem; padding-top: 0.8rem; border-top: 1px solid var(--border-color);">
+  📅 Version 1.0.2.1 · Letztes Update: Juni 2026 · <i class="fas fa-code-branch"></i> Continuous Development<br>
+  <span style="color: var(--accent-light);">👉 Mit ❤️ entwickelt von Michael "TheLaw5150" M. – für die CS2-Community. <strong>CS2 Hub – Deine gesamte CS2-Welt an einem Ort.</strong></span>
+</p>
+        </div>
+      </div>
+
+    <!-- ======================== FOOTER ======================== -->
+<footer class="app-footer">
+  <div class="footer-grid">
+    
+    <!-- Spalte 1: Rechtliches -->
+    <div class="footer-col">
+      <h4>📜 Rechtliches</h4>
+      <ul class="footer-links">
+        <li><a href="#" id="openImpressum">📄 Impressum</a></li>
+        <li><a href="#" id="openDatenschutz">🔒 Datenschutzerklärung</a></li>
+        <li><a href="#" id="openNutzungsbedingungen">⚖️ Nutzungsbedingungen</a></li>
+        <li><span class="copyright">© 2025-2026 Michael M. (TheLaw5150)</span></li>
+      </ul>
+    </div>
+    
+    <!-- Spalte 2: Support & Spenden -->
+    <div class="footer-col">
+      <h4>💝 Support</h4>
+      <button id="footerDonationBtn" class="footer-donation-btn">
+        💖 Spenden / Donation
+      </button>
+      <div class="support-links">
+        <a href="#" id="footerDiscordLink">
+          <i class="fab fa-discord"></i> Discord Support
+        </a>
+        <a href="#" id="footerGitHubLink">
+          <i class="fab fa-github"></i> GitHub Projekt
+        </a>
+      </div>
+      <div class="support-note">
+        ⭐ Wenn dir das Tool gefällt, unterstütze die Weiterentwicklung!
+      </div>
+    </div>
+    
+    <!-- Spalte 3: Version & Updates -->
+    <div class="footer-col">
+      <h4>🔄 Version & Updates</h4>
+      <div class="version-badge">v1.0.2.1</div>
+      <div class="build-date">Build: Juni 2026</div>
+      <a href="#" id="showChangelogLink" class="changelog-link">
+        📝 Changelog anzeigen
+      </a>
+    </div>
+    
+    <!-- Spalte 4: Quick Links (Navigation) -->
+    <div class="footer-col">
+      <h4>🔗 Quick Links</h4>
+      <ul class="footer-links">
+        <li><a href="#" onclick="scrollToTab('bindsTab')">⌨️ Binds erstellen</a></li>
+        <li><a href="#" onclick="scrollToTab('configTab')">⚙️ Configs verwalten</a></li>
+        <li><a href="#" onclick="scrollToTab('crosshairTab')">🎯 Crosshair Generator</a></li>
+        <li><a href="#" onclick="scrollToTab('analyzerTab')">📊 System Analyzer</a></li>
+        <li><a href="#" onclick="scrollToTab('pingTab')">📡 Ping Radar</a></li>
+        <li><a href="#" onclick="scrollToTab('exportTab')">📦 Export & Backup</a></li>
+        <li><a href="#" onclick="scrollToTab('startTab')">🚀 Start Optionen</a></li>
+        <li><a href="#" onclick="scrollToTab('aboutTab')">👤 About Me</a></li>
+      </ul>
+    </div>
+    
+    <!-- Spalte 5: KONTAKTFORMULAR -->
+    <div class="footer-col contact-col">
+      <h4>📧 Kontakt</h4>
+      <form id="footerContactForm" class="contact-form">
+        <div class="form-group">
+          <input type="text" id="contactName" placeholder="Dein Name" required>
+        </div>
+        <div class="form-group">
+          <input type="email" id="contactEmail" placeholder="Deine E-Mail" required>
+        </div>
+        <div class="form-group">
+          <select id="contactSubject" required>
+            <option value="" disabled selected>Betreff wählen</option>
+            <option value="bug">🐛 Bug melden</option>
+            <option value="feature">💡 Feature-Wunsch</option>
+            <option value="question">❓ Frage</option>
+            <option value="support">🆘 Support-Anfrage</option>
+            <option value="other">📝 Sonstiges</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <textarea id="contactMessage" rows="3" placeholder="Deine Nachricht..." required></textarea>
+        </div>
+        <div class="form-group checkbox-group">
+          <label>
+            <input type="checkbox" id="contactCopyToSelf" checked>
+            <span>Kopie an meine E-Mail senden</span>
+          </label>
+        </div>
+        <button type="submit" class="contact-submit-btn">
+          <i class="fas fa-paper-plane"></i> Nachricht senden
+        </button>
+        <div id="contactFormStatus" class="contact-form-status"></div>
+      </form>
+    </div>
+    
+  </div>
+  
+  <!-- Footer Bottom Bar -->
+  <div class="footer-bottom">
+    <div class="disclaimer">
+      <i class="fas fa-info-circle"></i>
+      CS2 Neon Armory ist ein Fan-Projekt und nicht offiziell mit Valve verbunden.
+      Counter-Strike 2 ist eine Marke von Valve Corporation.
+    </div>
+    <div class="status-bar">
+      <span class="status-dot online"></span>
+      <span>Tool Online</span>
+      <span class="status-separator">|</span>
+      <span>💾 Storage: <span id="footerStorageUsed">0</span> KB</span>
+      <span class="status-separator">|</span>
+      <span>⚡ Letzter Export: <span id="lastExportTime">-</span></span>
+    </div>
+  </div>
+</footer>
+
+    <script src="js/footer.js"></script>
     <script src="js/data.js"></script>
     <script src="js/defaultbinds.js"></script>
     <script src="js/theme.js"></script>
@@ -1254,8 +1911,11 @@
     <script src="js/export.js"></script>
     <script src="js/analyzer.js"></script>
     <script src="js/pingtest.js"></script>
+    <script src="js/crosshair.js"></script>
     <script src="js/binds.js"></script>
     <script src="js/donation.js"></script>
+    <script src="js/weaponsdb.js"></script>
+    <script src="js/economy.js"></script>
     <script src="js/main.js"></script>
   </body>
 </html>
